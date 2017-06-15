@@ -1,12 +1,252 @@
 ====================
-     06-11-2017
+     06-15-2017
 ====================
 
 
    * frameworks/base/
-06f30edf922 SystemUI: Clean duplicate permission
-aabdb19d0dd Merge branch 'cm-14.1' of https://github.com/LineageOS/android_frameworks_base into 7.1
-4b3a0fdae35 fingerprint: handle PerformanceStats NULL pointers
+24e7dd500a7 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_frameworks_base into 7.1
+a6a57637b60 LocationTile: Behave like other tiles
+
+   * kernel/moto/shamu/
+1d764451544 shamu: sigma kernel 6.4
+75fbca8da5f ASoC: compress: fix unsigned integer overflow check
+ec3e49300ad ASoC: Fix use-after-free at card unregistration
+44c5d64062e ext4: keep existing extra fields when inode expands
+01c45dd25ca ext4: fix SEEK_HOLE
+1a94dd0982b KEYS: fix dereferencing NULL payload with nonzero length
+82c6d6bed66 crypto: msm: check invalid src and dst vbuf in qcedev.c
+5573a4697ab ASoC: utils: initialize dummy_codec before use
+b69a73e4f7b ASoC: add rate limit for prints causing excessive logging
+709650ab86a ASoC: pcm: increase the hostless buffer size
+ac4189a1d2f ASoC: pcm: Add support for fixup callback
+298e76375c4 ASoC: pcm: update the start-up sequence for playback
+5b648b462a5 ASoC: dapm: Add cache to speed up adding of routes
+07c462f0ff5 ASoC: soc-pcm: fix the invalid access of the memory
+c23267c6ab4 ASoC: dapm: Break out of widget search when source and sink are located
+54290d32e42 ASoC: dapm: Add new widgets to the end of the widget list
+ed48775d7aa ASoC: dapm: using freed pointer in dapm_kcontrol_add_widget()
+0b48c1d7528 ASoC: dapm: Don't create routes when creating kcontrols
+6da7003dea1 ASoC: dapm: Keep a list of paths per kcontrol
+f9a1196b138 ASoC: dapm: Wrap kcontrol widget list access
+03464497724 sound: dapm: Fix compilation error when PROVE_LOCKING is enabled
+b6f5bb50889 ASoC: dapm: Do not process cpu_dai widgets in bias changes
+455f50347a8 ASoC: dapm: fix race condition in dapm
+3621fca7518 ion: fix remaining instances of sg_dma_len
+334fed43db8 ion: validate ion client in ion_debug_client_show() and extract data
+6e271a6d274 ion: WARN when the handle kmap_cnt is going to wrap around
+8a99d0e98d8 ANDROID: ion: Fix uninitialized variable
+bb7e9916cf6 crypto: ahash - Fix EINPROGRESS notification callback
+4117b7c0a08 crypto: hash - initialize entry len for null input in crypto hash sg list walk
+2a13bb2a270 crypto: hash - Add real ahash walk interface
+a87ef5d262f crypto: hash - Simplify the ahash_finup implementation
+2fd4bd1a812 crypto: hash - Pull out the functions to save/restore request
+2194e8d1ffc crypto: hash - Fix the pointer voodoo in unaligned ahash
+fef1778f37a crypto: ahash - Fully restore ahash request before completing
+4808f07ff4a mm/mempolicy.c: fix error handling in set_mempolicy and mbind.
+fe750287596 shamu: sigma kernel 6.3
+cd2fa0cc993 leds: Quick fix warning for blink led support
+f7bb44e451a Revert "leds: Fix permissions"
+6e659963c40 netfilter: xt_hashlimit: Do not use power efficient wq
+64dd69781f6 net: Fix build failure due to lockdep_sock_is_held().
+8e49db86b5d sock: make lockdep_sock_is_held static inline
+e1817ac6442 net/sched: em_meta: Fix 'meta vlan' to correctly recognize zero VID frames
+3efdca44d72 ipv6: Prevent overrun when parsing v6 header options
+c71f1acc373 ipv6: reorder ip6_route_dev_notifier after ipv6_dev_notf
+c8a75122fe9 ipv6: initialize route null entry in addrconf_init()
+246e3a52759 ipv6: avoid write to a possibly cloned skb
+18b8032523b ipv6: pointer math error in ip6_tnl_parse_tlv_enc_lim()
+46aeb63394d ipv6: fix ip6_tnl_parse_tlv_enc_lim()
+8c1ca24b0ca ipv6: release dst in ping_v6_sendmsg
+08ede2582a1 UPSTREAM: ipv6: tcp: add rcu locking in tcp_v6_send_synack()
+882b6a2dac2 ipv6: sctp: fix lockdep splat in sctp_v6_get_dst()
+6dc7ccc29fe ipv6: sctp: add rcu protection around np->opt
+44f76afce3b sctp: do not inherit ipv6_{mc|ac|fl}_list from parent
+6f0754a2f02 netfilter: xt_hashlimit: perform garbage collection from process context
+fdb9f91ee48 netfilter: xt_hashlimit: fix proc entry leak in netns destroy path
+1f32cffff83 netfilter: don't use mutex_lock_interruptible()
+d90f60a6ee4 netfilter: nf_qeueue: Drop queue entries on nf_unregister_hook
+7f0cb75f295 BACKPORT: netfilter: Kconfig: get rid of parens around depends on
+2bc32b2e36d UPSTREAM: netfilter: Fix build errors with xt_socket.c
+e034bf092b0 net: tcp: fix rtable leak in tcp_is_local[6]
+9fc2f74f424 net: tcp: split ack slow/fast events from cwnd_event
+d89f455e2cf ping: fix a null pointer dereference
+02c2d93cec3 ipv4, ipv6: ensure raw socket message is big enough to hold an IP header
+85a7d1f5130 tcp: fix a compile error in DBGUNDO()
+a92440e97fc ANDROID: Add untag hacks to inet_release function
+15db2a67837 CHROMIUM: net: xt_qtaguid: Remove unnecessary check for in_ifaddr.ifa_label != NULL
+7bc1b7e7744 sock: tigthen lockdep checks for sock_owned_by_user
+de1aa495689 net: introduce lockdep_is_held and update various places to use it
+fa6c67e08fe tcp: fix various issues for sockets morphing to listen state
+0928e0b799d tcp: initialize max window for a new fastopen socket
+b96eae08c42 net: fix IP early demux races
+ea92d1e1e22 ipv4: mask tos for input route
+56ccd37fc1d tcp: do not underestimate skb->truesize in tcp_trim_head()
+6067dca02cd tcp: fix 0 divide in __tcp_select_window()
+0e8dbb90d35 tcp: fix wraparound issue in tcp_lp
+ae478bb879b tcp: remove unused min_cwnd member of tcp_congestion_ops
+6714fd87947 net: net_enable_timestamp() can be called from irq contexts
+3f71aa0f03c net: use a work queue to defer net_disable_timestamp() work
+d4339d2c21a skbuff: support disabling of skb fragment cache
+01537b047fd net: less interrupt masking in NAPI
+d5b30e29eac net: core: neighbour: Change the print format for addresses
+93b13475b6f net: core: Send ARP probe and trigger RTM_NEWNEIGH
+ce3da93e439 net: rest NAPI bit if IPI failed
+bd0c7390d44 net: attempt a single high order allocation
+10b69aa384c net: use __GFP_NORETRY for high order allocations
+a4484bea6e0 net: allow > 0 order atomic page alloc in skb_page_frag_refill
+8214724b4cd net: refactor sk_page_frag_refill()
+bfffa63def7 af_unix: move unix_mknod() out of bindlock
+7aef050943b net: unix: Fix uninitialized warnings when building for ARCH=um
+cc2c317fd56 net: fix uninitialized variable usage
+d1a218f60d6 af_unix: fix bug on large send()
+f9a57916553 net: attempt high order allocations in sock_alloc_send_pskb()
+91efadb7307 af_unix: improve STREAM behavior with fragmented memory
+7b178bc50e0 af_unix: fix struct pid memory leak
+c183742e015 net: don't call strlen() on the user buffer in packet_bind_spkt()
+e66d117d840 packet: round up linear to header len
+50186ddd9fd packet: Do not call fanout_release from atomic contexts
+fe4233e94b8 packet: remove unnecessary break after return
+9226cfcf3d9 af_packet: make tpacket_rcv to not set status value before run_filter
+f98aa22daf1 packet: race condition in packet_bind
+a891c610a08 packet: missing dev_put() in packet_do_bind()
+366a753b963 packet: improve socket create/bind latency in some cases
+
+====================
+     06-14-2017
+====================
+
+
+   * android/
+4adee7b manifest: Track libphonenumber and mdnsresponder
+e322d5b manifest: Track libunwind_llvm
+
+   * frameworks/base/
+2931e67ef9c CaptivePortalLoginActivity correctly gets UserAgent
+37f849c1718 Prettify the captive portal sign-in activity
+5ff648c132a Merge branch 'cm-14.1' of https://github.com/LineageOS/android_frameworks_base into 7.1
+
+   * packages/apps/DUI/
+41f1491 New Smartbar icons to match Pixel theme
+
+   * packages/services/Telephony/
+7009aa0d Merge branch 'cm-14.1' of https://github.com/LineageOS/android_packages_services_Telephony into 7.1
+
+   * system/bt/
+331fc1e2 bt: Disable AVRCP 1.6
+
+====================
+     06-13-2017
+====================
+
+
+   * frameworks/base/
+f61b7786115 Fix a use-of-uninitialized-value warning.
+f3c417cff9f Fix a use-of-uninitialized-value warning.
+05bdf55950d Check for spurious wake ups
+336f3b377b0 Reduce hwui CPU time by using glDrawRangeElements
+6334326ca89 Stop holding mProxyLock while downloading PAC script data.
+b715a08ed22 Format Japanese numbers using national format when in Japan.
+c6607c5d275 fix IndexOutOfBoundsException in AccessibilityManagerService..manageServicesLocked
+3e23b8a703c preloaded drawables few
+5251038400a Schedule agentDisconnected() in handler thread
+48787e9e33c Fix PrcessRecord.renderThreadTid not reset in some case.
+2fbc0435b67 SoundPool: decrease binder call when calling SoundPool.play
+5b24363cab8 Recents: Clear locked tasks when using alternative
+19b7b453255 Allow using grid style aosp recents [1/2]
+347402aa485 Recents: Make lock task and dismiss icons optional [1/2]
+6a4058c76a3 KernelCpuSpeedReader: Account for missing sysfs nodes
+
+   * packages/apps/Snap/
+bd1d6ea46 Snap: Sign with platform key
+d7247ff7c Add orientation correction for landscape devices
+
+   * packages/apps/crDroidSettings/
+3a6d7a2 crdroid: Make dismiss icon optional in recents [2/2]
+
+   * packages/services/Telephony/
+a40c8ca4 Fix Phone Service crash on MSIM devices as Guest user
+
+   * vendor/addons/
+fcf7c01 addons: Update AdAway
+
+====================
+     06-12-2017
+====================
+
+
+   * frameworks/base/
+fd4fa4f9357 NullPointerException: Attempt to invoke virtual method 'int android.os.Parcel.dataSize()' on a null object reference
+7dd3d416d1b SystemUI: Clean duplicate permission
+bc468e22194 Add Korean translation
+9140e6bd659 Slim Recents: allow to disable round corners for cards [1/3]
+a36c12f5ef4 Reduce hwui CPU time by using glDrawRangeElements
+f2e94a811de Fix batterySendBroadcast not synchronized issue.
+dfa13bd3e3e bless python versions newer than 2.6
+076d927f85c Handle ActivityNotFoundException for contacts activity
+973d4969587 extend PreferenceActivity for title text on a single pane mode
+1b1578108cf Override onRestoreInstanceState() in MultiSelectListPreference
+0933bbc5b62 Fragment animations are not being saved across configuration changes
+f47a153bc2a Fix to NullPointerException when activity is relaunched
+34f0204a46d Fix right mLastTimeUsed when aggregate UsageStats
+835c7b3ce8d Fix ListView is not scrolled properly with arrows
+a52e415c49b Synchronize access of mSubscriptions
+21fd6684c8a Fix deadlock b/w ActivityManagerService and MediaSessionService
+aee7a2ef8f4 Provide synchronization to setview to avoid NPE
+9e97b9077c5 AsyncTask: Fix to remove canceled tasks from executor's queue.
+bb8e4362822 frameworks/base: Fix to avoid crash when the tab is not set from app
+619298105b8 IInputMethodWrapper to recycle SomeArgs in all cases.
+9ce21868081 Catch corruptexception during Transaction operation
+19ebc7d2339 better notification speed change
+136dd7d78f1 Adjusted animation timing
+a2696ba39fd Fix TaskRecord wrong dump element firstActiveTime
+65ab4492aed Fix force idle issue
+a83565ef9af Make the view more compact and show more entries per page
+6269c63145b Fix lag when opening an entry from the Settings left drawer
+9937b78c77b Update font size of date and time on QS panel
+5843e2c352e Fix code-style around notification ranker service in AndroidManifest.xml
+6bf3d67ebeb Fix issue
+43a0086c9f7 set the resultTo to null started by a finishing activity
+242361b2f0d Fix SystemUI FC due to Google Assistant
+29139a7b473 DisplayPowerController: Overwrite doze settings if required
+57c54ec6510 base: notifications: DEFAULT_LIGHTS and FLAG_SHOW_LIGHTS must count as noisy
+27e80cd42fc Frameworks AppOps: Enable MODE_IGNORED for OP_WAKE_LOCK
+c8c7371e995 CaptivePortal: login activity UI improvements
+30080a6cd99 Fix an apk icon animation corruption issue
+820970bc020 Fix crash by IllegalStateException in sendAccessibilityEvent
+8ada820be79 base: enable power save config of system apps [1/2]
+dbb206b2119 use FgThread.class instead of UiThread.class for lock object
+6e6557ea768 Timeout should not include sleep time.
+9ea0844db28 Fixes sharedUserId change issue.
+9570fd9f34a an extra animation when finish a visible paused activity
+df6bb5be290 Fix a crashed when clicking list item and button meanwhile
+7ad973d47b2 Make BluetoothStateChangeCallback oneway to prevent waiting on response.
+1a1b925bf5e skip schedule broadcast and startservice if the user is stopped
+af2cc6d3e30 Fix permissions for CTS [1/2]
+c3685bff2d3 sqlite query perf: try to avoid getCount()
+4a95e4670c1 sqlite query perf: clean up in-flight statements on cursor close
+c6a7cf69673 sqlite query perf: try to reuse in-flight statements
+d9dd09512ce sqlite query perf: better window selection in common case
+7e84d14fa5e Limit the number of start or bind service
+191f2286479 Do not remove the alarm listener if it still need to be used
+f669d33c904 Fix the IndexOutOfBoundsException issue.
+123dd25251e Fix double free issue in ResTable.
+986faf113a2 Make sdcard volumes visible even when FBE is enabled
+a252024ffed Consider allow-in-power-save-except-idle whitelist while updating rules.
+9e2a73f89fa system_server crash in ArrayMap.
+85cfc07e96c base: update updateUsbStateBroadcastIfNeeded types
+c7fc9f8e2a7 Check and send usb state broadcast when devices boots
+2e196740bd8 Only send usb disconnect intents after boot.
+0850726e685 Format Japanese numbers using national format when in Japan.
+1ced5e621a6 SystemUI: Enable show battery info on lockscreen by default [1/2]
+b5535ef1105 SystemUI: Fix broken keyguard indication
+fa74c6cf8a9 Lockscreen charging info: real time values [2/2]
+5d57a212e78 base: show battery info on lockscreen when charging [1/2]
+40dbfcf9673 SettingsProvider: Add missing INTERACT_ACROSS_USERS_FULL permission
+2e1e37760ce Merge branch 'cm-14.1' of https://github.com/LineageOS/android_frameworks_base into 7.1-next
+612f954e115 Revert "Disable Lockscreen Media Art [1/2]"
+99bf8fceef4 SystemUI: allow user to dismiss a locked task by swiping it away manually
+5ebba8f5ad8 SystemUI: animate icon when locking a task
+6c158c6a42b SystemUI: Support recents task locking
 
    * kernel/moto/shamu/
 f8a3209764a shamu: sigma kernel 6.2
@@ -24,6 +264,30 @@ a8c635b9f7d leds: led-class: don't disable active triggers
 088f4f22ba1 leds: leds-qpnp: correct brightness value for MPP based LEDs
 641f3eb47e7 leds: leds-qpnp: avoid truncation in qpnp_led_masked_write function
 fddba837760 UPSTREAM: sysfs: add sysfs_create/remove_groups()
+
+   * packages/apps/Settings/
+463ffa4a40 Settings: Remove duplicate permissions
+
+   * packages/apps/crDroidSettings/
+b1ac09c crdroid: Improve toggles in recent settings
+
+   * vendor/crDroidOTA-devices/
+a049eb9 onyx and clark 3.4
+6869ca5 Update all klte devices.
+5472b2d shamu: Update build
+f334820 v3.4
+55fbd98 update herolte & hero2lte to build crDroidAndroid-7.1.2-20170611
+3731d66 Update sailfish, marlin, h811 and h815
+
+====================
+     06-11-2017
+====================
+
+
+   * frameworks/base/
+4b3a0fdae35 fingerprint: handle PerformanceStats NULL pointers
+
+   * kernel/moto/shamu/
 b7950884bf6 shamu: sigma kernel 6.1
 51e8a65fae3 ext4: fix inline data error paths
 46a998227ef ext4: fix data corruption in data=journal mode
@@ -41,15 +305,10 @@ b77d61dae96 sched/cputime: Fix prev steal time accouting during CPU hotplug
 040e5ac69d3 UPSTREAM: dm ioctl: prevent stack leak in dm ioctl call
 3a5466b4fcc ANDROID: sdcardfs: d_splice_alias can return error values
 
-   * packages/apps/Settings/
-463ffa4a40 Settings: Remove duplicate permissions
-
-   * packages/apps/crDroidSettings/
-b1ac09c crdroid: Improve toggles in recent settings
-
    * vendor/crDroidOTA-devices/
 29fa195 falcon: Update to v3.4
 0cc6ba3 bacon 3.4
+085cfe3 v3.4
 
 ====================
      06-10-2017
@@ -59,12 +318,15 @@ b1ac09c crdroid: Improve toggles in recent settings
    * frameworks/base/
 6ab406c4dd2 Optimised hwui rounded corners shader
 
+   * system/core/
+a86e0e6da Revert "sdcard: switch sdcardfs over to bind mounts"
+
    * vendor/crDroidOTA-devices/
-085cfe3 v3.4
 c367b0a Rolled back sailfish & marlin OTA to 3.3
 5df9cda crackling: Update to 3.4.1
 58e0a7f Update angler, bullhead, marlin & sailfish.
 aa364c5 v500: Update to 3.4 (20170609)
+5fed6e9 lettuce: Update to v3.4
 
 ====================
      06-09-2017
@@ -79,13 +341,18 @@ f36f76a36 Build FUTILITY tool from futility-host.
    * frameworks/base/
 2dbfdfd8316 Remove FastJNI optimization on AssetManager to avoid dead lock.
 
-   * system/core/
-a86e0e6da Revert "sdcard: switch sdcardfs over to bind mounts"
+   * packages/apps/Email/
+ea4eb75bf Adjust Email UnitTests to e353ae2ea19c9ea800d10b37e05de7b0ea1aeeb4
+
+   * packages/apps/Jelly/
+22cb565 Implement history management through a ContentProvider.
 
    * vendor/crDroidOTA-devices/
-5fed6e9 lettuce: Update to v3.4
 2692c5e v500: Update to 3.4
 6b5236a mido, s2, tomato: update for v3.4
+f2108eb 3.4
+83d09f1 shamu: Update to crDroid v3.4
+bca2731 Update m8, m8d, deb & flo
 
    * vendor/motorola/
 0af25d2 athene: rename HAL for camera wrapper
@@ -126,34 +393,42 @@ a3a72b1718e qseecom: add mutex around qseecom_set_client_mem_param
 6b09b17de60 msm: IPA: add the check on intf query
 2fed1a09bbb USB: cypress_m8: add endpoint sanity check
 
+   * packages/apps/CarrierConfig/
+6aa9fb6 CarrierConfig: allow 3 ITA roaming
+
    * packages/apps/DUI/
 40425d6 Pulse: Navbar left in landscape support
-
-   * packages/apps/Email/
-ea4eb75bf Adjust Email UnitTests to e353ae2ea19c9ea800d10b37e05de7b0ea1aeeb4
 
    * packages/apps/Gallery2/
 93bcb4cd8 Gallery2: support GIF animation
 
-   * packages/apps/Jelly/
-22cb565 Implement history management through a ContentProvider.
+   * packages/apps/SlimRecents/
+dc6e3e2 Close recents panel after drag-cards-for-multiwindow action
+
+   * packages/apps/Snap/
+78666b57a Snap: Simulate back button press when menu back button is pressed
 
    * packages/apps/Terminal/
 5856a60 Terminal: Fix keyboard Ctrl- and ALT-key input.
 
+   * packages/apps/crDroidSettings/
+792180a Merge pull request #62 from beroid/7.1
+5ec71be crdroid: Update RU translations
+
    * vendor/addons/
 9712ac2 addons: Update Turbo from angler N2G47W
 
+   * vendor/cm/
+7d9af16e crDroid v3.4
+
    * vendor/crDroidOTA-devices/
-f2108eb 3.4
-83d09f1 shamu: Update to crDroid v3.4
-bca2731 Update m8, m8d, deb & flo
 2c47bda update op3 & ks01lte
 c931a81 Update sailfish, angler & bullhead
 ddf3113 Update to v3.4
 592e85d Update marlin.
 06350a9 crackling: Update to 3.4
 a9be189 update herolte & hero2lte to build crDroidAndroid-7.1.2-20170607
+8ee570c added coolpad note 3 lite to ota support
 
 ====================
      06-07-2017
@@ -174,10 +449,7 @@ f7674967 shamu: update build fingerprint & description to N6F27E
 264075b5 Add a script to help automate V8 updates.
 
    * frameworks/base/
-1f5e19e6263 Merge pull request #22 from lilymaniac/7.1-ko
-92a10dfe2da Merge branch 'cm-14.1' of https://github.com/LineageOS/android_frameworks_base into 7.1
 2a9db95a79a QS: Remove listeners only if added
-be60ef1a32a Add Korean translation
 
    * frameworks/native/
 af07d0791 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_frameworks_native into 7.1
@@ -190,6 +462,8 @@ c11e85a3e0e CHROMIUM: mm: lower oom dump burst limit to 1
 b0145667d15 CHROMIUM: DROP: mm/oom_kill: Double-check before killing a child in our place
 ccc723ba1e3 BACKPORT: mm: oom_kill: don't ignore oom score on exiting tasks
 5598b758177 Merge branch 'android-msm-shamu-3.10-nougat-mr1.5' of https://github.com/android/kernel_msm into cm-14.1
+68f3f1df679 shamu: sigma kernel 5.9
+42537bbe668 build: GCC 7.x fixes
 
    * libcore/
 990cbc406 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_libcore into 7.1
@@ -209,9 +483,6 @@ bd6dc5f Merge branch 'cm-14.1' of https://github.com/LineageOS/android_packages_
    * packages/apps/Settings/
 d9e0550978 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_packages_apps_Settings into 7.1
 
-   * packages/apps/SlimRecents/
-dc6e3e2 Close recents panel after drag-cards-for-multiwindow action
-
    * packages/apps/Trebuchet/
 5d94d234a Merge branch 'cm-14.1' of https://github.com/LineageOS/android_packages_apps_Trebuchet into 7.1
 
@@ -227,10 +498,6 @@ f4e82a32 Use more descriptive strings for add accessory page
 18c18a95 One does not simply become a Developer
 34001b81 Add LineageOS version to the About screen
 
-   * packages/apps/crDroidSettings/
-792180a Merge pull request #62 from beroid/7.1
-5ec71be crdroid: Update RU translations
-
    * packages/inputmethods/LatinIME/
 67fdf8a71 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_packages_inputmethods_LatinIME into 7.1
 
@@ -238,11 +505,10 @@ f4e82a32 Use more descriptive strings for add accessory page
 ba47bb796 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_system_core into 7.1
 
    * vendor/cm/
-7d9af16e crDroid v3.4
 4ac59c21 crdroid: Disable cLock widget for now
 
    * vendor/crDroidOTA-devices/
-8ee570c added coolpad note 3 lite to ota support
+20c4b73 update G5,mako and pme to 3.3
 
    * vendor/lge/
 6044693 bullhead: update blobs from N2G47W factory image
@@ -263,16 +529,13 @@ d00494552 Merge tag 'android-7.1.2_r17' into cm-14.1
 11bc5a2 Revert "FFmpegExtractor: Don't use our extractor when we agree with StageFright"
 
    * frameworks/base/
-a1a62467814 Slim Recents: allow to disable round corners for cards [1/3]
 77163a27041 Merge tag 'android-7.1.2_r17' into cm-14.1
-3506fc28ae1 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_frameworks_base into 7.1
+4f07a6bc4aa SystemUI: Remove trailing whitespace on high_accuracy_description
 
    * frameworks/native/
 1eed0779c Merge tag 'android-7.1.2_r17' into cm-14.1
 
    * kernel/moto/shamu/
-68f3f1df679 shamu: sigma kernel 5.9
-42537bbe668 build: GCC 7.x fixes
 fe09092e4e0 net: rmnet_data: Further optimize UL aggregation accumulation
 1c08bc02921 net: rmnet_data: Optimize UL aggregation accumulation logic
 2d2bea6c2fa net: rmnet_data: add support to UL checksum offload for IPv6 over UDP
@@ -319,245 +582,5 @@ aa318521 Merge tag 'android-7.1.2_r17' into cm-14.1
 67b34205 sensitive_pn: Add sensitive numbers for Serbia
 
    * vendor/crDroidOTA-devices/
-20c4b73 update G5,mako and pme to 3.3
-
-====================
-     06-05-2017
-====================
-
-
-   * android/
-c359c24 manifest: Track zlib
-
-   * frameworks/base/
-4f07a6bc4aa SystemUI: Remove trailing whitespace on high_accuracy_description
-c9e4d80f12a StorageManager: Improve exception handling
-2b7fd52dc05 Add support for page theme color to WebView and WebChromeClient.
-fccae76aa23 Optimised hwui rounded corners shader
-538e40c17c7 Reduce hwui CPU time by using glDrawRangeElements
-836f968006e Recents: Rename drawables for lock icon
-
-   * frameworks/native/
-2f916bf85 vulkan: add support for AArch32 targets
-
-   * hardware/qcom/display-caf/msm8996/
-92fa2ea2 Merge tag 'LA.UM.5.5.r1-04700-8x96.0' into HEAD
-
-   * kernel/moto/shamu/
-c97a2b65c8b net: ipc_router: fix NULL pointer de-reference issue
-3affa26c99f net: ipc_router: Do not map server lookup mask
-3b77bc3f480 net: ipc_router: Update debugfs to use seq_file
-32fccf2734f net: ipc_router: Create remote port before creating the server
-9ec0ec86699 net: ipc_router: Fix memory leaks when releasing a remote port
-88a214cc3c4 net: ipc_router: Fix uninitialized variable warning
-c48f3203ed3 net: ipc_router: Add data_ready callback support
-9a5903e8d27 net: ipc_router: Allocate platform device using platform_device_alloc
-f226da06a12 net: ipc_router: Fix socket reference in IPC Router
-a69fd798194 net: ipc_router: Add support for blocking send
-3150ddd1a46 net: ipc_router: Update the receive operation to be blocking by default
-155fdb510a5 net: ipc_router: Add support for connect system call
-89aee31bd81 net: ipc_router: Create remote port information for local connection
-182c5275c61 net: ipc_router: Reference count server
-8f1261a557a net: ipc_router: Register the service with "SVC" prefix
-3cd45a65dd8 net: ipc_router: Reference count local port
-ba91d0e4a05 net: ipc_router: Reference count routing table entries and remote ports
-
-   * packages/apps/AudioFX/
-6850778 AudioFX: Sign with platform key
-
-   * packages/apps/Jelly/
-7ac5399 Add support for WebViews that provide the site's theme color.
-
-   * packages/services/Telephony/
-6ba71ddc VoicemailSettingsActivity: Fix some NPEs
-
-   * system/core/
-f8582fd31 sdcard: switch sdcardfs over to bind mounts
-6d21ba44e Set zygote process priority to -20 to speed up VM startup time.
-
-   * vendor/crDroidOTA-devices/
 0012d39 update G3 and G2 to 3.3
-36e74d3 ks01lte update
-b48061e oneplus3 update
-
-====================
-     06-04-2017
-====================
-
-
-   * art/
-d23f0bfd7 art: Support more variants of ARM
-
-   * external/zlib/
-b410491 Revert "zlib: Fix implicit declaration of mkdir(const char* dirname, int chmod)"
-63bcaf9 zlib: Remove usage of cpu directive in inline asm
-2b4d36d minizip: Clean up the code
-3b77771 zlib: Fix build under M
-
-   * frameworks/base/
-6c66a2a2376 Fix batterySendBroadcast not synchronized issue.
-fa9193f13cd bless python versions newer than 2.6
-f9ff170de73 Handle ActivityNotFoundException for contacts activity
-7ad4c169305 extend PreferenceActivity for title text on a single pane mode
-dcc558b7fd9 Override onRestoreInstanceState() in MultiSelectListPreference
-c2fda7afac8 Fragment animations are not being saved across configuration changes
-0807f5745d3 Fix to NullPointerException when activity is relaunched
-6b99c16e2ce Fix right mLastTimeUsed when aggregate UsageStats
-38e33109680 Fix ListView is not scrolled properly with arrows
-4062a22e847 Synchronize access of mSubscriptions
-d42b88db44b Fix deadlock b/w ActivityManagerService and MediaSessionService
-8792fb6ea49 Provide synchronization to setview to avoid NPE
-10e30206017 AsyncTask: Fix to remove canceled tasks from executor's queue.
-e36cdc23cda frameworks/base: Fix to avoid crash when the tab is not set from app
-197ef77c4ab IInputMethodWrapper to recycle SomeArgs in all cases.
-efcf44d1e2c Catch corruptexception during Transaction operation
-5b78f193799 better notification speed change
-ed3e66dd24d Adjusted animation timing
-9c0335327e6 Fix TaskRecord wrong dump element firstActiveTime
-53d9f2be05d Fix force idle issue
-51aae730792 Make the view more compact and show more entries per page
-22ce8de63e3 Fix lag when opening an entry from the Settings left drawer
-409cfc6aec1 Update font size of date and time on QS panel
-c93a94ddf14 StorageManager: Improve exception handling
-d8038089f33 Fix code-style around notification ranker service in AndroidManifest.xml
-2e580ca3e33 Fix issue
-61cd5aa0342 set the resultTo to null started by a finishing activity
-
-   * kernel/moto/shamu/
-96014b76547 ANDROID: hid: uhid: implement refcount for open and close
-f5998322905 ANDROID: mnt: Fix next_descendent
-91bfe594245 ipv6: fix out of bound writes in __ip6_append_data()
-215c232d45a ipv6/dccp: do not inherit ipv6_mc_list from parent
-cfc178ffed0 dccp/tcp: do not inherit mc_list from parent
-
-   * packages/apps/Contacts/
-3c4a8b5f0 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_packages_apps_Contacts into 7.1
-
-   * packages/apps/ContactsCommon/
-9ff346d8 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_packages_apps_ContactsCommon into 7.1
-
-   * packages/apps/DUI/
-43140ad SmartBar: Touch sound support
-
-   * packages/apps/Dialer/
-e37b2baa8 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_packages_apps_Dialer into 7.1
-
-   * packages/apps/PhoneCommon/
-81a2dc9 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_packages_apps_PhoneCommon into 7.1
-
-   * packages/apps/crDroidSettings/
-e6ce193 Allow using grid style aosp recents [2/2]
-
-   * packages/services/Telecomm/
-18e0fe66 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_packages_services_Telecomm into 7.1
-
-   * packages/services/Telephony/
-5ae4f22d Merge branch 'cm-14.1' of https://github.com/LineageOS/android_packages_services_Telephony into 7.1
-
-   * vendor/cm/
-997c92d6 sensitive_pn: Catch up with LOS
-
-   * vendor/cmsdk/
-c46a903 Merge branch 'cm-14.1' of https://github.com/LineageOS/cm_platform_sdk into 7.1
-
-   * vendor/crDroidOTA-devices/
-0f553e9 lettuce: Update to crDroid v3.3
-9c9f92f update herolte & hero2lte to build crDroidAndroid-7.1.2-20170603
-46e3523 falcon: Update to crDroid v3.3
-
-====================
-     06-03-2017
-====================
-
-
-   * android/
-65df762 manifest: Track libxml2
-
-   * bionic/
-a4c134acb bionic: arm64: generic: strcmp: align to cache and preload
-a2eab6c10 libc: Optimize memmove for 32-bit kryo
-230d138e0 Set __ARM_ARCH__ correctly for ARMv8 32bit builds
-e3f34b95e libc: Use cortex-a15 strcmp for kryo and scorpion
-85c4e7401 libc: arm: add NEON-optimized memchr implementation from newlib
-d32d9d29e libc: add optimized ARM64 strrchr from newlib
-99babf245 libc: import ARM strcmp from newlib
-e3e523d00 bionic: strip libc and linker
-cee1e58f7 linker: convert 'mov pc' instruction to 'bx'
-a1051993b Check overflows in c-tor instead of doing it in d-tor
-9639dd0e9 Increase map size for block allocator to 5 pages
-f8c6137b6 linker: try remaining locations on library load failure
-a372e1929 Data connection not working due to invalid dns server used
-0e5f4c5a0 Eliminate deadlock in forked child due to delayed resetting mutex lock
-fa10ebae3 libc: ARM: add Apple strcmp
-
-   * external/sqlite/
-ef8d4f9 sqlite: upgrade to SQLite 3.19.2
-877aafb sqlite: upgrade to SQLite 3.19.1
-
-   * frameworks/base/
-8a13912a693 Automatic translation import
-2f074d0e57b Merge branch 'cm-14.1' of https://github.com/LineageOS/android_frameworks_base into 7.1
-e5d5787d04c Revert "Disable Lockscreen Media Art [1/2]"
-1780fa6bb98 Fix SystemUI FC due to Google Assistant
-2bdfbf399c8 Merge branch 'cm-14.1' of https://github.com/LineageOS/android_frameworks_base into 7.1
-47b4fa00620 Allow using grid style aosp recents [1/2]
-3a315acf53c Double tap to sleep anywhere on the lock screen [1/3]
-ef847f7c4cc base: Disable Lockscreen Media Art [1/3]
-a1b706d3d12 fw: Don't consume home key press when KEY_ACTION_SLEEP is used
-
-   * packages/apps/CMParts/
-db1ae70 Set android:configChanges for .PartsActivity
-
-   * packages/apps/Settings/
-9d0198fee2 Automatic translation import
-dd4f7731f4 Double tap to sleep anywhere on the lock screen [2/3]
-6a704cee29 Settings: Disable Lockscreen Media Art [2/3]
-
-   * packages/apps/crDroidSettings/
-d8cc36c crdroid: Update features to cmsettings
-
-   * system/sepolicy/
-d23c11f Add policy to fix interfacer derp on boot
-
-   * vendor/cmsdk/
-f53bcaa Automatic translation import
-4fba119 Merge branch 'cm-14.1' of https://github.com/LineageOS/cm_platform_sdk into 7.1
-6a47344 Double tap to sleep anywhere on lock screen [3/3]
-062bfa9 cmsdk: Disable Lockscreen Media Art [3/3]
-
-   * vendor/crDroidOTA-devices/
-a02e65c update for MI5 gemini
-eb0d8b6 Update to V3.3
-e905a03 Update changelog_gemini.txt
-9620e13 update to v3.3
-a0b9a5a Update m8 & m8d.
-1d6aa43 Revert "Bring up OTA for gemini"
-97c344c Bring up OTA for gemini
-84e7744 Rename changelog_gemini to changelog_gemini.txt
-a1696a0 create Changelog_gemini
-
-====================
-     06-02-2017
-====================
-
-
-   * hardware/qcom/audio-caf/msm8916/
-ef3989be Merge remote-tracking branch 'caf/LA.BR.1.2.9_rb1.18' into cm-14.1-caf-8916
-40d378ac Revert "audio HAL: fix thread starvation"
-
-   * hardware/qcom/media-caf/msm8916/
-d781d8fd Merge remote-tracking branch 'caf/LA.BR.1.2.9_rb1.18' into cm-14.1-caf-8916
-
-   * kernel/motorola/msm8226/
-4fa3de88c7b ipv6: fix out of bound writes in __ip6_append_data()
-9d3a61f9bb3 ipv6/dccp: do not inherit ipv6_mc_list from parent
-
-   * packages/apps/Settings/
-b9f7effc2c Settings: Make string untranslatable
-
-   * packages/resources/devicesettings/
-fe6b096 Automatic translation import
-
-   * vendor/qcom/opensource/cryptfs_hw/
-da6e595 cryptfs_hw: Fix stack out of bound issue
 
