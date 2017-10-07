@@ -1,4 +1,584 @@
 ====================
+     10-08-2017
+====================
+
+
+   * device/moto/shamu/
+6703425c shamu: Add health_board_shamu.cpp to get rid of logspam
+52172978 Revert "shamu: Give additional cores to background cpuset"
+
+   * frameworks/av/
+45b4fa79d cameraservice: Resolve message vs start/stop preview races
+e6a34dcd1 camera: Don't segfault if we get a NULL parameter
+67b399c6e MTP: Fix crash when no storages are available
+65f4ecee9 nuplayer: Avoid crash when codec fails to load
+
+   * frameworks/base/
+33b89060e2e Pixel Navbar animation toggle [1/2]
+96c43b33fdd SystemUI: Add back the Pixel Navbar
+81d237f215f Ability to toggle VoLTE icon in statusbar [1/2]
+312719bc15e SQLite: Do integrity_check only once
+bded1191a43 Disable Lockscreen Media Art [1/2]
+f226889bcc6 Max Lockscreen Notification count [1/2]
+
+   * frameworks/opt/telephony/
+9f90363b9 Fix signal icon is not shown
+
+   * kernel/moto/shamu/
+b3afa7d9f91 leds: Quick fix warning for blink led support
+01a5fe86b41 leds: led-class: Retain the latest user brightness request
+147899ad173 leds: led-class: don't disable active triggers
+35c0e1b8c8e leds: leds-qpnp: make blink functionality synchronous
+3a99a4a08f1 leds: leds-qpnp: use the proper pwm period in LPG mode
+42d09e370f0 leds: leds-qpnp: remove the usage of mutex_destroy for static mutex
+8994cfb935a leds: leds-qpnp: use a single global mutex for flash led
+8e9d9fd98b7 leds: leds-qpnp: avoid calling pwm_disable when scaling leds' brightness
+38a7d59a8ee leds: leds-qpnp: bug fix for NULL pointer dereference in qpnp_xxx_set()
+8186a3a4c7b leds: leds-qpnp: PWM period granularity auto selection for leds
+2498a95025a leds: leds-qpnp: correct brightness value for MPP based LEDs
+dfd6170796c leds: leds-qpnp: avoid truncation in qpnp_led_masked_write function
+78311ea2ccd fs: Workaround the compiler's bad optimization
+ee328b3f08a pstore-ram: Use unbuffered memory by default
+6307bd8546c pstore: Use dynamic spinlock initializer
+ff210c0b4ed pstore: Correctly initialize spinlock and flags
+01f82c437de pstore: Allow prz to control need for locking
+4667b94a87f pstore: Make spinlock per zone instead of global
+6350ebe703a fs/pstore: Optimization function ramoops_init_przs
+271c0694f9d pstore: Fix return type of pstore_is_mounted()
+55a679c1065 pstore: Actually give up during locking failure
+a025dbb3c33 pstore: make the unlock code a bit simpler
+faa1fbb2fef pstore: Fix the ramoops module parameters update
+2b1eb47a37a Revert "drivers: base: close firmware file after use"
+07a95c9d159 mm/page-writeback.c: fix divide by zero in bdi_dirty_limits()
+f3a6558ff59 mm/page-writeback.c: add strictlimit feature
+dc68c7f0403 mm: page-writeback: fix page state calculation in throttle_vm_writeout
+aa64d78a053 Revert "mm: change max readahead size to 512KB"
+b26a9665203 readahead: make context readahead more conservative
+45c8dff945c writeback: Do not sort b_io list only because of block device inode
+43524e67399 writeback: Fix occasional slow sync(1)
+572d93d80cd writeback: fix writeback cache thrashing
+81d990f5b9d writeback: fix race that cause writeback hung
+4e1cd19d495 sync: don't block the flusher thread waiting on IO
+e1a6bfc3d34 ARM: 8328/1: remove empty preprocessor #else branch
+b9797d909fb ARM: 8160/1: drop warning about return_address not using unwind tables
+8b43033f025 ARM: 8158/1: LLVMLinux: use static inline in ARM ftrace.h
+f610c046db8 i2c-qup: improve the bus recovery procedure in qup i2c driver
+fedc01ec628 qup_i2c: translate controller errors to real ones
+0714a5799c6 i2c-qup: don't ignore the last byte of a message
+9a449415a92 scripts: remove unused function in sortextable.c
+7cecb0ff0a5 scripts/sortextable: support objects with more than 64K sections.
+098293f7fed scripts/tags.sh: catch 4.9-rc6
+60f50857788 scripts: Build in parallel if requested
+8ec65301a6f scripts: Refactor build-all.py's build
+eb1663fdbf0 tty: fix memleak in alloc_pid
+7fba1db97cd diag: dci: Send mode reset command to the apps processor
+87f444873d7 diag: Reduce error message frequency
+d9f0cf1fba0 msm: Fix high load average from uninterruptible waits
+831bc23a8d8 UPSTREAM: seccomp: always propagate NO_NEW_PRIVS on tsync
+00f90a06af2 ARM: wire up getrandom syscall
+6806721f173 BACKPORT: random: Wake up all getrandom(2) callers when pool is ready
+2ca54bf38de BACKPORT: random: introduce getrandom(2) system call
+cd80ff27400 random32: include missing header file
+a1fafd84375 BACKPORT: random32: add prandom_reseed_late() and call when nonblocking pool becomes initialized
+96fafdcd741 BACKPORT: random32: add periodic reseeding
+c220c07f46f msm_rng: Prune unnecessary log spam
+fe753feff34 random: add_hwgenerator_randomness() for feeding entropy from devices
+0ae7c62ef60 msm_rng: Resolve race condition issues
+c0e8266a626 msm_rng: Enable/ Disable Bus bandwidth for every RNG read call
+9f8f763d26e hw_random: msm_rng: fix a null pointer dereference
+08c6db3ea40 msm_rng: Change long to u32 type for buffers reading from RNG HW
+717f33fb562 hwrng: Pass entropy to add_hwgenerator_randomness() in bits, not bytes
+08168142da5 hwrng: create filler thread
+134952889b3 cpufreq: flush queued work before freeing policy
+f33c65b090f cpufreq: Resolve CPUFREQ_NOTIFY issue
+bdd9802f489 cpufreq: Refactor cpufreq_set_policy()
+223b2e78437 cpufreq: stats: Fix memory leaks when updating stats table
+6d13face47c cpufreq: Iterate over all the possible cpus to create powerstats.
+debd7423e08 cpufreq: conservative: Allow down_threshold to take values from 1 to 10
+bb75d8e1804 cpufreq: move policy kobj to policy->cpu at resume
+df81a1a7419 cpufreq: remove race while accessing cur_policy
+c2d6c6730ec cpufreq: Fix timer/workqueue corruption by protecting reading governor_enabled
+24e47030e66 cpufreq: Protect against hotplug in cpufreq_register_driver()
+8c5ba3d8d5f cpufreq: Use correct locking for cpufreq_cpu_data
+0cdd88eaaeb cpufreq: Add if cpu is online check in show
+71ab02b870c cpufreq: preserve user_policy across suspend/resume
+1705f7dd0db cpufreq: Clean up after a failing light-weight initialization
+16495b579ca cpufreq: use memcpy() to copy policy
+a7b4777a0e7 Makefile: Enable ld fix for cortex-a53 errata 843419
+aecf48a57d9 shamu: Disable CC_OPTIMIZE_FOR_SIZE
+ec3084d27ea Makefile: Readd opt flags
+a31342f1c37 ./Makefile: tell gcc optimizer to never introduce new data races
+6608595f4b6 ARM: VFP: use optimal flags for Krait
+abe0eaeb94f msm: mdss: skip configuring when pipes are dirty
+206df51e026 msm: mdss: fix ret value during error case
+51b46b692f0 msm: mdss: allow unused SMP for targets with high number of SMPs
+ce22159e397 msm: mdss: Remove the unused has_buf pipe member
+57ce3e7a63b msm: mdss: Remove pwm_disable from backlight pwm driver
+a9b98765e97 msm: mdss: Correct the format specifiers in sscanf function
+2b51af92158 msm: mdss: Remove partial update region delays
+182bb922314 msm: mdss: Update RT priority
+be4c19064f9 kgsl: Increase priority of RT thread
+9d0afa63dc2 shamu: bluetooth: Remove transmission timer
+bd464fd3fef shamu: bluetooth: fix possible memory leak in kernel
+5bf1d116e07 shamu: bluetooth: Add missing PROC in proc_show
+6f65d41819a Bluetooth: bnep: fix possible might sleep error in bnep_session
+bbb908fdc72 Bluetooth: cmtp: fix possible might sleep error in cmtp_session
+4cba9925a36 Bluetooth: hidp: fix possible might sleep error in hidp_session_thread
+865d4213d07 bluetooth: Configure DUT as MASTER for outgoing connection requests
+a5e0a5c452b BACKPORT: Bluetooth: Fix potential NULL dereference in RFCOMM bind callback
+f3e68903b83 bluetooth: Send HCI RESET during BT OFF
+8f37126b661 hidp: initialized hidp_session struct pointer to NULL
+131b7bfb386 BLUETOOTH: Add NULL Check for pointer
+ed16151cbaf bluetooth: Fix SCO connection synchronization.
+e0696542c22 Bluetooth: Release locks before sleeping for L2CAP socket shutdown
+07a903dd3bf Bluetooth: Return the correct address type for L2CAP sockets
+ff61acb456f Bluetooth: Store source address of HCI connections
+13320daab52 Bluetooth: Store the source address type of LE connections
+45891e0a7fa bluetooth: Initiate authentication before sending l2cap connect response.
+cf8399e8762 Bluetooth: Fix redundant encryption when receiving Security Request
+b4afc329ef8 Bluetooth: remove unnecessary check on BT_CLOSED socks during accept
+035fa41dcc5 Bluetooth: Fix crash in l2cap_chan_send after l2cap_chan_del
+6d255df725b Bluetooth: Avoid Spurious AMP node access if not created
+b84fb2fc16f Bluetooth: Fix ERTM L2CAP resend packet
+a46eb82e598 bluetooth: Notify connection deletion only for SCO/ESCO links.
+a7926123777 bluetooth: Add HCI device to device list after initialization
+c6e28a3d1e4 Bluetooth: change cancel_delayed_work to cancel_delayed_work_sync
+6258d8eec35 power: bcl: Handle hotplug mask like thermal mask
+20c6d688e3b Revert "power: bcl: Improve battery monitor work"
+
+   * packages/apps/crDroidSettings/
+368fa3a Pixel Navbar animation toggle [2/2]
+d297762 crdroid: statusbar: Add new tunable to reset
+536d34c crdroid: lockscreen: Add new tunables to reset
+9e43829 crdroid: Use custom seekbar pref
+dff0655 Ability to toggle VoLTE icon in statusbar [2/2]
+d05a9e2 Disable Lockscreen Media Art [2/2]
+3dd0a62 Max Lockscreen Notification count [2/2]
+
+   * packages/services/Telephony/
+1b05964a IMS: Add API to get IMS Registration Status based on subId
+
+====================
+     10-07-2017
+====================
+
+
+   * device/moto/shamu/
+0ff3cc65 shamu: bluetooth: Update config
+21c46339 shamu: update build fingerprint & description to N6F27M
+5c703d25 QCamera2/HAL3: correct mutex lock/unlock sequence
+3b842b7c shamu: Fix setting governor when device boots with low power
+1edfbaf2 shamu: Enable adaptive LMK
+
+   * frameworks/base/
+dffb0056217 Force disable OTA and enable Dev settings for some Google apps
+d717e5ca9ab Fully enable system round icons if used
+218dfb58d0a QS: Expanded Desktop Tile Reloaded
+68dc5feffa1 QS: Add Expanded Desktop QS Tile
+636bc6ad908 FWB: Squashed commit for Expanded Desktop [1/2]
+f087c5da686 Merge branch 'lineage-15.0' of https://github.com/LineageOS/android_frameworks_base into 8.0
+61079b17e62 Revert "Status bar: Add HSPA+ icons"
+a03327cd645 AAPT2: Fix processing of quotes in XML
+7249d417ddc Avoid race condition during grayscale animation of QS tile
+8fee332db87 Fix another AddAccountSettings memory leak
+
+   * kernel/moto/shamu/
+6e59edb9da3 msm_thermal: Unbreak interrupt mode
+ef2c24cf733 shamu: Enable FB_MSM_TRIPLE_BUFFER
+ea64bef7903 shamu: Disable SLUB_DEBUG
+4daa5203fb0 shamu: Disable sync before suspend
+1756eb0eab1 power: make sync on suspend optional
+3eae7b6f4ce sync: Fix a race condition between release_obj and print_obj
+8a13d82fbec cpufreq: cpu-boost: Make cpufreq wq unbound
+75bace2b618 cpufreq: cpu-boost: New enhancements
+bd5214d2558 pinctrl: msm: prevent bogus wake up from suspend
+297df6af20f pinctrl: msm: fix potential NULL pointer dereference
+c4ca4cd2f27 pinctrl: fix a memleak when freeing maps
+26356dd3b33 netfilter: xt_qtaguid: fix memory leak in seq_file handlers
+f5bca669b1b shamu: Enable WAKE_GESTURES
+fc5cdb31936 drivers: input: Add support for wake gestures
+caf652df07c msm_serial_hs: Modify the PM ioctl
+378c63ab3c1 fs: Add TTY PM IOCTLs to compat table
+b8cfb09b346 serial: tty: msm_hs_uart: Fix the compat table
+e7d267d7199 msm_serial_hs: Handle core interrupt irrespective of wakeup interrupt
+c5b8b002301 msm_serial_hs: ensure clock_count follows clk_state
+d8b30df4d1a msm_serial_hs: Handling spinlocks during error case
+7b6931c81b9 TTY: msm_smd_tty: Fix clean up tty devices in fail case
+afdb5dfba15 TTY: msm_smd_tty: Fix client notification issue in suspend state
+84d8143cfd1 TTY: msm_smd_tty: Fix driver addition/removal error
+c0f06729439 TTY: msm_smd_tty: Add warning to driver removal function
+779f132a9b8 BACKPORT: sched/rt: Reduce rq lock contention by eliminating locking of non-feasible target
+5a956a6c463 sched/rt: Avoid moving rt task if destination CPU does not run low priority task.
+2887eb3d408 sched/cputime: Fix prev steal time accouting during CPU hotplug
+31858d12619 sched/cputime: Fix invalid gtime in proc
+c3238775ad3 sched: reinitialize rq->next_balance when a CPU is hot-added
+3da42f00a1b sched/fair: Optimize find_idlest_cpu() when there is no choice
+becd48e124f sched/idle: Optimize the generic idle loop
+d5b7c3025d9 sched: Remove get_online_cpus() usage
+86329774e8a cputime: Fix jiffies based cputime assumption on steal accounting
+5ebe5919c0e sched/rt: really force updates rq clock in pick_next_task_rt
+6998846655e sched/fair: Fix tg_set_cfs_bandwidth() deadlock on rq->lock
+19df43fb194 sched: Avoid throttle_cfs_rq() racing with period_timer stopping
+5af35c2d53b sched/balancing: Prevent the reselection of a previous env.dst_cpu if some tasks are pinned
+1d1850aac8c sched/__wake_up_sync_key(): Fix nr_exclusive tasks which lead to WF_SYNC clearing
+d751db1b393 cpumask: Fix cpumask leak in partition_sched_domains()
+2a4de4658f8 sched: Fix inaccurate accounting for real-time task
+50d026ad90c sched/idle: Avoid spurious wakeup IPIs
+dbd2798c884 sched/fair: Optimize find_busiest_queue()
+79ed013c1f8 sched: Remove one division operation in find_busiest_queue()
+753ebf4a306 sched: Fix bug in average nr_running and nr_iowait calculation
+26391b44be3 sched: Fix race in idle_balance()
+81ed144b352 sched/loadavg: Fix loadavg artifacts on fully idle and on fully loaded systems
+bf348b1b7bc sched: Allow migrating kthreads into online but inactive CPUs
+857df0cf292 kernek/fork.c: allocate idle task for a CPU always on its local node
+81dc34c9f9e workqueue: Fix flag collision
+249435ed02a workqueue: implicit ordered attribute should be overridable
+d1a1d1a0b56 workqueue: restore WQ_UNBOUND/max_active==1 to be ordered
+fbe6c58f015 workqueue: allow rescuer thread to do more work.
+4b17c15c01f timer: optimize apply_slack()
+709328e5173 cpu: Handle smpboot_unpark_threads() uniformly
+77a6a79bef1 cpu: Defer smpboot kthread unparking until CPU known to scheduler
+722f994e8e2 smpboot: use kmemleak_not_leak for smpboot_thread_data
+fa0b1487653 sched: Add a check for cpu unbound deferrable timers
+ff58cddaafe nohz: Convert a few places to use local per cpu accesses
+5e8c99e43dc shamu: Remove TIMER_STATS
+974d88ebcf5 time: Remove CONFIG_TIMER_STATS
+f14a95eb844 timer: reduce cache bouncing of deferral timer wheel
+72e61930556 timer: make deferrable cpu unbound timers really not bound to a cpu
+8b5043b2390 msm: thermal: Fix corner cases in thermal driver
+afd64ff6a25 msm: mdss: Fix null dereference
+e7dac139e8a msm: mdss: Fix potential deferencing of null pointer
+46dae5bfa98 msm: mdss: reduce log level when ping pong timeout happens
+55afee55c17 mdss: compat: suppress unnecessary prints
+c40749e0792 msm: mdss: Fix uninitialized return value for compact ioctl function
+8b647243387 msm: mdss: prevent excessive logging after shutdown requested.
+5b8d68d8921 mmc: sdhci-msm: Fix HW issue with power IRQ handling during reset
+b918b2ffce5 mmc: sdhci-msm: fix possible NULL pointer dereference
+adbdfe8218d msm: vidc: Increase timeout for power collapse
+1f0897c9fa5 msm: vidc: pm qos stability fixes for video driver.
+72da398518e msm: vidc: disable CPU L2 cache PC during video sessions
+dee4273d591 qos: wake up cores based on the qos updated cpu mask
+f704086707c qos: Register irq notify after adding the qos request
+36b52ca5a86 qos: Disable irq notifier when qos request is removed
+a264f25ec9a qos: Pass the list of cpus with affected qos to notifer
+19c89b4a1fa QoS: Enhance framework to support cpu/irq specific QoS requests
+238fd61468b irq: smp_affinity: Initialize work struct only once
+61f56b457eb genirq: fix race condition in irq_affinity_notify
+1e2ae4f0b7a irq: Allow multiple clients to register for irq affinity notification
+eaa9bc54307 irq_work: register irq_work_cpu_notify in early init
+8dd79acc37e msm: vidc: Fix packet size check for SESSION_RELEASE_BUFFER_DONE
+6c9ae28e4ae msm: vidc: Protect debug_buffer access in core_info_read with lock, part 2
+13607af8a7b msm: vidc: Defer suspend till Venus goes to power collapse
+20d3cf8ea0a msm: vidc: Fix timestamp for EOS buffer
+4363c2351db msm: vidc: skip fps round off when client sets 1 fps
+149eb1b77a9 msm: vidc: Handle invalid core state
+83a95640ac9 msm: vidc: Clean session when failed to open instance
+cf2238037c0 msm: vidc: Handle max clients error properly
+fcecd7643a8 msm: vidc: Fix SYS_ERROR handling
+49a2c7e9db4 msm:vidc: Fix klockwork errors in video driver.
+626a03e8f9d msm: vidc: Fix ion_handle checking before mapping buffers
+1c5a41ebb56 msm: vidc: Protect debug_buffer access in core_info_read with lock.
+361984399b9 msm: vidc: Increase firmware unload delay
+154363d40a0 msm: vidc: WARN_ON() reveals fuction addresses
+b2714e2244d msm: vidc: return EBUSY when hw is overloaded
+9b29b1cc7ce msm: vidc: Protect suspend operation with core lock
+4676cf3f509 msm: vidc: Update Venus DCVS algorithm for 8994V2
+2559e296cba msm: vidc: Cancel pending power collapse works in core_release
+bd168e74b55 msm: vidc: Handle the dangling sessions in hfi sessions list
+066319aade5 msm: vidc: Advertise extradata size in queue_setup()
+04a0d73ad18 msm: vidc: Unload firmware immediately after sys error
+f6dd0bb511b msm: vidc: Error handling when core is in bad state
+95cb6bc5447 msm: vidc: Convert macros into inline functions
+7876858756e msm: vidc: fix a race condition in OCMEM free function
+bb8e8c48c8e msm: vidc: Scale clocks and buses on V4L2_CID_MPEG_VIDC_SET_PERF_LEVEL
+767f6306cea msm: vidc: Fast forward power collapse features
+cb7b29bea39 msm: vidc: Don't query the V4L2 ctrl framework for checking thumbnail mode
+03602d07275 msm: vidc: Increase the MIN DRAIN RATE when DCVS is enabled
+92074b7def0 msm: vidc: Validate buffer prior to releasing reference
+ab6c2d01b2f msm: vidc: limit only OCMEM vote to lowest vector
+09e7661dbcc msm: vidc: Check video buffer handle for Null pointer access.
+756cbd4b36e msm: thermal: Fix usage of core control toggle
+9e2565d286d power: bcl: Improve battery monitor work
+b9758ed42d7 power: bcl: Handle hotplug sensibly
+e992e18f1b4 mm: vmstat: make vmstat_work cpu bound during requeue
+01e4f8c0777 lowmemorykiller: Don't count swap cache pages twice
+be2c73ccd8b mm/vmpressure.c: fix race in vmpressure_work_fn()
+4c28a493967 vmpressure: make sure there are no events queued after memcg is offlined
+5907c8caf07 vmpressure: do not check for pending work to prevent from new work
+2e1c62640fe vmpressure: change vmpressure::sr_lock to spinlock
+944cd91d640 lowmemorykiller: Account for unevictable pages in vmpressure notifier
+8def7e3a057 lowmemorykiller: avoid false adaptive LMK triggers
+76ac98f735b lowmemorykiller: adapt to vmpressure
+d9d4214baf1 mm: vmpressure: account allocstalls only on higher pressures
+f33be895393 mm: vmpressure: scale pressure based on reclaim context
+19a248627f4 mm: vmpressure: allow in-kernel clients to subscribe for events
+c2fb678453e lowmemorykiller: Run the lowmemory notifier when killing
+5a993b2c7d3 lowmemorykiller: Dump out slab state information
+d5241cc7460 lowmemorykiller: enhance debug information
+3fe574f0a70 mm, oom: make dump_tasks public
+c5a8e935235 mm: Add notifier framework for showing memory
+6cf4ec838cc shamu: Enable LMK_ADJ_RBTREE
+ad4b22981a7 lowmemorykiller: account for unevictable pages
+d975ef9ae7f lowmemorykiller: Do proper NULL checks
+121e2fe6804 fs: avoid adding non-thread-group task to LMK rbtree
+c837f85fec1 fs: support task's adj rbtree
+9f648e6c3da kernel: avoid adding non-thread-group task to LMK rbtree
+25d313ed5f8 kernel: support task's adj rbtree
+9b0f004d766 lowmemorykiller: maintain LMK rbtree with signal->adj_node
+93147ff32be staging:android:lmk: read rb tree root with spinlock
+4fc3f42109c lowmemorykiller: Check tgid with rcu lock held
+bbd0d0fe1a7 drivers:lmk: Fix null pointer issue
+701294c1a5c drivers:lmk: Fix double delete issue
+55aeef7c351 drivers:lmk: implement task's adj rbtree
+be14e0c02dd staging: android: lowmemorykiller: skip dying or exiting task
+f10923b8174 Revert "trace: memkill: trace LMK and OOM kills"
+88694381ac9 Revert "trace: memkill: per-zone page state for LMK"
+f07413a939b shamu: Enable dropbox
+40094256508 cpufreq: Break out early when frequency equals target_freq
+ab09a4c25ed cma: Make the default CMA region not reserved by default
+116b779447b hrtimer: Prevent stale expiry time in hrtimer_interrupt()
+19a53f558ff arm: idle: add missing need_resched check
+e261342d928 cpuidle: kick all cpu after idle handler installed
+f572247af29 net:rmnet_data remove warning message for invalid cmd
+4faf253c185 net: rmnet_data: Clear VNDs upon unregistration
+624185b8be9 fbdev: core: Initialise structure to prevent kernel information leak
+d026bf5c6b7 drivers: base: close firmware file after use
+d4d79b101c3 ion: cma_heap: free mem if fail to create sg_table
+2586ea02b3b ion: shrinker free pages even for unmovable page requests
+0bfba168e13 ion: retry during race with shrinking/allocating
+936070374bd ion: fix remaining instances of sg_dma_len
+234ff15ff2f ion: validate ion client in ion_debug_client_show() and extract data
+b3240930f6d ion: WARN when the handle kmap_cnt is going to wrap around
+fbd13f78caa ANDROID: ion: Fix uninitialized variable
+e571d88d208 UPSTREAM: staging: ion: Fix error handling in ion_buffer_create
+57b36f30183 staging: ion: fix corruption of ion_import_dma_buf
+c20e4087e16 slub/memcg: cure the brainless abuse of sysfs attributes
+fa64b78c10e mm: compaction: fix the page state calculation in too_many_isolated
+1e934296747 mm: vmscan: fix the page state calculation in too_many_isolated
+d606ba578a0 mm: kmemleak: allow safe memory scanning during kmemleak disabling
+825790dfc39 kmemleak: change some global variables to int
+76b5b32b92b kmemleak: allow freeing internal objects after kmemleak was disabled
+dc3d044c9a5 kmemleak: free internal objects only if there're no leaks to be reported
+82f42059aa4 kmemleak : Make kmemleak_stack_scan optional using config
+25d5b031458 mm: kmemleak: avoid false negatives on vmalloc'ed objects
+86160330a0b mm/vmalloc.c: Correctly calculate VMALLOC_TOTAL
+580bab576c5 mm/slub: don't wait for high-order page allocation
+bda7644a967 mm: use managed_pages to calculate default zonelist order
+44d5e809159 mm/page_alloc: move freepage counting logic to __free_one_page()
+dfa92509a84 mm/page_alloc: add freepage on isolate pageblock to correct buddy list
+937abf46084 mm/page_alloc: fix incorrect isolation behavior by rechecking migratetype
+38c1428f1bb mm: correctly update zone->managed_pages
+78041bdca52 mm: use a dedicated lock to protect totalram_pages and zone->managed_pages
+022ceac7b26 mm: accurately calculate zone->managed_pages for highmem zones
+5084a50af9d DO NOT MERGE: CHROMIUM: selinux: Do not log "permissive" denials
+5523bb3d630 DO NOT MERGE: audit: Mute userspace and kernel audit logs
+cdd6d4c2d15 msm_thermal: Re-evaluate hotplug for unexpected cpu online
+2b1b8c3599a msm_thermal: Make logs consistent with bcl
+704d5a2cb0b power: bcl: Re-evaluate hotplug for unexpected cpu online
+1f91b30fd7b power: bcl: Online a CPU only if it is offlined by BCL
+9d62a1cc8b3 qcom-cpufreq: Use CLKFLAG_NO_RATE_CACHE
+849c7919527 cpufreq: Check current frequency in device driver
+cf612ebac8d ARM: dts: msm: Remove Gfx warm to normal temperature monitor
+7f54b25c6b6 ARM: dts: 8084: Online cores that thermal driver offlines
+d9061795baf msm: thermal: Check clients request just after frequency thread init
+a774e61d50d msm: thermal-dev: Protect IOCTL from race condition
+ad91be5329b msm: thermal: Retry hotplug when exiting from suspend
+a36340dd016 msm: thermal: Online only cores, which are hotplugged by KTM
+2784838429e msm: thermal: Add support to online the hotplugged cores
+cfda363d19a msm: thermal: Add sysfs nodes to control parameters
+8bfcb04b4e3 thermal: tsens: Don't cast iomem pointers to unsigned long
+3c3ed469069 msm: thermal: Check temperature only if probed
+011fb29ae0c msm: thermal: Optimize locking in thermal frequency mitigation thread
+da513aeff1d msm: thermal: Limit the emergency mitigation messages
+c8d4270bddb msm: thermal: Store temperature of tsens on kernel panic notification
+98a44a46442 thermal: msm: Remove early init from board file
+5805246835f msm: thermal: Prevent mitigation if not required
+4eb566a9dc5 thermal-core: Fix to send correct trip type to get trip temperature
+cc32aef0f40 msm: thermal: Add RT priority to kernel hotplug thread
+19d3e4356a1 msm: thermal: Proceed thermal late init only if probe is successful
+50cc4d3fcc5 msm: thermal: Decouple Gfx phase control monitoring
+ff626730465 msm: thermal: Add RT priority to kernel thermal threads
+cecf1718d65 thermal: tsens: Fix TSENS Upper/Lower IRQ type
+b1ea8770e7c thermal: tsens: Add NULL pointer check for id
+98663f2f7b9 arm/dt: 8084: Set KTM to drop 2 cores
+82cf9c0b971 ARM:dts:msm:Set the shutdown low gauge vbat
+c49564e0ef0 power: max17042: Limit battery psy uevent updates.
+31e5ece8db4 power: max17042: add retry logic if reg rw fails
+9cb3d5c308a power: max17042: Force POR on Bad FCC
+c3d34096b86 power: max17042: Increase High Threshold for FCC reporting
+8c4b26dab2b power: max17042: Add dropbox events for Full Cap deviation.
+c3c99dccbdf Revert "power: max17042: Force POR on Bad FCC"
+11cd65f0e73 drivers: misc: add dropbox sysfs interface driver
+e27f3aeaf25 power: smb135x: Add Temp check at PON
+822b3458656 power:bcl:new smb algorithm on bcl
+3d7a0af9902 cpufreq: fallback to interactive if governor is not found
+1e6ed4337c0 cpufreq: interactive governor drops bits in time calculation
+ec43b91745f cpufreq: stats: Don't update cpufreq_stats_table if it's NULL
+0567063e3d0 cpufreq: stats: Print error messages if table initialization fails
+01a694771a4 cpufreq: Correct the data reported in all_time_in_state
+ce2647b1e8a cpufreq: interactive: Remove boost pulse
+051bc79bbf3 cpufreq: interactive: Do not reschedule timer if policy->max changes
+bb0a8dcf071 cpufreq: interactive:call __cpufreq_driver_target() for cur frequency
+9e8338f9349 cpufreq: interactive: don't skip waking up speedchange_task if target_freq > policy->cur
+8808dda88ea cpufreq: interactive: prevents the frequency to directly raise above the hispeed_freq from a lower frequency.
+ad2ec485f18 cpufreq: interactive: Reschedule timer if min_freq is reduced
+9abe86dabb5 CHROMIUM: cpufreq: interactive: calculate load before freq change
+7aa579d3ead cpufreq: interactive: Rearm governor timer at max freq
+5e4dafe51d1 CHROMIUM: Replace obsolete strict_strtoul calls.
+fd5317ea2cb CHROMIUM: cpufreq: interactive: validate above_hispeed_delay
+9fec3f100cf cpufreq: interactive: Several optimizations
+f7319ccbc6a cpufreq: Return directly in __cpufreq_get if policy is NULL
+d01cf874fc0 cpufreq: interactive: Record hispeed_validated_time in timer function
+76ece02de50 cpufreq: interactive: Exercise hispeed settings at a policy level
+68d60af41f2 cpufreq: interactive: Make window alignment optional
+b7c71041bd4 cpufreq: interactive: Add max_freq_hysteresis feature
+e62938cb207 cpufreq: interactive: Use del_timer/add_timer_on to rearm timers
+a9bc6ac0574 cpufreq: interactive: Cache tunables when they are created
+b198573cfaa cpufreq: interactive: Round up timer_rate to match jiffy
+f3656c550ca cpufreq: interactive: Reset last evaluated jiffy in idle callback
+869a6b6c352 cpufreq: interactive: Align timer windows for all CPUs
+4878f30ab47 cpufreq: interactive: Move cached_tunables into cpuinfo
+0d298840a1e cpufreq: interactive: Remove sampling_down_factor
+580bc1c5bbe cpufreq: interactive: Revert sync freq feature
+076eb2e64ba cpufreq: interactive: Revert sync on thread migration optimizations
+96b71a448c6 Revert "cpufreq: interactive: Allow 1 ms error in above_hispeed_delay comparisons"
+314d96e5675 cpufreq: interactive: BUG_ON when tunables are NULL after init
+44372deced5 cpufreq: interactive: Fix freeing of cached tunabled during module_exit()
+7fabc9befc2 cpufreq: interactive: Revert timer start modification
+24862a5710b cpufreq: interactive: Make common_tunables static
+50693a6e4d2 cpufreq: interactive: Permanently cache tunable values
+1b43a1acff2 cpufreq: interactive: remove compilation error from commit 49cc72365fb7ee87762a7ccc6a32ef68627216c5
+348bf93c286 cpufreq: interactive: turn boost_pulse off on boost off
+794e9b76962 cpufreq: interactive: fix NULL pointer dereference at sysfs ops
+4824fbc493e cpufreq: Interactive: Implement per policy instances of governor
+60a01804614 cpufreq: interactive: Remove unnecessary cpu_online() check
+0dcf3f8a95a cpufreq: interactive: Move definition of cpufreq_gov_interactive downwards
+f01d1ff5289 block: disable add_random
+dd5f87cb50d block: disable entropy contributions for nonrot devices
+4e22ee575b3 cpufreq: Introduce new relation for freq selection
+5ddd43ae09a msm: lpm_levels: return new idle level to cpuidle framework
+ccdc8253153 drivers: lpm-levels: Don't allow idle low power modes during resume
+8ec3b1dfbcc msm: lpm-levels: Fix wakeup time for suspend
+c4ff14eb5b9 msm: lpm-levels: Fix truncation of wakeup time
+c860ea3ad58 msm: Use 64 bit type for sclk
+c964d326bda msm: mpm-of: fix for "cxo_lpm_clk is unbalanced" slowpath warning.
+057a83afe80 apq8084: disable spurious WARN in rcg_clk_prepare
+b8d25fd6456 msm: kgsl: Add a sync fence timeout callback
+e5aa2bad9c4 sync: Only print details for active fences
+7d55df24217 sync: Add a "details" callback for sync points
+5eb74e1640e msm: kgsl: Separate HW_FAULT register for A4XX
+0ee2f551591 apq8084: gpu: Vote against deep low power modes correctly
+f95395a9460 msm: kgsl: Wake up GPU only for touch events
+772e0de1f19 msm: kgsl: Add registers and function to read the RBBM_ALWAYSON_COUNTER
+ddcb7100856 msm: kgsl: Add the oxili_rbbmtimer_clk to the list of gpu clks
+8203da679b3 msm: kgsl: Check the address range before mapping to GPU
+edd9ca691e0 msm: kgsl: Clear pending transactions from VBIF on hang
+1d458d8ef8f msm: kgsl: Check for integer overflow before allocating memory
+ab07f5cfaa0 msm: kgsl: Remove event worker
+7bb680f10b6 msm: kgsl: Add spinlock last timestamp in kgsl_sync
+18acc89a0d8 msm: kgsl: Add compat.h header explicitly
+801c501cf07 ARM: dts: msm: disable support of 50MHz for i2c for apq8084
+3c131e5b9e0 msm: kgsl: Unbind the kgsl-event workqueue
+4518017b76b msm: kgsl: Ratelimit memory related error messages
+62bae70cc90 PM / sleep: unregister wakeup source when disabling device wakeup
+3b1f36d30db mdss: move to a kthread for vsync_retire_work_handler
+eca64ef0cfb kgsl: convert some workqueues to use kthreads
+148a60edacf tty: Fix hang at ldsem_down_read()
+e9da502ea4a proc: much faster /proc/vmstat
+00b4d3e0575 msm: properly unlock mutexes
+69f7e18da62 msm: vidc: Convert realloc to resource managed malloc to avoid memleak.
+744f580ac67 kthread_work: wake up worker only when the worker is idle
+fe3aea5c88e msm: vidc: avoid crash due to division by zero
+abab91e7e1a PM: Fix a bug in dpm_suspend_late()
+c48edf33ad5 PM / Sleep: Print last wakeup source on failed wakeup_count write
+0f0266ccc1f power: increment wakeup_count when save_wakeup_count failed.
+5319433fd13 power: validate wakeup source before activating it.
+cc32b2bf5c3 wakeup: Add the guard condition for len in pm_get_active_wakeup_sources
+8a19dd26b23 mm: slub: Default slub_max_order to 0
+efd3730657e binfmt_elf.c: use get_random_int() to fix entropy depleting
+16543bafafd fs/namei.c: fix potential memory leak in path_lookupat
+abea3f0fb0d msm: kgsl: Bump the GPU frequency for long blocks of processing
+a419639d81a PM: devfreq: Use high priority workqueue
+d67b1bfa4b7 PM: devfreq: Fix simple_ondemand crashing on startup
+8fb4501a2b0 msm: kgsl: set the correct max_state
+4c907f5785a msm: kgsl: Report correct GPU frequency in sysfs
+275c971a6c8 fuse: initialize the flock flag in fuse_file on allocation
+d9a8381226c Add padding field to fuse_open_out
+c8a6ce43b9d Add blink support to kernel.
+7235b6a6d24 fs: fuse: fix invalid write bypass
+b1ed126d852 fs:fuse: Disable shortcircuit when mmap is called on a file
+2079ab63a25 fs:fuse: Ensure update of fuse inode attributes in shortcircuit
+aded50f65e8 fuse: Add support for shortcircuited read/write for files
+1ade3a410f4 fs: push sync_filesystem() down to the file system's remount_fs()
+6c6349ad193 fuse: fuse_flush() should wait on writeback
+33a8c19cc61 fuse: Implement write_begin/write_end callbacks
+44b95bc005a fuse: Turn writeback cache on
+fe4d829c33c fuse: Fix O_DIRECT operations vs cached writeback misorder
+d1b1422d376 fuse: restructure fuse_readpage()
+de457f72a91 fuse: Flush files on wb close
+55f67c4b217 fuse: Trust kernel i_mtime only
+58dca7bc295 fuse: Trust kernel i_size only
+ae916862876 fuse: Prepare to handle short reads
+6f67d664826 fuse: don't invalidate attrs when not using atime
+c2b29f1c0a6 fuse: fix "uninitialized variable" warning
+1dfb282645f fuse: Connection bit for enabling writeback
+a664c1e28f6 fuse: Linking file to inode helper
+4645ed31d56 fs: fuse: lock the new non-CMA page before replace_page_cache_page()
+a58df166cc1 net/core/flow.c: Fix CPU hotplug callback registration
+963f9a19863 mm, zswap: Fix CPU hotplug callback registration
+247559d2ab5 mm, vmstat: Fix CPU hotplug callback registration
+d5bb76c767e profile: Fix CPU hotplug callback registration
+894c3084c48 trace, ring-buffer: Fix CPU hotplug callback registration
+a1c178e75d4 drivers/base/topology.c: Fix CPU hotplug callback registration
+6aea139d343 arm64, debug-monitors: Fix CPU hotplug callback registration
+9beb75c4b29 arm64, hw_breakpoint.c: Fix CPU hotplug callback registration
+40bf8efdc45 arm, hw-breakpoint: Fix CPU hotplug callback registration
+217e047c1c0 CPU hotplug, perf: Fix CPU hotplug callback registration
+ff0c0adf9ae Doc/cpu-hotplug: Specify race-free way to register CPU hotplug callbacks
+f528ad2f3d6 CPU hotplug: Provide lockless versions of callback registration functions
+
+   * packages/apps/Settings/
+6cc11b3680 Merge branch 'lineage-15.0' of https://github.com/LineageOS/android_packages_apps_Settings into 8.0
+e2f41a8806 Default apps settings disappear when switching to secondary user
+
+====================
+     10-06-2017
+====================
+
+
+   * art/
+03081da42 For aosp build with clang master
+916267a09 Fix up code warning and errors
+d609e6917 Fix FastNative/CriticalNative annotation lookup.
+
+   * frameworks/base/
+79d3298c56b SystemUI: Use new drawable and correct tint for H+ qs icon
+ecae920fffa Fix NPE in StatusBar#onBackPressed()
+
+   * libcore/
+fff1b2182 Fix aliasing rules violations
+90d2ef471 XML Pull Parser optimizations
+8a30345d1 Libcore: Switch wakeup signal to value reserved in bionic
+ca8cf713e Libcore: Make java.security.Provider compile-time initializable
+84686eec0 System: Remove unnecessary null check.
+6619433fd Fix the infinite loop issue of the conversion from string to double
+27fcd432e Performance tweak to CollectionUtils.removeDuplicates
+5ae7198a0 Work around 32 bit glibc bug.
+
+====================
+     10-05-2017
+====================
+
+
+   * hardware/qcom/gps/
+2ab98d8 msm8960: Default apn ip type to ipv4
+4309d0c msm8960: Add support for IPV6 in AGPS Interface
+2a3a97e msm8960: Add missing liblog dependency
+
+   * vendor/crDroidOTA-devices/
+3189777 shamu: Update build details
+
+====================
      10-04-2017
 ====================
 
@@ -19,248 +599,6 @@ f114066401d Fix memory leak when used WifiManager
 15bc6dbf9 Handle glGetString returning NULL
 
    * kernel/moto/shamu/
-76fb8c788a3 shamu: Enable dropbox
-1012051d310 cpufreq: Break out early when frequency equals target_freq
-dea517e1dbb cma: Make the default CMA region not reserved by default
-af0c226318e hrtimer: Prevent stale expiry time in hrtimer_interrupt()
-771d7e1312c arm: idle: add missing need_resched check
-242fd61cbf5 cpuidle: kick all cpu after idle handler installed
-a0847e478e1 net:rmnet_data remove warning message for invalid cmd
-3bbbcd8f2c8 net: rmnet_data: Clear VNDs upon unregistration
-b2630885862 fbdev: core: Initialise structure to prevent kernel information leak
-f0531c13f11 drivers: base: close firmware file after use
-5ec77e2e369 ion: cma_heap: free mem if fail to create sg_table
-43dc09e33bd ion: shrinker free pages even for unmovable page requests
-7fb5d94ebad ion: retry during race with shrinking/allocating
-b7b81ae9031 ion: fix remaining instances of sg_dma_len
-60353606f8a ion: validate ion client in ion_debug_client_show() and extract data
-6b2b2476ade ion: WARN when the handle kmap_cnt is going to wrap around
-5bc3960237b ANDROID: ion: Fix uninitialized variable
-e5e225def07 UPSTREAM: staging: ion: Fix error handling in ion_buffer_create
-96c58350e72 staging: ion: fix corruption of ion_import_dma_buf
-0d254da95fe slub/memcg: cure the brainless abuse of sysfs attributes
-4f7bbc3523a mm: compaction: fix the page state calculation in too_many_isolated
-5fd7298ac7e mm: vmscan: fix the page state calculation in too_many_isolated
-e9f267f8b5f mm: kmemleak: allow safe memory scanning during kmemleak disabling
-fb8598826bd kmemleak: change some global variables to int
-add3f72d1ad kmemleak: allow freeing internal objects after kmemleak was disabled
-6f50d187a1c kmemleak: free internal objects only if there're no leaks to be reported
-5a68d52cd30 kmemleak : Make kmemleak_stack_scan optional using config
-230a27b7b40 mm: kmemleak: avoid false negatives on vmalloc'ed objects
-ad40347f19e mm/vmalloc.c: Correctly calculate VMALLOC_TOTAL
-c8bd034ec0e mm/slub: don't wait for high-order page allocation
-6c684a73823 mm: use managed_pages to calculate default zonelist order
-cd0224ca901 mm/page_alloc: move freepage counting logic to __free_one_page()
-d8549687803 mm/page_alloc: add freepage on isolate pageblock to correct buddy list
-3f6b70e0a11 mm/page_alloc: fix incorrect isolation behavior by rechecking migratetype
-6545e3e99e4 mm: correctly update zone->managed_pages
-db57534c464 mm: use a dedicated lock to protect totalram_pages and zone->managed_pages
-a0e36d960d7 mm: accurately calculate zone->managed_pages for highmem zones
-b6173f3507e DO NOT MERGE: CHROMIUM: selinux: Do not log "permissive" denials
-52eec5f5d46 DO NOT MERGE: audit: Mute userspace and kernel audit logs
-272c483473b msm_thermal: Re-evaluate hotplug for unexpected cpu online
-77a45ae00c3 msm_thermal: Make logs consistent with bcl
-b54f8b761ba power: bcl: Re-evaluate hotplug for unexpected cpu online
-34646128b5c power: bcl: Online a CPU only if it is offlined by BCL
-8980aae80bc qcom-cpufreq: Use CLKFLAG_NO_RATE_CACHE
-b24dde86052 cpufreq: Check current frequency in device driver
-abbb4648db5 ARM: dts: msm: Remove Gfx warm to normal temperature monitor
-82778a1fc9b ARM: dts: 8084: Online cores that thermal driver offlines
-b0fa009555e msm: thermal: Check clients request just after frequency thread init
-c4ece8a7b08 msm: thermal-dev: Protect IOCTL from race condition
-1e025546c48 msm: thermal: Retry hotplug when exiting from suspend
-9e9f0783e2f msm: thermal: Online only cores, which are hotplugged by KTM
-99843fae1b8 msm: thermal: Add support to online the hotplugged cores
-698168be36b msm: thermal: Add sysfs nodes to control parameters
-1ad4d0a48ea thermal: tsens: Don't cast iomem pointers to unsigned long
-85adae71903 msm: thermal: Check temperature only if probed
-beb2df504e1 msm: thermal: Optimize locking in thermal frequency mitigation thread
-3a6a3a9ca47 msm: thermal: Limit the emergency mitigation messages
-18afc152629 msm: thermal: Store temperature of tsens on kernel panic notification
-e970f2177f4 thermal: msm: Remove early init from board file
-e5e0b4b2355 msm: thermal: Prevent mitigation if not required
-80c1fbfa842 thermal-core: Fix to send correct trip type to get trip temperature
-8b6d20321cc msm: thermal: Add RT priority to kernel hotplug thread
-0bf6b355f17 msm: thermal: Proceed thermal late init only if probe is successful
-b20f6ba2b8d msm: thermal: Decouple Gfx phase control monitoring
-15bce1497e9 msm: thermal: Add RT priority to kernel thermal threads
-556c7a01c22 thermal: tsens: Fix TSENS Upper/Lower IRQ type
-aa3ac82afda thermal: tsens: Add NULL pointer check for id
-38fa9594a81 arm/dt: 8084: Set KTM to drop 2 cores
-c0beace9f94 ARM:dts:msm:Set the shutdown low gauge vbat
-fc4e521cddc power: max17042: Limit battery psy uevent updates.
-e7f6d0c611e power: max17042: add retry logic if reg rw fails
-d1ba6f0be25 power: max17042: Force POR on Bad FCC
-6e42107d9f9 power: max17042: Increase High Threshold for FCC reporting
-b974bd2d959 power: max17042: Add dropbox events for Full Cap deviation.
-c08d63ac9ec Revert "power: max17042: Force POR on Bad FCC"
-7d97087b497 drivers: misc: add dropbox sysfs interface driver
-e5ae7e7e64e power: smb135x: Add Temp check at PON
-826225ad1d3 power:bcl:new smb algorithm on bcl
-85b3031cfc7 cpufreq: fallback to interactive if governor is not found
-aab3ccf54ca cpufreq: interactive governor drops bits in time calculation
-f3651096053 cpufreq: stats: Don't update cpufreq_stats_table if it's NULL
-cd90721bee0 cpufreq: stats: Print error messages if table initialization fails
-7868722c17b cpufreq: Correct the data reported in all_time_in_state
-fd029eec15d cpufreq: interactive: Remove boost pulse
-b4560753345 cpufreq: interactive: Do not reschedule timer if policy->max changes
-364f76b8d92 cpufreq: interactive:call __cpufreq_driver_target() for cur frequency
-60a0a6e91fd cpufreq: interactive: don't skip waking up speedchange_task if target_freq > policy->cur
-6a7c7e32ca6 cpufreq: interactive: prevents the frequency to directly raise above the hispeed_freq from a lower frequency.
-42e85d7893b cpufreq: interactive: Reschedule timer if min_freq is reduced
-08a2b226ee8 CHROMIUM: cpufreq: interactive: calculate load before freq change
-4bc60875ec1 cpufreq: interactive: Rearm governor timer at max freq
-3097863c4c9 CHROMIUM: Replace obsolete strict_strtoul calls.
-e00dc95c82f CHROMIUM: cpufreq: interactive: validate above_hispeed_delay
-c7fe08f072d cpufreq: interactive: Several optimizations
-edb902d2285 cpufreq: Return directly in __cpufreq_get if policy is NULL
-cdc5bcd4d3a cpufreq: interactive: Record hispeed_validated_time in timer function
-c41d42d219b cpufreq: interactive: Exercise hispeed settings at a policy level
-1ccf4ce0c88 cpufreq: interactive: Make window alignment optional
-6b1b328f07d cpufreq: interactive: Add max_freq_hysteresis feature
-0943c7b93d3 cpufreq: interactive: Use del_timer/add_timer_on to rearm timers
-ef3b3b7e564 cpufreq: interactive: Cache tunables when they are created
-4ca1b87af83 cpufreq: interactive: Round up timer_rate to match jiffy
-bc75afcb5f1 cpufreq: interactive: Reset last evaluated jiffy in idle callback
-d17791c0677 cpufreq: interactive: Align timer windows for all CPUs
-052a27e2f75 cpufreq: interactive: Move cached_tunables into cpuinfo
-5817bcdbbff cpufreq: interactive: Remove sampling_down_factor
-1d20982b5f4 cpufreq: interactive: Revert sync freq feature
-2ef2957b377 cpufreq: interactive: Revert sync on thread migration optimizations
-205b5a5c394 Revert "cpufreq: interactive: Allow 1 ms error in above_hispeed_delay comparisons"
-e9b44f24483 cpufreq: interactive: BUG_ON when tunables are NULL after init
-8eced24887a cpufreq: interactive: Fix freeing of cached tunabled during module_exit()
-197dc10db1d cpufreq: interactive: Revert timer start modification
-340aee383ec cpufreq: interactive: Make common_tunables static
-b9c29cc909e cpufreq: interactive: Permanently cache tunable values
-d7f3078117b cpufreq: interactive: remove compilation error from commit 49cc72365fb7ee87762a7ccc6a32ef68627216c5
-55725e10dfa cpufreq: interactive: turn boost_pulse off on boost off
-eeb343178cc cpufreq: interactive: fix NULL pointer dereference at sysfs ops
-8dc92501579 cpufreq: Interactive: Implement per policy instances of governor
-5059760f5d8 cpufreq: interactive: Remove unnecessary cpu_online() check
-701722166f8 cpufreq: interactive: Move definition of cpufreq_gov_interactive downwards
-19b2b514fdd block: disable add_random
-ba9c37d37cf block: disable entropy contributions for nonrot devices
-108321b321e cpufreq: Introduce new relation for freq selection
-b72f414b078 msm: lpm_levels: return new idle level to cpuidle framework
-8f3e69d1949 drivers: lpm-levels: Don't allow idle low power modes during resume
-ed515ea6016 msm: lpm-levels: Fix wakeup time for suspend
-46246ded1dc msm: lpm-levels: Fix truncation of wakeup time
-d078db66ffd msm: Use 64 bit type for sclk
-6b14c291cba msm: mpm-of: fix for "cxo_lpm_clk is unbalanced" slowpath warning.
-61c32c3f8d2 apq8084: disable spurious WARN in rcg_clk_prepare
-aa4419726a8 msm: kgsl: Add a sync fence timeout callback
-34449e3f440 sync: Only print details for active fences
-d01e384a4ef sync: Add a "details" callback for sync points
-cb06cab46c3 msm: kgsl: Separate HW_FAULT register for A4XX
-9e2c2c600f5 apq8084: gpu: Vote against deep low power modes correctly
-545da247204 msm: kgsl: Wake up GPU only for touch events
-36942465486 msm: kgsl: Add registers and function to read the RBBM_ALWAYSON_COUNTER
-afb38513fc6 msm: kgsl: Add the oxili_rbbmtimer_clk to the list of gpu clks
-423500a822c msm: kgsl: Check the address range before mapping to GPU
-34073122dd1 msm: kgsl: Clear pending transactions from VBIF on hang
-d9dbef69f5d msm: kgsl: Check for integer overflow before allocating memory
-6381562025b msm: kgsl: Remove event worker
-6d99b3b7287 msm: kgsl: Add spinlock last timestamp in kgsl_sync
-d33b0a0ef93 msm: kgsl: Add compat.h header explicitly
-55d5c23ea5b ARM: dts: msm: disable support of 50MHz for i2c for apq8084
-b29aa6cca88 msm: kgsl: Unbind the kgsl-event workqueue
-c314cb5ee10 msm: kgsl: Ratelimit memory related error messages
-d1888e2e9db PM / sleep: unregister wakeup source when disabling device wakeup
-4f3f10523d9 mdss: move to a kthread for vsync_retire_work_handler
-6acf97458db kgsl: convert some workqueues to use kthreads
-17f1f11dd12 tty: Fix hang at ldsem_down_read()
-0425c9a484b proc: much faster /proc/vmstat
-bc0a4582c7f msm: properly unlock mutexes
-a1b517a1937 msm: vidc: Convert realloc to resource managed malloc to avoid memleak.
-2c6f9dfeae8 kthread_work: wake up worker only when the worker is idle
-7cec78ddc1e msm: vidc: avoid crash due to division by zero
-1a887a0f596 PM: Fix a bug in dpm_suspend_late()
-ed9126e6411 PM / Sleep: Print last wakeup source on failed wakeup_count write
-96109e830fe power: increment wakeup_count when save_wakeup_count failed.
-0afb387e628 power: validate wakeup source before activating it.
-e93f69f6e80 wakeup: Add the guard condition for len in pm_get_active_wakeup_sources
-a0a679e3e9a mm: slub: Default slub_max_order to 0
-49f71827b42 binfmt_elf.c: use get_random_int() to fix entropy depleting
-bab151a06f0 fs/namei.c: fix potential memory leak in path_lookupat
-89c4edf3d28 msm: kgsl: Bump the GPU frequency for long blocks of processing
-2feb2bdedb0 PM: devfreq: Use high priority workqueue
-e78e6763604 PM: devfreq: Fix simple_ondemand crashing on startup
-ca3366b1a79 msm: kgsl: set the correct max_state
-7f199ac19e6 msm: kgsl: Report correct GPU frequency in sysfs
-62a2a1911d5 fuse: initialize the flock flag in fuse_file on allocation
-aac1911bbb8 Add padding field to fuse_open_out
-63809d19e9c Add blink support to kernel.
-e994076b16c fs: fuse: fix invalid write bypass
-e3e7d1c5297 fs:fuse: Disable shortcircuit when mmap is called on a file
-a334a9bc346 fs:fuse: Ensure update of fuse inode attributes in shortcircuit
-4ea160c82bc fuse: Add support for shortcircuited read/write for files
-469a0e5fd03 fs: push sync_filesystem() down to the file system's remount_fs()
-07737ab172b fuse: fuse_flush() should wait on writeback
-3727f704d6b fuse: Implement write_begin/write_end callbacks
-bff9270a2bd fuse: Turn writeback cache on
-16b6f2847fa fuse: Fix O_DIRECT operations vs cached writeback misorder
-7c8104a67a5 fuse: restructure fuse_readpage()
-33128d0273c fuse: Flush files on wb close
-d1498cded71 fuse: Trust kernel i_mtime only
-07dbc5f4b54 fuse: Trust kernel i_size only
-350bc700c20 fuse: Prepare to handle short reads
-1416b731c85 fuse: don't invalidate attrs when not using atime
-01777e3f4c8 fuse: fix "uninitialized variable" warning
-47b10d1c1c6 fuse: Connection bit for enabling writeback
-f783e2a9284 fuse: Linking file to inode helper
-a1cd600a831 fs: fuse: lock the new non-CMA page before replace_page_cache_page()
-c158ea10c3b net/core/flow.c: Fix CPU hotplug callback registration
-05be00b95ee mm, zswap: Fix CPU hotplug callback registration
-c0381e31120 mm, vmstat: Fix CPU hotplug callback registration
-768345d716c profile: Fix CPU hotplug callback registration
-ed7b7ca8e30 trace, ring-buffer: Fix CPU hotplug callback registration
-bab6ff83564 drivers/base/topology.c: Fix CPU hotplug callback registration
-fa126cee8ba arm64, debug-monitors: Fix CPU hotplug callback registration
-a6f87438c85 arm64, hw_breakpoint.c: Fix CPU hotplug callback registration
-f81d4cc33d7 arm, hw-breakpoint: Fix CPU hotplug callback registration
-65ad65bcc8e CPU hotplug, perf: Fix CPU hotplug callback registration
-5c8dedcef8f Doc/cpu-hotplug: Specify race-free way to register CPU hotplug callbacks
-189e5ac8b83 CPU hotplug: Provide lockless versions of callback registration functions
-7982495e7de msm_serial_hs: Fix API to disable clock
-d5c639a8a8c shamu: Disable BT_MSM_SLEEP driver
-af71f244548 shamu: Enable UART clock for ADSPD
-ce6429e334a shamu: Enable UART clock for Bluetooth
-598214d77cb msm_serial_hs: Add defensive checks due to sudden port close
-483eb782f61 serial: msm_serial_hs: Change the wakeup interrupt enable sequence
-8ce9b562971 msm_serial_hs: disable interrupts cleanly in shutdown
-0cb54c078c2 Make msm_serial_hs RT to improve bluetooth performance
-b552baeec8a msm_serial_hs: fix error handling path of wakeup irq
-7f535fd803a msm_serial_hs: Use pin control standard macros
-c56b4d6d2b0 msm_serial_hs: Fix null pointer in msm_serial_rx_work.
-9d08ea70ee7 msm_serial_hs: update the DMA inflight indicator optimally
-62486777332 msm_serial_hs: avoid unnecessary rx processing during port setup
-eccd2b35649 msm_serial_hs: avoid enabling disabling tx and rx in set_termios
-1bb976accc0 msm_serial_hs: manage PM state when callbacks are disabled
-7afe66cd859 msm_serial_hs: disable TX and RX during baudrate change
-bab401c3bc7 msm_serial_hs: cleanup unused code
-d22cbe71b93 msm_serial_hs: remove BAM debug code in tx timeout
-56f7c7b1319 msm_serial_hs: fix tx state machine
-4809d5ccb0a msm_serial_hs: Handle GPIO state in PM routines
-0d2e8f9fd5b msm_serial_hs: fix style issues
-e5a3fc37ba8 msm_serial_hs: Fix the receive buffer index pointer in logging
-8a808e295c5 msm_serial_hs: Use kthreads for data handling
-7fca05e1139 msm_serial_hs: Support out of band sleep feature
-75bf271a399 msm_serial_hs: Remove redundant pdata check during probe
-75a19e7369c msm_serial_hs: ensure clock_count follows clk_state
-921780a6f11 msm_serial_hs: Add runtime PM support
-0eb308324f8 Revert "msm_serial_hs: Fix for Rx wakeup disabled case"
-64fb6943c13 Revert "msm_serial_hs: add irq number in wakelock name"
-202ca9f0fd3 msm_serial_hs: Track TX transmit time and detect errors
-424287d4fac msm_serial_hs: Remove redundant platform data check
-899b28ad0e6 msm_serial_hs: Modify the PM ioctl
-5d4808fc6a1 serial: tty: msm_hs_uart: Fix the compat table
-74cd3205aa2 TTY: msm_smd_tty: Fix clean up tty devices in fail case
-864f948de83 TTY: msm_smd_tty: Fix client notification issue in suspend state
-c9920b4b164 TTY: msm_smd_tty: Fix driver addition/removal error
-d939b529bd6 TTY: msm_smd_tty: Add warning to driver removal function
-26b94f724e8 msm_serial_hs: Handling spinlocks during error case
-0c62cae361a fs: Add TTY PM IOCTLs to compat table
 737651e7ecf ASoC: msm: qdsp6v2: Update supported sample rates
 abecb029e08 shamu: Enable RCU_BOOST, QUOTA, IKCONFIG
 19b4ee6c567 shamu: Enable RBCPR logs
@@ -431,160 +769,9 @@ e86dcae7efd msm: restart: Retain memory contents after reboot
 44ad8242728 shamu: Regenerate defconfig
 0fed6662f1d Merge tag 'v3.10.107' into android-msm-shamu-3.10-nougat-mr1.7
 
-   * libcore/
-8db46d905 Fix failing FileTest#test_canonicalCachesAreOff()
-2c0f7e9f8 Disable File.getCanonicalPath caches.
-
    * packages/apps/Settings/
 b734b9c4f3 Settings: Hide OTA icon in launcher
 
-====================
-     10-03-2017
-====================
-
-
-   * device/moto/shamu/
-4dde078c shamu: Update camera build stack
-
-   * frameworks/av/
-4def508e3 Stagefright: Do not skip frames in time-lapse-source for high-speed
-63dd0c92f Camera: Add support for ZSL burst mode. Added ability to set number of snapshots in burst mode.
-daa6a53d2 Stagefright: Update start-time once input-time reaches expected start-time
-2ae98da96 Stagefright: Allow setting high-framerates in CameraSource
-8ce297b4a audioflinger: Fix audio for WifiDisplay
-
-   * frameworks/base/
-f6435cd29d9 base: SettingsLib: stop ClassCastException
-
-   * hardware/qcom/audio-caf/msm8952/
-ff18e275c Merge remote-tracking branch 'caf/LA.BR.1.3.7_rb1.4' into lineage-15.0-caf-8952
-
-   * hardware/qcom/display-caf/msm8952/
-80eea5d68 Merge remote-tracking branch 'caf/LA.BR.1.3.7_rb1.4' into lineage-15.0-caf-8952
-
-   * hardware/qcom/media-caf/msm8952/
-94c1b1acd Merge remote-tracking branch 'caf/LA.BR.1.3.7_rb1.4' into lineage-15.0-caf-8952
-
-   * packages/apps/Settings/
-eb71924d4f crdroid: Fix OTA notification shortcut [2/2]
-
-   * packages/apps/crDroidSettings/
-256333e crdroid: Fix OTA notification shortcut [1/2]
-
-   * vendor/addons/
-be8eb10 SmoothSpinners: Makes the loading "spinner" animation smoother
-
-   * vendor/crDroidOTA-devices/
-b1777bb crdroid: Test
-
-====================
-     10-02-2017
-====================
-
-   * android/
-fb509fa manifest: Drop crDroid OTA package
-
-   * build/make/
-f2f36c420 Merge branch 'lineage-15.0' of https://github.com/LineageOS/android_build into 8.0
-e3bd1ca92 Revert "build/target: Include CM platform jars in system server."
-
-   * device/moto/shamu/
-1bf00758 shamu: Enable adaptive LMK
-91133ed1 shamu: Add binderized graphics composer and mapper
-bcce2e23 shamu: Add binderized renderscript
-8ffadeda shamu: Add binderized memtrack
-dfe25eb6 shamu: Add media/omx services to manifest
-e3d09e79 shamu: Add binderized audio and audio effects HAL
-
-   * frameworks/base/
-8640dd89ada base: audioservice: Set BT_SCO status
-989def81474 Add Music QS Tile
-19b8292da0a Language toggle QS
-54f7f1bef7c Add IME selector QS Tile
-6d6255a62a3 Refresh USB tile
-4da7c0a5a65 Add USB Tether QS Tile
-77aaec142eb qs: FlashlightTile: Long press to launch default camera
-02087d4853e Add Compass tile
-1ff9d54e270 Add Reboot/Recovery QS Tile
-58a42fd03c5 Integrate crDroid OTA into crDroid Settings [1/3]
-
-   * packages/apps/Settings/
-b7cb4bad0c Settings: we do not ship Google Now Launcher wallpapers
-1b5f75c4c4 Fix crash issue when user uses multi-window mode on WifiCallingSettings
-1fcd8126cd Default apps settings disappear when switching to secondary user
-dfd44d5e52 Fix NPE crash in UsageAccessDetails
-aa9bbe424d Fix a crash in ChooseLockGenericFragment.
-1f6414af43 Fix BT stop searching after rotating screen.
-b244b8ec6f Settings: Use separate icon for flashlight power usage
-a4ef0e01c7 Show USB Mode Dialog
-08291130d3 Integrate crDroid OTA into crDroid Settings [2/3]
-
-   * packages/apps/crDroidSettings/
-6226032 Integrate crDroid OTA into crDroid Settings [3/3]
-
-   * vendor/crDroidOTA-devices/
-05c7703 crdroid: Test
-
-   * vendor/lineage/
-d445c3b5 overlay: Enable disabling stock OTA components
-
-====================
-     10-01-2017
-====================
-
-
-   * device/moto/shamu/
-184c61a2 power: Remove MPSS stats
-
-   * external/libpng/
-8f72e8a libpng: Upgrade to 1.6.34
-
-   * frameworks/base/
-1686a49db24 SystemUI: thread protect keyguard callbacks
-0af3d85a62e Frameworks: Move Log holder to be preloaded
-1b47e99b42b check whether the ActivityClientRecord of token is null when handleStopActivity.
-b4dd06e2bc9 ContentResolver: fix native crash by limit observer's count
-75740c02b4d Passing a new ArraySet instance to avoid crash
-08e9dc1b459 PackageManagerService: Add finally block to close the stream.
-
-   * frameworks/native/
-56672a510 Avoid closing invalid fds in GraphicBufferMapper
-
-   * hardware/qcom/audio-caf/msm8960/
-9c4cb658a Equalizer: Check value size for get preset name
-
-   * hardware/qcom/media-caf/msm8960/
-305626d38 BACKPORT: mm-video: venc: Protect buffer from being freed while accessing
-
-   * vendor/crDroidOTA-devices/
-4d619a9 crdroid: Test
-
-====================
-     09-30-2017
-====================
-
-
-   * external/f2fs-tools/
-acb9193 f2fs-tools: Add back missing targets
-
-   * frameworks/base/
-7824cd9c60d QS: Add Sync QS Tile
-b64f0feb712 PiP tile: launch PiP settings with long press
-0852e74f890 Added show volume panel tile to QS
-b5ec425be41 Add Sound tile to Quick Settings
-2a1cc569ab2 HBM: Check HBM availability before adding tile
-ef068527a5a Add Functionality to control High Brightness Mode [1/2]
-805b1e65801 Add PiP tile
-30461fe2480 Add a sendKeycode api to crdroid Utils
-cc413592221 Location tile: make it cycle modes
-76eb09f93a6 Add Ambient-LiftToWake tile
-1f5f4a0820a Allow user to add/remove QS with one click
-c20c2bc2fad Add partial/full screenshot QS tile
-30328312ac2 Add api to take screenshots
-
-   * hardware/qcom/audio-caf/msm8960/
-bb0aae986 aenc-aac: bounds checking
-
-   * hardware/qcom/media-caf/msm8960/
-370ec760f BACKPORT: mm-video: vdec: Avoid processing ETBs/FTBs in invalid states
+   * packages/resources/devicesettings/
+ecc50c7 Add strings for devices' custom gesture handlers
 
