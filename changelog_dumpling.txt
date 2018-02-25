@@ -1,4 +1,102 @@
 ====================
+     02-25-2018
+====================
+
+
+   * bootable/recovery/
+f66aeed recovery: Graphical UI
+ff14b68 minui: Skip EV_REL input devices.
+af0276f Allow custom bootloader msg offset in block misc
+7d9e8fa bootloader_message: allow devices to override
+1c1c019 updater: Allow devices to suppress BLKDISCARD
+04dec0f sr: Add performance control
+59f17e7 recovery: init: mount pstore fs
+4d0eb79 minui: accept RGBA and treat it as RGBX
+0965dbe recovery: Enable the menu for User builds
+22a0a99 recovery: Remove "Supported API" message
+b51322b recovery: Fix mounting f2fs partitions
+e3aa5c8 Allow f2fs to reserve bytes for footer when formatting
+f3ce5ac update-binary: support reboot_now on older recoveries
+840bfc9 minui: support to pan display (FBIOPAN_DISPLAY)
+8a6aa6b recovery: Allow devices to reboot to download mode
+a9c227a recovery: autodetect filesystem type
+07b5577 sr: updater: Fix multi-stage docs
+351ff1a sr: Dejank the menus, fix colors
+c9455e3 sr: Fix the progress bar
+5228512 sr: Return to main menu after selection
+856faef recovery: Add wipe system partition option
+eb98fde recovery: Provide caching for sideload files
+9c62b06 recovery: bu: Implement backup/restore
+5dfa5bf recovery: Provide sideload cancellation
+47c5a3b Blank screen during shutdown and reboot
+493baca recovery: Awakening of MiniVold
+969862d sr: Allow device-specific recovery modules
+0e81208 sr: Include vendor init trigger
+298d203 recovery: Add fstools
+
+   * device/lineage/sepolicy/
+d54feea common: Add sf_lcd_density_prop type and labelled props
+5e84bfc sepolicy: Initial policy for recovery
+
+   * device/oneplus/msm8998-common/
+dbf349d msm8998: Added some more VoLTE props
+2ee564c msm8998: Update prebuilt OOS cam and gallery
+c88e504 msm8998: Fix front cam issues with few apps
+14f50e4 msm8998: Build Snap with OOS cam
+b504993 msm8998: Add few VoLTE props
+
+   * device/qcom/sepolicy/
+7eac191 sepolicy: Remove definition and labelling of sf_lcd_density_prop
+
+   * external/e2fsprogs/
+9d2fbee Fix build warnings with '__bitwise' macro redefined
+
+   * external/f2fs-tools/
+c1c7fa3 f2fs-tools: Rename utf conversion symbols
+0cc764b f2fs-tools: Rename quota symbols
+975d7bc f2fs-tools: Add static libs for recovery
+
+   * frameworks/base/
+f9db9b5 Simplify loading multiple dark overlays
+
+   * lineage-sdk/
+eb09fee sdk: Rebrand to crDroid
+6b32ee5 sdk: add systemui restart to advanced reboot [2/2]
+1837fc9 lineage-sdk: Enable advanced reboot by default
+4c72f42 Disable by livedisplay by default
+deda37d sdk: Map to ro.modversion
+74f1d38 Allow value 3 for status bar quick pull down
+
+   * packages/apps/Contacts/
+2cb5e07 Contacts: Enable support for device contact.
+
+   * packages/apps/LineageParts/
+87eab64 LineageParts: Rebrand to crDroid
+
+   * packages/apps/Settings/
+d043630 Updated translations
+
+   * packages/apps/crDroidSettings/
+71f64f7 Updated translations
+
+   * system/extras/
+d28d5f0 mkf2fsuserimg.sh: support sload_f2fs
+04f0fc8 mkf2fsuserimg.sh: add missing features
+e8357ef f2fs_utils: enable mac build by removing dead codes
+e8b6fe0 Use -Werror in system/extras
+5984d6b extras: remove su
+fc20f73 f2fs_utils: Add a static libf2fs_sparseblock for minvold
+
+   * system/sepolicy/
+2cb3ed1 sepolicy: Allow recovery to write to rootfs
+
+   * system/vold/
+3c6ab83 vold: Fix minivold
+
+   * vendor/crDroidOTA/
+c6e2b05 update changelog
+
+====================
      02-24-2018
 ====================
 
@@ -7,6 +105,14 @@
 364001f Merge 'lineage-15.1' into 8.1
 c15783a use our own fork of frameworks/opt/net/wifi
 
+   * bootable/recovery/
+529971e sr: Enable gunzip/gzip/unzip/zip commands
+afc2dae sr: Puke out an /etc/fstab so stuff like busybox/toybox is happy
+59fbcbd recovery: ui: Support hardware virtual keys
+a0bca1a recovery: ui: Minor cleanup for touch code
+4509d87 recovery: ui: Default to touch enabled
+1538923 sr: Get a proper shell environment in recovery
+
    * device/oneplus/msm8998-common/
 1856b8f msm8998: wifi: wait for kernel driver to get ready
 
@@ -14,8 +120,32 @@ c15783a use our own fork of frameworks/opt/net/wifi
 c6d10a2 Automatic translation import
 
    * frameworks/base/
+6221d7b Merge 'lineage-15.1' into 8.1
+185b730 crdroid: Revert out expanded desktop implementation
+aaf0bd6 SystemUI: Fix FC issue
+68bd830 media: jni: Support conversion from jbyte array to ByteBuffer.
 9882634 Updated translations
+c9ec07f SystemUI: Avoid creating navbar if it already exists
 3ca80ee Updated translations
+2bb09a0 Implement expanded desktop feature
+d801d23 Automatic translation import
+
+   * frameworks/native/
+c5437d4 Fix bugs regarding calculate dalvik-cache size
+
+   * lineage-sdk/
+5c6b561 LineageSettingsProvider: Fix default setting for DEV_FORCE_SHOW_NAVBAR
+
+   * packages/apps/LineageParts/
+dbb34f0 Moved expanded desktop settings to crdroid settings
+c4de3f0 Change default accent to pixel blue
+b07f8df Hide color style under display
+3509957 LineageParts: Silently kill anonymous stats collections
+cceec1e Moved status bar settings to crdroid settings
+74a7782 Moved button settings to crdroid settings
+84b8a8e LineageParts: Update our NFC profile mime type
+082ad67 LineageParts: Inject expanded desktop settings via IA
+808f9b5 LineageParts: Reenable expanded desktop settings
 
    * packages/apps/Nfc/
 5981d86 NfcNci: make T3T/Nfc-F HCE optional
@@ -23,15 +153,37 @@ c6d10a2 Automatic translation import
 389ae87 Automatic translation import
 
    * packages/apps/Settings/
+4e6a5ad InstalledApp: show link to Google Play
+d5f0d04 Fix NPE in AutoSyncWorkDataPreferenceController
+7c0e3b6 Settings: Fix for battery item summary that disappears
+b3b3c34 settings: update switch state only if there is change
+04d0f59 Settings: Fix Always-on VPN sync problem
 63ff28b Updated translations
 2fc87c2 Updated translations
 
+   * packages/apps/crDroidMusic/
+832cf21 Fix bottom bar lag on first start.
+74db696 Move Pageindicator to current position
+1bd709a music: Use adaptive icon
+
    * packages/apps/crDroidSettings/
+27a1877 crdroid: Use LOS expanded desktop implementation
 a536f56 Updated translations
 b53481a Updated translations
 
+   * system/sepolicy/
+36f2515 Merge 'lineage-15.1' into 8.1
+
    * vendor/crDroidOTA/
-6dacff5 mido: fix ota
+a5ee61b should be ok now
+e5732f3 update tags
+3ddaf6a Correct end tag for devicename tag
+c06edd4 Add devicename tag to new xml
+0aa4063 add changelog
+e04eb9a add LG G3 and HTC M8
+51715de dumpling: update to crDroidAndroid-8.1-20180224-dumpling-v4.0
+dbd8993 angler: Update links
+b197351 angler: Update build
 
 ====================
      02-23-2018
