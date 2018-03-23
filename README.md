@@ -1,5 +1,5 @@
 # crDroid OTA repo
-OTA configuration for crDroidOTA (push OTA info when new build is ready to device users)
+OTA configuration for crDroidOTA (push OTA info when new build is ready for device users)
 
 ## Introduction ##
 In order for a device to be OTA compliant, there are a few things to know. 
@@ -20,7 +20,6 @@ In order for a device to be OTA compliant, there are a few things to know.
 </manufacturer>
 ```
 
-
 ### Mandatory XML tags ###
 **maintainer** - your name followed by your nickname (your name can be private if you want - just add some info)  
 **devicename** - device name (pay attention not codename)  
@@ -33,4 +32,4 @@ In order for a device to be OTA compliant, there are a few things to know.
 
 ### Optional tags ###
 **paypal** - paypal url (for donations)  
-**telegram** - telegram url (if you offer support via telgram - can be a group link or telegram.me link)  
+**telegram** - telegram url (if you offer support via telegram - can be a group link or telegram.me link)  
