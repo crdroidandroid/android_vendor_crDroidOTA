@@ -16,6 +16,8 @@ In order for a device to be OTA compliant, there are a few things to know.
                   <changelog>ChangelogLink</changelog>
                   <gapps>GappsLink</gapps>
                   <forum>ForumLink</forum>
+                  <paypal>PaypalLink</paypal>
+                  <telegram>TelegramLink</telegram>
             </DeviceCode>
       </manufacturer>
 ```
@@ -31,10 +33,11 @@ In order for a device to be OTA compliant, there are a few things to know.
 * **ChangelogLink** - Changelog url (github)
 * **GappsLink** - Google apps url (preferred: opengapps url)
 * **ForumLink** - Forum url for discussions and support (preferred: xda url)
+* All mandatory XML tags need to be there. Please leave blank in case some do not apply to you.
 
 ### Optional XML tags ###
-* **paypal** - paypal url (for donations)
-* **telegram** - telegram url (if you offer support via telegram - can be a group link or telegram.me link)
+* **PaypalLink** - paypal url (for donations)
+* **TelegramLink** - telegram url (if you offer support via telegram - can be a group link or telegram.me link)
 
 ## Guidelines ##
 * Check if manufacturer is already existing
