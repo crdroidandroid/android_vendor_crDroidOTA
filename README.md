@@ -23,14 +23,14 @@ In order for a device to be OTA compliant, there are a few things to know.
 ```
 
 ### Mandatory XML tags ###
-* **Manufacturer** - Add under existing manufacturer; Create manufacturer if required
+* **Manufacturer** - Add under existing manufacturer (create manufacturer if required)
 * **DeviceCode** - Device code name
 * **MaintainerName** - Maintainer name followed by prefered name in parenthesis
 * **DeviceName** - Device name (not code name)
-* **FileName** - Latest crdroid build name; OTA code parses date to check for new version
+* **FileName** - Latest crdroid build name (OTA code parses date to check for new version - don't include file extension .zip)
 * **BuildType** - Nightly/Weekly/Final
-* **DownloadLink** - Official download folder url (afh); Masked with goo.gl
-* **ChangelogLink** - Changelog url (github)
+* **DownloadLink** - Official download folder url (from AFH) masked by bit.ly shortlinks
+* **ChangelogLink** - Changelog url (GitHub)
 * **GappsLink** - Google apps url (preferred: opengapps url)
 * **ForumLink** - Forum url for discussions and support (preferred: xda url)
 
