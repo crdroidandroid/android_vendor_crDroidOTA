@@ -17,6 +17,10 @@ In order for a device to be OTA compliant, there are a few things to know.
                   <changelog>ChangelogLink</changelog>
                   <gapps>GappsLink</gapps>
                   <forum>ForumLink</forum>
+                  <firmware>FirmwareLink</firmware>
+                  <modem>ModemLink</modem>
+                  <bootloader>BootloaderLink</bootloader>
+                  <recovery>RecoveryLink</recovery>
                   <paypal>PaypalLink</paypal>
                   <telegram>TelegramLink</telegram>
             </DeviceCode>
@@ -38,6 +42,10 @@ In order for a device to be OTA compliant, there are a few things to know.
 *All mandatory XML tags need to be there. Please leave blank in case some do not apply to you.*
 
 ### Optional XML tags ###
+* **FirmwareLink** - link for needed firmware
+* **ModemLink** - link for needed modem
+* **BootloaderLink** - link for needed bootloader
+* **RecoveryLink** - link for recommended recovery
 * **PaypalLink** - paypal url (for donations)
 * **TelegramLink** - telegram url (if you offer support via telegram - can be a group link or telegram.me link)
 
