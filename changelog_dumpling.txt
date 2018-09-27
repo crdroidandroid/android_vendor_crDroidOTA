@@ -1,43 +1,293 @@
 ====================
-     09-25-2018
+     09-27-2018
 ====================
 
 
    * build/kati/
-6f17bf7 Do not limit threads upon calling legacy GNU make
+4c1987c Do not limit threads upon calling legacy GNU make
 
    * dalvik/
-6f4024854 dexdeps: Ignore static initializers on analysis.
-f1dde2bc9 dexdeps: Add option for --include-lineage-classes.
+95177e94f dexdeps: Ignore static initializers on analysis.
+2559fb46f dexdeps: Add option for --include-lineage-classes.
 
    * device/qcom/sepolicy/
-da0abf0f sepolicy: Allow perf HAL to set freq props
-45fdb042 common: Fix labelling of lcd-backlight
-5bb6ce24 sepolicy: Allow mm-qcamerad to access v4L "name" node
-4194cf3c sepolicy: Fix video4linux "name" node labeling
-7f9ae430 sepolicy: allow vold to read persist dirs
-dcf75534 sepolicy: qti_init_shell needs to read dir too
-29344230 hal_gnss_default: Do not log udp socket failures
-bdf8cd0b sepolicy: rules to allow camera daemon access to app buffer
-91986a13 sepolicy: Label mpctl_socket as data_file_type
-7bbb6372 sepolicy: Add libcryptfs_hw to SP HALs
-33d9ed27 sepolicy: Allow thermal-engine to read sysfs_uio[_file]
-461fd57d sepolicy: Add libsdm-disp-vndapis and libsdmutils to SP-HALs
-8775ef05 sepolicy: Allow system_server to 'read' qti_debugfs
-c568dca3 sepolicy: Allow wcnss_service to set wlan.driver properties
-42462621 Use set_prop() macro for property sets
-efdf9055 qcom: Label vendor files with (vendor|system/vendor) instead of vendor
+e72f5274 sepolicy: Allow perf HAL to set freq props
+c446d75a common: Fix labelling of lcd-backlight
+8f6b15de sepolicy: Allow mm-qcamerad to access v4L "name" node
+029c2241 sepolicy: Fix video4linux "name" node labeling
+85887161 sepolicy: allow vold to read persist dirs
+ed04ef94 sepolicy: qti_init_shell needs to read dir too
+b07b1988 hal_gnss_default: Do not log udp socket failures
+1e860831 sepolicy: rules to allow camera daemon access to app buffer
+936c22b1 sepolicy: Label mpctl_socket as data_file_type
+0552410c sepolicy: Add libcryptfs_hw to SP HALs
+78cf94c3 sepolicy: Allow thermal-engine to read sysfs_uio[_file]
+58a2f757 sepolicy: Add libsdm-disp-vndapis and libsdmutils to SP-HALs
+ebd9c16a sepolicy: Allow system_server to 'read' qti_debugfs
+4e7fdc03 sepolicy: Allow wcnss_service to set wlan.driver properties
+872f09a9 Use set_prop() macro for property sets
+3a0fcfd1 qcom: Label vendor files with (vendor|system/vendor) instead of vendor
 
    * external/ant-wireless/ant_native/
-9f1b660 Cast BT_VND_OP_ANT_USERIAL_{OPEN,CLOSE} to bt_vendor_opcode_t in vfs code
-afd69b5 Update bt vendor callbacks array in vfs code
+ca30ecd Cast BT_VND_OP_ANT_USERIAL_{OPEN,CLOSE} to bt_vendor_opcode_t in vfs code
+2f75453 Update bt vendor callbacks array in vfs code
 
    * external/tinycompress/
-40b78ce tinycompress: Fix compilation on old targets
-73760bc tinycompress: tinycompress fixes
+b1a61c7 tinycompress: Fix compilation on old targets
+59220ca tinycompress: tinycompress fixes
 
    * frameworks/base/
+8372beedb53 CompassTile: Do not use slashed icon
+15d1f21bbab Use alphaoptimized layout for custom icons on left
+38b9b334787 SystemUI: Network Traffic [1/3]
+2013923f017 SystemUI: Add Lineage statusbar item holder
+29cbde84aba CPUInfoTile: Reduce code redundancy
+1b25133a9a4 ExpandedDesktopTile: Set default state inactive
+c4e8b23f13e CompassTile: Set default state inactive
+cef16fb2680 Add Compass tile
+4d76f122ba1 QS: Add Expanded Desktop QS Tile
+8bc42014a67 PhoneWindowManager: Do not panic if immersive mode active
+e3a224a25c9 Implement expanded desktop feature
+
+   * frameworks/opt/net/wifi/
+ab5eba2d3 wifi: Not reset country code for Dual SIM if any slot is active
+dfbb897bf wifi: don't check if WIFI_DRIVER_STATE_CTRL_PARAM is readable
+9982d7020 wifi: Check whether dev node is accessible or not before opening
+a33b1f54b libwifi-hal: add flag to wait for kernel driver to get ready
+
+   * hardware/interfaces/
+69960850 camera: Only link and use vendor.qti.hardware.camera.device if specified
+1ea4b7b0 Camed HAL extension: Added support in HIDL for Extended FD.
+36c60199 keymasterV4_0: Tags support for FBE wrapped key.
+
+   * hardware/lineage/interfaces/
+599e6d0 interfaces: Add id HAL definition
+b121792 interfaces: Add touch HIDL interface definitions
+0b60251 interfaces: Add 2.0 livedisplay interfaces
+
+   * hardware/nxp/nfc/
+710f739 nfc: Restore pn548 support to 1.1 HAL
+
+   * hardware/qcom/audio-caf/msm8998/
+e5ef02c97 audio: replace %zd with %jd for ssize_t argument
+4942e72e4 audio: Use normal tinycompress
+3e3ff59cc audio: Guard power@1.2 hints
+a4b164554 Move audio-perf to HAL module
+a87a0e645 audio: Use perf hints from audio HAL for ULL and MMAP
+504df7bc0 audio-hal: use powerHAL 1.2 to do performance hint
+
+   * hardware/qcom/bt-caf/
+6118909 libbt-vendor: Fix BLUETOOTH_MAC_ADDR_BOOT_PROPERTY definition
+4c05101 Don't build libbt-hidlclient for OSS builds
+f611975 Load bluetooth firmwares from /vendor
+c833945 Add missing headers to libbt-vendor
+8f1bdca Apply the Cherokee's mechanism of stopping hci_filter to ROME
+a72d386 BT: Moving chipset version parameters' initialization out of ALOG
+74750aa Remove hardcoded LOCAL_MODULE_PATHS from vendor components. (bt)
+1822482 Add vendor-specific message types for FM.
+6ddf8c1 libbt-qcom: Allow reading BT address from property
+5839bcb Bluetooth: load btaddr from NV if QCOM_BT_USE_BTNV is set
+e639397 libbt: Fix case where SoC type is not set
+ad84945 libbt-qcom: Allow building without proprietary bits
+
+   * hardware/qcom/keymaster/
+27c8a15 keymaster: move to /vendor
+3d2a8f6 keymaster: Fix compiler warnings
+c49093c keymaster: add TARGET_PROVIDES_KEYMASTER
+80852fe keymaster: Featureize support for waiting on QSEE to start
+9a7a4d4 Keymaster: Check if keymaster TZ app is loaded
+f9ba9a0 keymaster: Set HEAP_MASK_COMPATIBILITY by platform for QCOM_HARDWARE
+6fbbd78 Keymaster: Support for 64bit userspace and 32bit TZ
+78fc5b6 keymaster: Add kernel dependency
+cb76b9e Revert "Remove legacy keymaster support for msm8226"
+b38c3e4 Revert "msm8974: remove from top level makefile"
+
+   * hardware/qcom/wlan-caf/
+4776cec wcnss_service: Read serial number from custom property
+e6b516a wcnss_qmi: Generate a fixed random mac address if the NV doesn't provide one
+
+   * kernel/oneplus/msm8998/
+9276fdb6d9ba Merge 'oneplus/QC8998_O_8.1' into 9.0
+2a612fec9515 msm: mdss: Silence "invalid data for dither" error
+eecfc12cc648 mdss: Do not wait for kickoff in display commit
+f7b7d2a48478 slimbus: Fix potential memory leak
+7d993d815d9b do not call trace_printk on non-debug build
+72482a512a36 msm: ipa3: Fix redundant wakelock releases in error paths
+db2acdd9c74a mhi: core: Relax wakeup in mhi_process_event_ring() error path
+a88aced8f02b DTS: Decrease BCL low battery threshold to 5%
+
+   * lineage-sdk/
+967a538 Custom inactivity threshold for network traffic monitor [1/2]
+
+   * packages/apps/Camera2/
+145c44260 Camera2: Stop using GPS when going to background
+bcdc99fe3 Camera2: Remove settings preferences only once
+bc3ac5dd6 Camera2: Only autofocus before a snap if we are actually in "auto" mode.
+62f2828f8 Don't attempt to convert degree to orientation enum twice
+f1e91a213 Camera2: Target API 27
+b16b920c4 Use mCameraAgentNg for getting camera info when available
+
+   * packages/apps/DeskClock/
+8317c6491 Make new menu entry to link to cLock widget settings.
+d884f34f2 Provide upgrade path for cm-14.1 -> lineage-16.0
+
+   * packages/apps/LineageParts/
+6657e3f ExpandedDesktop: Fix crash with resource ID
+1f88aaa Moved expanded desktop settings to crdroid settings
+cc0f923 LineageParts: Re-enable expanded desktop.
+
+   * packages/apps/Nfc/
+8395f4fa NFC: Adding new vendor specific interface to NFC Service
+
+   * packages/apps/crDroidSettings/
+573d222 crdroid: Bring back network traffic settings
+bbe9e3d crdroid: Re-enable expanded desktop settings
+
+   * packages/providers/MediaProvider/
+0effada MediaProvider: set usesCleartextTraffic prop
+
+   * system/bt/
+e415f6570 Add support to force disable enhanced sco commands
+9f2ff8df6 Bluetooth: Read BLE vendor capability to proceed on Secure conn
+9a5d55edf Prevent abort in case of command timeout
+
+   * system/sepolicy/
+956a2f25 Build sepolicy tools with Android.bp.
+bdf959c7 Add rules required for TARGET_HAS_LEGACY_CAMERA_HAL1
+
+   * system/vold/
+5af85cd vold: Add texfat and sdfat support
+
+   * vendor/qcom/opensource/cryptfs_hw/
+c1ecc3c cryptfs_hw: add missing logging tag
+9d0799d cryptfs_hw: Featureize support for waiting on QSEE to start
+a4e6429 cryptfs_hw: Add compatibility for pre-O hw crypto
+
+====================
+     09-26-2018
+====================
+
+   * android/
+bb8244b manifest: Track libcore
+
+   * device/oppo/common/
+92ca27f Initial fixes for racy slider
+
+   * frameworks/base/
+881c1f22914 SystemUI: Sort subscriptions in reversed order
+a5a667681ae PM: Signature spoofing [1/2]
+794979911c0 core: Add support for MicroG
+854c13e7df0 base: Delink HW keys toggle from navbar
 28890f5307b Forward port 'Swap volume buttons' (1/3)
+
+   * frameworks/native/
+c458fb86a Forward port 'Swap volume buttons' (2/3)
+
+   * kernel/oneplus/msm8998/
+73405175b40d Merge 4.4.158 into oneplus/QC8998_O_8.1
+9fbcdd1319b4 Linux 4.4.158
+262ea6c0c422 MIPS: VDSO: Match data page cache colouring when D$ aliases
+30eee1c68c52 drivers: net: cpsw: fix segfault in case of bad phy-handle
+24328b80de17 mei: bus: type promotion bug in mei_nfc_if_version()
+8b97b2ec3672 USB: serial: ti_usb_3410_5052: fix array underflow in completion handler
+86312d58a9de pinctrl: qcom: spmi-gpio: Fix pmic_gpio_config_get() to be compliant
+4951eb4bb6d6 drm/panel: type promotion bug in s6e8aa0_read_mtp_id()
+5f5ea78ba60c selftest: timers: Tweak raw_skew to SKIP when ADJ_OFFSET/other clock adjustments are in progress
+e573a9830c52 ALSA: pcm: Fix snd_interval_refine first/last with open min/max
+5e1924779a64 rtc: bq4802: add error handling for devm_ioremap
+c862b3823509 drm/amdkfd: Fix error codes in kfd_get_process
+785cb2b02ff7 gpiolib: Mark gpio_suffixes array with __maybe_unused
+2e1c096da640 coresight: tpiu: Fix disabling timeouts
+bfb2cbf2aaea coresight: Handle errors in finding input/output ports
+05925d757140 parport: sunbpp: fix error return code
+eddbab9022ec drm/nouveau: tegra: Detach from ARM DMA/IOMMU mapping
+f615d18bab76 ARM: hisi: check of_iomap and fix missing of_node_put
+eafee0717962 ARM: hisi: fix error handling and missing of_node_put
+96d4584f786f ARM: hisi: handle of_iomap and fix missing of_node_put
+f13ad779213b MIPS: loongson64: cs5536: Fix PCI_OHCI_INT_REG reads
+1533250294cf mtdchar: fix overflows in adjustment of `count`
+20d6cff3fc05 audit: fix use-after-free in audit_add_watch
+0b726a48b985 binfmt_elf: Respect error return from `regset->active'
+74fb46864fcb CIFS: fix wrapping bugs in num_entries()
+2d3631960dd3 cifs: prevent integer overflow in nxt_dir_entry()
+b8b53adeca0e usb: cdc-wdm: Fix a sleep-in-atomic-context bug in service_outstanding_interrupt()
+4be36bccc6c5 USB: yurex: Fix buffer over-read in yurex_write()
+b214cde70484 usb: misc: uss720: Fix two sleep-in-atomic-context bugs
+403c5c2377ca USB: serial: io_ti: fix array underflow in completion handler
+f409f3407029 USB: net2280: Fix erroneous synchronization change
+34f1df0ff035 USB: add quirk for WORLDE Controller KS49 or Prodipe MIDI 49C USB controller
+637acc7bdebc usb: host: u132-hcd: Fix a sleep-in-atomic-context bug in u132_get_frame()
+35bcdf481ce4 usb: Avoid use-after-free by flushing endpoints early in usb_set_interface()
+49c05a0000dd USB: Add quirk to support DJI CineSSD
+c343fc8035cb usb: Don't die twice if PCI xhci host is not responding in resume
+68fe884e7b98 misc: hmc6352: fix potential Spectre v1
+c527796fdb64 Tools: hv: Fix a bug in the key delete code
+ee4d1a30a4dd IB/ipoib: Avoid a race condition between start_xmit and cm_rep_handler
+a739cb3e04a2 xen/netfront: fix waiting for xenbus state change
+1cd01dba1355 pstore: Fix incorrect persistent ram buffer mapping
+07c63fd02841 RDMA/cma: Protect cma dev list with lock
+12c3ba18e3f1 xen-netfront: fix warn message as irq device name has '/'
+715012010448 crypto: sharah - Unregister correct algorithms for SAHARA 3
+da189ebd788c platform/x86: toshiba_acpi: Fix defined but not used build warnings
+a4b8132c86c9 s390/qeth: reset layer2 attribute on layer switch
+29162495129d s390/qeth: fix race in used-buffer accounting
+4f3381ab8af2 arm64: dts: qcom: db410c: Fix Bluetooth LED trigger
+2e0c018c0c60 xen-netfront: fix queue name setting
+773320786c56 mac80211: restrict delayed tailroom needed decrement
+2ca7b66d826d MIPS: jz4740: Bump zload address
+8e8c3ba5add9 powerpc/powernv: opal_put_chars partial write fix
+d4aa4e4f7764 perf powerpc: Fix callchain ip filtering
+016353ef55c9 ARM: exynos: Clear global variable on init error path
+57a1dd74441d fbdev: Distinguish between interlaced and progressive modes
+e71975f0d7d5 perf powerpc: Fix callchain ip filtering when return address is in a register
+5a85c8d629cb fbdev/via: fix defined but not used warning
+1401b76dfbcc video: goldfishfb: fix memory leak on driver remove
+98c059565202 fbdev: omapfb: off by one in omapfb_register_client()
+66e32b788f4f mtd/maps: fix solutionengine.c printk format warnings
+0eda7472163d media: videobuf2-core: check for q->error in vb2_core_qbuf()
+9f6d6fb580c0 MIPS: ath79: fix system restart
+46c66ac93816 dmaengine: pl330: fix irq race with terminate_all
+d6ac46c7db36 kbuild: add .DELETE_ON_ERROR special target
+210006efbb7a clk: imx6ul: fix missing of_node_put()
+9e8d585c52c5 gfs2: Special-case rindex for gfs2_grow
+1e89472ff063 xfrm: fix 'passing zero to ERR_PTR()' warning
+650ca59a640b ALSA: usb-audio: Fix multiple definitions in AU0828_DEVICE() macro
+5df13ba49374 ALSA: msnd: Fix the default sample sizes
+a8323a853776 iommu/arm-smmu-v3: sync the OVACKFLG to PRIQ consumer register
+17645a99c298 cfq-iosched: fix the setting of IOPS mode on SSDs
+db59b55aabf7 block: Make CFQ default to IOPS mode on SSDs
+1330e41f7fa2 CUSTOM: arm64: Disable asm-operand-width warning for clang
+e9ed3a93b925 arm64: topology: fix cpu power calculation
+bbf93c2a4f53 arm64: lib: memory utilities optimization
+b9195f4c0b2c DTS: Reduce msm-core polling rate to 100ms
+978706fb530c ANDROID: ARM64: smp: disable preempt in backtracing across all cores
+ba30410f7196 Fix Kconfig warnings
+04908cd0d3e0 oneplus5: Disable DEBUG_RODATA
+
+   * libcore/
+ba8378dff Libcore: Amend NoSuchMethodException message
+1cf01cd50 Libcore: Speed up single word BigInteger division
+8b4d57808 Work around 32 bit glibc bug.
+712f57ded XML Pull Parser optimizations
+
+   * packages/apps/Snap/
+a1b282bb6 SnapdragonCamera2: Add missing RECEIVE_BOOT_COMPLETED permission
+d06e26324 SnapdragonCamera2: fix record location
+
+   * packages/apps/crDroidSettings/
+8ee9cb3 PM: Signature spoofing [2/2]
+197410f crdroid: Delink HW keys toggle from navbar and hw keys
+8767e6c Revert "crdroid: Stick HW keys settings"
+ef6e3e6 crdroid: Drop 'Control ringtone volume' setting for pie
+
+====================
+     09-25-2018
+====================
+
+   * android/
+2c29381 manifest: Enable sdk prebuilt
+
+   * frameworks/base/
 5014cd58c8c AbsListView: Fix widget couldn't find any view fc
 63413000cd8 Return: Listanimation Views and Interpolator [1/2]
 e9852f6abda Add option to disable scrolling cache [1/2]
@@ -47,99 +297,36 @@ b1e326d2661 FW_Base - XuiMod: Toast Animations [1/2]
 8d7a3d22838 Allow toggling animations off [1/2]
 14327d0f3dd SystemUI: remove unnecessary recent apps transition
 11cdb163382 AOKP custom system animations (1/2)
+570a508b177 base: make screen off animation selection logical [1/2]
+d86b1764906 display: Don't animate screen brightness when turning the screen on
 
-   * frameworks/native/
-c458fb86a Forward port 'Swap volume buttons' (2/3)
-
-   * frameworks/opt/net/wifi/
-07bdcf4b6 wifi: Not reset country code for Dual SIM if any slot is active
-f964dee38 wifi: don't check if WIFI_DRIVER_STATE_CTRL_PARAM is readable
-c19f3bab0 wifi: Check whether dev node is accessible or not before opening
-33bd7cf3b libwifi-hal: add flag to wait for kernel driver to get ready
-
-   * hardware/interfaces/
-6bc64d6e camera: Only link and use vendor.qti.hardware.camera.device if specified
-80175603 Camed HAL extension: Added support in HIDL for Extended FD.
-c4f7fb4d keymasterV4_0: Tags support for FBE wrapped key.
-
-   * hardware/lineage/interfaces/
-b87bf31 interfaces: Add id HAL definition
-05204d9 interfaces: Add touch HIDL interface definitions
-7962e0f interfaces: Add 2.0 livedisplay interfaces
-
-   * hardware/nxp/nfc/
-9dab64a nfc: Restore pn548 support to 1.1 HAL
-
-   * hardware/qcom/audio-caf/msm8998/
-63db10132 audio: replace %zd with %jd for ssize_t argument
-0acdcf976 audio: Use normal tinycompress
-c53b0933f audio: Guard power@1.2 hints
-6b8c50d96 Move audio-perf to HAL module
-492b31c63 audio: Use perf hints from audio HAL for ULL and MMAP
-7b30d04d9 audio-hal: use powerHAL 1.2 to do performance hint
-
-   * hardware/qcom/bt-caf/
-d56f391 libbt-vendor: Fix BLUETOOTH_MAC_ADDR_BOOT_PROPERTY definition
-fdf614d Don't build libbt-hidlclient for OSS builds
-e2d8b8a Load bluetooth firmwares from /vendor
-7b39106 Add missing headers to libbt-vendor
-f5a655a Apply the Cherokee's mechanism of stopping hci_filter to ROME
-23c6ceb BT: Moving chipset version parameters' initialization out of ALOG
-06c2795 Remove hardcoded LOCAL_MODULE_PATHS from vendor components. (bt)
-9d77a1b Add vendor-specific message types for FM.
-f24346d libbt-qcom: Allow reading BT address from property
-d823934 Bluetooth: load btaddr from NV if QCOM_BT_USE_BTNV is set
-5769f39 libbt: Fix case where SoC type is not set
-b902cac libbt-qcom: Allow building without proprietary bits
-
-   * hardware/qcom/keymaster/
-24dce92 keymaster: move to /vendor
-d7743aa keymaster: Fix compiler warnings
-6883612 keymaster: add TARGET_PROVIDES_KEYMASTER
-4d70aa2 keymaster: Featureize support for waiting on QSEE to start
-1aad58f Keymaster: Check if keymaster TZ app is loaded
-ddaa975 keymaster: Set HEAP_MASK_COMPATIBILITY by platform for QCOM_HARDWARE
-5eb6ab9 Keymaster: Support for 64bit userspace and 32bit TZ
-c89d1f6 keymaster: Add kernel dependency
-86523a6 Revert "Remove legacy keymaster support for msm8226"
-13ffd43 Revert "msm8974: remove from top level makefile"
-
-   * hardware/qcom/wlan-caf/
-7bb928d wcnss_service: Read serial number from custom property
-c092cd9 wcnss_qmi: Generate a fixed random mac address if the NV doesn't provide one
-
-   * packages/apps/Camera2/
-0fabbc430 Camera2: Stop using GPS when going to background
-058500879 Camera2: Remove settings preferences only once
-b4845b788 Camera2: Only autofocus before a snap if we are actually in "auto" mode.
-2c0260217 Don't attempt to convert degree to orientation enum twice
-14f667ca8 Camera2: Target API 27
-cadd9d943 Use mCameraAgentNg for getting camera info when available
-
-   * packages/apps/Nfc/
-6854433c NFC: Adding new vendor specific interface to NFC Service
+   * packages/apps/LineageParts/
+4533081 LineageParts: Drop `Control ringtone volume` setting
+4ab6520 LineageParts: Reenable buttons related settings
 
    * packages/apps/crDroidSettings/
-8767e6c Revert "crdroid: Stick HW keys settings"
-ef6e3e6 crdroid: Drop 'Control ringtone volume' setting for pie
 2a022b1 crdroid: Fix qs anim keys
 98ba557 crdroid: bring up remaining animation settings
 ac031e2 Allow toggling animations off [2/2]
 c832d9f AOKP custom system animations (2/2)
+7bb2c0d crdroid: make screen off animation selection logical [2/2]
+b913959 crdroid: Stick HW keys settings
 
-   * system/bt/
-635b57b78 Add support to force disable enhanced sco commands
-46d8d3c3b Bluetooth: Read BLE vendor capability to proceed on Secure conn
-0ca537e62 Prevent abort in case of command timeout
-
-   * system/sepolicy/
-69f6c5d8 Build sepolicy tools with Android.bp.
-8377fedc Add rules required for TARGET_HAS_LEGACY_CAMERA_HAL1
-
-   * vendor/qcom/opensource/cryptfs_hw/
-fde75bd cryptfs_hw: add missing logging tag
-6de3a9c cryptfs_hw: Featureize support for waiting on QSEE to start
-e1376fd cryptfs_hw: Add compatibility for pre-O hw crypto
+   * system/vold/
+76fd200 secdiscard: should pin_file to avoid moving blocks in F2FS
+28c4871 vold: Also wait for dm device when mounting private volume
+2cdb693 vold: Make sure block device exists before formatting it
+9fc9c89 vold: Accept Linux GPT partitions on external SD cards
+4fb77bf vold: Allow reset after shutdown
+261e090 vold: skip first disk change when converting MBR to GPT
+40ae013 Fix the group permissions of the sdcard root.
+eba4b5e vold ext4/f2fs: do not use dirsync if we're mounting adopted storage
+71e1a38 Treat removable UFS card as SD card
+c111a2f vold: Mount ext4/f2fs portable storage with sdcard_posix
+8a780bd vold: Honor mount options for ext4/f2fs partitions
+0a91f75 vold: Support internal storage partitions
+9f374e5 vold: Fix fsck on public volumes
+8b70f34 vold: add support for more filesystems for public storage
 
 ====================
      09-24-2018
