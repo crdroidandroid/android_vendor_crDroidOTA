@@ -1,17 +1,20 @@
 ====================
-     09-27-2018
+     09-28-2018
 ====================
 
 
    * build/kati/
 b20c76d Do not limit threads upon calling legacy GNU make
 
+   * build/make/
+150af5430 build: Automatically replace old-style kernel header includes with new header lib
+
+   * build/soong/
+f94e1a60 soong sbox: Add option to allow copying all generated output
+
    * dalvik/
 9e3021d01 dexdeps: Ignore static initializers on analysis.
 4e1cba07e dexdeps: Add option for --include-lineage-classes.
-
-   * device/oneplus/cheeseburger/
-0003994 cheeseburger: Adapt for local LineageHW java overlays
 
    * device/qcom/sepolicy/
 05baf5a0 sepolicy: Allow perf HAL to set freq props
@@ -37,6 +40,7 @@ eb19d41c qcom: Label vendor files with (vendor|system/vendor) instead of vendor
 392e909 Update bt vendor callbacks array in vfs code
 
    * external/tinycompress/
+c602a19 tinycompress: Use generated kernel headers
 16d6929 tinycompress: Fix compilation on old targets
 5ae0fa6 tinycompress: tinycompress fixes
 
@@ -44,14 +48,6 @@ eb19d41c qcom: Label vendor files with (vendor|system/vendor) instead of vendor
 d23bf9ad8ad ListView: Obtain next list item in advance
 79a14cb3fd3 PackageManagerService: update client app info when related shared library updated.
 4600b33af9b ExternalStorageProvider always throws exception when renaming
-8372beedb53 CompassTile: Do not use slashed icon
-15d1f21bbab Use alphaoptimized layout for custom icons on left
-38b9b334787 SystemUI: Network Traffic [1/3]
-2013923f017 SystemUI: Add Lineage statusbar item holder
-29cbde84aba CPUInfoTile: Reduce code redundancy
-1b25133a9a4 ExpandedDesktopTile: Set default state inactive
-c4e8b23f13e CompassTile: Set default state inactive
-cef16fb2680 Add Compass tile
 
    * frameworks/opt/net/wifi/
 a65987176 wifi: Not reset country code for Dual SIM if any slot is active
@@ -70,6 +66,7 @@ e78178b7 keymasterV4_0: Tags support for FBE wrapped key.
 aad9960 interfaces: Add 2.0 livedisplay interfaces
 
    * hardware/nxp/nfc/
+1199fb5 nxp: Rename HAL to @1.1-service-nxp
 498d33a nfc: Restore pn548 support to 1.1 HAL
 
    * hardware/qcom/audio-caf/msm8916/
@@ -130,7 +127,7 @@ aa268f1 Revert "msm8974: remove from top level makefile"
 8379e44 wcnss_qmi: Generate a fixed random mac address if the NV doesn't provide one
 
    * lineage-sdk/
-967a538 Custom inactivity threshold for network traffic monitor [1/2]
+301bf4b sdk: Set summary automatically if required
 
    * packages/apps/Camera2/
 8a822c251 Camera2: Stop using GPS when going to background
@@ -140,15 +137,8 @@ aa268f1 Revert "msm8974: remove from top level makefile"
 899e8971b Camera2: Target API 27
 1d8c3741b Use mCameraAgentNg for getting camera info when available
 
-   * packages/apps/DeskClock/
-8317c6491 Make new menu entry to link to cLock widget settings.
-d884f34f2 Provide upgrade path for cm-14.1 -> lineage-16.0
-
    * packages/apps/Nfc/
 ca33917e NFC: Adding new vendor specific interface to NFC Service
-
-   * packages/apps/crDroidSettings/
-573d222 crdroid: Bring back network traffic settings
 
    * system/bt/
 0842b8304 Add support to force disable enhanced sco commands
@@ -181,13 +171,71 @@ eacb4dc vold: Honor mount options for ext4/f2fs partitions
 dc07cca vold: add support for more filesystems for public storage
 
    * vendor/crDroidOTA/
+a006944 cheeseburger: Update link
+889542b cheeseburger: Update
+eae7e74 sagit: 27
 3c4be95 dumpling update: crDroid v5 build 20180927
 1326c19 mido: update
 
+   * vendor/lineage/
+cbf59bd4 lineage: Automatically set soong namespace when setting    * pathmap
+dd95955b vendor/lineage: Remove kernel.mk headers generation
+4e11b1a9 lineage: Dynamically generate kernel headers using lineage generator
+cb9a6505 vendor/lineage: Add soong generator module type
+6f9dda10 lineage: Move some kernel definitions to BoardConfigKernel
+
    * vendor/qcom/opensource/cryptfs_hw/
+f59584c cryptfs_hw: Use generated kernel headers
 8799666 cryptfs_hw: add missing logging tag
 cd25165 cryptfs_hw: Featureize support for waiting on QSEE to start
 687888b cryptfs_hw: Add compatibility for pre-O hw crypto
+
+====================
+     09-27-2018
+====================
+
+
+   * device/oneplus/cheeseburger/
+0003994 cheeseburger: Adapt for local LineageHW java overlays
+
+   * frameworks/base/
+8372beedb53 CompassTile: Do not use slashed icon
+15d1f21bbab Use alphaoptimized layout for custom icons on left
+38b9b334787 SystemUI: Network Traffic [1/3]
+2013923f017 SystemUI: Add Lineage statusbar item holder
+29cbde84aba CPUInfoTile: Reduce code redundancy
+1b25133a9a4 ExpandedDesktopTile: Set default state inactive
+c4e8b23f13e CompassTile: Set default state inactive
+cef16fb2680 Add Compass tile
+4d76f122ba1 QS: Add Expanded Desktop QS Tile
+8bc42014a67 PhoneWindowManager: Do not panic if immersive mode active
+e3a224a25c9 Implement expanded desktop feature
+
+   * kernel/oneplus/msm8998/
+9276fdb6d Merge 'oneplus/QC8998_O_8.1' into 9.0
+
+   * lineage-sdk/
+967a538 Custom inactivity threshold for network traffic monitor [1/2]
+
+   * packages/apps/DeskClock/
+8317c6491 Make new menu entry to link to cLock widget settings.
+d884f34f2 Provide upgrade path for cm-14.1 -> lineage-16.0
+
+   * packages/apps/LineageParts/
+6657e3f ExpandedDesktop: Fix crash with resource ID
+1f88aaa Moved expanded desktop settings to crdroid settings
+cc0f923 LineageParts: Re-enable expanded desktop.
+
+   * packages/apps/crDroidSettings/
+573d222 crdroid: Bring back network traffic settings
+bbe9e3d crdroid: Re-enable expanded desktop settings
+
+   * packages/providers/MediaProvider/
+0effada MediaProvider: set usesCleartextTraffic prop
+
+   * vendor/crDroidOTA/
+1898859 sagit: 26
+58d2dca cheeseburger: Update
 
 ====================
      09-26-2018
@@ -200,16 +248,14 @@ bb8244b manifest: Track libcore
 92ca27f Initial fixes for racy slider
 
    * frameworks/base/
-4d76f122ba1 QS: Add Expanded Desktop QS Tile
-8bc42014a67 PhoneWindowManager: Do not panic if immersive mode active
-e3a224a25c9 Implement expanded desktop feature
 881c1f22914 SystemUI: Sort subscriptions in reversed order
 a5a667681ae PM: Signature spoofing [1/2]
 794979911c0 core: Add support for MicroG
 854c13e7df0 base: Delink HW keys toggle from navbar
+28890f5307b Forward port 'Swap volume buttons' (1/3)
 
-   * kernel/oneplus/msm8998/
-9276fdb6d Merge 'oneplus/QC8998_O_8.1' into 9.0
+   * frameworks/native/
+c458fb86a Forward port 'Swap volume buttons' (2/3)
 
    * libcore/
 ba8378dff Libcore: Amend NoSuchMethodException message
@@ -217,36 +263,29 @@ ba8378dff Libcore: Amend NoSuchMethodException message
 8b4d57808 Work around 32 bit glibc bug.
 712f57ded XML Pull Parser optimizations
 
-   * packages/apps/LineageParts/
-6657e3f ExpandedDesktop: Fix crash with resource ID
-1f88aaa Moved expanded desktop settings to crdroid settings
-cc0f923 LineageParts: Re-enable expanded desktop.
-
    * packages/apps/Snap/
 a1b282bb6 SnapdragonCamera2: Add missing RECEIVE_BOOT_COMPLETED permission
 d06e26324 SnapdragonCamera2: fix record location
 
    * packages/apps/crDroidSettings/
-bbe9e3d crdroid: Re-enable expanded desktop settings
 8ee9cb3 PM: Signature spoofing [2/2]
 197410f crdroid: Delink HW keys toggle from navbar and hw keys
 8767e6c Revert "crdroid: Stick HW keys settings"
-
-   * packages/providers/MediaProvider/
-0effada MediaProvider: set usesCleartextTraffic prop
+ef6e3e6 crdroid: Drop 'Control ringtone volume' setting for pie
+2a022b1 crdroid: Fix qs anim keys
+98ba557 crdroid: bring up remaining animation settings
 
    * vendor/crDroidOTA/
-1898859 sagit: 26
-58d2dca cheeseburger: Update
 2761065 dumpling update: crDroid v5 build 20180925
 
 ====================
      09-25-2018
 ====================
 
+   * android/
+2c29381 manifest: Enable sdk prebuilt
 
    * frameworks/base/
-28890f5307b Forward port 'Swap volume buttons' (1/3)
 5014cd58c8c AbsListView: Fix widget couldn't find any view fc
 63413000cd8 Return: Listanimation Views and Interpolator [1/2]
 e9852f6abda Add option to disable scrolling cache [1/2]
@@ -256,47 +295,48 @@ b1e326d2661 FW_Base - XuiMod: Toast Animations [1/2]
 8d7a3d22838 Allow toggling animations off [1/2]
 14327d0f3dd SystemUI: remove unnecessary recent apps transition
 11cdb163382 AOKP custom system animations (1/2)
-
-   * frameworks/native/
-c458fb86a Forward port 'Swap volume buttons' (2/3)
+570a508b177 base: make screen off animation selection logical [1/2]
+d86b1764906 display: Don't animate screen brightness when turning the screen on
 
    * packages/apps/LineageParts/
 4533081 LineageParts: Drop `Control ringtone volume` setting
 4ab6520 LineageParts: Reenable buttons related settings
 
    * packages/apps/crDroidSettings/
-ef6e3e6 crdroid: Drop 'Control ringtone volume' setting for pie
-2a022b1 crdroid: Fix qs anim keys
-98ba557 crdroid: bring up remaining animation settings
 ac031e2 Allow toggling animations off [2/2]
 c832d9f AOKP custom system animations (2/2)
+7bb2c0d crdroid: make screen off animation selection logical [2/2]
+b913959 crdroid: Stick HW keys settings
+d991c1b crdroid: Re-enable available animations
 
    * vendor/crDroidOTA/
 9f554bb dumpling update: crDroid v5 build 20180924
+5e4f130 cheeseburger: Update
 
 ====================
      09-24-2018
 ====================
 
-   * android/
-2c29381 manifest: Enable sdk prebuilt
+
+   * device/oneplus/msm8998-common/
+6fc99cb msm8998: drop dpm
+a8f4909 msm8998: Rename Snap cam package
 
    * frameworks/base/
-570a508b177 base: make screen off animation selection logical [1/2]
-d86b1764906 display: Don't animate screen brightness when turning the screen on
 c633c476098 Add interpolators to qs tiles animation [1/2]
 3cd53d64816 Add animations to quick settings tiles [1/2]
 89e7ac7a306 base: screen off animation config [1/2]
+
+   * packages/apps/Launcher3/
+6121bd8d2 Launcher3: Update default workspace
 
    * packages/apps/crDroidMusic/
 b444ae1a Music: Rename package name to avoid conflict
 37e5ac32 Music: Simplify about section
 fc35d75a Music: Add default adaptive icons
+62ab6ff4 Rename to be generic music app
 
    * packages/apps/crDroidSettings/
-7bb2c0d crdroid: make screen off animation selection logical [2/2]
-b913959 crdroid: Stick HW keys settings
-d991c1b crdroid: Re-enable available animations
 379aef9 crdroid: Remove proximity sensor pref if not supported
 
    * vendor/addons/
@@ -304,7 +344,6 @@ d991c1b crdroid: Re-enable available animations
 2bee48e addons: Support more resolutions for boot animation
 
    * vendor/crDroidOTA/
-5e4f130 cheeseburger: Update
 c6ff605 sagit: 24
 0b525c4 sagit: crdroid pie
 
@@ -312,13 +351,17 @@ c6ff605 sagit: 24
      09-23-2018
 ====================
 
+   * android/
+c1ddd9b manifest: Track crDroid Music
 
    * bionic/
 c691679d8 Implement per-process target SDK version override.
 
    * device/oneplus/msm8998-common/
-6fc99cb msm8998: drop dpm
-a8f4909 msm8998: Rename Snap cam package
+9bf94b8 msm8998: move bluetooth mac to /data/vendor/
+21f73c9 msm8998: Add radio power saving prop
+e77de1c msm8998: Default to high quality NR and JPEG for Snap
+224987b msm8998: Update Snap overlay
 
    * frameworks/base/
 cae35331cb4 Update ringtones and notifications
@@ -337,37 +380,6 @@ f677f3c15b4 ActivityManager: fix npe in ProcessRecord
 8035f7707c3 frameworks: Fix null pointer Issue
 ea4e730229b hwui: Don't run comparisons on non-jank frames
 1a6e3946e3c SystemUI: Fix ArrayList callbacks not being thread-safe
-
-   * packages/apps/Launcher3/
-6121bd8d2 Launcher3: Update default workspace
-
-   * packages/apps/Snap/
-cd4ac0aff Rename to Snap2
-
-   * packages/apps/crDroidMusic/
-62ab6ff4 Rename to be generic music app
-
-   * vendor/crDroidOTA/
-63b9e14 mido: update
-
-   * vendor/lineage/
-2f384d15 lineage: Use add_json_str_omitempty directive for TARGET_LD_SHIM_LIBS
-c6d28428 soong_config: Allow process-specific override of target SDK version
-
-====================
-     09-22-2018
-====================
-
-   * android/
-c1ddd9b manifest: Track crDroid Music
-
-   * device/oneplus/msm8998-common/
-9bf94b8 msm8998: move bluetooth mac to /data/vendor/
-21f73c9 msm8998: Add radio power saving prop
-e77de1c msm8998: Default to high quality NR and JPEG for Snap
-224987b msm8998: Update Snap overlay
-
-   * frameworks/base/
 52773bc546b Add DeskClock in powersave whitelist
 450b1b84c41 Force Expanded Notifications [1/2]
 032ec7df16f Base: HeadsUp snooze function [1/2]
@@ -382,17 +394,6 @@ d848241e379 Add device key action to kill app [2/3]
 246e7bbe124 Allow screen unpinning on devices without navbar
 01567f8ff06 Framework: Forward port Long press back to kill app (2/2)
 d2c26136148 Add toggle to disable HW keys [1/2]
-1dd0da237b6 PhoneWindowManager: Allow torch and track skip during ambient display
-a7f81836b6d fw/b: Allow customisation of navbar app switch long press action
-2f614931081 Camera button support
-5b40759ef28 PhoneWindowManager: Implement press home to answer call
-e309149079d PhoneWindowManager: Tap volume buttons to answer call
-93bda124999 Reimplement device hardware wake keys support
-347ade2b4de Reimplement hardware keys custom rebinding
-d916fd352a6 SystemUI: add left and right virtual buttons while typing
-7e60b9332cd Long-press power while display is off for torch
-8cec9ffba44 PhoneWindowManager: add LineageButtons volumekey hook
-cb972ab8795 Framework: Volume key cursor control
 
    * lineage-sdk/
 02fdb28 Battery light: 100% charged level (3/3)
@@ -415,6 +416,9 @@ c6b1ddc8f Launcher3: Stability NullPointer issue
 1221f8f681 Settings: Add new frags to indexable
 a340867b0a Settings: Fix NPE with customdialogpref for backlight settings
 
+   * packages/apps/Snap/
+cd4ac0aff Rename to Snap2
+
    * packages/apps/crDroidSettings/
 8036192 crdroid: Bring up buttons frag
 071af49 crdroid: Bring up buttons frag
@@ -423,26 +427,55 @@ a340867b0a Settings: Fix NPE with customdialogpref for backlight settings
 f08a094 addons: Update overlay for crDroid music
 
    * vendor/crDroidOTA/
+63b9e14 mido: update
+
+   * vendor/lineage/
+2f384d15 lineage: Use add_json_str_omitempty directive for TARGET_LD_SHIM_LIBS
+c6d28428 soong_config: Allow process-specific override of target SDK version
+
+====================
+     09-22-2018
+====================
+
+
+   * frameworks/base/
+1dd0da237b6 PhoneWindowManager: Allow torch and track skip during ambient display
+a7f81836b6d fw/b: Allow customisation of navbar app switch long press action
+2f614931081 Camera button support
+5b40759ef28 PhoneWindowManager: Implement press home to answer call
+e309149079d PhoneWindowManager: Tap volume buttons to answer call
+93bda124999 Reimplement device hardware wake keys support
+347ade2b4de Reimplement hardware keys custom rebinding
+d916fd352a6 SystemUI: add left and right virtual buttons while typing
+7e60b9332cd Long-press power while display is off for torch
+8cec9ffba44 PhoneWindowManager: add LineageButtons volumekey hook
+cb972ab8795 Framework: Volume key cursor control
+62e30c1adb1 policy: introduce pocket lock
+
+   * packages/apps/crDroidSettings/
+0654658 crdroid: enable pocket lock settings
+
+   * vendor/crDroidOTA/
 c7e8e6b dumpling update: crDroid v5 build 20180921
+06b2903 cheeseburger: Update
+
+   * vendor/lineage/
+f1c763ed crdroid: Add back music app
 
 ====================
      09-21-2018
 ====================
 
 
-   * frameworks/base/
-62e30c1adb1 policy: introduce pocket lock
-d7c9c6f8953 pocket: introduce pocket judge
+   * external/sqlite/
+b3f8ac0 sqlite: upgrade to SQLite 3.25.1
 
-   * packages/apps/crDroidSettings/
-0654658 crdroid: enable pocket lock settings
+   * frameworks/base/
+d7c9c6f8953 pocket: introduce pocket judge
+b17af6aa141 base: themes: dont use colorPrimary for active qs
 
    * vendor/crDroidOTA/
-06b2903 cheeseburger: Update
 ffea1ba dumpling update: crDroid v5 build 20180920
-
-   * vendor/lineage/
-f1c763ed crdroid: Add back music app
 
    * vendor/oneplus/
 c006c61 msm8998: Remove slim_daemon
@@ -458,17 +491,13 @@ c006c61 msm8998: Remove slim_daemon
    * build/make/
 66238fdeb build info: Remove line breaks
 
-   * external/sqlite/
-b3f8ac0 sqlite: upgrade to SQLite 3.25.1
-
-   * frameworks/base/
-b17af6aa141 base: themes: dont use colorPrimary for active qs
-
    * packages/apps/Snap/
 48b26a831 Snap it!
 
    * vendor/crDroidOTA/
 be78a88 cheeseburger: Update
+0931429 mido: update
+050c726 Update whyred - 19/09/2018
 
 ====================
      09-19-2018
@@ -481,263 +510,5 @@ be78a88 cheeseburger: Update
 2c2ea44 libpng: Suppress sign compare warning
 
    * vendor/crDroidOTA/
-0931429 mido: update
-050c726 Update whyred - 19/09/2018
 56d85b7 dumpling update: crDroid v5 build 20180918
-
-====================
-     09-18-2018
-====================
-
-
-   * device/oneplus/msm8998-common/
-4698a80 msm8998: Migrate to versioned VNDK layout
-cbce74e Revert "vndk-sp: Move to vendor again"
-f137476 msm8998: Add 'vendor.' prefix to a vendor HAL service name - Part 2
-57ce0aa msm8998: move rootdir to prebuilt
-0d45453 msm8998: Add 'vendor.' prefix to a vendor HAL service name
-
-   * external/libpng/
-7e2fa9f Fix build errors with MSVC ARM64
-db0c76b Prefer memcpy to manual pointer arithmetic
-3c482d7 ARM: Disable hand-written AArch32 NEON on AArch64
-
-   * frameworks/base/
-dd8f6756eae Revert "Delay blanking of displays to improve performance"
-e8649a55d8a Fix pinned stack may be null after animation end
-ccfa1e131a3 Expose faststroller text for themes
-e898cae4d0e Allow Immersive cling colors to be fully themed
-3e741f73e45 base: fix notification overlay config
-00d0a2a09ab Expose two target preference divider color
-45bded88ac5 Expose and tint settings dashboard icon tint
-fe1dc728b8f Add support for theming notifications
-a65ebc06a07 Expose autofill save dialog text color
-432ddd7854d Expose toast colors for themes
-60784c71d8d Expose notification info text color
-20747743950 NotificationColorUtil: Fix missing resource import
-3b85bf6fd55 Expose screen pinning dialog background and text color
-ffd8e81e83a Expose resolver hardcoded colors
-f965063c98f Add default temp sysfs path for CPUinfo overlay
-df057ded696 base: Add bool to enable/disable doze by default
-b745767ea75 Allow tuning ambient display with sensors [1/3]
-dbc66a9f6f2 Add string to store status for dark theme usage
-51901463a54 Toast icon switch [1/2]
-d988c8b0020 Show icon of package associated with Toast
-f310379012e Integrate crDroid OTA into crDroid Settings [1/3]
-4911077d2dc StatusBar: add missing import for ContentObserver
-c50976d6f23 LOS theming: worst APIs ever [2/3]
-9178f622701 SystemUI: Berry styles
-b3908494c8e DNM: Revert "OMS: harden permission checks"
-cd47c8dfb9a LockSettingsService: Support for separate clear key api
-4419a776612 Use fdeCheckPassword error code to indicate pw failure
-2782cc014b0 frameworks: base: Port password retention feature
-a253b5fa393 Base: fix facelock crash when lock screen is disabled
-a3fcf5f883a Camera: Add missing imports
-a1ddb60a7b1 Camera: Ignore torch status update for aux or compsite camera
-a00fef67b0d Camera: Skip stream size check for whitelisted apps..
-cef9dec0b9f camera: Skip HFR checks for privileged apps.
-bc7b688a011 Camera2: Notify fps as Session Based Parameter
-4b5a72631c5 camera: Check if aux camera whitelist is set before restricting cameras
-88be50e928c Camera: Expose Aux camera to apps present in the whitelist
-ccb02db8e8d Camera: Clearing exception for Extended Face
-5f4a9d44c0c Camera: Extend face detection
-e1c99e35a35 Add AlarmsBlocker [1/2]
-6c5aa69d3e5 Add WakelockBlocker [1/2]
-5604b1aa9da QS: Add CPUInfo toggle tile
-41bf00f5ccf SystemUI: add CPU info overlay
-ab7f9e09765 Base: Hide power menu on secure lockscreen [1/2]
-1e1e61da144 base: persist screenshot type in settings
-37f8359e409 QS: Add partial/full screenshot QS tile
-ff35d233348 QS: Add Screenshot QS Tile
-53c6830e324 core: Add api to take screenshots
-1e06724fe25 base: bring back screenrecord [1/2]
-52efde5dbee Live Volume Steps [1/2]
-4e92363a3cb Improve a calculation method for LTE antenna reception level
-e5d2296f50d QS tile titles visibility [1/2]
-d900dee93ad Statusbar: Clean up Tuner API
-2cd79508311 Quick settings: Add Haptic Feedback to tiles [1/2]
-86fb24a0db9 Add option to select brightness slider positon [2/3]
-5ba22e03ea4 Fix playing screenshot's sound when camera's sounds off
-ffda23a62d3 Allow to disable screenshot sound [1/2]
-db4a8bff6ea Separate double tap to sleep on lockscreen [1/2]
-e65e8e87918 Return: Smart Pulldown [1/2]
-e7717fa50b7 SystemUI: Add case to quick pull down status bar anywhere
-d3355c0b605 NotificationPanelView: Clean up tuner API
-0c8ff17412b SystemUI: Update NFC tile drawable
-8b5ca1109b5 MediaScanner behavior on boot (1/3)
-ec25f500773 Keyguard: Fix scramble PIN view for multiple users
-2304a83491e Disable PIN entry after successful quick unlock
-35047446213 Keyguard: Forward port lockscreen quick unlock (1/2)
-54a0425386c SystemUI: Add back the Pixel Navbar
-b830fa2c129 Add navigation bar visibility toggle [1/2]
-7d93bfc945b Add preference for automatic face unlocking [1/2]
-09a1f21ab40 Dismiss keyguard automatically when face is recognized
-9d302116645 Add crdroid utils
-354b9142256 base: Add metric for crDroid Settings
-aa8de5a03da BatteryService: add dash charging support
-e8d17454c59 LockscreenCharging: squashed (1/3)
-72b2ebc55fa base: Add stub files
-3ae2f44031e SystemUI: re-enable Tuner
-b25b348b61a Disable AOD by default [1/2]
-b45f8367b16 Revert "Remove getIntWithSubId in TelephonyManager."
-203869914c8 Parse Exif OffsetTime in MediaScanner
-992edc6aa50 Can't enter "Connected devices" after pairing the BT REF phone
-00ac54ae5ba Use getCompressedSizeLong to get correct size for 2G file
-1efc1cd5f1b base: disable warning in StaticLayout
-a09b5c44bf5 storage: Set all sdcards to visible
-e06dcaf3257 connectivity: Configure additional TCP parameters
-532981cefc0 Telephony: Don't crash for too long baseband version
-57d2fb603c3 Fix MtpDatabase multithreading NullPointerException
-788eda3829d MtpDatabase: Fix potential NULL dereference errors
-79ea11bb419 Return null if a provider died before acquisition
-140f3fac748 SystemUI: restart timeout causes black screen
-fcb11c554d4 system_server: Default to FULL synchronous mode for sqlite DBs
-b71c363baf9 wm: Passing a new ArraySet instance to avoid crash
-516514ec72c GlobalActions: Fix systemserver crash issue
-bfa2a63b1b6 Make the allPendingIntents add operation thread-safe
-fca57ab27a2 Delay blanking of displays to improve performance
-897558a17b7 Fix System Server Crash in completePauseLocked()
-8c54b174b76 Reuse DeathRecipient object for StatusBarManagerService
-48c25117307 Binder threads exhausted during waiting provider publish
-179f8ec7c29 ViewRootImpl: Fixed memory leak caussed by viewrootImpl objects
-b3758c8c86d ContentProvider: avoid client waiting forever if server is killed
-971d5d5a477 frameworks: Fix activity stack ConcurrentModificationException
-9c26995982c PackageManagerService: Avoid NPE in matchComponentForVerifier
-51f1e8927a5 Google FRP: save password quality in resetPassword
-d15b0968bec base: limit direct share targets to reduce lag
-cf4d652ead1 Reduce the uncessery wm call while checkKeyguardVisibility
-5e384eea1e0 aapt: Fix compiler warning (clobbered by longjmp)
-667fdbbbb09 aapt: add check for untranslatable "string-array"s
-c665cd4e6a1 aapt: Use a std::map instead of a SortedVector
-44373f9be10 aapt: Speed up the style pruning
-7d65169ac1d SystemUI: Prevent NPE in Dependency.get() in BrightnessController
-fafd0e50fcc CarrierConfigManager: Enable enhanced call blocking function
-4852a8d92e6 TelephonyManager: Prevent NPE when registering phone state listener
-f42b59a7044 SystemUI: guard possible concurrent issue in LocationController
-c6fced34764 SystemUI: thread protect keyguard callbacks
-bc88e54e4cb InputWrapper: Opt out early if session == null
-6a72f3fee3d bgdexopt: Let PM handler run between optimizations
-c8c78cfd669 Update whitelist when installing system application
-5bedc4ff7b8 fix incorrect context classloader initialization in system_server
-ad56f0f12e9 Add system_server to system group only if per_app_memcg is true
-520385199e0 StorageManagerService: Fix for system_server crash while booting
-b6f956abbea core: set default longpress home action setting
-f2ac2d5d6ea WindowManagerService: Remove status bar perm checks
-508f19b0012 BatteryStats: Correct formatter for pkginst in battery stats
-ea264d751a4 SettingsLib: Cherry-pick misc fixes to AOSP
-14a89400368 Handling InputMethodService show with BadTokenException
-f0ab9dfa4ef Fix NullPointerException in CaptivePortalLogin
-fd09bae1a01 DragSurface: destroy surfacecontrol in view site
-eb73b518883 Not passing contentInsets to onAnimationStart
-518be6322f8 core: touch response optimizations
-9a5216c97d4 Optimize AbsListView to reduce click operation latency
-2fdbff9c96f Persistent disable background app notification by default
-f1fc0591785 services/job: Fix two Jobscheduler bugs
-6f73960d185 SystemUI: Remove annoying log caused by aosp bug
-aa50788c2ee Remove another unused calling for better performance
-3e709556aab NavigationBarView: Avoid NPE before mPanelView is created
-75810d2f54e BackupAgent: add backup shared mode
-6ff76728f14 Add missing STORAGE_INTERNAL permission for BackupRestoreConfirmation
-1be7da5dd3e SettingsProvider: Fix for google backup and restore
-34fe3140f65 Rename the backup file to base file when backup exists
-e00f309db40 SQLite: Do integrity_check only once
-d52413591a5 SQLiteDatabase: Catch corrupt exception during transaction
-3acd54fff43 Add handling SQLiteDatabaseCorruptException
-fb846123da3 MediaScanner: Detect folders
-b8313903238 Make Build.TYPE and Build.FINGERPRINT consistent for apps.
-203f2efa2cd audio: Don't play sound effects if stream is muted
-e304a1bf688 Camera: Don't throw exceptions when value pairs have spaces in them
-76bbbad0487 SystemUI: fix MediaProjection cast crash
-fef890af469 Enable NSRM (Network Socket Request Manager).
-3083ece424c aapt: silence density flag warnings
-d897c4bf106 Avoid needless Integer.valueOf() object allocation.
-3cbcdfb11a9 Reduce log verbosity: Don't spam logcat
-9ba7cfde744 Improve scrolling cache
-3832e05fb93 DEBUG: Turn off some debugging we don't need.
-1ffeb74d0c7 SmoothSpinners: Makes the loading "spinner" animation smoother
-38638923c88 Allow Python Versions Higher than 2.6
-51916562b08 ParcelFileDescriptor: can we stop the panic here?
-4c268fb7c8e Scroll: modified velocitytracker
-dbf260c22f7 BluetoothAdapter: disable logspew
-358c0046802 Allow faster app switching
-afda8805b85 Speed up Orientation Listener
-bcff0cea252 base: set scrolling to 0.006f
-348b0b179e7 ViewConfiguration: misc changes (rev)
-b6f61d35c91 android.view: Speed things up!!
-49b67afc9c6 libs: hwui: Enable perf mode and disable pgo
-9b01b005c0c hwui: Disable fine-grained logging
-78298fcc228 hwui: Remove deprecated compiler flag
-
-   * lineage-sdk/
-5d0b74f Add option to select brightness slider positon [1/3]
-566bd75 Allow value 3 for status bar quick pull down
-bdf6348 Lineage style interface: fix possible NPE when OMS is not up on start
-55abe36 Prevent NPE with current dark overlay
-8974d2f lineage-sdk: Prevent NPE in style interface service
-e2f50c0 LOS theming: worst APIs ever [1/3]
-fc19a34 lineage-sdk: Make styles init at system services ready
-4a2a08c crdroid: Do better for version pref
-c2a1306 lineage-sdk: Enable advanced reboot by default
-83dd0e8 Disable by livedisplay by default
-cf6ff8c sdk: Rebrand to crdroid
-578d6bf sdk: Map to ro.modversion
-
-   * packages/apps/LineageParts/
-7b00dd5 Move style settings under crdroid [1/3]
-dbd5eca Change default accent to pixel blue
-a96290e LOS theming: worst APIs ever [3/3]
-7c47b7c Make trust interface less boring
-4846b6c LineageParts: Silently kill anonymous stats collections
-b044b36 Moved status bar settings to crdroid settings
-409a8e7 Rebrand to crdroid
-
-   * packages/apps/Settings/
-764cd95d3f Changes on Settings UI for a better user experience
-992cd5b832 Settings: Ambient settings moved under crDroid
-270e03e38b Allow tuning ambient display with sensors [3/3]
-47c6c52f04 Themes: Settings: Fix theming zoom preview timestamp text color
-b8050e8212 Themes: Settings: fix storage icon tint
-eca86ea208 Themes: Settings: Expose storage summary text
-4cdeaadb11 Themes: Settings: expose msim color picker text colors
-46138bb210 Themes: Settings: Expose storage icon colors
-078811705d Settings: fix themeing of sim preference dialogs
-b9f2279966 Integrate crDroid OTA into crDroid Settings [2/3]
-8271bed613 Settings: Include crdroid settings indexable
-b745d861d1 Port "Battery Usage Alerts" feature from factory images
-ed64f26601 InstalledApp: show link to Google Play
-1dd2c3fece Keyguard: Forward port lockscreen quick unlock (2/2)
-0c3730131c Settings: remove unneeded collapse limits
-0f1712ebb0 Move style settings under crdroid [2/3]
-bfdbeda628 Move lockscreen visualizer and media metadata under crdroid [1/2]
-a087a412e1 Settings: fix dark style issues
-d6e1f3309f Settings: Hide AOSP theme-related controllers
-7dd2ccd55a Add crdroid settings category
-a473c1a606 Settings: Hide API version
-5996c3602b Disable AOD by default [2/2]
-9838321ee0 Settings: Enabled advance reboot by default
-ba9f7ccd5e Settings: Remove system update preferences
-7338ed1595 Settings: (Bluetooth) Disabling Contact Sharing Doesnt disconnect PBAP
-92f792bb94 Settings: Fix bluetooth pan memory leakage
-e5dbf5e4ee Settings: Add animations on some preferences
-4743848ddf Fix the Wifi Calling back button goes to wrong screen
-1830c94eb3 Settings: Cherry-pick a bunch fixes to AOSP
-10fa45d2bd Fix toast is covered by PIN code screen after wrong pin
-f32025f62f Fix crash in clicking Default Home gear icon
-f11fb39996 Settings: Fix for NPE caused by missing argument in setResult for ChooseLockGeneric
-18d6ec0fa0 CryptKeeper need release all StatusBar blocks when it is destroyed by system
-17786c64ba Settings:Fix the crash caused by show DialogFragment after it state already saved
-67257981ec InstalledAppDetails: fix refreshing storage summary after force stop
-994770df99 Settings: Fixed bug in the summary of "Special app access"
-5f232c060d Settings: Fixed crash for ConfigDialogFragment
-d08598d644 DashboardSummary: Fixed memory leak onPause
-573729a659 Settings: Fix NullPointerException in BatteryUtils
-ae8aedc7b5 Settings: Remove legal and regulatory info from device settings
-adc7b8f94b DevelopmentSettings: Remove system update switch
-71832892e1 deviceInfo: Fix imei dialog fc when only 1 sim is inserted
-b1fab4dd60 Revert "Settings: Add LineageOS legal info"
-f3bea3aa5e Revert "Settings: adaptive icon"
-d4d99cebd5 Revert "Settings: Add contributors cloud to device info"
-
-   * vendor/crDroidOTA/
-164957b dumpling update: crDroid v5 build 20180917
 
