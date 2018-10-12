@@ -1,13 +1,33 @@
 ====================
+     10-12-2018
+====================
+
+*Fixed proximity sensor
+
+*Set build to selinux permissive to allow VolTE fix to work
+
+*Integrated VoLTE fix into ROM - Now will ask for SIM setup on each boot without flashing extra zip file
+
+====================
      10-11-2018
 ====================
-   * Enforce selinux
-   * MIUI Camera
+
 
    * frameworks/base/
 8cba5077411 Allow using 4G icon instead LTE [1/2]
 720dc2abd75 Make roaming indicator optional [1/2]
+
+====================
+     10-10-2018
+====================
+
+
+   * frameworks/base/
 9731b95ec07 PM: Enable signature spoofing by default [1/2]
+
+   * packages/apps/Settings/
+51512367db Settings: Remove battery light and notification light settings
+7642c708a9 crdroid: Move gesture settings under crdroid
 
    * packages/apps/crDroidSettings/
 bbc8c55 Allow using 4G icon instead LTE [2/2]
@@ -16,20 +36,6 @@ fe45b12 crdroid: Enable signature spoofing by default [2/2]
 feccfbb crdroid: Goodbye gplus :(
 6334094 crdroid: Auto remove notification and battery lights pref properly
 1cd1340 crdroid: Enable statusbar tuner pref
-
-====================
-     10-10-2018
-====================
-
-
-   * hardware/broadcom/libbt/
-2201061 libbt-vendor: add support for samsung bluetooth
-
-   * packages/apps/Settings/
-51512367db Settings: Remove battery light and notification light settings
-7642c708a9 crdroid: Move gesture settings under crdroid
-
-   * packages/apps/crDroidSettings/
 d434a54 crdroid: Move in leftover gesture xml
 
 ====================
@@ -74,8 +80,6 @@ f59164204 DNM: Allow adb debug
 bae687d56 DNM: build: Disable adding compatibility archive on treble builds
 10d94edda target: Skip building QSB
 0df48875d build: Rename OTA package
-f75849ade dex2oat: disable multithreading for WSL
-1f30b17a7 Add detection for WSL
 
    * frameworks/base/
 248d1dbcbfe FB: Clean up oneplus camera support
@@ -330,8 +334,6 @@ d23880d7938 android.view: Speed things up!!
 b78578a6146 libs: hwui: Enable perf mode and disable pgo
 e96cc83eb60 hwui: Disable fine-grained logging
 bf18033326d hwui: Remove deprecated compiler flag
-854332a5a19 Screenshot: Append app name after screenshot date.
-7dc1eeecfa5 SystemUI: Sort subscriptions in reversed order
 
    * frameworks/native/
 8f8e1f6eb Gralloc2: Allow invalid usage bits
@@ -343,6 +345,9 @@ e309a7ccc sensorservice: customize sensor fusion mag filter via prop
 fa5c8510f libbinder: Don't log call trace when waiting for vendor service on non-eng builds
 940042a84 Fix bugs regarding calculate dalvik-cache size
 730aaf581 Input: improve touch response slightly
+
+   * hardware/broadcom/libbt/
+2201061 libbt-vendor: add support for samsung bluetooth
 
    * lineage-sdk/
 258a10b sdk: Don't clear calling identify when calling IOverlayManager.setEnabled()
@@ -402,6 +407,19 @@ a08e59eab7 deviceInfo: Fix imei dialog fc when only 1 sim is inserted
      10-08-2018
 ====================
 
+
+   * build/make/
+f75849ade dex2oat: disable multithreading for WSL
+1f30b17a7 Add detection for WSL
+
+   * frameworks/base/
+854332a5a19 Screenshot: Append app name after screenshot date.
+7dc1eeecfa5 SystemUI: Sort subscriptions in reversed order
+
+====================
+     10-07-2018
+====================
+
    * android/
 e171117 manifest: android-9.0.0_r6 -> android-9.0.0_r10
 
@@ -410,6 +428,10 @@ e171117 manifest: android-9.0.0_r6 -> android-9.0.0_r10
 
    * frameworks/base/
 593900c465c Merge tag 'android-9.0.0_r10' into lineage-16.0-android-9.0.0_r10
+
+   * packages/apps/Launcher3/
+211b3cb77 Launcher3: Add SearchLauncher target
+f9f9337e3 Launcher3: Use new widget style for Google searchbar
 
    * packages/apps/Settings/
 9de0c6bca3 Merge tag 'android-9.0.0_r10' into lineage-16.0-android-9.0.0_r10
@@ -424,20 +446,6 @@ cf8382e Merge tag 'android-9.0.0_r10' into lineage-16.0-android-9.0.0_r10
 2a629d5 Merge tag 'android-9.0.0_r10' into lineage-16.0-android-9.0.0_r10
 
 ====================
-     10-07-2018
-====================
-
-
-   * packages/apps/Launcher3/
-211b3cb77 Launcher3: Add SearchLauncher target
-f9f9337e3 Launcher3: Use new widget style for Google searchbar
-
-   * packages/apps/crDroidSettings/
-7eca2d4 crdroid: Disable face auto unlock pref if not available
-fe43494 crdroid: Fix default snooze timeout value
-a4eb91d crdroid: Remove smart pixels if burn in protection not supported
-
-====================
      10-06-2018
 ====================
 
@@ -446,11 +454,11 @@ a4eb91d crdroid: Remove smart pixels if burn in protection not supported
 b55f2104c90 SystemUI: Fix default mShowDpadArrowKeys value
 
    * packages/apps/crDroidSettings/
+7eca2d4 crdroid: Disable face auto unlock pref if not available
+fe43494 crdroid: Fix default snooze timeout value
+a4eb91d crdroid: Remove smart pixels if burn in protection not supported
 ebba7ad crdroid: Updated translations
 079563c crdroid: Add bluetooth battery level toggle for statusbar and qs
-bcd92c5 crdroid: Bring back carbon gestures frag
-eeb197b Move gesture settings under crdroid [2/2]
-05f0180 crdroid: Bring back smart pixels for devices support it
 
    * vendor/addons/
 cfa2ce7 addons: Update Turbo
@@ -466,6 +474,11 @@ a62a781d74f Tuner: Move clock seconds option to status bar settings
 aecf6fb4079 SystemUI: Add tunables for clock AM/PM style
 5d7cae9a4a3 SystemUI: Add tunables for clock position
 
+   * packages/apps/crDroidSettings/
+bcd92c5 crdroid: Bring back carbon gestures frag
+eeb197b Move gesture settings under crdroid [2/2]
+05f0180 crdroid: Bring back smart pixels for devices support it
+
 ====================
      10-04-2018
 ====================
@@ -477,10 +490,6 @@ aecf6fb4079 SystemUI: Add tunables for clock AM/PM style
 
    * android/
 e499523 manifest: Track vixl
-f0eea9d manifest: Track our libtextclassifier
-
-   * external/libtextclassifier/
-7d0a717 libtextclassifier: enable more languages
 
    * hardware/qcom/power/
 bc8e0f2 power: Remove 1.0 HAL remnants
@@ -488,12 +497,4 @@ bc8e0f2 power: Remove 1.0 HAL remnants
 5eb472d power: Clean up hint IDs
 8599e3c power: set_power_profile: handle errors
 282e889 power: perform_hint_action: return an error code
-
-====================
-     10-02-2018
-====================
-
-
-   * vendor/lineage/
-f27fc405 Add a whitelist for location providers outside of /system [2/2]
 
