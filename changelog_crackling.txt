@@ -1,132 +1,212 @@
 ====================
-     10-10-2018
+     10-13-2018
+====================
+
+   * android/
+dc1bda5 Merge 'lineage-16.0' into 9.0
+c3715a3 manifest: Track our own hardware/broadcom/nfc
+
+   * build/kati/
+28bcf92 Do not limit threads upon calling legacy GNU make
+
+   * dalvik/
+8dba4bd45 dexdeps: Ignore static initializers on analysis.
+201df9173 dexdeps: Add option for --include-lineage-classes.
+
+   * device/qcom/sepolicy-legacy/
+2910165 sepolicy-legacy: Treat BT vendor properties like non-vendor ones.
+
+   * external/ant-wireless/ant_native/
+5306d84 Cast BT_VND_OP_ANT_USERIAL_{OPEN,CLOSE} to bt_vendor_opcode_t in vfs code
+0365d54 Update bt vendor callbacks array in vfs code
+
+   * frameworks/base/
+d506f1a9727 BatteryStyles: Fix battery percent view issues and padding
+b5a06c9cd50 BatterySaverTile: Set meter style to portrait
+44ad80ab70d Fingerprint authentication vibration [1/2]
+7e3bcd9ba49 view: add null check for dispatch touch view
+d7cb659fe51 Fix UsbDeviceManager null object reference
+f80fbab5a09 ExifInterface: Avoid infinite loop on stream seeking failed
+ce267259794 battery: Allow setting custom symbol near text on charging [1/2]
+29d6b38206d BatteryMeterDrawable: add battery styles [1/2]
+027a264f212 Use SHOW_BATTERY_PERCENT to position battery percent [1/2]
+
+   * frameworks/opt/datetimepicker/
+5c17384 DateTimePicker: Add facilities to customize MonthView's appearance
+
+   * frameworks/opt/net/wifi/
+c0f56f892 wifi: Not reset country code for Dual SIM if any slot is active
+7610f2cd0 wifi: don't check if WIFI_DRIVER_STATE_CTRL_PARAM is readable
+248e4e16c wifi: Check whether dev node is accessible or not before opening
+e72364926 libwifi-hal: add flag to wait for kernel driver to get ready
+
+   * hardware/interfaces/
+c599dab7 keymasterV4_0: Tags support for FBE wrapped key.
+bb32f5a7 camera: Only link and use vendor.qti.hardware.camera.device if specified
+c8e78ae7 Camed HAL extension: Added support in HIDL for Extended FD.
+
+   * hardware/lineage/interfaces/
+62be7b4 interfaces: Add id HAL definition
+b02f6f2 interfaces: Add touch HIDL interface definitions
+1c188e9 interfaces: Add 2.0 livedisplay interfaces
+
+   * hardware/qcom/audio-caf/msm8916/
+9bafdaccc visualizer: Fix typedef redefinition
+dc24c5983 audio: Fix old style GNU designator extensions
+aabd39d6d post_proc: Mark unused parameters with (void)
+d885ba723 post_proc: Remove unused label
+f4a402c24 mm-audio: Remove extraneous parantheses
+f3919aee3 audio: Update compiler flags
+e2ca1ae25 Use -Werror in audio-caf/msm8916
+
+   * hardware/qcom/bt-caf/
+70a38d9 Don't build libbt-hidlclient for OSS builds
+e03c296 libbt-vendor: Add missing vendor prefix to a bluetooth.status prop
+fc3e88a libbt-vendor: Fix BLUETOOTH_MAC_ADDR_BOOT_PROPERTY definition
+55fa741 Load bluetooth firmwares from /vendor
+f938ef0 Add missing headers to libbt-vendor
+fa7cc32 Apply the Cherokee's mechanism of stopping hci_filter to ROME
+151a1ec BT: Moving chipset version parameters' initialization out of ALOG
+4281a32 Remove hardcoded LOCAL_MODULE_PATHS from vendor components. (bt)
+077035c Add vendor-specific message types for FM.
+a5b9126 libbt-qcom: Allow reading BT address from property
+9e602d8 Bluetooth: load btaddr from NV if QCOM_BT_USE_BTNV is set
+0bc0842 libbt: Fix case where SoC type is not set
+
+   * hardware/qcom/display-caf/msm8916/
+ec294bf24 hwcomposer: Work around overzealous fortify checks
+44eb1a8c4 Make hwc_vsync thread realtime
+373b73771 display: Include missing headers
+5ab093842 Use libhwui.so instead of libskia.so
+
+   * hardware/qcom/keymaster/
+3173eda keymaster: move to /vendor
+5fbc763 keymaster: Fix compiler warnings
+d3829e9 keymaster: add TARGET_PROVIDES_KEYMASTER
+85aa0ec keymaster: Featureize support for waiting on QSEE to start
+75f15b6 Keymaster: Check if keymaster TZ app is loaded
+b2ba520 keymaster: Set HEAP_MASK_COMPATIBILITY by platform for QCOM_HARDWARE
+08d2127 Keymaster: Support for 64bit userspace and 32bit TZ
+2b477e2 keymaster: Add kernel dependency
+4ef6c1d Revert "Remove legacy keymaster support for msm8226"
+8442d6d Revert "msm8974: remove from top level makefile"
+
+   * hardware/qcom/media-caf/msm8916/
+83e8c8c75 libc2dcolorconvert: Fix clang compilation errors.
+f6df2efa8 Add -Wno-error to compile with global -Werror.
+
+   * hardware/qcom/wlan-caf/
+3c1925b wcnss_service: Read serial number from custom property
+3d45865 wcnss_qmi: Generate a fixed random mac address if the NV doesn't provide one
+
+   * lineage-sdk/
+c248b9f sdk: Disable selinux warning alert for now
+8ff11f1 sdk: Kill trust interface hint on first boot
+
+   * packages/apps/Camera2/
+3679b6f6a Use mCameraAgentNg for getting camera info when available
+
+   * packages/apps/Jelly/
+243233e Jelly: update assets to use outline style
+
+   * packages/apps/Settings/
+b0af338538 Settings: add Trust interface hook
+
+   * packages/apps/crDroidSettings/
+51065f1 Fingerprint authentication vibration [2/2]
+9ed685a Disable square battery for now
+843be6d crdroid: Allow setting custom symbol near text on charging [2/2]
+c5f3d9c crdroid: add battery styles [2/2]
+
+   * system/bt/
+83deaa7f9 Fix for Bluetooth device name is resetting to default name after reboot
+0575b5fef Add support to force disable enhanced sco commands
+dabf7efe5 Prevent abort in case of command timeout
+c13970b93 Bluetooth: Read BLE vendor capability to proceed on Secure conn
+
+   * system/sepolicy/
+b0ba1404 Build sepolicy tools with Android.bp.
+b402f6af Add rules required for TARGET_HAS_LEGACY_CAMERA_HAL1
+
+   * system/vold/
+3763821 vold: Add texfat and sdfat support
+d17f498 vold: Wrapped key support for FBE
+f1b6c29 vold: Move QCOM HW FDE inclusion under lineage namespace
+6a97375 system: vold: Remove crypto block device creation
+1879614 vold: Add Hardware FDE feature
+
+   * vendor/addons/
+dd2fd1f addons: Update default wallpaper
+
+   * vendor/qcom/opensource/cryptfs_hw/
+759783b cryptfs_hw: Use generated kernel headers
+1928c6f cryptfs_hw: add missing logging tag
+5dea351 cryptfs_hw: Featureize support for waiting on QSEE to start
+a74f3d1 cryptfs_hw: Add compatibility for pre-O hw crypto
+
+====================
+     10-12-2018
 ====================
 
 
-   * build/kati/
-2062d3d Do not limit threads upon calling legacy GNU make
+   * packages/apps/crDroidSettings/
+66bae67 Use SHOW_BATTERY_PERCENT to position battery percent [2/2]
 
-   * dalvik/
-6a151551d dexdeps: Ignore static initializers on analysis.
-e45b07279 dexdeps: Add option for --include-lineage-classes.
+====================
+     10-11-2018
+====================
+
+
+   * frameworks/base/
+8cba5077411 Allow using 4G icon instead LTE [1/2]
+720dc2abd75 Make roaming indicator optional [1/2]
+9731b95ec07 PM: Enable signature spoofing by default [1/2]
+
+   * hardware/qcom/audio-caf/msm8974/
+8716833b6 Add -Wno-error to compile with global -Werror.
+
+   * hardware/qcom/display-caf/msm8974/
+b446b062a display: Enable clang for all display modules
+765083daf display: remove compile time warnings
+
+   * hardware/qcom/media-caf/msm8974/
+630adcf06 Add -Wno-error to compile with global -Werror.
+
+   * packages/apps/Settings/
+11b531d4ce Settings: Clean up gestures leftover
+d8e255b296 Settings: Override doze packages
+
+   * packages/apps/crDroidSettings/
+bbc8c55 Allow using 4G icon instead LTE [2/2]
+ee43fa2 Make roaming indicator optional [2/2]
+fe45b12 crdroid: Enable signature spoofing by default [2/2]
+feccfbb crdroid: Goodbye gplus :(
+6334094 crdroid: Auto remove notification and battery lights pref properly
+1cd1340 crdroid: Enable statusbar tuner pref
+
+   * vendor/lineage/
+9edbc84f crdroid: Add microG unifiednlp location provider
+fe003458 kernel: Correct CROSS_COMPILE_ARM32 toolchain
+
+====================
+     10-10-2018
+====================
+
+   * android/
+ed09554 manifest: Track SettingsIntelligence
 
    * device/cyanogen/msm8916-common/
 ecd2fe1 msm8916-common: Make the external camera provider ignore internal cameras
-
-   * device/qcom/sepolicy-legacy/
-8389578 sepolicy-legacy: Treat BT vendor properties like non-vendor ones.
-
-   * external/ant-wireless/ant_native/
-ecab220 Cast BT_VND_OP_ANT_USERIAL_{OPEN,CLOSE} to bt_vendor_opcode_t in vfs code
-8c6ab31 Update bt vendor callbacks array in vfs code
-
-   * frameworks/opt/datetimepicker/
-cf4094c DateTimePicker: Add facilities to customize MonthView's appearance
-
-   * frameworks/opt/net/wifi/
-ea701edb7 wifi: Not reset country code for Dual SIM if any slot is active
-35b0d79df wifi: don't check if WIFI_DRIVER_STATE_CTRL_PARAM is readable
-128c03d5c wifi: Check whether dev node is accessible or not before opening
-6e026c18e libwifi-hal: add flag to wait for kernel driver to get ready
-
-   * hardware/broadcom/libbt/
-2201061 libbt-vendor: add support for samsung bluetooth
-
-   * hardware/interfaces/
-1ab5252f keymasterV4_0: Tags support for FBE wrapped key.
-db19e91e camera: Only link and use vendor.qti.hardware.camera.device if specified
-9fdfae64 Camed HAL extension: Added support in HIDL for Extended FD.
-
-   * hardware/lineage/interfaces/
-58bc32b interfaces: Add id HAL definition
-6f544fa interfaces: Add touch HIDL interface definitions
-5954166 interfaces: Add 2.0 livedisplay interfaces
-
-   * hardware/qcom/audio-caf/msm8916/
-8c4b5f6cd visualizer: Fix typedef redefinition
-8234c4d12 audio: Fix old style GNU designator extensions
-ad2ec4408 post_proc: Mark unused parameters with (void)
-91476bbc0 post_proc: Remove unused label
-dbdb49330 mm-audio: Remove extraneous parantheses
-c02c94222 audio: Update compiler flags
-f250b3ff1 Use -Werror in audio-caf/msm8916
-
-   * hardware/qcom/bt-caf/
-883c36a Don't build libbt-hidlclient for OSS builds
-ded669e libbt-vendor: Add missing vendor prefix to a bluetooth.status prop
-26aa62a libbt-vendor: Fix BLUETOOTH_MAC_ADDR_BOOT_PROPERTY definition
-1a4067d Load bluetooth firmwares from /vendor
-df72efd Add missing headers to libbt-vendor
-5a1df27 Apply the Cherokee's mechanism of stopping hci_filter to ROME
-90c9d92 BT: Moving chipset version parameters' initialization out of ALOG
-06b6b65 Remove hardcoded LOCAL_MODULE_PATHS from vendor components. (bt)
-9879a08 Add vendor-specific message types for FM.
-b5fd977 libbt-qcom: Allow reading BT address from property
-a8b7111 Bluetooth: load btaddr from NV if QCOM_BT_USE_BTNV is set
-2da7cb1 libbt: Fix case where SoC type is not set
-
-   * hardware/qcom/display-caf/msm8916/
-38fb66896 hwcomposer: Work around overzealous fortify checks
-cef726eb9 Make hwc_vsync thread realtime
-90ed8ef35 display: Include missing headers
-ea0f167f7 Use libhwui.so instead of libskia.so
-
-   * hardware/qcom/keymaster/
-641ed9e keymaster: move to /vendor
-ed1454f keymaster: Fix compiler warnings
-86f20af keymaster: add TARGET_PROVIDES_KEYMASTER
-7e7882d keymaster: Featureize support for waiting on QSEE to start
-23ace5b Keymaster: Check if keymaster TZ app is loaded
-1d01b14 keymaster: Set HEAP_MASK_COMPATIBILITY by platform for QCOM_HARDWARE
-88bd073 Keymaster: Support for 64bit userspace and 32bit TZ
-e873354 keymaster: Add kernel dependency
-c792907 Revert "Remove legacy keymaster support for msm8226"
-480dccc Revert "msm8974: remove from top level makefile"
-
-   * hardware/qcom/media-caf/msm8916/
-6cefec2bd libc2dcolorconvert: Fix clang compilation errors.
-013fc4988 Add -Wno-error to compile with global -Werror.
-
-   * hardware/qcom/wlan-caf/
-a0322ce wcnss_service: Read serial number from custom property
-461d62f wcnss_qmi: Generate a fixed random mac address if the NV doesn't provide one
-
-   * packages/apps/Camera2/
-581b22d70 Use mCameraAgentNg for getting camera info when available
-
-   * packages/apps/Jelly/
-1e01879 Jelly: allow disabling clear text traffic at runtime
-fcddad6 Jelly: update deps
 
    * packages/apps/Settings/
 51512367db Settings: Remove battery light and notification light settings
 7642c708a9 crdroid: Move gesture settings under crdroid
 
+   * packages/apps/SettingsIntelligence/
+53065f8 Settings: refresh search index check on build change
+
    * packages/apps/crDroidSettings/
 d434a54 crdroid: Move in leftover gesture xml
-
-   * system/bt/
-19165221b Fix for Bluetooth device name is resetting to default name after reboot
-e625a81d4 Add support to force disable enhanced sco commands
-38d020f2a Prevent abort in case of command timeout
-c08948c83 Bluetooth: Read BLE vendor capability to proceed on Secure conn
-
-   * system/sepolicy/
-420888f5 Build sepolicy tools with Android.bp.
-935e4618 Add rules required for TARGET_HAS_LEGACY_CAMERA_HAL1
-
-   * system/vold/
-0369f73 vold: Add texfat and sdfat support
-9f7e817 vold: Wrapped key support for FBE
-d9fa229 vold: Move QCOM HW FDE inclusion under lineage namespace
-467b2be system: vold: Remove crypto block device creation
-ce7194e vold: Add Hardware FDE feature
-
-   * vendor/qcom/opensource/cryptfs_hw/
-c5c3c6f cryptfs_hw: Use generated kernel headers
-92cbd04 cryptfs_hw: add missing logging tag
-42170e8 cryptfs_hw: Featureize support for waiting on QSEE to start
-7d86c72 cryptfs_hw: Add compatibility for pre-O hw crypto
 
 ====================
      10-09-2018
@@ -458,6 +538,9 @@ fa5c8510f libbinder: Don't log call trace when waiting for vendor service on non
 940042a84 Fix bugs regarding calculate dalvik-cache size
 730aaf581 Input: improve touch response slightly
 
+   * hardware/broadcom/libbt/
+2201061 libbt-vendor: add support for samsung bluetooth
+
    * lineage-sdk/
 258a10b sdk: Don't clear calling identify when calling IOverlayManager.setEnabled()
 
@@ -511,6 +594,9 @@ a08e59eab7 deviceInfo: Fix imei dialog fc when only 1 sim is inserted
 819029e581 Revert "Settings: Add LineageOS legal info"
 4450350f3d Revert "Settings: adaptive icon"
 85be591db6 Revert "Settings: Add contributors cloud to device info"
+
+   * packages/apps/SettingsIntelligence/
+2f12222 Fix dark style issues
 
 ====================
      10-08-2018
@@ -637,75 +723,4 @@ a912213a4e90 ANDROID: sdcardfs: d_make_root calls iput
 c48e15bd20cb ANDROID: sdcardfs: Fix sdcardfs to stop creating cases-sensitive duplicate entries.
 b907d3263b5c ANDROID: sdcardfs: Set num in extension_details during make_item
 6e3ee7ccb551 ANDROID: sdcardfs: Hold i_mutex for i_size_write
-
-====================
-     10-03-2018
-====================
-
-   * android/
-e499523 manifest: Track vixl
-
-   * device/wileyfox/crackling/
-830a5af DNM crackling HAX
-
-   * hardware/qcom/power/
-bc8e0f2 power: Remove 1.0 HAL remnants
-93023a2 power: sdm660: Support power profiles
-5eb472d power: Clean up hint IDs
-8599e3c power: set_power_profile: handle errors
-282e889 power: perform_hint_action: return an error code
-
-====================
-     10-02-2018
-====================
-
-   * android/
-f0eea9d manifest: Track our libtextclassifier
-
-   * device/cyanogen/msm8916-common/
-36bf241 msm8916-common: Switch to 1.1 power HAL
-d6d4550 msm8916-common: Disable power HAL stats for msm8916
-708aa15 msm8916-common: Include only legacy QC sepolicy
-a94ba48 msm8916-common: Mark camera-related processes as API level 23.
-69e671b msm8916-common: Allow additional gralloc 1.0 buffer usage bits
-0cf214e msm8916-common: Update WCNSS configuration symlink
-98cd32f msm8916-common: Rename bt props for new HAL
-6de5bfc msm8916-common: Switch to common basic USB HAL
-ae660f0 msm8916-common: Set TARGET_2ND_ARCH_VARIANT to armv8-a
-3cb046c msm8916-common: Add hostapd HIDL interface
-126b942 msm8916-common: Uprev to supplicant 1.1
-7db84a3 msm8916-common: Uprev Wi-Fi HAL to 1.2
-7d4b657 msm8916-common: wpa_supplicant(hidl): Add support for starting HAL lazily
-1723572 msm8916-common: wpa_supplicant: Move control sockets to /data/vendor
-d94f286 msm8916-common: Don't start supplicant with interfaces
-c73e128 msm8916-common: wifi_supplicant: deprecate entropy.bin
-3cfe734 msm8916-common: init.rc: update wifi config location /data/vendor/wifi
-a94e88b msm8916-common: init: Create wifi directory into /data/vendor path
-bcf829b msm8916-common: recovery: Fix include headers
-ec70899 msm8916-common: Fix HWC1 support with surfaceflinger
-6cc0120 msm8916-common: init: Don't include unused headers
-d2e6046 msm8916-common: Set sys.usb.ffs.aio_compat
-
-   * device/wileyfox/crackling/
-afc844f crackling: Doze: Drop useless SDK dependency
-ac1b390 crackling: doze: Set LOCAL_PRIVATE_PLATFORM_APIS
-7d87050 crackling: Use default android kernel gcc
-1e91292 sensors: use LOCAL_PRIVATE_PLATFORM_APIS for Calibration
-e12984e crackling: move dalvik props to device
-4922a64 crackling: Consider lineage_crackling product via the AOSP way
-7091337 crackling: create dir for sensor calibration
-
-   * external/libtextclassifier/
-7d0a717 libtextclassifier: enable more languages
-
-   * vendor/lineage/
-f27fc405 Add a whitelist for location providers outside of /system [2/2]
-
-====================
-     10-01-2018
-====================
-
-
-   * external/sqlite/
-cc5eebc sqlite: upgrade to SQLite 3.25.2
 
