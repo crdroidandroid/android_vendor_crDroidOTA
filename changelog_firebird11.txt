@@ -1,8 +1,83 @@
 ====================
+     01-11-2019
+====================
+
+
+   * device/oneplus/sdm845-common/
+b7f3b9a sdm845-common: update Camera,CameraService and Gallery to 9.0.3
+9540061 sdm845-common: enable oneplus portrait mode
+c41a0da sdm845-common: Make KeyHandler configurable
+
+   * device/qcom/sepolicy/
+06c43db sepolicy: qti_init_shell needs to read dir too
+78c368d hal_gnss_default: Do not log udp socket failures
+31417b8 sepolicy: rules to allow camera daemon access to app buffer
+b722e78 sepolicy: Add libsdm-disp-vndapis and libsdmutils to SP-HALs
+f1aed13 sepolicy: Allow system_server to 'read' qti_debugfs
+
+   * device/qcom/sepolicy-legacy/
+6117f01 common: grant DRM HIDL HAL ownership access to /data/{misc,vendor}/media/
+
+   * frameworks/base/
+74a0d38fb4f fonts: Fix compiling generic fonts
+e6f51d3bcf7 fonts: Clean up absent fonts if EXCLUDE_SERIF_FONTS is true
+352361fdb47 Revert "Fix memory leak caused by SystemUIDialog"
+
+   * hardware/qcom/display/
+a4bdfad86 display: Always assume kernel source is present
+
+   * kernel/oneplus/sdm845/
+064b3cf8671a Merge remote-tracking branch 'als/android-9.0' into 9.0
+
+   * system/sepolicy/
+33cbeba6 Allow dnsmasq to getattr netd unix_stream_socket
+ab0a29c8 Allow init to chmod/chown /proc/slabinfo
+2a9b4b9a Allow init to write to /proc/cpu/alignment
+
+   * vendor/xiaomi/
+0365e402 jason: Kang nqnfcinfo from B2N_sprout
+f6109d9d jason: Massive blob update from nitrogen
+4df78217 jason: Remove ipacm-diag
+30756392 jason: Remove unused jars
+4eb2569a jason: Remove prebuilt libsensorndkbridge
+78728c40 jason: Remove unused 64bit sound trigger blobs
+1a76d77f jason: Remove unused widevine blobs
+023ae290 jason: Remove prebuilt ClearKey HIDL plugin
+d12910ce jason: Hax to load MBN from /data/vendor/modem_config
+f2fe3bfe jason: Remove unused libril-qc-qmi-1.so
+ec29526a jason: Add mlipay stack for Alipay fingerprint payment
+391dc865 jason: Hack camera HAL to workaround the broken HAL3
+e73c5e97 jason: Update blobs from MIUI 10.2.3.0
+ad6aafcb jason: Drop unused secure UI blobs
+89c04645 jason: Add MIUI offmode charging daemon
+ca8d8155 jason: Add missing blobs
+a2e1fded jason: Update blobs from miui_MINote3_V10.0.5.0.OCHCNFH_c48c33b395_8.1
+4be419e5 jason: Fix some dependency issues found by static analysis
+63215ffe jason: Update ANT+ system blobs to P
+d95a97c4 jason: Move NFC firmware to lib
+889585de jason: Rename qti sensors daemon
+c018a805 jason: Use vndk-27 sensorservice for libvideorefiner.so
+ca2f4cbe jason: add stock libraries needed for camera stack
+78948c1d jason: Update blobs from B2N_sprout PPR1.180610.011
+ea8a560b jason: Remove unused 64bit audio blobs
+7021430f jason: Add missing xtwifi certificate
+c585e707 jason: Add xtwifi daemons
+b4a8f045 jason: Update blobs from miui_MINote3_V10.0.4.0.OCHCNFH_a5262b4c65_8.1
+3c447b93 jason: Load camera configs from vendor
+ed52e9e6 jason: Move hardware specific files to vendor
+bbbf10b5 jason: Add msm_irqbalance
+ab8eb68c jason: Cleanup blob list
+b7bec10e jason: Add libqminvapi.so
+444306e8 jason: Add QTI bluetooth stack
+858471b8 jason: Add power-off alarm blobs
+851a8838 jason: Initial Oreo blobs
+
+====================
      01-10-2019
 ====================
 
    * android/
+345d2e6 manifest: Track zlib
 a047ff2 Merge 'lineage-16.0' into 9.0
 
    * build/make/
@@ -40,25 +115,12 @@ dfbbb8d Sepolicy exceptions for font engine assets
 3c21663 sepolicy: Move in pocket service sepolicy
 
    * device/oneplus/sdm845-common/
-1c7ad92 Revert "sdm845-common: enable oneplus portrait mode"
-d442820 sdm845: Make KeyHandler configurable
-d306936 sdm845-common: enable oneplus portrait mode
 770ac3c sdm845-common: doze: Move Utils.checkDozeService in an handler
 a4183e5 sdm845-common: doze: Set entry timestamp before registering sensor
 057fb78 sdm845-common: doze: Add AOD support to Ambient Display
 a80c599 sdm845-common: doze: Add missing pocket mode hooks
 c9be8ec sdm845-common: doze: Add pocket mode support
 ab8b793 sdm845-common: Enable AOD
-
-   * device/qcom/sepolicy/
-4c05dca sepolicy: allow vold to read persist dirs
-18a3651 sepolicy: qti_init_shell needs to read dir too
-40af51f hal_gnss_default: Do not log udp socket failures
-4fc66ca sepolicy: rules to allow camera daemon access to app buffer
-800b2b2 sepolicy: Label mpctl_socket as data_file_type
-
-   * device/qcom/sepolicy-legacy/
-620c247 common: grant DRM HIDL HAL ownership access to /data/{misc,vendor}/media/
 
    * frameworks/av/
 6d6c23a9d av: camera: catch mad hals that mess up buffer time
@@ -524,16 +586,96 @@ d3e8af73a50 NavigationBarView: Avoid NPE before mPanelView is created
 b65825040f8 hwui: Disable fine-grained logging
 22f4235e2c0 hwui: Remove deprecated compiler flag
 
-   * hardware/qcom/display/
-89c4f121f display: Always assume kernel source is present
+   * frameworks/native/
+226ac3c33 APP may display abnormally in landscape LCM
+7788754e4 Gralloc2: Allow invalid usage bits
+9f5dc57b0 native: touch response optimizations
+7b744f135 Fix incorrect print starved time of binder pool
+d1a37160a libbinder: auto-choose between binder/vndbinder
+5ba5ede85 sensorservice: customize sensor fusion mag filter via prop
+1f5b321f0 sensorservice: Register orientation sensor if HAL doesn't provide it
+3391f1f07 Fix bugs regarding calculate dalvik-cache size
+d9895cf72 Input: improve touch response slightly
+
+   * kernel/oneplus/sdm845/
+4e811a4b6bf2 Merge 4.9.149 into android-9.0
+7c2a4d023fb5 Merge remote-tracking branch 'omni/android-9.0' into android-9.0
+8a12358ba0e2 Linux 4.9.149
+0b7a78688a4c spi: bcm2835: Unbreak the build of esoteric configs
+7dd6d0d40f13 tpm: tpm_i2c_nuvoton: use correct command duration for TPM 2.x
+6e2ecb4f2ae6 rtc: m41t80: Correct alarm month range with RTC reads
+c1348e03c15b arm64: KVM: Avoid setting the upper 32 bits of VTCR_EL2 to 1
+737dcb98a359 x86/kvm/vmx: do not use vm-exit instruction length for fast MMIO when running nested
+40738b6a0428 CIFS: Fix error mapping for SMB2_LOCK command which caused OFD lock problem
+855feca99019 MIPS: OCTEON: mark RGMII interface disabled on OCTEON III
+93cf55e2835d MIPS: Align kernel load address to 64KB
+eaca94b0a613 MIPS: Ensure pmd_present() returns false after pmd_mknotpresent()
+b21535727613 media: v4l2-tpg: array index could become negative
+c8d550daa042 media: vivid: free bitmap_cap when updating std/timings/etc.
+468b4fb53fe8 serial: uartps: Fix interrupt mask issue to handle the RX interrupts properly
+362e8cbc7c72 f2fs: fix validation of the block count in sanity_check_raw_super
+252098084eac cdc-acm: fix abnormal DATA RX issue for Mediatek Preloader.
+751fcd0f1d6c clk: rockchip: fix typo in rk3188 spdif_frac parent
+31115f50aa7a spi: bcm2835: Avoid finishing transfer prematurely in IRQ mode
+a0049c05f7c1 spi: bcm2835: Fix book-keeping of DMA termination
+708f742ea556 spi: bcm2835: Fix race on DMA termination
+40a19e58f205 ext4: force inode writes when nfsd calls commit_metadata()
+2eb64177787d ext4: include terminating u32 in size of xattr entries when expanding inodes
+c72f56c5ae2a ext4: fix EXT4_IOC_GROUP_ADD ioctl
+eaec103eb0c3 ext4: missing unlock/put_page() in ext4_try_to_write_inline_data()
+836bf269c56f ext4: fix possible use after free in ext4_quota_enable
+fdb2f4c79a86 perf pmu: Suppress potential format-truncation warning
+e50db95d6eb6 platform-msi: Free descriptors in platform_msi_domain_free()
+7b4a3e9d8d0e KVM: x86: Use jmp to invoke kvm_spurious_fault() from .fixup
+597929da47a9 Input: elan_i2c - add ACPI ID for touchpad in ASUS Aspire F5-573G
+d050458dd70a qmi_wwan: apply SET_DTR quirk to the SIMCOM shared device ID
+6e18378e8cc1 staging: wilc1000: fix missing read_write setting when reading data
+8b22ef661019 usb: r8a66597: Fix a possible concurrency use-after-free bug in r8a66597_endpoint_disable()
+6703c3e8d5d1 USB: serial: option: add Fibocom NL678 series
+f3e8dfa394ad USB: serial: pl2303: add ids for Hewlett-Packard HP POS pole displays
+29a4c8dd0fb2 ALSA: hda/tegra: clear pending irq handlers
+119199f04b33 ALSA: hda: add mute LED support for HP EliteBook 840 G4
+542a4304f043 mtd: atmel-quadspi: disallow building on ebsa110
+0e71e6cee4a3 ALSA: emux: Fix potential Spectre v1 vulnerabilities
+7455acac681d ALSA: pcm: Fix potential Spectre v1 vulnerability
+b9b881e05362 ALSA: emu10k1: Fix potential Spectre v1 vulnerabilities
+f2f87232dbf1 ALSA: rme9652: Fix potential Spectre v1 vulnerability
+ce8ec03171c6 ptr_ring: wrap back ->producer in __ptr_ring_swap_queue()
+7abb7f747bd0 sock: Make sock->sk_stamp thread-safe
+cf7640671ad2 net/mlx5: Typo fix in del_sw_hw_rule
+82b8fa5e32aa net/mlx5e: Remove the false indication of software timestamping support
+52f563ef53f4 gro_cell: add napi_disable in gro_cells_destroy
+60216788e4e3 tipc: compare remote and local protocols in tipc_udp_enable()
+8dd36f18decc tipc: use lock_sock() in tipc_sk_reinit()
+ba0b3c189365 xen/netfront: tolerate frags with no data
+d2ea9f12c45e VSOCK: Send reset control packet when socket is partially bound
+bd50de33ca4c vhost: make sure used idx is seen before log in vhost_add_used_n()
+336e822a0d48 tipc: fix a double kfree_skb()
+aa0c48d16195 sctp: initialize sin6_flowinfo for ipv6 addrs in sctp_inet6addr_event
+84e1bfdecaaf packet: validate address length if non-zero
+3ddf35c6983b packet: validate address length
+0ca2635b418c net/wan: fix a double free in x25_asy_open_tty()
+aa9f3a0f2b5d netrom: fix locking in nr_find_socket()
+99519a6d546c net: phy: Fix the issue that netif always links up after resuming
+122aeb4a1990 net: ipv4: do not handle duplicate fragments as overlapping
+401b5f3d4869 isdn: fix kernel-infoleak in capi_unlocked_ioctl
+818b3f7fa002 ipv6: tunnels: fix two use-after-free
+41743ce604da ipv6: explicitly initialize udp6_addr in udp_sock_create6()
+1a6cd598c827 ieee802154: lowpan_header_create check must check daddr
+b3ebeeb7efe0 ibmveth: fix DMA unmap error in ibmveth_xmit_start error path
+c39b8fd4997b ax25: fix a use-after-free in ax25_fillin_cb()
+35775cc415d2 ipv4: Fix potential Spectre v1 vulnerability
+5d9a7965b157 ip6mr: Fix potential Spectre v1 vulnerability
+afb85b1bbe4f NFC: nxp-nci: Include unaligned.h instead of access_ok.h
+
+   * packages/apps/Launcher3/
+a71f11715 Launcher3: Add missing permission for flashlight gesture
 
    * packages/apps/Settings/
 cb8e5e59b7 Merge 'lineage-16.0' into 9.0
 
-   * system/sepolicy/
-9f786e50 Allow dnsmasq to getattr netd unix_stream_socket
-143fc21b Allow init to chmod/chown /proc/slabinfo
-016ea2be Allow init to write to /proc/cpu/alignment
+   * packages/apps/crDroidSettings/
+ce51a09 New Crowdin translations (#352)
 
    * vendor/lineage/
 902f8273 Don't explicitly build uneeded packages
@@ -555,6 +697,10 @@ aaad39f Allow LiveDisplay to access vendor display property
 17ee363 common: Allow init to relabel I/O sched tuning nodes
 dd4ff84 common: Label and allow access over LiveDisplay sysfs nodes
 55699af common: Expand labeling of sysfs_vibrator nodes using genfscon
+
+   * device/qcom/sepolicy/
+a8d664b sepolicy: allow vold to read persist dirs
+84d55e5 sepolicy: Label mpctl_socket as data_file_type
 
    * device/xiaomi/msm8996-common/
 831e291 msm8996-common: doze: Check if AOD is enabled after boot
@@ -578,6 +724,13 @@ dd4e0ad9b Merge tag 'android-9.0.0_r30' into lineage-16.0-android-9.0.0_r30
 
    * packages/apps/Contacts/
 f2ad2c2ef Merge tag 'android-9.0.0_r30' into lineage-16.0-android-9.0.0_r30
+
+   * packages/apps/Launcher3/
+a28e143d6 Add updated Google Feed lib from Pixel 3 launcher
+93d7ca335 Revert "Add SearchLauncher target"
+d83957fe5 Add Google search double tap option
+0519666f4 Add Google ActionServices (MatchmakerPrebuilt) to blacklisted apps
+d842f2f57 Launcher3: Switch to actual compiled library for SystemUI
 
    * packages/apps/PackageInstaller/
 3a5a40fd Merge tag 'android-9.0.0_r30' into lineage-16.0-android-9.0.0_r30
@@ -633,6 +786,9 @@ c85e1eb msm8996-common: doze: Add AOD support to Ambient Display
    * frameworks/base/
 16f0360a9a6 WindowOrientationListener: Check if proposed rotation is in range
 5c87c5cca64 ShortcutService: Use ro.build.date to signal package scanning
+
+   * frameworks/native/
+386830b07 sf: Workaround BufferLayer::setBuffers issue on 1440p msm8974
 
    * packages/apps/Settings/
 c81b35ce45 Settings: Check if we have any color modes declared in overlay
@@ -695,20 +851,17 @@ b76c31981 mediascanner: Accept .opus file extension.
 2f8fdbd61d4 Merge remote-tracking branch 'aosp/pie-gsi' into HEAD
 
    * frameworks/native/
-50820d24e APP may display abnormally in landscape LCM
-dde8dfedf Gralloc2: Allow invalid usage bits
-2a6f92e5e native: touch response optimizations
-a70b0fbc8 Fix incorrect print starved time of binder pool
-ef34ba81f libbinder: auto-choose between binder/vndbinder
-a6f252efb sensorservice: customize sensor fusion mag filter via prop
-aa5d3c99b sensorservice: Register orientation sensor if HAL doesn't provide it
-33da5af39 Fix bugs regarding calculate dalvik-cache size
-77320d8b1 Input: improve touch response slightly
 3094d2ca7 Merge remote-tracking branch 'aosp/pie-gsi' into HEAD
 
    * frameworks/support/
 8639e44e3a Disable debugging
 0dc6ae3f67 support: touch response optimizations
+
+   * kernel/oneplus/sdm845/
+9f452ac49d49 Synchronize codes for OnePlus 6T OxygenOS 9.0.11
+81a69c142d57 Optimizing the stability of display
+8fe6d9f39278 Optimizing the stability of display
+ba3bf65224fa Optimizing the stability of gsi
 
    * packages/apps/LineageParts/
 cdbf748 Hide power menu actions
@@ -992,32 +1145,4 @@ e9af20307 libbinder: -case in 'Waiting for service' log.
 3926fd74 msm8996-common: Massive blob update from daisy
 8d44927b sdm845-common: Add SDM blob needed for LiveDisplay HAL
 ddeb612b sdm845-common: Add SoterService app and remove unnecessary deps
-
-====================
-     01-01-2019
-====================
-
-
-   * kernel/oneplus/sdm845/
-fc3baa4ade2b Merge 4.9.148 into android-9.0
-
-   * packages/apps/Messaging/
-58349f7 Messaging: use white nav bar
-931ae31 AOSP/Messaging: bump targetSDK to 28
-6aed1fd AOSP/Messaging: bump to targetSDK 24
-
-   * packages/apps/crDroidSettings/
-1075d78 Add toggle for lockscreen weather
-4a0f093 New Crowdin translations (#345)
-
-   * vendor/htc/
-68d69df8 hima: Remove ipacm-diag
-9a900577 hiae: Remove qti
-f1e6e4f5 hiae: Remove ipacm-diag
-
-   * vendor/oneplus/
-fa88304 sdm845: update to OB10 blobs
-
-   * vendor/xiaomi/
-64b9f1af msm8953-common/tissot: Update blobs to P
 
