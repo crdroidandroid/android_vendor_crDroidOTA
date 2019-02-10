@@ -1,37 +1,75 @@
 ====================
+     02-10-2019
+====================
+
+
+   * device/lineage/sepolicy/
+9aca04d Add sepolicy for edge gesture service
+0f23c86 Sepolicy exceptions for font engine assets
+1111624 sepolicy: Alow CPUInfo access to thermal sysfs
+7e3c436 sepolicy: Move in pocket service sepolicy
+
+   * device/oneplus/sdm845-common/
+3f389ce4 sdm845-common: Enable dash charging overlay
+f31009ef sdm845-common: Enable burn in protection
+cf85563f Revert "sdm845-common: overlay: Enable Burn-In Protection"
+400eeafc sdm845-common: add GoogleCamera
+
+   * device/qcom/sepolicy-legacy/
+e1238b4 Display: Remove vendor property context for lcd density
+
+   * frameworks/base/
+ee6023a1ece New Crowdin translations (#194)
+73252901260 Disable edge gesture service by default
+f0a7d79913a PIE: Add back landscape check properly
+6a3dc5669f4 PIE: Fix animation for settings icon and clean up
+1aedb7bd9b1 PIE: Clean up for orientation mess
+
+   * packages/apps/crDroidSettings/
+362071b New Crowdin translations (#374)
+48b03d0 Add EdgeGesture service for system gestures
+0c39df2 crdroid: PA PIE Controls 3.0 [3/3]
+
+   * system/sepolicy/
+040aec06 Ignore newly added selinux objects
+
+====================
      02-09-2019
 ====================
 
 
    * device/lineage/sepolicy/
-8d6ba7b Add sepolicy for edge gesture service
+ff9271d Snap and gallery require to run vendor code
+da24d05 Remove not allowed rule
+de42705 Revert "common: Add sf_lcd_density_prop type and labelled props"
+b986852 qcom: Remove power HAL 1.0 label
 
    * device/oneplus/sdm845-common/
-e0b2726 sdm845-common: sepolicy: Label dsi-display@21 nodes
-81c8feb sdm845-common: Add debug IMS props to workaround CarrierConfig restrictions
-4281a1d sdm845-common: Add and build trust HAL
-ba28971 sdm845-common: Remove no longer needed Android Blueprints
-10f9f1d sdm845-common: Replace lineagehw implementation by HIDL services
-b9e4d08 sdm845-common: Fix neverallows
-9c5ff86 sdm845-common: overlay: Move rounded corner content padding to devices
-e7725c3 sdm845-common: Move all notification LEDs related overlays to enchilada
-de4cac9 sdm845-common: Add fajita to build guard
-58e1d93 sdm845-commob: Add qcnvitems.jar
-b24ec5f sdm845-common: Enable vibration multiple intensities
-9cdc814 sdm845-common: add dual LTE support
-037c2c0 sdm845-common: overlay: Configure number of physical SIM slots
-f427d0c sdm845-common: overlay: move audio panel to left side
-0f86097 audio_policy: enable configs
-4f1e235 sdm845-common: Update dexpreopt configuration
-04ab8b1 sdm845-common: Make KeyHandler configurable
-82a0c12 sdm845-common: Add support for 18:9 apps
-7701921 sdm845-common: Add QCOM's WFD implementation
-e340704 sdm845-common: Add missing VoLTE props
-7bd79c3 sdm845-common: enable sdclang for kernel
-9eed19f sdm845-common: enable sdclang
-7e91c89 sdm845-common: Compile libhwui in perf mode
-5527aa6 sdm845-common: overlay: Enable Burn-In Protection
-cde0a2c sdm845-common: Enable smart pixels
+e0b27268 sdm845-common: sepolicy: Label dsi-display@21 nodes
+81c8feb9 sdm845-common: Add debug IMS props to workaround CarrierConfig restrictions
+4281a1d6 sdm845-common: Add and build trust HAL
+ba28971d sdm845-common: Remove no longer needed Android Blueprints
+10f9f1dd sdm845-common: Replace lineagehw implementation by HIDL services
+b9e4d08b sdm845-common: Fix neverallows
+9c5ff865 sdm845-common: overlay: Move rounded corner content padding to devices
+e7725c3e sdm845-common: Move all notification LEDs related overlays to enchilada
+de4cac9b sdm845-common: Add fajita to build guard
+58e1d939 sdm845-commob: Add qcnvitems.jar
+b24ec5fe sdm845-common: Enable vibration multiple intensities
+9cdc8144 sdm845-common: add dual LTE support
+037c2c04 sdm845-common: overlay: Configure number of physical SIM slots
+f427d0c2 sdm845-common: overlay: move audio panel to left side
+0f86097b audio_policy: enable configs
+4f1e2354 sdm845-common: Update dexpreopt configuration
+04ab8b17 sdm845-common: Make KeyHandler configurable
+82a0c12b sdm845-common: Add support for 18:9 apps
+7701921e sdm845-common: Add QCOM's WFD implementation
+e340704f sdm845-common: Add missing VoLTE props
+7bd79c3a sdm845-common: enable sdclang for kernel
+9eed19fc sdm845-common: enable sdclang
+7e91c891 sdm845-common: Compile libhwui in perf mode
+5527aa68 sdm845-common: overlay: Enable Burn-In Protection
+cde0a2cb sdm845-common: Enable smart pixels
 
    * frameworks/base/
 0fb06e33240 PIE: Fix auto dark theming and use tuner API
@@ -62,6 +100,9 @@ f93782979 libs: ui: Fix shadow-field warnings
 
    * kernel/oneplus/sdm845/
 193c31953c9a Merge android-linux-stable into IllusionKernel
+
+   * packages/apps/Settings/
+2d22fd3f11 Settings: PA PIE Controls 3.0 [2/3]
 
    * packages/apps/crDroidSettings/
 532a75a New Crowdin translations (#373)
@@ -1011,14 +1052,15 @@ b952db0 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
 38eb834 manifest: android-9.0.0_r30 -> android-9.0.0_r31
 77a2947 Merge 'lineage-16.0' into 9.0
 ed85df9 Revert "manifest: Temp tracking lineage hw    *s"
+feb2253 manifest: Sync hardware/lineage/livedisplay
 
    * build/soong/
 1c272bea Always link org.lineageos.platform-res for org.lineageos.platform.sdk
 
    * device/lineage/sepolicy/
-39224d3 Sepolicy exceptions for font engine assets
-654cc15 sepolicy: Alow CPUInfo access to thermal sysfs
-374b290 sepolicy: Move in pocket service sepolicy
+c8ceb6f sepolicies: add Trust hal
+701b30d common: Migrate to livedisplay 2.0
+1c44e50 common: Add vendor.lineage.touch rules
 
    * frameworks/base/
 38919152c0a base: add Trust usb restrictor
@@ -1027,6 +1069,8 @@ afbbb20194d SystemUI: Add onStatusBarMotionEvent hook
    * hardware/lineage/interfaces/
 c6e0e42 trust: create service
 4b1c700 interfaces: Add trust 1.0 HAL
+73c5a16 interfaces: Add touch HIDL interface definitions
+47208dd interfaces: Add 2.0 livedisplay interfaces
 
    * hardware/lineage/livedisplay/
 75ac2f2 livedisplay: Use 1 thread
@@ -1062,6 +1106,8 @@ dbdc4618 crdroid: Do better for version pref
 d853f892 PerformanceManager: Allow wait for MPCTL to start on boot
 a7d15946 LiveDisplayService: Catch NPE before LiveDisplayConfig is initialized
 dc5d872a LineageAudioService: Make audio session broadcast explicit
+b49ed556 sdk: Add HIDL compat in LineageHardwareManager
+7368c8e9 sdk: Deprecate some unused lineagehw features
 
    * packages/apps/Dialer/
 178611362 Merge pull request #1 from SubhrajyotiSen/9.0
@@ -1094,21 +1140,15 @@ ab234a0d sdm845-common: Ship system variant of postprocessing blobs
      02-04-2019
 ====================
 
-   * android/
-feb2253 manifest: Sync hardware/lineage/livedisplay
 
    * device/lineage/sepolicy/
-c8ceb6f sepolicies: add Trust hal
-701b30d common: Migrate to livedisplay 2.0
-1c44e50 common: Add vendor.lineage.touch rules
 c72a806 lineage: Rewrite Lineage Power HAL rules
 87d305d lineage: Properly write rules for Lineage LiveDisplay as a HAL
 e6c3ce0 sepolicy: Allow recovery update_engine to setexec backuptool
 0211a9c sepolicy: Allow Settings to read ro.vendor.build.security_patch
 
-   * hardware/lineage/interfaces/
-73c5a16 interfaces: Add touch HIDL interface definitions
-47208dd interfaces: Add 2.0 livedisplay interfaces
+   * device/qcom/sepolicy/
+f30e936 sepolicy: Whitelist vold from reading mnt_vendor_file
 
    * hardware/lineage/livedisplay/
 7a5da24 livedisplay: sdm: Wire it up
@@ -1123,10 +1163,6 @@ c108ce3f7 mm-video-v4l2: C++11 requires a space between literal and string macro
 b9af12c5d mm-video-v4l2: Compilation warning fixes
 44b85bb31 libstagefrighthw: Compilation warning fixes
 8d7910226 libc2dcolorconvert: Compilation warning fixes
-
-   * lineage-sdk/
-b49ed556 sdk: Add HIDL compat in LineageHardwareManager
-7368c8e9 sdk: Deprecate some unused lineagehw features
 
    * packages/apps/Dialer/
 e2fd6bfd6 Show phone number on bottom row if number type is present.
@@ -1205,58 +1241,4 @@ babb84e crdroid: Fix derp
 
    * kernel/oneplus/sdm845/
 e8de15a4fb05 Merge android-linux-stable into IllusionKernel
-
-====================
-     01-31-2019
-====================
-
-
-   * kernel/oneplus/sdm845/
-23bb3185e198 Merge 4.9.154 into oneplus/SDM845_P_9.0
-a4d0a0910e69 Linux 4.9.154
-6362aa508f82 btrfs: dev-replace: go back to suspended state if target device is missing
-c34120809454 btrfs: fix error handling in btrfs_dev_replace_start
-dff93bb9ecba f2fs: read page index before freeing
-f63ee3bb14a6 nvmet-rdma: fix null dereference under heavy load
-8d1ee2d54d41 nvmet-rdma: Add unlikely for response allocated check
-59735968ad8c s390/smp: Fix calling smp_call_ipl_cpu() from ipl CPU
-25043da99095 irqchip/gic-v3-its: Align PCI Multi-MSI allocation on their size
-a9c87582ba82 perf unwind: Take pgoff into account when reporting elf to libdwfl
-2b0aa312513e perf unwind: Unwind with libdw doesn't take symfs into account
-c13c2a5b1906 vt: invoke notifier on screen size change
-30e7517e837a can: bcm: check timer values before ktime conversion
-69129bcefbf9 can: dev: __can_get_echo_skb(): fix bogous check for non-existing skb by removing it
-3cfc8a2983a9 x86/kaslr: Fix incorrect i8254 outb() parameters
-cc6455e97d8c x86/selftests/pkeys: Fork() to check for state being preserved
-22c9bc0fc0e1 KVM: x86: Fix single-step debugging
-5675a52cf5e1 dm thin: fix passdown_double_checking_shared_status()
-e531b6550950 acpi/nfit: Fix command-supported detection
-17f69298472c acpi/nfit: Block function zero DSMs
-a3c841af7dee Input: uinput - fix undefined behavior in uinput_validate_absinfo()
-1777fa9611fc compiler.h: enable builtin overflow checkers and add fallback code
-c4a8adc4ddaf Input: xpad - add support for SteelSeries Stratus Duo
-eb2fe47ca980 CIFS: Fix possible hang during async MTU reads and writes
-493f75839c11 tty/n_hdlc: fix __might_sleep warning
-b7bd4a2b4263 uart: Fix crash in uart_write and uart_put_char
-0609c03246eb tty: Handle problem if line discipline does not have receive_buf
-dff6b7b31d65 staging: rtl8188eu: Add device code for D-Link DWA-121 rev B1
-08e4f6c4750c char/mwave: fix potential Spectre v1 vulnerability
-7ed458fd0b7e s390/smp: fix CPU hotplug deadlock with CPU rescan
-17eb3c3efb0e s390/early: improve machine detection
-d89408999619 ARC: perf: map generic branches to correct hardware condition
-5a026d14c5fe ARCv2: lib: memeset: fix doing prefetchw outside of buffer
-9b65b52eb689 ASoC: rt5514-spi: Fix potential NULL pointer dereference
-3d963c98d796 ASoC: atom: fix a missing check of snd_pcm_lib_malloc_pages
-efccd43d994a USB: serial: pl2303: add new PID to support PL2303TB
-da0629385449 USB: serial: simple: add Motorola Tetra TPG2200 device id
-8c849652804b ipfrag: really prevent allocation on netns exit
-147bb6f52c5f net_sched: refetch skb protocol for each filter
-bff74329bcc7 net: ipv4: Fix memory leak in network namespace dismantle
-b35efeb6b4ea vhost: log dirty page correctly
-4b9245f2cd30 openvswitch: Avoid OOB read when parsing flow nlattrs
-04663e84f042 net: Fix usage of pskb_trim_rcsum
-0ae4bffc96aa net: bridge: Fix ethernet header pointer before check skb forwardable
-
-   * packages/apps/crDroidSettings/
-ba5f0d5 New Crowdin translations (#366)
 
