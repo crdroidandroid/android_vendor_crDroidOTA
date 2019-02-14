@@ -1,676 +1,233 @@
 Lenovo P2(Kuntao)|Maintainer: Saikiran(Beastmaster)
 
 ====================
-     02-07-2019
+     02-14-2019
 ====================
 
-   * android/
-94498d1 manifest: Track clang 8.0.8
-b7d2d04 Merge 'lineage-16.0' into 9.0
 
-   * bionic/
-6b956ae bionic: Remove ARM/MIPS fenv duplication
-622520b arm64: Extend branch range in __memcpy_chk
-e61cddc bionic: strip libc and linker
-6fc123a libm: Update to FreeBSD r336665
-d23e700 bionic: Update libm from upstream
-4176263 libm: Switch to FreeBSD's actual sincos
-e32f8ae Switch to FreeBSD catrigl.c for complex arc trig functions
-3a274b9 Improve strncmp for mutually misaligned inputs
-f019206 Improve strcmp performance for misaligned strings
-c0303a0 Optimize memcmp for medium to large sizes
-663c250 arm64: Use builtin for nearbyintf/nearbyint
-8bebcf9 Optimize the clone() system call on ARM(64)
-
-   * build/make/
-661ba35 core: Fix dex pre opt build with ims
-4263382 build info: Remove line breaks
-912e002 build: Add more info
-9213725 Enable GSS garbage collection
-555382e libart: Turn off jit profiles and just use speed
-7b45e5f build: execute changelog generator script
-b8be462 build: Enable custom ccache cache dir for Android
-714f107 Make build ID simple
-070c5d3 build: force rebuild build.prop
-458bde5 Use 'release-keys' for build tag
-97a0ffd Remove ro.kernel.android.checkjni
-8d2ebbd disable Dalvik lock contention logging as it isnt needed
-a72f2cb Remove Feedback Directed Optimization support
-eb29b4e DNM: Allow adb debug
-d40fda9 build: Add ANSI name
-
-
-   * build/soong/
-a2b846f soong: arm: Use -mcpu=kryo when using clang
-efdf38f soong: use -mcpu=cortex-a57 for kryo
-59ce6cd soong: make host use native not prescott
-d67e276 soong: Add -fsanitize= argument to assembly flags
-bbebf7c Fix multilib first with multiple 64-bit architectures
-a9da48b Allow product_variables.malloc_svelte inside target
-52598a7 soong: Change to CR_VERSION
-
-   * external/skia/
-89b7010 Merge 'lineage-16.0' into 9.0
+   * device/qcom/sepolicy/
+70a449f sepolicy: qti_init_shell needs to read dir too
+e5429b1 sepolicy: Add libsdm-disp-vndapis and libsdmutils to SP-HALs
 
    * frameworks/av/
-fb4181e cameraservice: Lazy loading of audio files can speed up camera startup
-17b84cb MTP: Add support of ObjectInfoChanged Event
-c35eeb8 av: silence album art error in MetadataRetrieverClient
-fb4004f audiopolicy: support extended feature in audiopolicymanager
-efa9f06 Allow FaceUnlock in background
-fab88da CameraService: Fix openCamera denial for OP cam
-5dc7a8a OMXNodeInstance: Do not use already freed memory
-b129060 Use uint32_t instead of int to support 2G or bigger file
-b5b18ff audio: add support to enable track offload using direct output
-e1f43db Camera: Skip stream size check for whitelisted apps.
-e2c5471 Tuning of Binder buffer for various HALs
-d0facff audiopolicy: reset capture state when input is closed
-6378ed9 Audio: Set Deep Buffer flag for music stream.
-2e4f07d base: bring back screenrecord [2/2]
-b70d872 Stagefright: Do not skip frames in time-lapse-source for high-speed
-6151fe6 Stagefright: Update start-time once input-time reaches expected start-time
-07bf4fc Stagefright: Allow setting high-framerates in CameraSource
-d762750 Modified that logs do not include URLs
-bedffb3 Fix high battery drain after using flashlight
+eb50b57 CameraService: Allow new msg types for OP cam
 
    * frameworks/base/
-c16ec20 Informing app idle listeners on enabled state changes
-355cce1 Clear all lingering notifications when network is disconnected
-02c2b98 OnTheGo: Add missing import ComponentName
-5be359e New Crowdin translations (#191)
-0fe1197 Update Crowdin configuration file
-f40e1af frameworks: Reset battery stats [1/2]
-552e458 Themes: Workaround to fix dark theme on Messaging app
-65449b5 Ability to hide superuser status bar icon [1/2]
-4ae6f13 Remove the check of mService when BluetoothHidDevice doUnbind
-039f434 Update navigation bar upon change of display density
-49b6add SystemUI: don't add already attached qs tile views
-f51d146 Keyguard: Hide check button when using PIN quick unlock
-9991ab4 LatinIME: fix navigation bar for expanded desktop
-3856c88 build: Add props to allow skipping build consistency checks
-226c401 Utils: Add function to kill package
-7d8a2f4 Add Clear All Button to Recents [1/2]
-3cab5ee Quick settings panel : Set transparency [1/2]
-550d363 crdroid: Clean up one hand mode UI [1/2]
-76c9e38 onehand: Add display shrink mode
-68175a3 Move net monitor to expanded statusbar header [1/2]
-76a02e3 Revert "Fix memory leak caused by SystemUIDialog"
-970f9c1 VoLTE icon: reduce height & width to match status bar icons
-650cc67 Custom Rounded Corner and Padding preferences [1/2]
-39ee752 Add toggle for lockscreen weather and improve code
-a58d6bf Weather client: fix refresh at boot and improve/cleanup code [1/2]
-f9a67aa Weather client: switch to vector drawables
-b2ccacc SystemUI: Implement weather on lockscreen like Pixels
-1946bf0 WifiDisplayController: handle preexisting p2p connection status
-8488084 WiFiDisplayController: Defer the P2P Initialization from its constructor.
-a970f0c Merge changes for launching wifidisplay from system settings
-10e5036 Add option to auto hide status-bar clock [1/2]
-224fba4 Update QS tiles showed by default
-382a2ba Use same NFC icon as that in QS tile
-1b0353f SystemUI: Add statusbar NFC icon
-ca3f26e Extended audio panel - fixes for unlinked notifications
-121af31 Extended audio panel [1/2]
-8c9303b Left volume panel: Fix animation
-6568db1 Volume panel location: load the bool once
-8c11560 SystemUI: allow devices override audio panel location
-2d6833c frameworks: Add unlinked ringtone and notification volumes
-3e7bbc4 BatteryMeterDrawableBase: Refresh only when value changed
-6087ae5f BatteryMeterView: Fix logspam with battery percent view while charging
-4e3a50e PMS: Improve code stability and avoid vm reboot
-2665eb8 PMS: No need to call permissionsState.getPermissions
-6beb8e6 telephony: Conditionally ignore RSSNR signal level
-8e148ca CPUInfoService: Clean up intent filter
-227c9ed telephony: Make IMS method updateToState accessible
-71d4894 Ambient music ticker: don't trigger if it's not a media notification
-e4f44a6 Ambient music: be sure to clean track info on media notification drop
-9298077 fonts: Build different fonts.xml if EXCLUDE_SERIF_FONTS is true
-ddfd5b0 FontService: Disable logspam
-ec7cf58 Set font for remaining keyguard items
-d299eed Set font for AmbientIndicationContainer
-7f0d9d4 FontService: fix null object reference
-293c82a FontService: fix potential NPE and handle disabled packages properly
-8dd67a2 Add progress for font apply [1/2]
-e04ee16 Dynamic font fix for FDE devices
-2ed24ef Fonts: patched a few need files for boot
-76fb8a6 Fonts: Update keyguard when font changes
-66b8133 bringup: Fontservice
-4cb7d1b4 PebbleBerry: Introduce Tile Styles - a QS tile style picker [1/3]
-e7e2e2a PebbleBerry: Simplify for power saver mode
-59e53c3 PebbleBerry: Turn off night mode before switching dark style
-94da994 PebbleBerry: Fix black theme auto reset
-72bb70f PebbleBerry: Add independent switching of notification theme
-0404b58 PebbleBerry: Support black overlays
-2fdfce8 PebbleBerry: Allow switching accents and light dark themes in better way
-a55e5ab PebbleBerry: Add string to store status for dark theme usage
-06206aa PebbleBerry: Add SystemUI dark theme support
-8d960d5 PebbleBerry: Create theme/accent manager utils
-2c3672d TunerServiceImpl: Remove unavailable settings from blacklist
-2122879 Revert "SystemUI: Berry styles"
-f379c78 Reload assets on overlay change: code improvements
-d83e34e Notifications: Do not use theme context for remote views
-27611cc Improvements in loading notifications with dark mode
-d108fb4 Reload more assets on overlay change
-cb06f52 Add support for theming notifications
-4bd623c Expose notification info text color
-81a7ebb Themes: Remove color spans when using config_useDarkBgNotificationIconTinting
-5172b42 Themes: Add Theme.DeviceDefault.Resolver.Exposed
-2ee463b Themes: add bool to optimize notification icon colors on dark backgrounds
-f861fac Themes: Expose notification icon colors
-13b3fad Themes: Set UserIcons tintMode to SRC_ATOP
-dcb4630 Themes: Expose QS tiles and label colors
-087dd5a Themes: SystemUI: expose screen pinning colors
-ee74405 Themes: SystemUI: Expose QS edit item decoration background color
-eb4a957 Themes: Allow Permission Icons to be fully themed
-dff2cd1 Themes: Expose toast & tooltip text colors for themes
-f70a4af Themes: Expose Keyguard affordance circle background
-d01b991 Themes: Allow volume slider and thumb to work with custom images.
-111b8d0 Themes: Expose Screenshot flash and background colors
-a5a98b8 Themes: Expose Keyboard Shortcuts Dialog
-ce11f93 Themes: graphics: ADB "N" icon compatible with OMS7
-c71bb1a Themes: SystemUI: Expose switch bar title
-38583c2 Allow Navbar ripple color to be themed
-0e4ae63 Themes: Expose QS tiles and label colors
-19c09d1 Themes: Expose QS background color
-ee0246e Expose and tint settings dashboard icon tint
-dd0b973 base: themes: dont use colorPrimary for active qs
-30e8049 Expose two target preference divider color
-df10d49 Expose faststroller text for themes
-ded86a9 Expose toast colors for themes
-b1ee13a Fix autofill save dialog
-3da3966 Allow Immersive cling colors to be fully themed
-ee11137 Themes: Allow Resolver List BG to be fully themed
-f26bd21 Make resolver list fully themeable
-4ca9b5e Themes: Expose resolver hardcoded colors
-f45b653 Lockscreen Visualizer: Check for keyguard fading away
-841663c LockscreenVisualizer: Use offload thread
-5c34440 Ambient display music ticker [1/2]
-f5877ca Port ambient Now Playing container from Pixel [stripped down version]
-f1e96a3 Fixes for lockscreen visualizer
-47b2acf Lockscreen visualizer: fix SystemUI FC when using Pulse
-215caf8 SmartBar: Enable action for Expanded Desktop
-f49d53a SmartBar: Enable action for One Hand mode
-91ab623 Update stock navbar items only if enabled
-3adeb99 SmartNav: Bring back Kill App action
-f94b0a9 Pulse : allow to blacklist apps [1/2]
-ce4faf0 SmartNav: Implement pulse for stock navbar
-6f72cb6 SmartNav: Add missing setting defines
-b7bf02a Pulse: add back auto color based on albumart
-e27064a Initial checkin on Pie for SmartNav navigation suite
-bff4f59 Add Flashlight blink on incoming calls [1/3]
-d7a73bd AppOps: Do not prune apps that are not present
-136d530 SystemUI: Name Cellular Tile based on carrier
-e1df5f7 Custom Icons handler: add launcher icon cache support
-13d8b0f Stock Recents/Overview icon pack support [2/3]
-1d546e9 Camera: Longshot with Burst Functionality.
-79ebe4b Camera: Force HAL1 for predefined package list.
-e81c9aa Camera: Ignore torch status update for aux or compsite camera
-a7064e9 Camera: Skip stream size check for whitelisted apps..
-712f7bd camera: Skip HFR checks for privileged apps.
-59a1472 Camera2: Notify fps as Session Based Parameter
-00a7e7d Camera: Clearing exception for Extended Face
-9eacc88 Camera: Extend face detection
-c49c6c1 Camera: Don't throw exceptions when value pairs have spaces in them
-7450af3 base: implement OP like navigation gestures [1/2]
-cd11833 AODTile: Fix long click intent
-22c0b78 BatteryBar [1/2]
-a1f8a99 Ability to toggle VoLTE icon in statusbar [1/2]
-d3bceb0 Allow to dismiss notifications with FP left/right swipe [1/2]
-e08b4ae Add Always On Display QS Tile
-a367209 MusicTile: Make tile state inactive if not playing music
-0551744 Add Music QS Tile
-e90e388 Allow to set QS panel columns and rows [1/2]
-69a2217 Speed up Recents additional buttons show delay
-beaa6ab battery: Allow setting custom symbol near text on charging [1/2]
-38af366 BatteryMeterDrawable: add battery styles [1/2]
-617fb6f Use SHOW_BATTERY_PERCENT to position battery percent [1/2]
-90ff063 Fingerprint authentication vibration [1/2]
-35c8641 Allow using 4G icon instead LTE [1/2]
-cfdb6ad Make roaming indicator optional [1/2]
-e0f893d PM: Enable signature spoofing by default [1/2]
-a97a266 Add ability to toggle bluetooth battery level in QS [1/2]
-84cbab6 Add ability to toggle bluetooth battery level [1/2]
-7c3d016 Add CarbonGestures [1/2]
-4725a3d SmartPixels: Also depend on burn in protection
-481d6d5 SmartPixels: Add config to enable smartpixels support
-3fcd784 base: make smart pixel burn-in protection dependent on device burn-in
-da4ef29 Add smart pixels [1/2]
-67f065b Custom logo customizations [1/2]
-457be3d Statusbar clock customizations
-140fd7b Allow using position tunable to hide clock
-414108b Add separate tunable for clock seconds
-74c075b Use alphaoptimized layout for custom icons on left
-a8ccb29 CollapsedStatusbar: Fix phantom spaces in status bar
-a89ae98e SystemUI: Network Traffic [1/3]
-07899f8 SystemUI: Add Lineage statusbar item holder
-be4dea1 CompassTile: Add a device supports compass check
-b314914 CompassTile: Do not use slashed icon
-2cb1208 CompassTile: Set default state inactive
-2912a6e Add Compass tile
-a201a99 ExpandedDesktopTile: Set default state inactive
-f9c095a QS: Add Expanded Desktop QS Tile
-3eaa493 am: Fix top activity resume with secure keyguard
-54f8c0f Fix app shortcuts string when changing language during first boot
-b6295ee do not remove system when provider publish timeout
-f9090b9 service: ResetListener in StorageManagerService
-29e4362 system_server:process: Crash on Android user-switching
-45a04ab Kill off provider info logspam
-cd0126f Remove unnecessary videos
-1505eeb Fix a 'memory leak'
-5eb1251 base: Remove round corner padding from statusbar
-c14327b KernelWakelockReader: stop the panic
-e8e105f Screenshot: Fix possible NPE
-61986f0 Sync Preference in UI for new cached device
-1f57279 Suppress FingerprintManager logspam
-b16dd47 TunerService: Prevent NPE with tunable
-979f1b8 base: Make Build.DATE visible to apps
-7d66281 Synchronize on a static final object to lock mDeviceBusy
-feeb33f Avoid that the bound process has a higher priority than caller
-8d98d5c Framework: Remove some methods from boot image profile
-1b2fbcd Fix data source for HEIF exif extractor
-d4cbeb2 Fix issue which exception happens with ExifInterface for HEIF content
-cfbc5fe Change caught exception in MediaScanner when ExifInterface is created
-eae9687 Remove NotificationVisibility storage pool
-27e4be2 NightLight: Allow lower temperatures
-55c2aaa Increase Zenmode max hour limit from 12 to 24
-8952ec1 view: add null check for dispatch touch view
-261683c Fix UsbDeviceManager null object reference
-91c9e21 ExifInterface: Avoid infinite loop on stream seeking failed
-fdc5bdc Revert "ViewRoot: Ensure we release surface from setWindowStopped"
-bbd816a AppStandbyController: Only check user standby setting
-425f25c WallpaperManagerService: Fix theme switching
-78282a2 ConnectivityService: Fix idle timer rule leakage
-60b4bbf PackageManagerService: update client app info when related shared library updated.
-e2ccdad ExternalStorageProvider always throws exception when renaming
-13f46d6 audio: dispatchPlaybackChange with handlerThread
-80fc4a4 Settings: Only valid screen power consumption need to smear
-ea2ef35 Fix ix Intent restoreFromXml missing type
-4b56d29 pm: Fixes can not boot issue
-f7d44e6 pms: Fix the IndexOutOfBoundsException issue
-2291604 Add missing STORAGE_INTERNAL permission for BackupRestoreConfirmation
-6e52efa SQLiteDatabase: Catch corrupt exception during transaction
-72e1bfd Make Build.TYPE and Build.FINGERPRINT consistent for apps.
-b7e9da3 Enable NSRM (Network Socket Request Manager).
-9fc4a78 Improve scrolling cache
-3ae3916 DEBUG: Turn off some debugging we don't need.
-cd1aab5 Allow Python Versions Higher than 2.6
-af174ff ParcelFileDescriptor: can we stop the panic here?
-fc18921 BluetoothAdapter: disable logspew
-b25dd8c base: set scrolling to 0.006f
-d22305d hwui: Disable fine-grained logging
-d6cd7e1 hwui: Remove deprecated compiler flag
-
-   * frameworks/native/
-10f728b Translate pointer motion events for OneHandOperation Display Shrink
-cd0e17d sf: Add support for multiple displays
-6b8cc31 Gralloc2: Allow invalid usage bits
-a0404e3 native: touch response optimizations
-355f4f4 Fix incorrect print starved time of binder pool
-0beab8d libbinder: auto-choose between binder/vndbinder
-fd3186f Fix bugs regarding calculate dalvik-cache size
-47e4b57 Input: improve touch response slightly
-
-   * frameworks/opt/net/wifi/
-06a92f5 WiFi: Ignore connectivity scans during WFD session
-
-   * hardware/lineage/livedisplay/
-d4eb8a8 livedisplay: The module isn't proprietary
-0d26b6b livedisplay: Nuke color balance
-d421085 livedisplay: Minor code cleanup
-950336a livedisplay: Fix racy init
-
-   * libcore/
-1c7c326 Merge tag 'android-9.0.0_r31' into 9.0
-
-   * lineage-sdk/
-7592f34 lineage-sdk: Remove DB upgrade for FORCE_SHOW_NAVBAR
-513d27d LineageSettingsProvider: Fix migration of FORCE_SHOW_NAVBAR
-
-   * packages/apps/Settings/
-0ef864e Settings: Use correct icon to reset battery stats
-dbfbeb4 Settings: Reset battery stats [2/2]
-5f38b6c Settings: Bring root settings on top of the list
-90e04f2 Add extended audio panel shortcut to sound settings
-c60200b Settings: Use correct icon for ring volume
-accf143 Settings: Add switch for linked ring and media notification volumes
-058716d Add permission for changing fonts
-02068e5 Initial checkin for SmartNav navigation suite
-23d0d29 Settings: Remove percentage icon switch from power usage summary
-09fce6f crdroid: Move gesture settings under crdroid
-3013c92 Settings: Add CHANGE_OVERLAY_PACKAGES permission
-5391e3e Phone ringtone setting for Multi SIM device
-bcf9105 BatteryMeterView: Always use Portrait battery style
-b378b83 Ensure battery saver preference is truly disabled while plugged in
-f09fea1 Fix IMEI dialog FC when only one SIM is inserted
-b68f1f1 Fix Battery settings FC
-74e1f56 fuelgauge: Fix possible memory leaks
-cdda6b7 fuelgauge: Implement Early Warnings
-e63257c fuelgauge: Use Enhanced Battery Prediction from Turbo
-33cadf5 fuelgage: Implement isTypeService
-e5054ef Fix BT pairing dialog DarkUI theme issue
-48cdca4 Show full /proc/version information
-e2cbef4 add additional battery saver steps
-08f7535 Settings: Add permission to allow restarting SYSTEM_UI
-5fe5f07 Settings: Add AGPS setting menu.
-c0b3c4a BasebandVersionDialogController: Don't duplicate baseband
-4eb0c56 Settings: Override doze packages
-4d6af97 Settings: Remove battery light and notification light settings
-4638b58 Settings: refresh search index check on build change
-93fa15a Move charging sound settings under crdroid
-bd9f0ea Settings: Remove kill app back button
-076dd9b Settings: Fix NPE with customdialogpref for backlight settings
-a06fa62 Changes on Settings UI for a better user experience
-ba57c3b Settings: Ambient settings moved under crDroid
-e4f3c84 Allow tuning ambient display with sensors [3/3]
-44edb0c Themes: Settings: Fix theming zoom preview timestamp text color
-3cfb84b Themes: Settings: fix storage icon tint
-
-
-   * packages/apps/crDroidSettings/
-639e542 crdroid: Improve string for battery stats reset
-
-   * packages/inputmethods/LatinIME/
-eb61e9f Merge 'lineage-16.0' into 9.0
-
-   * packages/providers/MediaProvider/
-6c881c5 Merge 'lineage-16.0' into 9.0
-
-   * packages/services/Telecomm/
-c6e706e Telecomm: Add Flashlight blink on incoming calls [3/3]
-6df1c44 Phone ringtone setting for Multi SIM device
-
-   * packages/services/Telephony/
-98d4849 Telephony: Add missing key for phone account settings
-ca92cf0 Telephony: add permission to change wifi hot spot settings
-1183a05 Suspend Actions [2/3]
-
-   * prebuilts/clang/host/linux-x86/clang-5271481/
-a0688fa Update prebuilt clang to 8.0.8 (based on r349610) from build 5271481.
-
-   * system/core/
-0b687d3 init: I hate safety net
-
-====================
-     02-06-2019
-====================
-
-
-   * art/
-f443eb4 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * bionic/
-2c489cf Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * bootable/recovery/
-e61adcc Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * build/kati/
-e1ae0f6 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * build/make/
-238f876 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * dalvik/
-a879c37 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * development/
-86865ad Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-
-   * external/skia/
-afc6528 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * frameworks/av/
-feb51fd Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * frameworks/base/
-12930ac Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * frameworks/native/
-4e76108 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * frameworks/opt/net/wifi/
-9992063 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * frameworks/opt/telephony/
-dc96f18 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * hardware/interfaces/
-aa0e295 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * hardware/nxp/nfc/
-ec3b549 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * hardware/qcom/audio/default/
-8050568 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * hardware/qcom/bootctrl/
-a1d491d Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * hardware/qcom/gps/
-5dc7ab4 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * hardware/qcom/media/
-a316b4c Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * hardware/ril/
-8f3b236 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/Bluetooth/
-b25a585 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
+87f7809 Add developer setting to set the default GPU renderer.
+f6ed9f3 FontService: Protect font changed broadcast
+91b9912 PebbleBerry: Switch styles [1/3]
+60c2690 Add synchronization for invokeForAllObservers call
+34dec22 SystemUI: Fix NPE when DozeService is destroyed
+9b88a97 AlarmManagerService: Add null check to QCNsrmAlarmExtension call
+f39982c ActivityRecord: .app must not be null when you call .setVisible
+c00096f Get new surface if it was released from setWindowStopped
+f84cc6b Pass correct preserve window value to performStop
+40c8df3 Fix to hide phone number printed in the log
+4d54f40 AccountManagerService: Fix ConnectionRecord Leak
+40f637f Update boot image profile to include Object.wait()
+3f8a1bd WifiDisplay: Merge changes from gerrit
+427c2e0 Revert "PhoneWindowManager: Check if proposed rotation is in range"
+4b2f6b8 New Crowdin translations (#198)
 
    * packages/apps/Camera2/
-1353931 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
+a15ec43 Use mCameraAgentNg for getting camera info when available
 
-   * packages/apps/CarrierConfig/
-240fe89 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/CellBroadcastReceiver/
-e4439ca Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/CertInstaller/
-f5f144b Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/Contacts/
-5136049 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/DeskClock/
-30c9100 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/DocumentsUI/
-d945fdf Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/Email/
-e3e6551 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/EmergencyInfo/
-945e797 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/KeyChain/
-beb9b46 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/ManagedProvisioning/
-6328a99 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/StorageManager/
-41a18ac Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/TvSettings/
-eb9b2f3 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/apps/UnifiedEmail/
-84b7ce0 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
+   * packages/apps/Settings/
+230531c Add developer setting to set the default GPU renderer.
 
    * packages/apps/crDroidSettings/
-1dbc78c New Crowdin translations (#370)
-084bef3 Revert "crdroid: Re-enable substratum category"
+8432c04 PebbleBerry: Switch styles [2/3]
+c4651d1 New Crowdin translations (#376)
 
-   * packages/inputmethods/LatinIME/
-5ffe028 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/providers/ContactsProvider/
-09c216f Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/providers/DownloadProvider/
-f443f24 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/providers/MediaProvider/
-9072294 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/providers/TelephonyProvider/
-8f71026 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/providers/TvProvider/
-9989e28 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/screensavers/PhotoTable/
-6136119 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-   * packages/services/BuiltInPrintService/
-a42c960 Merge tag 'android-9.0.0_r31' into lineage-16.0-android-9.0.0_r31
-
-====================
-     02-05-2019
-====================
-
-   * android/
-38eb834 manifest: android-9.0.0_r30 -> android-9.0.0_r31
-77a2947 Merge 'lineage-16.0' into 9.0
-ed85df9 Revert "manifest: Temp tracking lineage hw    *s"
-
-   * build/soong/
-1c272be Always link org.lineageos.platform-res for org.lineageos.platform.sdk
-
-   * device/lineage/sepolicy/
-39224d3 Sepolicy exceptions for font engine assets
-654cc15 sepolicy: Alow CPUInfo access to thermal sysfs
-374b290 sepolicy: Move in pocket service sepolicy
-
-   * frameworks/base/
-3891915 base: add Trust usb restrictor
-
-   * hardware/lineage/interfaces/
-c6e0e42 trust: create service
-4b1c700 interfaces: Add trust 1.0 HAL
-
-   * hardware/lineage/livedisplay/
-75ac2f2 livedisplay: Use 1 thread
-
-   * lineage-sdk/
-a010716 Move net monitor to expanded statusbar header [2/2]
-7057436 NetworkTraffic: stop the handler in doze mode
-
-
-   * packages/apps/Dialer/
-1786113 Merge pull request #1 from SubhrajyotiSen/9.0
-
-   * packages/apps/LineageParts/
-144fd4c Make trust interface less boring
-37af296 Hide power menu actions
-3460a67 ExpandedDesktop: Fix crash with resource ID
-4847e5c Moved expanded desktop settings to crdroid settings
-ccd9914 Move out notification and battery light settings
-954ecef Moved button settings to crdroid settings
-ab35c40 Move style settings under crdroid
-a6d99d8 LineageParts: Silently kill anonymous stats collections
-6678646 Moved status bar settings to crdroid settings
-992386d Rebrand to crdroid settings
-
-   * packages/apps/crDroidSettings/
-021a875 New Crowdin translations (#369)
-ff15d15 crdroid: Add battery reset strings
-3b42ff9 crdroid: Re-enable substratum category
+   * system/bt/
+781dc2b Increase maximum Bluetooth SBC codec bitrate for SBC HD
 
    * vendor/addons/
-090ac6c addons: Disable light statusbar for dark themes
-1e55338 addons: Add wellbeing and google intellegience sense themes
+9cca73a PebbleBerry: Switch styles [3/3]
 
 ====================
-     02-04-2019
+     02-13-2019
 ====================
-
-   * android/
-feb2253 manifest: Sync hardware/lineage/livedisplay
 
 
    * device/lineage/sepolicy/
-c8ceb6f sepolicies: add Trust hal
-701b30d common: Migrate to livedisplay 2.0
-1c44e50 common: Add vendor.lineage.touch rules
-c72a806 lineage: Rewrite Lineage Power HAL rules
-87d305d lineage: Properly write rules for Lineage LiveDisplay as a HAL
-e6c3ce0 sepolicy: Allow recovery update_engine to setexec backuptool
-0211a9c sepolicy: Allow Settings to read ro.vendor.build.security_patch
+79697dc Allow launcher access system data file
 
-   * frameworks/base/
-afbbb20 SystemUI: Add onStatusBarMotionEvent hook
+   * frameworks/av/
+74c1218 Merge 'lineage-16.0' into 9.0
+d1f45ec CameraService: Fix missing torch state callback
+3cf5e72 libstagefright: Allow HFR-60 in HAL-3 recording
+244cc25 aaudio: fix race condition in timestamp path
 
-   * hardware/lineage/interfaces/
-73c5a16 interfaces: Add touch HIDL interface definitions
-47208dd interfaces: Add 2.0 livedisplay interfaces
-
-   * hardware/lineage/livedisplay/
-7a5da24 livedisplay: sdm: Wire it up
-2667bbd livedisplay: sdm: Remove unused HALs
-ce53d14 livedisplay: legacymm: Wire it up
-
-
-   * hardware/qcom/media-caf/msm8952/
-c108ce3 mm-video-v4l2: C++11 requires a space between literal and string macro
-b9af12c mm-video-v4l2: Compilation warning fixes
-44b85bb libstagefrighthw: Compilation warning fixes
-8d79102 libc2dcolorconvert: Compilation warning fixes
-
-   * lineage-sdk/
-b49ed55 sdk: Add HIDL compat in LineageHardwareManager
-7368c8e sdk: Deprecate some unused lineagehw features
-
-   * packages/apps/Dialer/
-e2fd6bf Show phone number on bottom row if number type is present.
+   * packages/apps/Snap2/
+540bcdb Snap: make support for bokeh mode configurable per device
+d91ac34 Snap: use platform cert
+a85ad7b CameraSettings: Do not crash if zoom ratios are not exposed
+e5fa527 Snap: Avoid crash with empty RAW output size
+5c4831a Do not crash if we don't have support for RAW files
+43ba04a Snap: check tags before using them
+785d1a0 Snap: Check various feature support before applying
 
    * packages/apps/crDroidSettings/
-aa81191 crdroid: Clean up for search results
-
-   * vendor/lineage/
-e5e1302 overlay: Lock day night mode
-b999e44 Revert "Add crdroid privapp-permissions"
-c9bbe4a Merge pull request #37 from bdashore3/9.0
+c4651d1 New Crowdin translations (#376)
+49070e5 crdroid: Add couple of missing fragment titles
+0d38e9f crdroid: Improve custom seekbar usage for few settings
+ad8b895 crdroid: Fix displaying units for CustomSeekBarPreference
 
 ====================
-     02-03-2019
+     02-12-2019
+====================
+
+
+   * device/lineage/sepolicy/
+cdd4684 Allow switch sysfs access for system apps
+954204e Allow more access for theme_data_file
+1c3bf1b sepolicy: address denials for init/vendor_init
+d07447d Allow webview_zygote to read /dev/ion
+8893bf0 Add sepolicy for edge gesture service
+aea948a Sepolicy exceptions for font engine assets
+6da4019 sepolicy: Alow CPUInfo access to thermal sysfs
+583f27f sepolicy: Move in pocket service sepolicy
+
+   * frameworks/base/
+798f829 Improve performance of unclipped save layers
+df0555b Adjust AsyncTask.THREAD_POOL_EXECUTOR config
+8ed93f0 SystemUI: Fix an issue where jumping to black after screen turned on
+
+   * hardware/qcom/display-caf/apq8084/
+215f973 Make memtrack build with the VNDK.
+7676dca Add missing includes.
+bdf8b28 libmemtrack: Add open method for apq8084.memtrack
+a594015 display: Use generated kernel headers
+3ac0314 hal: Added LOCAL_VENDOR_MODULE to set output path of the binaries
+a04c97c Use header lib instead of using global include path
+
+   * hardware/qcom/media-caf/apq8084/
+0203123 Revert "media: Avoid collision with FFMPEG plugin"
+
+   * hardware/ril-caf/
+b475875 Encode the Number of MNC Digits in CellIdentity
+
+====================
+     02-11-2019
+====================
+
+
+   * device/lineage/sepolicy/
+db35068 Move snap/gallery definitions back to private
+2a2773a Clean-up a bit recovery rules
+d0c3919 Revert "sepolicy: recovery: Allow (re)mounting system"
+6fe48f6 Make backuptool permissive only in non user builds
+
+   * external/skia/
+cbb5592 Add rect-parameter to makeImageSnapshot and stop using chromium config options
+
+   * frameworks/av/
+7abefe9 effects: fix volume burst on pause/resume with AudioFX
+
+   * frameworks/base/
+8aaa576 New Crowdin translations (#196)
+8ed9e96 Volume dialog timeout (1/2)
+a63fde8 VolumeDialogImpl: Create settings observer only once
+aaf84fd Switching audio panel position [1/2]
+d9371aa Remove signature spoofing toggle
+
+   * hardware/qcom/wlan-caf/
+9a9fda5 wcnss-service: Opt-in to disable copying WCNSS_qcom_cfg.ini to userdata
+
+====================
+     02-10-2019
+====================
+
+
+   * frameworks/base/
+ee6023a New Crowdin translations (#194)
+7325290 Disable edge gesture service by default
+f0a7d79 PIE: Add back landscape check properly
+6a3dc56 PIE: Fix animation for settings icon and clean up
+1aedb7b PIE: Clean up for orientation mess
+
+   * packages/apps/crDroidSettings/
+ee747e7 Remove signature spoofing toggle
+9c86f8f Switching audio panel position [2/2]
+362071b New Crowdin translations (#374)
+48b03d0 Add EdgeGesture service for system gestures
+0c39df2 crdroid: PA PIE Controls 3.0 [3/3]
+
+====================
+     02-09-2019
 ====================
 
 
    * device/qcom/sepolicy-legacy/
-8d40ce9 common: Allow webview_zygote to read /dev/ion
+e1238b4 Display: Remove vendor property context for lcd density
 
-   * frameworks/av/
-2cc3062 Visualizer: fix native crash when visualizer release
+   * external/sqlite/
+3482bee sqlite: upgrade to SQLite 3.27.1
 
    * frameworks/base/
-0847bcd Visualizer: fix native crash when visualizer release
+0fb06e3 PIE: Fix auto dark theming and use tuner API
+e651c85 Frameworks: PA PIE Controls 3.0 [1/3]
+dc1327c Forward-port support for chained input filters
+72bf8eb Add EdgeGesture service for system gestures [1/3]
 
-   * hardware/lineage/livedisplay/
+   * frameworks/native/
+73da3b2 renderengine: clamp XYZ to [0.0, 1.0] in shaders
+203682c renderengine: avoid divide-by-zero in shaders
+5b2d931 binder: Remove thread shutdown logic
+c17c005 Remove more "template" keywords from non templated calls
+0808ef4 input: libbfqio: Adjust priority
+b655c0f binder: Don't initialize ProcessState unless we need to
+ab0064c sf : Change fatal to error for IGBP list leak
+d7440af libgui: Fix array out of bound
+c51356a Cleanup previous replacing NULL with nullptr
+2d306e3 binder: Replace NULL/0 with nullptr
+b97d588 Modernize codebase by replacing NULL with nullptr
+9fcbea5 Modernize codebase by replacing NULL with nullptr
+f937829 libs: ui: Fix shadow-field warnings
+3cf0f94 binder: Release tracking lock before invoking binder_proxy_limit_callback
 
-   * packages/apps/Dialer/
-c85ee3a Improve contatcts layout
-d6ca007 Incoming call screen & incall screen: contact name on 2 lines
+   * hardware/broadcom/libbt/
+0919027 libbt: Align Samsung CID strings to those created by macloader
+
 
    * packages/apps/crDroidSettings/
-eaaf168 New Crowdin translations (#368)
-148f2d0 Ability to hide superuser status bar icon [2/2]
-218d4e4 New Crowdin translations (#367)
+532a75a New Crowdin translations (#373)
 
-   * vendor/lineage/
-a1c84c9 Add crdroid privapp-permissions
+   * system/sepolicy/
+040aec0 Ignore newly added selinux objects
 
 ====================
-     02-02-2019
+     02-08-2019
 ====================
 
 
-   * packages/apps/LineageParts/
-5ff7c28 parts: add Trust usb restrictor
+   * device/lineage/sepolicy/
+d17608c Make sysinit permissive
+ff9271d Snap and gallery require to run vendor code
+da24d05 Remove not allowed rule
+de42705 Revert "common: Add sf_lcd_density_prop type and labelled props"
+b986852 qcom: Remove power HAL 1.0 label
+
+   * device/qcom/sepolicy-legacy/
+f6d960e legacy: Label some more sysfs_net
+
+   * external/sqlite/
+48ffcc9 sqlite: upgrade to SQLite 3.27.0
+
+   * frameworks/base/
+66d1fae Phonewindowmanager: Rectify import order
+a9e64f5 QS tiles customizer: respect user tiles columns value
+2628225 New Crowdin translations (#192)
+
+   * hardware/qcom/media-caf/apq8084/
+fd36f77 media: Use generated kernel headers
+3fe787a Add -Wno-error to compile with global -Werror.
+4cc25ca Build libstagefrighthw with BOARD_VNDK_VERSION
+4a86c80 Build libc2dcolorconvert with BOARD_VNDK_VERSION
+ea15be0 Build mm-video-v4l2 with BOARD_VNDK_VERSION
+a901ed3 mm-video-v4l2: Fix KW resported issues
 
    * packages/apps/crDroidSettings/
-babb84e crdroid: Fix derp
-101cf7b crdroid: Notify for device restart on changing recent style
+a5ed009 New Crowdin translations (#372)
+e928a91 New Crowdin translations (#371)
