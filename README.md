@@ -56,35 +56,29 @@ In order for a device to be OTA compliant, there are a few things to know.
 * Check if no extra / missing spaces  
 
 ## 3. How to ##
-### 3.1 Initial support - first setup via pull request ###
+### 3.1 Initial support ###
+After you contacted [Gabriel on Telegram](https://telegram.me/gwolf2u), and have the approval, follow the below steps.
 1. Fork this repo to your own GitHub 
 2. Make proper changes accoring to the [XML structure](https://github.com/crdroidandroid/android_vendor_crDroidOTA/blob/9.0/README.md#xml-structure) 
 3. Submit a pull request to this repo (this way we validate that you understood the requirements and if all is good you'll be granted direct push access to this repo)
 
-### 3.2 Initial support - after you got push access ###
+### 3.2 Update build ###
 1. Clone this repo locally
 ```
 git clone https://github.com/crdroidandroid/android_vendor_crDroidOTA -b 9.0
 ```
-2. Open file named **update.xml** and make changes based on the [XML structure](https://github.com/crdroidandroid/android_vendor_crDroidOTA#xml-structure). You can also add your **changelog_<device_codename>.txt** file if you have it.
-3. Now with the files updated, commit your changes to this repo.
-```
-git add *
-git commit #(this opens up your prefered text editor, so write a nice description like "added support for <device>")
-git push #you may be prompted for your github username and password
-```
-### 3.3 Update builds ###  
-1. Just open a terminal and change to the directory where you cloned this repo (android_vendor_crDroidOTA) and fetch updates from repo.
+Change to the directory where you cloned this repo (android_vendor_crDroidOTA) and fetch updates from repo.
 ```
 cd android_vendor_crDroidOTA
 git fetch --all
 git pull
 ```
-2. Make changes to **update.xml** and changelog, then push updates to repo.
+2. Open file named **update.xml** and make changes based on the [XML structure](https://github.com/crdroidandroid/android_vendor_crDroidOTA#xml-structure). You can also add your **changelog_<device_codename>.txt** file if you have it.
+3. Now with the files updated, commit your update to this repo.
 ```
 git add *
-git commit 
-git push
+git commit #(this opens up your prefered text editor, so write a nice description like "<device codename>: update build")
+git push #you may be prompted for your github username and password
 ```
 
 ## 4. Notice: ##  
