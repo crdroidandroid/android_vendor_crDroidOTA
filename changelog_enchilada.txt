@@ -1,0 +1,750 @@
+Highlights & Device Specific Changes:
+Build type: Beta
+Device: OnePlus 6 (enchilada)
+Device maintainer: Hildo Boerboom (firebird11)
+
+
+====================
+     11-02-2019
+====================
+
+
+   * bootable/recovery/
+0ee7ba0e recovery: symlink /sbin for script compatibility
+9ea11894 recovery: Provide caching for sideload files
+aba41a3e recovery: sdcard is data/media/0
+f701600e recovery: Puke out an /etc/fstab so stuff like busybox/toybox is happy
+186d7031 recovery: Get a proper shell environment in recovery
+806f0af4 Make adb use a custom prop for adb root
+
+   * build/make/
+0baed1f99 Merge 'lineage-17.0' into 10.0
+e2b8b585b Edify: Add abort message for bootloader asserts
+ba56d545f Allow setting the recovery density separately from the aapt config
+826281f8b Add blank_unblank_on_init to PRIVATE_RECOVERY_UI_PROPERTIES
+a4e0cb114 build: Separate commands in recovery foreach loops
+be3775a77 build: recovery: Support adding device-specific items
+
+   * device/oneplus/sdm845-common/
+c2bcfce sdm845-common: Patch qti-telephony-common.jar for compatibility with r9
+163004f sdm845-common: overlay: Disable config_cleanupUnusedFingerprints
+e11b1f0 Revert "sdm845-common: Compile libhwui in perf mode"
+
+   * frameworks/av/
+a0e8c960d CameraService: Support hooks for motorized camera
+
+   * frameworks/native/
+63a3537d2 libui: Allow invalid bits from callers conditionally
+42bb91963 sensorservice: customize sensor fusion mag filter via prop
+8bf5b940a sensorservice: Register orientation sensor if HAL doesn't provide it
+
+   * hardware/lineage/interfaces/
+06ccea1 cryptfshw: Introduce qti backend implementation
+e953d00 Initial audio amplifier HAL
+
+   * hardware/qcom-caf/common/
+2168415 fwk-detect: Relocate from vendor/qcom-opensource/core-utils
+
+   * lineage-sdk/
+af66a7c2 sdk: Kill los versioning
+
+   * packages/apps/Messaging/
+6c77b7c Messaging: Notification channel string fixes
+
+   * packages/apps/Nfc/
+992cfa8b NFCService: Add sysprop to prevent FW download during boot  with NFC off.
+
+   * packages/services/Telecomm/
+bcb96692 CallLog: Take into account multiple SIMs for sensitive numbers
+6361fcc0 Telecomm: Make sensitive phone numbers not to be shown in call log history.
+
+   * packages/services/Telephony/
+3cf65c22d Don't start SIP service before decrypted
+a07ba39be Telephony: Support muting by RIL command
+261877d8c Telephony: Add ERI configuration for U.S. Cellular
+
+   * system/vold/
+3aaad9a vold: Accept Linux GPT partitions on external SD cards
+994ce2c vold: Allow reset after shutdown
+e40135f vold: skip first disk change when converting MBR to GPT
+6a29731 Fix the group permissions of the sdcard root.
+2340212 vold ext4/f2fs: do not use dirsync if we're mounting adopted storage
+f075974 vold: Mount ext4/f2fs portable storage with sdcard_posix
+54de837 vold: Honor mount options for ext4/f2fs partitions
+4c98afa vold: Support internal storage partitions
+cb6ea77 vold: Fix fsck on public volumes
+0a48479 vold: add support for more filesystems for public storage
+c67fcbb system: vold: Use ICE for UFS card
+d73f6cc system: vold: Use wrapped key for metadata encryption
+bfdbce9 Updates for migrated code upstream
+8cb63e5 vold: change to upgrade key if export fails
+09071c2 vold: add support for clear key
+934282e Remove no longer relevant header file
+8acc62e vold: Use separate flag for wrappedkey
+4d21a5f vold: Wrapped key support for FBE
+f9bd274 Add "changepw" command to vdc.
+e552d81 vold: Move QCOM HW FDE inclusion under Lineage namespace
+960d574 [automerger] vold: resolve crypto device creation failure with dm-crypt skipped: 4b5c1b2db2
+d77090c system: vold: pass proper extra params to load crypto device
+53f094d system: vold: Close crypto block device if it was created
+d88e617 Updates for migrated code upstream
+01ed41b system: vold: fix block disk encryption to work with metadata encryption
+c1f79b3 vold: fix build error
+7087f30 Fix for CTS test CtsAppSecurityHostTestCases
+9990c37 system: vold: Remove crypto block device creation
+31fe604 vold: Add Hardware FDE feature
+
+   * vendor/lineage/
+e22f0cc4 soong_config: Reverse wait for qsee flag
+23811456 overlay: Remove Trebuchet config
+12dfc3d9 overlay: Remove Keyguard config
+fd84e644 crdroid: Fix version check in backuptool
+
+   * vendor/oneplus/
+39960710 Revert "sdm845-common: Patch qti-telephony-common.jar for compatibility with r9"
+
+   * vendor/qcom/opensource/interfaces/
+69077ca interfaces: Introduce qcom bluetooth_audio and btconfigstore HALs
+
+====================
+     11-01-2019
+====================
+
+
+   * device/oneplus/enchilada/
+716789d enchilada: remove pocketmode
+
+   * device/oneplus/sdm845-common/
+30cb7d1 sdm845-common: remove pocketmode
+
+   * frameworks/base/
+009e99a61f1 Always clear package cache when upgrade is detected
+54042c6af8f base: Use ro.build.date.utc to signal upgrades
+
+   * vendor/oneplus/
+0b5e3af4 sdm845-common: Patch qti-telephony-common.jar for compatibility with r9
+
+====================
+     10-31-2019
+====================
+
+   * android/
+063650c Merge 'lineage-17.0' into 10.0
+f869746 lineage: Enable legacy qcom sepolicy
+45be5e3 lineage: Reenable AOSP FM app and add QCOM libfmjni
+
+   * bionic/
+3ae72e5da bionic: Squash of pre-P mutex behavior restoration
+
+   * bootable/recovery/
+b9d31b95 recovery: Blank screen on init
+bb72ce1c recovery: Add runtime checks for A/B vs traditional updates
+fffa6b08 recovery: Allow bypassing signature verification on non-release builds
+3dd1d313 recovery: Also hide rescue mode from non eng builds
+4cd3afa8 recovery: Only show tests in eng builds
+a2f6c65e recovery: Expose reboot to recovery option
+8ae392c4 recovery: init: mount pstore fs
+48eb9e34 recovery: Enable the menu for User builds
+a143813c recovery: Remove "Supported API" message
+ac86ac4b recovery: Add wipe system partition option
+6eb9f4a0 otautil: add support for unmounting entire volumes
+35f47ca8 recovery: Provide sideload cancellation
+7d606892 recovery: Blank screen during shutdown and reboot
+53a32df7 recovery: Allow device-specific recovery modules
+d628c729 recovery: Include vendor init trigger
+fbccaab2 recovery: ui: Support hardware virtual keys
+79775b3a recovery: ui: Minor cleanup for touch code
+e7efe2cb recovery: ui: Default to touch enabled
+39ffc2e1 recovery: Remove HOST_OS guard for f2fs tools
+
+   * device/lineage/sepolicy/
+7b015eb sepolicy: Move in pocket service sepolicy
+
+   * frameworks/base/
+805df3a56fc Pocket lock improvements
+04aa700da9f pocket: Fix pocket lock view for display cutouts
+49e34ddacd1 pocket: Adjust sleep timeout for pocket lock view to 10 secs
+9ea05d4a2cc pocket: introduce pocket bridge
+5a21abf152f PocketService: Adjust light sensor rate to 400ms
+a2901faf7f6 pocket: Add hardware acceleration and properly maintain SYSTEM_UI flags
+8486c722800 policy: introduce pocket lock
+bd498cfa4dc pocket: introduce pocket judge
+fc6ecd51fd9 Revert "Add CHANNEL_MODE_DUAL_CHANNEL constant"
+6562aa2881a Revert "Add Dual Channel into Bluetooth Audio Channel Mode developer options menu"
+2641d7d29b9 Revert "Allow SBC as HD audio codec in Bluetooth device configuration"
+fb962c8ee73 SystemUI: Add case to quick pull down status bar anywhere
+a54a35290d3 Separate double tap to sleep on lockscreen [1/2]
+4698bbd2269 Add Lockscreen album art filter [1/2]
+b87bf2b64ea BatteryStats: Update WifiState even if EnergyInfo is invalid
+eb6b013a953 Catch IllegalArgumentException caused by recycled bitmap
+eb00d0441db BatteryService: scheduleUpdate asynchronously
+dd7c66e33d0 display: Validate activePhysIndex before access
+1c4af4c3423 WindowStateAnimator: Fix NPE with wallpaper offset
+c1d46cb659a Fix bugs regarding system app cannot write visible path
+0a5d66585e5 Fix for, BT Carkit position issue when music app is killed
+d163e38426d base: Live Volume Steps [1/2]
+0cdf1f2a87d Add battery styles and customizations for Android 10 [1/2]
+27cb3b3e214 base: media_seekbar: make it sexy
+a18d9bc55ef Add ability to toggle bluetooth battery level [1/2]
+bd09b452615 Only show bluetooth icon when connected && enabled
+a30b8daaf87 SystemUI: Change bluetooth battery level icon drawables
+5e90a144164 SystemUI: Add more bluetooth device filters
+631883a164c SystemUI: Improvements for bluetooth battery levels
+992257bd94d power: Disable keyboard/button lights while dozing/dreaming
+3ffdb9ac73a Audio: Do not disconnect profiles till Bluetooth Off
+78dd3eabf68 Disable tuner pref for battery
+7b02fd7f64f SystemUI: restart timeout causes black screen
+ea4a59a3531 Lockscreen Visualizer: Add pulse magic
+fc40deeff27 FlashlightController: Disable sending intent
+52bf6670095 Fix layout gravity for status bar right clock
+504093bb249 Temp: Remove dark tile
+985b7460f9d telephony: Conditionally ignore RSSNR signal level
+7c63968b982 Fix bootanimation stack overflow
+36c244aa188 SystemUI: Improve QS detail view layout
+156d8e89808 Recents: Fix NPE while changing themes
+f9039078e2c PebbleBerry: Support initial dark themes
+6ca5c58f2a4 base: themes: dont use colorPrimary for active qs
+29cdff3f33e SystemUI: Update automatic brightness drawables
+e15ffd2e6ae Camera: Expose Aux camera to apps present in the whitelist
+da29a26a20b PebbleBerry: Remove accent picker
+7003494bec2 base: Update path to camera_click ogg
+3b9be578d42 PebbleBerry: Allow switching accents and light dark themes in better way
+b94276aa620 PebbleBerry: Don't show system overlays on apps list
+1fb29f135af Disable More Debugging
+2564a9d2f7d BurnInProtection: Fix null object reference with timer
+5a7c83ee026 Keyguard: Actually kill the Fancy Colon
+ca98cbcfa0b base: SystemUI: reduce padding between clock and notification area
+d58a0c6fcd2 SystemUI: Implement burn-in protection for status/navbar
+b41fb966e55 SystemUI: assist: disable old Assistant animations
+a952c223a78 Add button to AppErrorDialog to upload crash information to dogbin
+82043f9d67d SystemUI: Hide back icon when screen pinned and gestural mode enabled
+2b462300580 SystemUI: Fix escape text when screen pinned and gestural mode enabled
+b27dc3dbff7 ScreenPinningRequest: Fix recents button not appearing
+d8a963961c7 SystemUI: Add method for getting estimated battery time
+e08f0a4ce82 SystemUI: Remove build version from qs footer
+573d32914f6 SystemUI: Fix flickering issue when live wallpaper is showing on aod/pulsing
+8c039e09750 Use new gradient dialog also for recovery/factory reset action
+f5bea052d2e AppStandbyController: Only check user standby setting
+e2ffe57b4b8 Conditionally disable uncrypt for ota
+1eec9361848 Shell: Don't show bugreport on DocumentsUI
+89a1f2e2588 SystemUI: Fix statusbar padding and layout for system icons
+dce9cc47b96 Whitelist WRITE_DEVICE_CONFIG for shell
+2b0f6ca0f75 Add missing STORAGE_INTERNAL permission for BackupRestoreConfirmation
+08bcf7188cf Update rounded corner radius path for Android 10
+f78a0a5b2d1 ScreenDecorations: Clean up tuner API
+167feb5bbd7 Allow tuning extra padding for status bar
+2b340651370 Rounded Corner: Code improvement and clean up
+69fee7b5eca Custom Rounded Corner and Padding preferences [1/2]
+86d8f74d4e3 base: Remove round corner padding from statusbar
+54f31387010 framework: Port IME selector notification toggle (2/2)
+6f718317be2 fb: add back all keyboard IME features back (1/2)
+b4e1cf3b694 SystemUI: Allow overlaying max system icons
+6b6dd3d89d1 ambient display: Fix volume key music control
+a6ccf1e41c2 CPUInfoService: Improvements and fixes
+1bf083f2613 SystemUI: add CPU info overlay
+56a4d35a9bf BatteryBar [1/2]
+74e99e1a61e Fix status bar for network traffic icon holder
+aedda9e84c0 Toast icon switch [1/2]
+0268db0fe64 Fix: No text in toast for RTL layout
+b0a068c6ac6 Show icon of package associated with Toast
+4644d23ccb2 AbsListView: Fix widget couldn't find any view fc
+efc37686e65 Return: Listanimation Views and Interpolator [1/2]
+98d76658d0c Allow toggling animations off [1/2]
+243d3912044 Add interpolators to qs tiles animation [1/2]
+03e01476887 Add animations to quick settings tiles [1/2]
+742c81df99e Add option to disable scrolling cache [1/2]
+615b92e80b1 AppTransitions: Remove hackery for controls duration
+42ed192bce3 FW_Base - XuiMod: Toast Animations [1/2]
+1962e6126ab Add Ethans animations
+8a83aa2d831 AOKP custom system animations (1/2)
+f2aaed7775c ScreenshotSound: Fix playing screenshot's sound when camera's sounds off.
+d875f8037ac Disable/Enable screenshot sound [1/2]
+3b5c7deabd0 Add colors to assistant animation
+91c58e6e427 Update permission whitelist for launcher3
+f77d1424d8a Add option to select brightness slider positon [2/3]
+0727f75463e QS tile titles visibility [1/2]
+dc9dcdf1772 Statusbar: Fix Tunerservice usage
+933e79e5507 NetworkStatsHistory: Prevent IllegalArgumentException
+dcca835c4ee Prevent crash in TTS engine due to improper configuration
+700344490ea Framelayout: Fix NPE when view is missing
+8269aeb8849 SystemUI: Keyguard: Check for a null errString
+1f795a20670 Keyguard: Fix scramble PIN view for multiple users
+8e2b4d7551b Keyguard: Hide check button when using PIN quick unlock
+5f207653c4e Disable PIN entry after successful quick unlock
+7efb442bc7f Keyguard: Forward port lockscreen quick unlock (1/2)
+2b5196c860e Fingerprint authentication vibration [1/2]
+9e03b929528 Network traffic mode for status bar [2/3]
+b643a97d226 FATAL EXCEPTION IN SYSTEM PROCESS: android.ui
+fe32deba614 KernelWakelockReader: stop the panic
+61dd450bf89 ParcelFileDescriptor: can we stop the panic here?
+45c50acb9d8 Enable NSRM (Network Socket Request Manager).
+87fc7f81a0b Rename the backup file to base file when backup exists
+3b3e5fb31fb SQLite: Do integrity_check only once
+e27e386d034 SQLiteDatabase: Catch corrupt exception during transaction
+d4721f7b3b0 base: limit direct share targets to reduce lag
+453b3b67ba6 aapt: Fix compiler warning (clobbered by longjmp)
+e2cd4270a04 aapt: add check for untranslatable "string-array"s
+c50e843d3ed aapt: Use a std::map instead of a SortedVector
+da6c6ebe094 aapt: Speed up the style pruning
+66526f6cf2b Fix to avoid UI freeze issue
+78bcf4746dc display: Don't animate screen brightness when turning the screen on
+ea4fd6d7fe2 connectivity: Configure additional TCP parameters
+3c8c228032c MountService: Prevent NPE with DropBoxManager
+09fceb76cfd MountService: ensure VolumeRecord with UUID exists before modifying
+947a6a3ef69 Settings:Bugfix for NPE, Only valid screen power consumption need to smear
+e2cfcf984a4 SystemUI: Fix SystemUI Crash
+4a278f28771 Suppress FingerprintManager logspam
+18f3892adc2 Kill off provider info logspam
+250e1b8ed0a ViewGroup: Remove child parent when a new view is added
+bc7e6ef765b Fix formatting for Dash charging overlay
+8a89aafd460 audioservice: fix hasMediaDynamicPolicy() for loopback and render policies
+63244276df2 audioservice: re send BT_SCO parameter to HAL when audioserver restarts
+d3cf7a38dd8 Do not apply date customization to QS clock [1/2]
+c45bc990afd Add option to auto hide status-bar clock [1/2]
+3c250775035 Statusbar clock customizations [1/2]
+695fd9dcdc7 Add separate tunable for clock seconds
+e6419c38cdc CollapsedStatusbar: Fix phantom spaces in status bar
+ef4ab985462 Allow using position tunable to hide clock
+de8db94dcf8 Use alphaoptimized layout for icons on left
+e41185055ca Use same NFC icon as that in QS tile
+b6b742e1f1a SystemUI: Update NFC tile drawable
+40ef4a27918 SystemUI: Update default set of tiles
+3a2a9726870 SystemUI: enable NFC tile
+05e5e567d8a SystemUI: Add statusbar NFC icon
+5d388286ff3 base: SettingsProvider: cleanup leftover logspill
+728c3560d6f Add tunables for navbar layout customization [1/2]
+a7bb0024952 Telephony: NPE observed in Settings when click on Search settings
+e32f196a127 Add toggle to disable HW keys [1/2]
+35b3a63d324 Use FORCE_SHOW_NAVBAR to actually toggle navbar
+ad112ee38ab base: Add accidental touch prevention for assist key
+65cd3e0471b base: Introduce Accidental Touch
+160c58e581f base: Introduce new navigation bar key event source
+c34ceb8ea34 base: Add START_ACTIVITIES_FROM_BACKGROUND on phone priv-app whitelist
+91fd68e29a5 base: rescuce party: check isDisabled on all public API
+46f57395553 Allow overriding default volume dialog position
+b3846feefe8 VolumeDialogImpl: Use TunerService properly
+a54d725f7b7 VolumeDialogControllerImpl: Check for internal audio recording support
+f9bb92e7dbe SystemUI: Whitelist our recorder on CastController
+71b936db482 fwb: Add support for internal audio recording
+01d698cf4f4 PackageManager: allow build-time disabling of components
+73d8f977b57 FingerprintService: add overlay to prevent cleanup of unused fingerprints
+68cb10657de fingerprint: notify client when cancelling succeeded
+20d333a0ffd Add crdroid utils
+a18e6503075 BatteryService: add dash charging support
+4283404032d LockscreenCharging: squashed (1/3)
+0d1aa808b18 Option to Display Data Disabled Indicator Icon [1/2]
+d23ed8abf84 Allow using 4G icon instead LTE [1/2]
+c3c857a569f Make roaming indicator optional [1/2]
+5e78c74b4be TunerService: Add parseInteger failsafe method
+02dafa0fe72 SystemUI: Allow using tuner API for Global settings
+cdfb51fcf20 TunerService: Prevent NPE with tunable
+b97410c3c02 Ability to toggle VoLTE icon in statusbar [1/2]
+0988c1d68e0 Make Build.TYPE and Build.FINGERPRINT consistent for apps
+7530b3555a7 base: Make Build.DATE visible to apps
+60ba04db9ef base: Add stub files
+63b60884757 Add customizable action for back long press button [2/3]
+a0669902ce9 Add device key action to kill app [2/3]
+f97ea4db0c5 base: Add metric for crDroid Settings
+0d78ef3ebd9 telephony: Make IMS method updateToState accessible
+ad23d1920ad IS_DEBUGGABLE -> IS_ENG
+9fdd9ed1e9b TypeClockController: Make it compile with new plugin API
+fca5b7acebe Revert "Drop Type clock face."
+0bc6dc66ea4 Revert "Drop final remnants of Type clock face"
+162e9709c6c Revert "Disable ClockOptionsProvider so clocks don't appear in picker app"
+b279a3734ad Revert "Disable custom clock faces in SystemUI"
+f4d80e9a2d9 PrivacyItemController: Enable permission hub by default
+aa3a2f42b88 Revert "DO NOT MERGE Revert "Adding the privacy chip to the CarStatusBar""
+841bfbd2bfe Revert "DO NOT MERGE Remove Privacy Indicators"
+ba9cd8622cd Allow SBC as HD audio codec in Bluetooth device configuration
+0be9cd49245 Add Dual Channel into Bluetooth Audio Channel Mode developer options menu
+918fecd7536 Add CHANNEL_MODE_DUAL_CHANNEL constant
+c29221f060c SystemUI: Don't dismiss keyguard if user key isn't unlocked
+a74c1335217 SystemUI: Dismiss keyguard on boot if disabled by current profile
+82efdd5928c SystemUI: Add visualizer feature
+1a3838da75e Keyguard: Allow disabling fingerprint wake-and-unlock
+eb3621a0701 fingerprint: handle PerformanceStats NULL pointers
+00c4ba09e81 Camera button support
+cf86263b34d power: Re-introduce custom charging sounds
+9ac2015aa59 SystemUI: Advanced location tile
+467c3811c96 SystemUI: Add Profiles tile
+c64f02e421c SystemUI: Enable and fix QS detail view, adapt layout to Pie
+4dca06824ec LockSettingsService: Support for separate clear key api
+70c7db72116 Fix Build Credentials refactored to use byte[]
+e2b683f09a4 frameworks: base: Port password retention feature
+5ce00a98a5e SystemUI: Fix up right clock handling when showing heads up
+
+   * kernel/oneplus/sdm845/
+9628ecfef01e Merge illusion kernel_oneplus_sdm845 into 10.0-ill
+
+   * packages/apps/Settings/
+bf5094bbab Revert "Add Dual Channel into Bluetooth Audio Channel Mode developer options menu"
+
+   * packages/apps/crDroidSettings/
+198e9bef crdroid: Enable pocket lock settings
+
+   * vendor/lineage/
+f27f5409 privapp-permissions: Allow Snap to use android.permission.START_ACTIVITIES_FROM_BACKGROUND
+027719d9 vendor: Add messaging app to power whitelist
+b14303ad overlay: Remove config_show4GForLTE
+4e401ff5 overlay: Clean up Settings overlay
+b642e9eb repopick: Support    * paths detection on different branches
+
+====================
+     10-30-2019
+====================
+
+   * android/
+0378f4f Revert "Revert "switch back to LOS QCOM power HAL""
+5ddba1b Merge 'lineage-17.0' into 10.0
+f7af0f5 lineage: Enable Exchange
+1fda9ac Switch to our platform_testing fork
+e437007 lineage: Remove AppDrawer and powertop
+1037e98 manifest: Switch to our external/mksh fork
+33ab736 Revert "switch back to LOS QCOM power HAL"
+47a5d48 manifest: Switch back qcom    *s to LOS
+65aefa5 Merge 'lineage-17.0' into 10.0
+
+   * build/soong/
+5e03d542 DNM: soong: Allow using PATH tools
+a4e53fe9 soong: Add function to return camera parameters library name
+c485f6d6 soong: Change to CR_VERSION
+fb6347a0 soong: Give priority to modules in exported namespaces for bootjars
+
+   * frameworks/opt/telephony/
+7cad4a58a 2G wants proper signal strength too
+3aff3574e Fix Issue Where SignalStrengthGsm is null
+55b4b6333 Migrate GSM SignalStrength to WCDMA on HAL 1.0
+
+   * kernel/oneplus/sdm845/
+52e5e37767b9 Merge tag 'v4.9.198' into IllusionKernel
+11a709efe143 Merge android-linux-stable into IllusionKernel
+
+   * lineage-sdk/
+72927d44 Allow value 3 for status bar quick pull down
+
+   * packages/apps/DeskClock/
+314850d1b Make new menu entry to link to cLock widget settings.
+77d5cb5d8 Provide upgrade path for cm-14.1 -> lineage-17.0
+
+   * packages/apps/Dialer/
+01c2a572d Dialer: AudioModeProvider: use wired route for usb headsets
+7a6992ddf Control dialer's incoming call proximity sensor check via an overlay
+8f9ac9217 Re-add call statistics.
+30fef9620 Allow per-call account selection.
+3fd43a1ce Re-add call recording.
+
+   * packages/apps/Email/
+049f235d6 Add missing LOCAL_MODULE_PATH
+
+   * packages/apps/Messaging/
+fde9c62 Messaging: Implement per conversation channels
+7dcfcb5 Don't build with platform certificate
+0ddca5c Messaging: use white nav bar
+d3aaa2b Allow intent shared subject or title to be mms subject
+6c0d75d Messaging: Add "Mark as read" quick action for message notifications
+a783416 Messaging: Fix crash of blocked participant list activity
+6a8b1eb Messaging: Don't crash on unsupported shared content type
+a791477 MediaPicker: Check for NPE
+27c3a8e Messaging: fix bad recycle on sending two mms in a row
+12dd706 Messaging app crashes after a few MMS
+f022d14 Fixed storage permission issue for attachments
+7d0e3e7 Added support for video and audio mms attachments
+25dbc45 Play an audible notification on receiving a class zero message.
+3184dc4 Messaging: Implement saved video attachments in MMS
+8df3691 Messaging: bring back accent color
+4d406e7 Fix menu item highlight color.
+5a2516e Messaging: Toggable keyboard emoticons access
+
+   * packages/apps/Settings/
+badb1df833 Settings: Add back crdroid logo
+
+   * packages/apps/crDroidSettings/
+cf4c000e crdroid: Re-enable setting for quick qs pull down
+ceaa08f0 Separate double tap to sleep on lockscreen [2/2]
+
+   * system/core/
+d322710bb Merge 'lineage-17.0' into 10.0
+3753ab112 Revert "Format formattable partitions if mount fails"
+7fa793e27 fs_mgr: mount: don't set the block device as ro for recovery
+136cade2f reboot: mark as recovery_available
+f6d04feea fs_mgr: Fix EnsurePathMounted with a given mount_point.
+
+   * vendor/lineage/
+6d543251 common: Bring back Android Beam
+ac35a262 lineage: use AB_OTA_PARTITIONS flag for including backuptool_ab
+11544c8c extract_utils: Added Suffix uses COMMON_SUFFIX
+19a0e29d extract_files: Implement blueprint file generation
+1499e614 extract_files: Add initial blueprint creation
+a7449079 extract_files: Match non-treble path prefixes
+99c79eef extract_files: Support system/ prefixes
+544d27d4 build: dt_image: use prebuilt lz4 binary for compressing
+
+====================
+     10-29-2019
+====================
+
+   * android/
+ba1ccb9 lineage: enable apq8084 hals
+9a86ab8 manifest: Switch to our fork of build/blueprint
+
+   * device/oneplus/sdm845-common/
+cf05010 sdm845-common: build kernel with clang
+
+   * hardware/qcom-caf/apq8084/audio/
+7feb4b079 apq8084: audio: fix msm8974 symlinks
+
+   * hardware/qcom-caf/sm8150/media/
+97face7ef media: Exclude libplatformconfig from OSS builds
+c72b63b23 media: Include display_headers instead of display_intf_headers
+e7db7d7db media: libOmxSw encoders require prop headers :(
+fd8b1ec54 media: Use    * pathmap
+
+   * kernel/oneplus/sdm845/
+9e48f0c28dd5 Linux 4.9.198
+84f5b67df81a RDMA/cxgb4: Do not dma memory off of the stack
+45156a830326 Revert "net: sit: fix memory leak in sit_init_net()"
+1ee3376d779f PCI: PM: Fix pci_power_up()
+3f119ae5eefb xen/netback: fix error path of xenvif_connect_data()
+7ccf3b8b7a12 cpufreq: Avoid cpufreq_suspend() deadlock on system shutdown
+3477314df841 memstick: jmb38x_ms: Fix an error handling path in 'jmb38x_ms_probe()'
+615e9f196d9e btrfs: block-group: Fix a memory leak due to missing btrfs_put_block_group()
+605387c7c699 CIFS: avoid using MID 0xFFFF
+088f75885bb4 parisc: Fix vmap memory leak in ioremap()/iounmap()
+8d53ef7bc7fa xtensa: drop EXPORT_SYMBOL for outs*/ins*
+f60a605aa56e mm/slub: fix a deadlock in show_slab_objects()
+a1f7f6afd227 scsi: zfcp: fix reaction on bit error threshold notification
+51ad5d1b36f4 drm/edid: Add 6 bpc quirk for SDC panel in Lenovo G50
+a61ac3915627 mac80211: Reject malformed SSID elements
+49d84740f8a7 cfg80211: wext: avoid copying malformed SSIDs
+5dd5ae04fd23 ASoC: rsnd: Reinitialize bit clock inversion flag for every format setting
+596836eb5c98 Input: da9063 - fix capability and drop KEY_SLEEP
+ce58d14c2f39 scsi: core: try to get module before removing device
+a56c80d8ee76 staging: wlan-ng: fix exit return when sme->key_idx >= NUM_WEPKEYS
+bfdf982921b6 MIPS: tlbex: Fix build_restore_pagemask KScratch restore
+e509538bb9cc USB: ldusb: fix read info leaks
+e5e48d279fce USB: usblp: fix use-after-free on disconnect
+1b64bc2abc56 USB: ldusb: fix memleak on disconnect
+afa3bc254e0f USB: serial: ti_usb_3410_5052: fix port-close races
+f0b1f7e0c8a7 usb: udc: lpc32xx: fix bad bit shift operation
+7de1569e525c ALSA: hda/realtek - Add support for ALC711
+4d56c096bce0 USB: legousbtower: fix memleak on disconnect
+3ce6b467b9b2 memfd: Fix locking when tagging pins
+24bde2946b5b ipv4: Return -ENETUNREACH if we can't create route but saddr is valid
+d1b2bdb9a130 net: avoid potential infinite loop in tc_ctl_action()
+18bfe53b6c47 sctp: change sctp_prot .no_autobind with true
+15cfb7203fba net: bcmgenet: Set phydev->dev_flags only for internal PHYs
+0197645bf8cd net: bcmgenet: Fix RGMII_MODE_EN value for GENET v1/2/3
+6303b51d182a loop: Add LOOP_SET_DIRECT_IO to compat ioctl
+75d52a1d100c ocfs2: fix panic due to ocfs2_wq is null
+8c03bacc9d50 Revert "drm/radeon: Fix EEH during kexec"
+95cfeeb5fe10 namespace: fix namespace.pl script to support relative paths
+f549c98ada33 net: hisilicon: Fix usage of uninitialized variable in function mdio_sc_cfg_reg_write()
+b742b54cb85e mips: Loongson: Fix the link time qualifier of 'serial_exit()'
+8b6d5c1e143b mac80211: fix txq null pointer dereference
+2f1530002f52 nl80211: fix null pointer dereference
+b49ac6012d75 MIPS: dts: ar9331: fix interrupt-controller size
+3d7f1bfaf354 ARM: dts: am4372: Set memory bandwidth limit for DISPC
+45c28489bd0a ARM: OMAP2+: Fix missing reset done flag for am3 and am43
+0229c97ff6d5 scsi: qla2xxx: Fix unbound sleep in fcport delete path.
+80efde4ba80d scsi: megaraid: disable device when probe failed after enabled device
+ea8a6a585aa5 scsi: ufs: skip shutdown if hba is not powered
+798b892d6fdd rename defconfig
+
+   * packages/apps/Exchange/
+7698915a Exchange: Migrate to androidx
+
+   * packages/apps/crDroidSettings/
+f9f9084e Add Lockscreen album art filter [2/2]
+
+====================
+     10-28-2019
+====================
+
+
+   * device/qcom/sepolicy/
+8e8382e7 sepolicy: qva: Remove duplicate specification for qti.ims.ext
+
+   * frameworks/base/
+fbd4341a4f0 sensors: Create bool to select what timestamp to use
+
+   * packages/apps/Recorder/
+5359157 Use static color for recorder icon
+
+   * packages/apps/crDroidSettings/
+987071ac crdroid: Re-enable volume livesteps
+74158794 crdroid: Update drawable for battery percent when charging
+fe344550 crdroid: Rearrange battery percentage icon for statusbar
+d9cee567 crdroid: Rectify battery alert icon
+53c8dc29 Add battery styles and customizations for Android 10 [2/2]
+
+   * vendor/addons/
+8132fe0 addons: Add mogrified 1440 bootanimation prebuilt
+
+   * vendor/qcom/opensource/dataservices/
+8c5e7f5 librmnetctl: Add flag for netmgrd without uplink features support
+
+====================
+     10-27-2019
+====================
+
+   * android/
+6b1a92e switch back to LOS QCOM power HAL
+
+   * frameworks/base/
+57aed8dc3f4 SystemUI: Show bluetooth battery level when available
+7240e031783 PowerProfile: allow overriding default power profile
+
+   * hardware/qcom/gps/
+e916479 msm8084: gps: Fix for buffer overrun crash at copying nmea string
+
+   * system/netd/
+a118c1f2 netd: Allow devices to force-add directly-connected routes
+
+====================
+     10-26-2019
+====================
+
+   * android/
+0654c44 manifest: Goodbye Eleven
+
+   * device/oneplus/sdm845-common/
+3a302ce sdm845-common: Update qti-telephony-common from DRG
+cdb9f1a sdm845-common: I'm sorry.
+7b5ed88 sdm845-common: Update aptX blobs from crosshatch
+68fe597 sdm845-common: Update blobs from Android Q Beta 3
+6613678 sdm845-common: Telephony: Add inject support for MultiSimSettingController
+8856a82 sdm845-common: Telephony: Move qti-telephony-common to product
+2d8c4b6 sdm845-common: Telephony: Add telephony_injection file
+b5b256c sdm845-common: FR53248: Android Q: Remove hidden API references in ims.apk
+aed73b1 sdm845-common: Add support for telephony hidl wrapper
+dd20f35 sdm845-common: IMS: decouple ims-ext-common from boot jars
+e678cb2 sdm845-common: Enable FEATURE_TELEPHONY_IMS for these devices
+5d39685 sdm845-common: Update device/qcom/sepolicy include paths
+0c51be5 sdm845-common: Compile libhwui in perf mode
+
+   * frameworks/av/
+67fe47374 camera: Allow devices to load custom CameraParameter code
+
+   * frameworks/base/
+bc865c165df SystemUI: Fix toggling lockscreen rotation [1/3]
+aa262423558 Configurable 0, 90, 180 and 270 degree rotation
+
+   * packages/apps/Settings/
+0505deab2d Merge pull request #66 from crDroid-lavender/10.0
+e07ea12bea Skip loading contextual cards if legacy cards are used
+cab0b010da Skip loading contextual cards if legacy cards are used
+
+   * packages/apps/crDroidMusic/
+c22a98cd Bump version
+fcce0899 Fix music service for Android 10
+
+   * vendor/addons/
+0e5f163 addons: Update crDroidMusic prebuilt
+98f1a67 addons: Fix creation of 0 byte zip
+76df7d7 addons: Add mogrified 1080 bootanimation prebuilt
+
+   * vendor/lineage/
+7662b3bf crdroid: Elevate to better music app
+
+   * vendor/oneplus/
+a03276ac sm8150-common: Build more stuff from source
+84c8e815 sm8150-common: Don't resign TimeService app
+da119faf sm8150-common: Drop Cryptfshw blobs
+ae90f04b sdm845-common: Update qti-telephony-common from DRG
+
+   * vendor/qcom/opensource/fm-commonsys/
+8ca1a78 FM: Remove unnecessary TARGET_BOARD_PLATFORM guard
+e4130e2 fm: Drop unnecessary dependencies
+0c86b61 FM: adaptive icon
+e3e0b39 FM: Revamp notifications
+4feca10 FM: Fix KHz->kHz
+6171592 FM: Convert regional band arrays to string references
+1ff3b0f FM: Update India bands
+39d3fe7 FM: Fix headphone icon
+edb0e23 FM: Fix settings UI bugs
+8a44f19 FM: Localization of band types
+0b2d42f FM: improved band selection
+5c15721 FM: Select band based on country
+94cab4e FM: Keep track of scanned frequencies in service
+f6600ec FM: Ensure scan state is kept in sync
+b84c5e0 FM: The collect channel disappear when quit FM
+d976587 FM: Fix status text to reflect when FM is enabled.
+53e9a22 FM: Launch station list automatically after scan
+14ce4f0 FM: reenable radio text visibility after station info updated
+48e5237 FM: Store tag num/value in sequence
+6844bc5 FM: retune last frequency when resume after call
+443f68b FM: materialize
+f83e62d FM: add Indonesia
+cfee4e1 FM: Cleanup resources
+6b384e3 FM: Add property to force use internal antenna
+26bc128 FM: Switch file extension to aac
+d88b5d4 FM: Call unregister in onPause
+8bbe12b FM: Scanned frequencies are saved in ascending ordering
+e89ec62 FM: Re-add RDS fields to UI
+e4e5511 FM: Make default country an overlay
+d80db1b FM: Restore seek arrows
+172c7ba FM: Re-vamp UI
+3487890 FM: Break bootclasspath dependency
+f913133 Allow library to be used by apps directly
+9b0d691 jni: Resolve -Wwritable-strings warnings in helium FW library variables
+7f68de6 jni: Resolve V4L2_CID_AUDIO_MUTE redefinitions
+46895b2 jni: Resolve equality comparisons with extraneous parentheses
+3432994 jni: Ignore unused parameters from APIs
+53fbfa4 jni: Resolve FM_DEVICE_PATH R/O open flag
+35fd3ff jni: Remove unused variables
+d672879 jni: Skip loading FM firmware if requested
+a6f8cbb jni: fix calibration data path for legacy fm_qsoc_patches
+744b84c Revert "Fm: Use btconfigstore interface to fetch vendor features"
+30fb38f Revert "FM: Use btconfigstore interface to fetch vendor features"
+
+====================
+     10-25-2019
+====================
+
+   * android/
+f965cd3 Merge branch 'lineage-17.0' of https://github.com/LineageOS/android into 10.0
+6b269bf lineage: Enable sm8150 CAF HALs
+
+   * frameworks/base/
+a86b7b5a7fe Add NR data RAT support
+e7559840953 Support for radio technology NR
+4cf68453ae4 FR57912: Add support for pdp data reject with cause code 29,33,55
+
+   * hardware/qcom-caf/msm8996/audio/
+f9a065a28 audio: Use normal tinycompress
+4d112ab6d audio: Use libprocessgroup unconditionally
+
+   * packages/apps/Settings/
+7c80ab87b5 settings: Black theme is getting nicer
+3041352bcf Fix crash when going back from battery it still tries to update battery level even after intent is closed add a null check to avoid that * fixes crash: https://del.dog/buvixadezo
+e3464f75b5 Settings: Update visualizer shortcut
+
+   * packages/apps/crDroidSettings/
+181047b1 crdroid: Update drawable for bluetooth battery toggle
+
+====================
+     10-24-2019
+====================
+
+   * android/
+cae7394 lineage: Enable msm8952 HALs
+7b8ed91 lineage: Enable QCOM power HAL
+9d7c702 Merge 'lineage-17.0' into 10.0
+
+   * device/lineage/sepolicy/
+b7c29bc Kill sysinit
+ef286ec sepolicy: vendor: Migrate to power 1.2
+
+   * hardware/interfaces/
+183bca8b3 camera: Only link and use vendor.qti.hardware.camera.device if specified
+
+   * packages/apps/Settings/
+83b0503901 Settings: Add our own dark style list
+
+   * packages/apps/crDroidSettings/
+6b0d8841 Add ability to toggle bluetooth battery level [2/2]
+f311abf7 crdroid: Re-enable lockscreen visualizer pulse
+
+   * vendor/lineage/
+adb26fe1 Kill sysinit
+
