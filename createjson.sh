@@ -20,13 +20,17 @@ telegram="https://link"
 
 #don't modify from here
 script_path="`dirname \"$0\"`"
-zip_name=$script_path/crDroid/out/target/product/$device/$zip
+zip_name=$script_path/out/target/product/$device/$zip
+buildprop=$script_path/out/target/product/$device/system/build.prop
 
-build_date=`echo "$zip_name" | cut -d'-' -f3 | cut -d'_' -f1`
-zip_date=`date -r $zip_name "+%Y%m%d %H:%M:%S"`
-timestamp=`date --date="$zip_date" +%s`
+if [ -f $script_path/$device.json ]; then
+  rm $script_path/$device.json
+fi
+
+linenr=`grep -n "ro.system.build.date.utc" $buildprop | cut -d':' -f1`
+timestamp=`sed -n $linenr'p' < $buildprop | cut -d'=' -f2`
 zip_only=`basename "$zip_name"`
-md5=`echo "$zip_name" | md5sum | cut -d' ' -f1`
+md5=`md5sum "$zip_name" | cut -d' ' -f1`
 size=`stat -c "%s" "$zip_name"`
 version=`echo "$zip_only" | cut -d'-' -f5`
 v_max=`echo "$version" | cut -d'.' -f1 | cut -d'v' -f2`
