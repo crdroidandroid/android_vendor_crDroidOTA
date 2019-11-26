@@ -7,24 +7,24 @@ In order for a device to be OTA compliant, there are a few things to know.
 
 ### 1.1 XML structure ###
 ```
-    <manufacturer id="Manufacturer">
-        <DeviceCode>
-            <maintainer>MaintainerName</maintainer>
-            <devicename>DeviceName</devicename>
-            <filename>FileName</filename>
-            <buildtype>BuildType</buildtype>
-            <download>DownloadLink</download>
-            <changelog>ChangelogLink</changelog>
-            <gapps>GappsLink</gapps>
-            <forum>ForumLink</forum>
+    <manufacturer id="Motorola">
+        <Ocean>
+            <maintainer>David Rondeau (Rondeau79)</maintainer>
+            <devicename>Moto G7 Power</devicename>
+            <filename>crDroid-9.0-20191125-ocean-v5.0</filename>
+            <buildtype>Weekly</buildtype>
+            <download><https://bit.ly/2KUoxVq</download>
+            <changelog>https://raw.githubusercontent.com/crdroidandroid/android/</changelog>
+            <gapps>https://opengapps.org</gapps>
+            <forumhttps://forum.xda-developers.com/g7-power/development/rom-t4005739></forum>
             <firmware>FirmwareLink</firmware>
             <modem>ModemLink</modem>
             <bootloader>BootloaderLink</bootloader>
             <recovery>RecoveryLink</recovery>
             <paypal>PaypalLink</paypal>
             <telegram>TelegramLink</telegram>
-        </DeviceCode>
-    </manufacturer>
+        </Ocean>
+    </Motorola>
 ```
 
 ### 1.2 Mandatory XML tags ###
