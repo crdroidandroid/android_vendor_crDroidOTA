@@ -51,7 +51,7 @@ Required firmware: add if any else remove this line
 ## 2 Guidelines ##
 * Check if manufacturer is already existing
 * Check if published link is official
-* Check if JSON is intact with help of online validator tools like [https://jsonformatter.curiousconcept.com](https://jsonformatter.curiousconcept.com)
+* Check if JSON is intact with help of online validator tools like [https://jsonformatter.curiousconcept.com](https://jsonformatter.curiousconcept.com) or [https://jsonformatter.org](https://jsonformatter.org)
 * Check if no extra / missing spaces
 
 ## 3. How to ##
