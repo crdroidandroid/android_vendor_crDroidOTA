@@ -47,7 +47,6 @@ Required firmware: add if any else remove this line
 - change 3
 ```
 
-
 ## 2 Guidelines ##
 * Check if manufacturer is already existing
 * Check if published link is official
@@ -55,10 +54,11 @@ Required firmware: add if any else remove this line
 * Check if no extra / missing spaces
 
 ## 3. How to ##
+For following below description, replace *codename* with your device codename. 
 ### 3.1 Initial support ###
 After you contacted [Gabriel on Telegram](https://telegram.me/gwolf2u), and have the approval, follow the below steps.
 1. Fork this repo to your own GitHub
-2. Copy file **createjson.sh** to crDroid source folder and make it executable
+2. Copy file **createjson.sh** from *initial support* folder to crDroid source folder and make it executable
 ```
 chmod +x createjson.sh
 ```
@@ -66,8 +66,8 @@ chmod +x createjson.sh
 ```
 ./createjson.sh
 ```
-4. A file named <device codename>.json gets created in main crDroid source folder. Copy it to where this repo was cloned.
-5. Create a file named changelog_<device codename>.txt based on changelog structure and add your changelog in it.
+4. A file named *codename*.json gets created in main crDroid source folder. Copy it to where this repo was cloned.
+5. Create a file named changelog_*codename*.txt based on changelog structure from point 1.2, and add your changelog in it.
 6. Submit a pull request to this repo (this way we validate that you understood the requirements and if all is good you'll be granted direct push access to this repo)
 
 ### 3.2 Update build ###
@@ -81,8 +81,8 @@ cd android_vendor_crDroidOTA
 git fetch --all
 git pull
 ```
-3. Run again **./createjson.sh** from crDroid source folder and copy <device codename>.json file to this repo folder.
-4. Make changes to changelog_<device codename>.txt and save it.
+3. Copy *codename*.json file from out dir (where your crDroid zip is compiled) over to this repo folder (android_vendor_crDroidOTA).
+4. Make changes to changelog_*codename*.txt and save it.
 5. Now with the files updated, commit your update to this repo.
 ```
 git add .
