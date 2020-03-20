@@ -4,6 +4,7 @@
 
 
    * device/xiaomi/chiron/
+4f1d7b2 chiron: disable runtime isolation otherway proximity will not work
 a63161f chiron: ship miui camera
 
    * kernel/xiaomi/msm8998/
@@ -353,10 +354,9 @@ d255d08 addons: add ColorOS 1/2 FOD animation
    * vendor/crDroidOTA/
 a49c4db update lg g3 family
 f1cb734 OTA : pyxis : bump pyxis
-f111f4e dipper: Update 18/03/2020
-11c5f59 raphael: update to 19/03/2020
 
    * vendor/miuicamera/
+e738d5b miuicamera: sagit: Advertise Android One * This allows to properly handle permissions on AOSP (thanks Arian)
 f451229 chiron
 
 ====================
@@ -431,6 +431,10 @@ eb9da316198 Visualizer: Ensure multi-thread safety
    * packages/apps/Launcher3/
 91d1c6e1f disable promisse apps
 
+   * vendor/crDroidOTA/
+f111f4e dipper: Update 18/03/2020
+11c5f59 raphael: update to 19/03/2020
+
    * vendor/xiaomi/
 e30a8a7 msm8998-common: Update RIL from LA.UM.8.2.r1-05700-sdm660.0
 a3158ad msm8998-common: Update QMI from LA.UM.8.2.r1-05700-sdm660.0
@@ -463,8 +467,6 @@ ab33933f4e4 New Crowdin translations (#384)
 31b8979 gemini: correct d/l folder path
 fbf187c pyxis : first official build (#117)
 c09d8d8 oops
-274d4ce update m8/d
-e3e3b26 update .json
 
 ====================
      03-17-2020
@@ -519,11 +521,12 @@ cf529b64e adb_root: Bypass few more checks
 7a4eab734 adb_root: Allow root uid to get root status
 
    * vendor/crDroidOTA/
+274d4ce update m8/d
+e3e3b26 update .json
 1f434ea Update whyred - 16/03/2020
 7ea3cd3 update op6/t
 66bcc7d gemini: Upload new build
 fd5e2ce Initial SUpport for Realme XT (RMX1921) (#115)
-a149a1a chiron: update
 
 ====================
      03-16-2020
@@ -566,6 +569,7 @@ a56c37e8 New Crowdin translations (#548)
 3de8f92 addons: Add FOD animation resources
 
    * vendor/crDroidOTA/
+a149a1a chiron: update
 5c1d3b4 jasmine_sprout: correct formatting
 cde0b4a jasmine_sprout:Update to V6.4
 
@@ -589,23 +593,10 @@ c3773a8967b Sanitize Bluetooth device names without regex
    * hardware/qcom-caf/msm8998/audio/
 5dcabd277 hal: Remove property violating property isolation
 
-   * packages/apps/Settings/
-b57370ce78 Merge 'lineage-17.1' into 10.0
-
-   * packages/apps/Snap/
-07d543015 Snap: Add back SCENE_MODE_HDR_INT definition
-
-   * system/core/
-bdcb51bd1 Merge 'lineage-17.1' into 10.0
-
    * vendor/crDroidOTA/
 14af98f ginkgo / willow: update
 7b075f1 X01BD: update
 4edf715 gucamoleb: update to build 20200314
-
-   * vendor/lineage/
-3481356d Always build adb_root
-9453f1b0 envsetup: s/wait-for-online/wait-for-device-recovery/g
 
 ====================
      03-14-2020
@@ -625,7 +616,11 @@ c2f29022 ConsumePrefix is now in libbase.
 9bbdc3f8ef9 New Crowdin translations (#379)
 
    * packages/apps/Settings/
+b57370ce78 Merge 'lineage-17.1' into 10.0
 3b881673da Hide ADB Root preference on user builds
+
+   * packages/apps/Snap/
+07d543015 Snap: Add back SCENE_MODE_HDR_INT definition
 
    * packages/apps/crDroidSettings/
 b3de6a59 New Crowdin translations (#546)
@@ -637,6 +632,7 @@ b3de6a59 New Crowdin translations (#546)
 73a185e clang 10.0.5 (based on r377782c) from build 6284175
 
    * system/core/
+bdcb51bd1 Merge 'lineage-17.1' into 10.0
 aef9606b8 adb: Also check for ALLOW_ADBD_ROOT
 c5894714d adb: support wait-for- with multiple states.
 124e1a0ea libbase: add ConsumePrefix/ConsumeSuffix.
@@ -648,9 +644,10 @@ a9981a8f6 adb: fix double close in wait-for-*.
 
    * vendor/crDroidOTA/
 5bcc3a7 drop tissot support
-621db88 update op6/t
 
    * vendor/lineage/
+3481356d Always build adb_root
+9453f1b0 envsetup: s/wait-for-online/wait-for-device-recovery/g
 43dc641a aosp_audio: copy our own old AOSP alarm variants
 f5a2ee5a add crDroid dependencies
 
@@ -671,11 +668,11 @@ d1adee6 Fix "msm8998-common: Run dpmserviceapp/uceShimService as android.uid.pho
 3fa8235c4 Revert "Bluetooth HFP: Use WBS by default (1/5)"
 
    * vendor/crDroidOTA/
+621db88 update op6/t
 782cccc Update Tissot build
 2eabbd3 mido: 12/03/2020 Update [B]
 16217f4 twolip: Update 12/03/2020
 aff48ed mido : 12/03/2020 Update
-ec0681d violet: update build to v6.4 12/03/2020
 
 ====================
      03-12-2020
@@ -693,82 +690,6 @@ ec0681d violet: update build to v6.4 12/03/2020
    * hardware/interfaces/
 6ec7e8061 Merge 'lineage-17.1' into 10.0
 
-   * kernel/xiaomi/msm8998/
-2cb6859a7504 Merge 4.4.216 into android-4.4-p
-6fd21f1d7907 Linux 4.4.216
-a43f5b15cbef crypto: algif_skcipher - use ZERO_OR_NULL_PTR in skcipher_recvmsg_async
-7296f23f4a3a dm cache: fix a crash due to incorrect work item cancelling
-c15a57533f9b powerpc: fix hardware PMU exception bug on PowerVM compatibility mode systems
-92627da9f73a dmaengine: coh901318: Fix a double lock bug in dma_tc_handle()
-04258bdb60e8 hwmon: (adt7462) Fix an error return in ADT7462_REG_VOLT()
-a9715b3d0d18 ARM: imx: build v7_cpu_resume() unconditionally
-d8ed6ecfca7f RMDA/cm: Fix missing ib_cm_destroy_id() in ib_cm_insert_listen()
-0ba4e0a33849 RDMA/iwcm: Fix iwcm work deallocation
-ad747453ab5f ASoC: dapm: Correct DAPM handling of active widgets during shutdown
-73487df565ce ASoC: pcm512x: Fix unbalanced regulator enable call in probe error path
-2317e3bb0914 ASoC: pcm: Fix possible buffer overflow in dpcm state sysfs output
-59ee23d98af6 dmaengine: tegra-apb: Prevent race conditions of tasklet vs free list
-f28645eba4b0 dmaengine: tegra-apb: Fix use-after-free
-05c508edc9d0 vt: selection, push sel_lock up
-ea36b8fa14f9 vt: selection, push console lock down
-63f529ab3567 vt: selection, close sel_buffer race
-a5b09199925e fat: fix uninit-memory access for partial initialized inode
-c0950b28ad5a vgacon: Fix a UAF in vgacon_invert_region
-9d96a79fb0c4 usb: core: port: do error out if usb_autopm_get_interface() fails
-b91f535ba7dd usb: core: hub: do error out if usb_autopm_get_interface() fails
-2edbd49ebb6f usb: quirks: add NO_LPM quirk for Logitech Screen Share
-ccd487f07289 usb: storage: Add quirk for Samsung Fit flash
-96c2df3e562b cifs: don't leak -EAGAIN for stat() during reconnect
-e83a845bea9e s390/cio: cio_ignore_proc_seq_next should increase position index
-7a99c19b9da8 watchdog: da9062: do not ping the hw during stop()
-7d6fd92a1b3c net: ks8851-ml: Fix 16-bit IO operation
-77e7fcdbd0cb net: ks8851-ml: Fix 16-bit data access
-9808a4754960 net: ks8851-ml: Remove 8-bit bus accessors
-641aadb54f84 drm/msm/dsi: save pll state before dsi host is powered off
-ef4731ceb354 drm: msm: Fix return type of dsi_mgr_connector_mode_valid for kCFI
-01810010bcb8 usb: gadget: serial: fix Tx stall after buffer overflow
-c47c9df73582 usb: gadget: ffs: ffs_aio_cancel(): Save/restore IRQ flags
-0e6d032c51c0 serial: ar933x_uart: set UART_CS_{RX,TX}_READY_ORIDE
-25344530b5d1 audit: always check the netlink payload length in audit_receive_msg()
-c326585619b9 fs: prevent page refcount overflow in pipe_buf_get
-842fc0ee42c4 pipe: add pipe_buf_get() helper
-c9343fc01d54 mm: prevent get_user_pages() from overflowing page refcount
-a1f17db9b512 mm, gup: ensure real head page is ref-counted when using hugepages
-3461e1787b1c mm, gup: remove broken VM_BUG_ON_PAGE compound check for hugepages
-40edf4e09c23 mm: add 'try_get_page()' helper function
-4057527a5e04 mm: make page ref count overflow check tighter and more explicit
-4b2e97b1409a slip: stop double free sl->dev in slip_open
-2f4375851ae2 KVM: Check for a bad hva before dropping into the ghc slow path
-fd59f1e5f261 namei: only return -ECHILD from follow_dotdot_rcu()
-cb8bca3299e5 net: netlink: cap max groups which will be considered in netlink_bind()
-cefb5fdeb4ce include/linux/bitops.h: introduce BITS_PER_TYPE
-6c2c0ed34eea ecryptfs: Fix up bad backport of fe2e082f5da5b4a0a92ae32978f81507ef37ec66
-4b15768e96c2 i2c: jz4780: silence log flood on txabrt
-d2943314866d MIPS: VPE: Fix a double free and a memory leak in 'release_vpe()'
-f0f25649c86f HID: hiddev: Fix race in in hiddev_disconnect()
-95a39fd3e6d0 HID: core: increase HID report buffer size to 8KiB
-01b358b1210d HID: core: fix off-by-one memset in hid_report_raw_event()
-c99bc56eba9e audit: fix error handling in audit_data_to_entry()
-bbe4b7f7ac20 ext4: potential crash on allocation error in ext4_alloc_flex_bg_array()
-5ed4c0b31830 net: sched: correct flower port blocking
-781017047f48 nfc: pn544: Fix occasional HW initialization failure
-4fd5220a5c9e sctp: move the format error check out of __sctp_sf_do_9_1_abort
-95eac9e6ab5f ipv6: Fix route replacement with dev-only route
-70510bbedf65 ipv6: Fix nlmsg_flags when splitting a multipath route
-ca6848ec71ea net: phy: restore mdio regs in the iproc mdio driver
-a45199f5aacf net: fib_rules: Correctly set table field when table number exceeds 8 bits
-b9f72ada4ef7 sysrq: Remove duplicated sysrq message
-19e489cc5d0c sysrq: Restore original console_loglevel when sysrq disabled
-bfb70b525408 cfg80211: add missing policy for NL80211_ATTR_STATUS_CODE
-a87e483e856e cifs: Fix mode output in debugging statements
-ce20579db0c2 cfg80211: check wiphy driver existence for drvinfo report
-1b5e99bd37f0 mac80211: consider more elements in parsing CRC
-1429f6e885c2 ipmi:ssif: Handle a possible NULL pointer reference
-a707c374c491 ext4: fix potential race between s_group_info online resizing and access
-d890e7af7a83 ext4: fix potential race between s_flex_groups online resizing and access
-f578cacd87a3 ext4: fix potential race between online resizing and write operations
-32b63f22e4c1 iwlwifi: pcie: fix rb_allocator workqueue allocation
-
    * packages/apps/Gallery2/
 7aff12e5c Merge tag 'LA.UM.8.1.r1-14300-sm8150.0' of https://source.codeaurora.org/quic/la/platform/packages/apps/SnapdragonGallery into lineage-17.1
 573d72c43 Revert "Fix can't enable speaker with bluetooth headset"
@@ -783,6 +704,7 @@ c08bb01e New Crowdin translations (#545)
 397d29493 fastbootd: hacks for legacy
 
    * vendor/crDroidOTA/
+ec0681d violet: update build to v6.4 12/03/2020
 06ea32f cheeseburger/dumpling: Update firmware links
 7dd39af cheeseburger/dumpling/vince: Update
 de694c0 beryllium: update to build 20200311
@@ -1270,12 +1192,84 @@ bd4f239f207 Revert "SystemUI: Bring back good ol' circle battery style"
    * frameworks/support/lottie/
 bc05815e KG Charging Animation: Add more animations [2/3]
 
+   * kernel/xiaomi/msm8998/
+2cb6859a7504 Merge 4.4.216 into android-4.4-p
+6fd21f1d7907 Linux 4.4.216
+a43f5b15cbef crypto: algif_skcipher - use ZERO_OR_NULL_PTR in skcipher_recvmsg_async
+7296f23f4a3a dm cache: fix a crash due to incorrect work item cancelling
+c15a57533f9b powerpc: fix hardware PMU exception bug on PowerVM compatibility mode systems
+92627da9f73a dmaengine: coh901318: Fix a double lock bug in dma_tc_handle()
+04258bdb60e8 hwmon: (adt7462) Fix an error return in ADT7462_REG_VOLT()
+a9715b3d0d18 ARM: imx: build v7_cpu_resume() unconditionally
+d8ed6ecfca7f RMDA/cm: Fix missing ib_cm_destroy_id() in ib_cm_insert_listen()
+0ba4e0a33849 RDMA/iwcm: Fix iwcm work deallocation
+ad747453ab5f ASoC: dapm: Correct DAPM handling of active widgets during shutdown
+73487df565ce ASoC: pcm512x: Fix unbalanced regulator enable call in probe error path
+2317e3bb0914 ASoC: pcm: Fix possible buffer overflow in dpcm state sysfs output
+59ee23d98af6 dmaengine: tegra-apb: Prevent race conditions of tasklet vs free list
+f28645eba4b0 dmaengine: tegra-apb: Fix use-after-free
+05c508edc9d0 vt: selection, push sel_lock up
+ea36b8fa14f9 vt: selection, push console lock down
+63f529ab3567 vt: selection, close sel_buffer race
+a5b09199925e fat: fix uninit-memory access for partial initialized inode
+c0950b28ad5a vgacon: Fix a UAF in vgacon_invert_region
+9d96a79fb0c4 usb: core: port: do error out if usb_autopm_get_interface() fails
+b91f535ba7dd usb: core: hub: do error out if usb_autopm_get_interface() fails
+2edbd49ebb6f usb: quirks: add NO_LPM quirk for Logitech Screen Share
+ccd487f07289 usb: storage: Add quirk for Samsung Fit flash
+96c2df3e562b cifs: don't leak -EAGAIN for stat() during reconnect
+e83a845bea9e s390/cio: cio_ignore_proc_seq_next should increase position index
+7a99c19b9da8 watchdog: da9062: do not ping the hw during stop()
+7d6fd92a1b3c net: ks8851-ml: Fix 16-bit IO operation
+77e7fcdbd0cb net: ks8851-ml: Fix 16-bit data access
+9808a4754960 net: ks8851-ml: Remove 8-bit bus accessors
+641aadb54f84 drm/msm/dsi: save pll state before dsi host is powered off
+ef4731ceb354 drm: msm: Fix return type of dsi_mgr_connector_mode_valid for kCFI
+01810010bcb8 usb: gadget: serial: fix Tx stall after buffer overflow
+c47c9df73582 usb: gadget: ffs: ffs_aio_cancel(): Save/restore IRQ flags
+0e6d032c51c0 serial: ar933x_uart: set UART_CS_{RX,TX}_READY_ORIDE
+25344530b5d1 audit: always check the netlink payload length in audit_receive_msg()
+c326585619b9 fs: prevent page refcount overflow in pipe_buf_get
+842fc0ee42c4 pipe: add pipe_buf_get() helper
+c9343fc01d54 mm: prevent get_user_pages() from overflowing page refcount
+a1f17db9b512 mm, gup: ensure real head page is ref-counted when using hugepages
+3461e1787b1c mm, gup: remove broken VM_BUG_ON_PAGE compound check for hugepages
+40edf4e09c23 mm: add 'try_get_page()' helper function
+4057527a5e04 mm: make page ref count overflow check tighter and more explicit
+4b2e97b1409a slip: stop double free sl->dev in slip_open
+2f4375851ae2 KVM: Check for a bad hva before dropping into the ghc slow path
+fd59f1e5f261 namei: only return -ECHILD from follow_dotdot_rcu()
+cb8bca3299e5 net: netlink: cap max groups which will be considered in netlink_bind()
+cefb5fdeb4ce include/linux/bitops.h: introduce BITS_PER_TYPE
+6c2c0ed34eea ecryptfs: Fix up bad backport of fe2e082f5da5b4a0a92ae32978f81507ef37ec66
+4b15768e96c2 i2c: jz4780: silence log flood on txabrt
+d2943314866d MIPS: VPE: Fix a double free and a memory leak in 'release_vpe()'
+f0f25649c86f HID: hiddev: Fix race in in hiddev_disconnect()
+95a39fd3e6d0 HID: core: increase HID report buffer size to 8KiB
+01b358b1210d HID: core: fix off-by-one memset in hid_report_raw_event()
+c99bc56eba9e audit: fix error handling in audit_data_to_entry()
+bbe4b7f7ac20 ext4: potential crash on allocation error in ext4_alloc_flex_bg_array()
+5ed4c0b31830 net: sched: correct flower port blocking
+781017047f48 nfc: pn544: Fix occasional HW initialization failure
+4fd5220a5c9e sctp: move the format error check out of __sctp_sf_do_9_1_abort
+95eac9e6ab5f ipv6: Fix route replacement with dev-only route
+70510bbedf65 ipv6: Fix nlmsg_flags when splitting a multipath route
+ca6848ec71ea net: phy: restore mdio regs in the iproc mdio driver
+a45199f5aacf net: fib_rules: Correctly set table field when table number exceeds 8 bits
+b9f72ada4ef7 sysrq: Remove duplicated sysrq message
+19e489cc5d0c sysrq: Restore original console_loglevel when sysrq disabled
+bfb70b525408 cfg80211: add missing policy for NL80211_ATTR_STATUS_CODE
+a87e483e856e cifs: Fix mode output in debugging statements
+ce20579db0c2 cfg80211: check wiphy driver existence for drvinfo report
+1b5e99bd37f0 mac80211: consider more elements in parsing CRC
+1429f6e885c2 ipmi:ssif: Handle a possible NULL pointer reference
+a707c374c491 ext4: fix potential race between s_group_info online resizing and access
+d890e7af7a83 ext4: fix potential race between s_flex_groups online resizing and access
+f578cacd87a3 ext4: fix potential race between online resizing and write operations
+32b63f22e4c1 iwlwifi: pcie: fix rb_allocator workqueue allocation
+
    * lineage-sdk/
 77e43f8c Revert "Add power menu option for screen record [2/3]"
-
-   * packages/apps/Settings/
-6f145943a8 DarkMode Settings: Include pref for selecting dark mode style
-7ac5b3d49b DarkMode Settings: Use List Preference rather ugly Drop Down
 
    * packages/apps/crDroidSettings/
 5a1bdc99 KG Charging Animation: Add more animations [3/3]
@@ -1283,9 +1277,6 @@ bc05815e KG Charging Animation: Add more animations [2/3]
 5b9d711c Revert "Add power menu option for screen record [3/3]"
 af37e1fb Revert "crdroid: Remove ScreenRecord preference if not supported"
 b414983e crDroid: Recognizing FP animation effects [2/2]
-94a65255 crdroid: Allow binding home, back and appswitch keys for all
-4e0d8fcc crdroid: Migrate style settings back to Settings
-107f6954 Clean up PebbleBerry override for dark theme
 
    * tools/repohooks/
 7331659 Add repo hook that checks formatting of Relnote: field
