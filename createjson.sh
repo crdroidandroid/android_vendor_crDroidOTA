@@ -3,11 +3,11 @@
 
 #modify values below
 #leave blank if not used
-maintainer="Name (nickname)" #ex: Lup Gabriel (gwolfu)
-oem="OEM" #ex: OnePlus
-device="device codename" #ex: guacamole
-devicename="name of device" #ex: OnePlus 7 Pro
-zip="crdroid zip" #ex: crDroidAndroid-10.0-20191110-guacamole-v6.0.zip
+maintainer="David Rondeau (Rondeau79)" #ex: Lup Gabriel (gwolfu)
+oem="Motorola" #ex: OnePlus
+device="ocean" #ex: guacamole
+devicename="Moto G7 Power" #ex: OnePlus 7 Pro
+zip="crDroidAndroid-10.0-20200321-ocean-v6.4.zip" #ex: crDroidAndroid-10.0-20191110-guacamole-v6.0.zip
 buildtype="Beta" #choose from Testing/Alpha/Beta/Weekly/Monthly
 forum="https://link"
 gapps="https://link"
