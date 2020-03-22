@@ -9,14 +9,14 @@ device="device codename" #ex: guacamole
 devicename="name of device" #ex: OnePlus 7 Pro
 zip="crdroid zip" #ex: crDroidAndroid-10.0-20191110-guacamole-v6.0.zip
 buildtype="type" #choose from Testing/Alpha/Beta/Weekly/Monthly
-forum="https://link"
-gapps="https://link"
-firmware="https://link"
-modem="https://link"
-bootloader="https://link"
-recovery="https://link"
-paypal="https://link"
-telegram="https://link"
+forum="" #https link (mandatory)
+gapps="" #https link (leave empty if unused)
+firmware="" #https link (leave empty if unused)
+modem="" #https link (leave empty if unused)
+bootloader="" #https link (leave empty if unused)
+recovery="" #https link (leave empty if unused)
+paypal="" #https link (leave empty if unused)
+telegram="" #https link (leave empty if unused)
 
 #don't modify from here
 script_path="`dirname \"$0\"`"
