@@ -4,6 +4,51 @@ Device: Device name gemini
 Device maintainer: Andrzej Perczak (xNombre)
 Required firmware: https://bit.ly/39fQrFs
 
+===== <22-04-2020> =====
+Changelog:
+- Fixed offline charging led
+- Addressed way more selinux denials
+- Switched to latest crypto hal implementation (qsee,keymaster,gatekeeper)
+- Fixed encryption
+- Enabled BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED
+- Added back wifi config changes from Xiaomi
+- Fixed random WiFi disconnects when screen off
+- Tweaked cpusets, vm for better battery
+- Tweaked LMKD to better choose its victims
+- Removed old boot-time tweaks -> saves power
+- Set up kernel boosting via dynamic stune boost and libperfmgr
+- Rework powerhints so it can be finally utilized
+- Make /persist mount flags more safe and trigger check on boot
+- Make peripheral manager realtime app
+- Import some useful device init stuff
+- Fix power profile xml for better battery usage measurements
+- Use build fingerprint from final MIUI version
+- Fix broken hotspot
+- Selinux enforcing and many denial fixes
+- Move back thermal and audio blobs to 8x96 tag
+- Other minor changes
+kernul: (this build bases on new, reworked kernul)
+- Remove more unused stuff
+- Sync with sultan's changes
+- Revert a lot of changes that commited to regressions or I was unsure about
+- Tweak sched
+- Fix fingerprint wakeup disable node
+- Rework random driver
+- Enable power efficient workqueues by default
+- Switch to faster net queue discipline
+- Upstream tweaks for devfreq governors
+- Upstream changes to GPU driver
+- Bug fixes to qcom soc drivers
+- Updated WiFi domain database from latest CAF
+- Disabled rx_wakelock (experimental)
+- Updated cnss driver from latest CAF
+- Increased fuel gauge driver ratelimit when screen is off to minimize its wakelocks power consumption
+- Merge latest tag and linux revision
+- Built using clang 10.0.6 (crDroid only)
+
+Warning! For some unobvious reason encryption process takes place on stuck MI logo, don't panic and don't reboot, wait patiently until it boots into encrypted system.
+
+
 ===== <16-03-2020> =====
 - Update to crDroid v6.4
 - Fix power-off alarm
