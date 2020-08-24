@@ -1,0 +1,334 @@
+Highlights & Device Specific Changes: Face Unlock, framework/native switched to caf, various kernel improvements 
+Build type: Weekly 
+Device: Xiaomi Mi A2 Lite (daisy) 
+Device maintainer: opal06
+
+
+====================
+     08-21-2020
+====================
+
+
+   * frameworks/base
+d2958611635 base: Port face unlock feature [3/4]
+
+   * packages/apps/Settings
+b3eb9d8b56 Settings: Port face unlock feature [4/4]
+b532bab7d6 Settings: Add strings for face unlock feature
+
+====================
+     08-20-2020
+====================
+
+
+====================
+     08-19-2020
+====================
+
+
+   * android
+dfa6db0 manifest: Track clang 11.0.4
+
+   * art
+31e4bcfda5 ART: Add HasNonNegativeInputAt and HasNonNegativeOrMinIntInputAt
+
+   * external/skia
+7af8005536 Issue- >Skia tiled bitmap rendering is too slow when tilemodeX is not same as tileModeY.
+fd9718da7a remove NEON matrix procs
+
+   * frameworks/base
+56db3da10a3 New Crowdin updates (#497)
+
+   * packages/apps/crDroidSettings
+7335456a New Crowdin updates (#633)
+
+   * prebuilts/clang/host/linux-x86/clang-6766004
+55ba894 clang 11.0.4 (based on r399163) from build 6766004
+
+   * tools/repohooks
+f773756 hooks: rustfmt: handle multiple commits
+
+====================
+     08-18-2020
+====================
+
+
+====================
+     08-17-2020
+====================
+
+
+   * android
+6c2819a manifest: Track stitchimage
+
+   * frameworks/base
+d7fb7591fd2 Long screenshot: Use helper function takeScreenshot
+c53ed8916b2 StitchImageUtility: Fix editor on multi user
+58eae04ff6d fwb: Port long screenshot implementation from Asus
+ba301735f88 Revert "base: Port extended screenshot function from OOS"
+4cbffca3d6e LS pulse: apply custom opacity also on lockscreen
+c35b428e90e power: Keep file scheme when not using content URI
+
+   * frameworks/native
+989e6d051 SurfaceFlinger: debug layer bounds inset
+d189c20c7 surfaceflinger: Pass proper transform orientation to setProjection()
+797dde863 sf: Avoid redundant re-populate in SetActiveConfig
+e41a1ead0 sf: do not enable protected content for non-secure displays
+184254ef8 sf: Guard access to mRefreshRates with mutex lock
+15b62f3f6 sf: add support for Phase offsets for HIGH2 RefreshRate Type
+614a4c805 sf: Fix platform specific header import
+da7d88dfe sensorservice: Register orientation sensor if HAL doesn't provide it
+b15ba449a Changing logic that generates virtual SENSOR_TYPE_LINEAR_ACCELERATION.
+dc8b7aaf2 Avoid potential deadlocks in SensorService
+805ef339d sensorservice: customize sensor fusion mag filter via prop
+dd510ffcc Fix testVerifyStatsExternalConsistent case
+1ee91f255 Don't destroy ART profiles after package move.
+9162d653c Add a separate flag in the installer for keeping ART profiles
+18ed42797 input: Adjust priority
+0f63899f8 Change the position of addAndGetFrameTimestamps when queueBuffer
+e1117d402 Correct PowerManager transaction IDs
+028c0ce6d add the OMX_VIDEO_CodingAV1 in the OMX_VIDEO_CODINGTYPE
+63a22ddc4 PowerManager.h: Define USER_ACTIVITY_FLAG values
+a28d424bc Forward port 'Swap volume buttons' (2/3)
+4d938b47e InputDispatcher: On keypress, deliver keycode to pokeUserActivity
+d666e0cce surfaceflinger: change usageBits type to uint64_t
+b553b70d3 surfaceflinger: Add support for extension lib
+477bf4d44 Reland "binder: Parcel avoid too small initial allocation"
+61bf79f13 libui: Allow invalid bits from callers conditionally
+a2bbd8e5a libui: Allow extension of valid gralloc 1.0 buffer usage bits
+2b449a312 sf: Fix issue with dequeueBuffer when multiple display present
+bb7b215c3 native: Screen Stabilization [2/2]
+d8f7c52b1 Add dalvik-heap device-configs for 4/6GB devices
+9b8307fb8 Use getLayerStack() instead of layerStack for input info
+3be2b2f56 Merge damage region when dropping an app buffer
+4f0d3c21a Surfacefinger: Set HWC Callback to SCHED_FIFO
+eb5a4c1c2 sf: Add support to enable Smart Video feature
+966a02d80 SurfaceFlinger: do not choose POWER_SAVING as refresh rate
+7a4ff3858 Surfaceflinger: adjust content detection fps selection
+7889dad23 SurfaceFlinger: do not force HDR content to default refresh rate
+3dd50e3ac sf: resync to HWVsync to handle idle screen exit cases
+e1fc8906f SF: Update forced composition color space along with color mode
+1787bd1e6 sf: Fix merge derp in vsync
+60e750aa6 SurfaceFlinger: add grace time for present fence to signal
+50d9eb5db SurfaceFlinger: calculate expected present once
+d30389df5 sf: Fix multi-display render engine context transitions
+3496f64cb SurfaceFlinger: add allowed display configs to dumpsys
+ad31f3e14 SurfaceFlinger: HWVsync when display is off
+a6385061f sf: update mUpcomingActiveConfig properly during setActiveConfig
+8f830a5c0 sf: Handle High or Perf Refresh Rate as DEFAULT
+30c1d14d0 SurfaceFlinger: send config event changed on allowed modes change
+50dcace1d SurfaceFlinger: Query Scheduler when updating allowed display configs
+858890b3d SurfaceFlinger: lock mStateLock when modifying allowed configs
+8a7433893 sf: Define Phase Offsets for PERF Refresh Rate config
+5464549d9 Don't touch hw vsync in DEFAULT RR with kernel timeout
+248ab5a3f SurfaceFlinger: add display power state timer
+de5967532 SurfaceFlinger: clamp frame refresh duration to min refresh duration
+0a6631e08 SurfaceFlinger: tune number of buffers for low activity layers
+7fae7c03b SurfaceFlinger: tune LayerHistory to be less aggressive
+d5a9115be SurfaceFlinger: store fps instead of duration in LayerInfo
+0f5352908 SF: Don't bump to PERFORMANCE refresh rate with infrequent updates
+b9ab3ffb1 SurfaceFlinger: tune FPS detection logic
+9a941f03a SurfaceFlinger: clear LayerHistory on touch
+4f438d0d6 sf: optimize luma sampling code
+dae8632a5 sf: avoid assumption remote binder is local
+24d8df6ed SF: do not extend DisplayDevice lifetime
+9ef4e40ad SF: delay region sampling when short on time
+b6af89bf9 Changed BufferLayer's canReceiveInput to check if its hidden by policy
+6f325e1b5 Remove unsafe cast in Client::createWithSurfaceParent
+e6af63a77 DO NOT MERGE: SF: fix SurfaceFlinger freeze
+1af72c4b3 SurfaceFlinger: Use cached expected present time in one frame
+1d22ac87b sf: avoid race condition of activeBuffer accessing.
+4ff67dad6 sf: add lock to avoid race condition access.
+c4508556b SurfaceFlinger: get present time from SF and not from Scheduler
+68f61fa5a Callback to renderengine when erasing BLAST buffers
+daf6bab41 support EGLImage management in BLAST
+b45ab924f correct present time for negative phase offsets
+34d09cca7 sf: update phase offsets and present time for advance offset cases
+c2d3afb36 Exclude first vsync duration from period calculation
+79337b30d SurfaceFlinger: DispSync: negative offsets when model is unlocked
+726e7eb69 SurfaceFlinger: Dispsync changePhaseOffset
+56a6887ac SurfaceFlinger: correct negative offset when refresh rate changes
+ffa6dc47e Store current offsets in VSyncModulator.
+c0ab2e673 Add vsync offset information to systrace.
+54aaf1409 Split VSyncModulator into .cpp/.h files
+915a4d79a add minimum frame count for early gl offsets.
+78aeacb07 SurfaceFlinger: Some fixes to DispSync
+e33b22a0a Some dispsync fixes for early event firing
+2597fb313 SurfaceFlinger: set refresh rate type when after an attempt to switch
+d353abf9e fix permanently enabling early offsets.
+240f629fd SF: enable device-specific dataspace for color space agnostic surfaces
+7372bf448 Disable deep press when long press timeout is long
+a5a6b0449 Properly initialize MotionClassifier
+cf2afad02 Don't leak input events to dumpsys on user builds
+aba6d6e3c EGL: Fix repeated extension lookups
+8884b2148 Fixing crash on allocation
+5dceb114e Capping buffer size to std::numeric_limits<size_t>::max()
+606b85f12 DO NOT MERGE: Fixing overflow bug
+d39e8f2dc Sensor: use FlattenableUtils::align
+fd31f4c7d Reorder when ImageManager thread starts
+acd92db7a add an ImageManager thread
+eab58731f Add cache contents to dumpsys
+8e33a2311 relax locking conditions of image cache.
+e23176562 Swap video frame rotation direction.
+5e6701280 GpuStats: fix driver loading stats at driver unloading
+c2ba01b4d Include extra HALs in dump state
+f35b62f54 Include automotive HALs in dumpstate
+15ecf0dcc dumpstate: add dumptrace for audio HIDL 5.0
+482032085 Add face hal to hal_interfaces_to_dump
+017df492b Fix addition/overflow checks.
+d0f065286 Resize object capacity when shrinking Parcel
+5e472ca57 Remove android.software.print from car builds.
+b3d73f56c installd: add dex2oat cpu-set system properties
+b4f52d32c Remove boot complete marker
+c76c1c458 Dump HALs and enable persistent logs for radio bugreports
+3ad390046 Add suspend_resume trace events to the atrace 'freq' category.
+44ee37ff2 libgui: add EGL Image Tracking for debug
+2a86d7cab When dropping a frame, merge its damage region
+a4c19838c Attach color space information when attach and queue buffer.
+85b531b47 SurfaceFlinger: add explicit register for DISPLAY_EVENT_CONFIG_CHANGED
+367a3f6a2 libgui: Add discardFreeBuffers callback to producer
+9d1712b9b Revert "Fix drag and drop (2/3)"
+6426c006b Update tests for canReceiveInput policy changes
+e0203c876 Vulkan: correctly expose Vulkan entry points
+d16554e5f Vulkan: Improve error translation in CreateSwapChainKHR
+21a03f9e0 libvulkan: remove a redundant check debuggable logic
+0b6a0b028 GraphicsEnv: refactor to unify the debuggable logic
+c8a4556e0 GpuStats: refactor single stats pieces into a uniform way
+bb7f8171a Revert "SurfaceFlinger: Update SmoMo interface"
+
+   * frameworks/opt/net/wifi
+4a1bc464c Prevent scan searching overhead
+773114eea wifi: don't check if WIFI_DRIVER_STATE_CTRL_PARAM is readable
+e696ebc85 wifi: Check whether dev node is accessible or not before opening
+a8cf34af8 libwifi-hal: add flag to wait for kernel driver to get ready
+
+   * vendor/addons
+3c74c76 addons: Remove OOS longshot
+
+   * vendor/lineage
+76ffccc7 crdroid: Build StitchImage
+
+====================
+     08-16-2020
+====================
+
+
+   * frameworks/base
+a22e76eaded New Crowdin updates (#496)
+169878c633a core: Improve clipboard access strings
+
+   * frameworks/opt/net/wifi
+9f1067f43 wifi: Add StaState API [2/2]
+
+   * packages/apps/Launcher3
+29c32b6a5 New Crowdin updates (#75)
+
+   * packages/apps/crDroidSettings
+39dfa0a6 New Crowdin updates (#632)
+
+   * vendor/lineage
+881d8e57 crdroid: Clean up QCOM defs
+ede8dc48 soong: Add shared lib variable for qcom product namespace
+37fc631c BoardConfigQcom: Allow a device to opt-out hardset of PRODUCT_SOONG_NAMESPACES
+
+====================
+     08-15-2020
+====================
+
+
+   * frameworks/base
+5a8936443ca New Crowdin updates (#495)
+fa95775d10e SystemUI: Add OOS Compact  VoLTE & VoWifi icon [1/2]
+3fcd4648a84 New Crowdin updates (#494)
+555f1b64386 Clipboard access toast: Improvements [1/2]
+2da84df11a4 base: clipboard toast toggle [1/2]
+58299b77fd9 base: iOS-like toast notification for clipboard access
+4259cfbeb99 Merge 'lineage-17.1' into 10.0
+1ed91f78f63 Show the nearby chip for images and files too.
+
+   * frameworks/opt/net/wifi
+2dbe66eb7 HDM: Resolve concurrent access issue - defer execution
+558dde0a2 [HDM] Fix concurrency failure
+
+   * packages/apps/Contacts
+855d881c5 Merge pull request #3 from Hikari-no-Tenshi/10.0
+
+   * packages/apps/crDroidSettings
+4501e90e New Crowdin updates (#631)
+ace42f8b SystemUI: Add OOS Compact VoLTE & VoWifi icon [2/2]
+de586013 New Crowdin updates (#629)
+b99d99fb Clipboard access toast: Improvements [2/2]
+04d9c1a6 crdroid: Clipboard toast toggle [2/2]
+
+   * tools/repohooks
+8ee0f2a hooks: use dedicated None asserts
+
+   * vendor/lineage
+b16200f3 vendor: apns-conf: Drop proxy for Movistar
+8e1cba27 repopick: Address PEP8 warnings regarding indentations and variable naming
+ae6e8752 repopick: Use empty metavar parameter to fix help's indentation
+da2f6b1a kernel: Bail-out if kernel config isn't set
+74b7bb83 kernel: Add support for module aliases
+95980ba6 kernel: Allow installing modules on vendor_overlay
+c089a64d prebuilt: Clean up lineage-system.rc
+6306f45e repopick: Use upstream instead of revision to determine branch
+
+   * vendor/nxp/opensource/commonsys/packages/apps/Nfc
+1fa0d049 Avoid NFC continuous crash
+
+====================
+     08-14-2020
+====================
+
+
+   * external/asus/stitchimage
+16d5f86 Automatic translation import
+2470b5c Update StitchImage
+
+   * hardware/qcom-caf/sm8150/display
+c78f45e58 sdm: mark FOD pressed layer by setting a bit on ZPOS
+
+   * packages/apps/Contacts
+225204a6a Contacts: Fix light dropdown lists on dark theme
+b7f618145 Merge pull request #2 from Hikari-no-Tenshi/10.0
+5d6254d3a Contacts: Fix light dialogs on dark theme
+
+   * packages/apps/Nfc
+ae902f6d Avoid NFC continuous crash
+
+====================
+     08-13-2020
+====================
+
+
+   * external/libjpeg-turbo
+7c5237e Add Arm NEON implementation of h2v1_downsample
+
+   * frameworks/base
+5623b7a5341 Merge pull request #492 from Hikari-no-Tenshi/10.0-light_error
+6666dc79f26 services: LightsService: Mute an annoying error message.
+
+   * packages/apps/crDroidSettings
+34b3de40 New Crowdin updates (#628)
+
+====================
+     08-12-2020
+====================
+
+
+   * external/asus/stitchimage
+118d848 Update prebuilt apk
+
+   * frameworks/base
+ae4527e0eff Make screenshot delay configurable [1/2]
+
+   * lineage-sdk
+2b14fce9 Merge pull request #6 from Hikari-no-Tenshi/10.0
+
+   * packages/apps/crDroidSettings
+0e189c5e crdroid: Set default screenshot delay properly
+ab82d280 Make screenshot delay configurable [2/2]
+
+   * vendor/lineage
+36663dd2 overlay: Reduce screenshot chord delay by half
+
