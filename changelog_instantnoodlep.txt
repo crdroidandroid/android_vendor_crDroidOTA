@@ -1,1 +1,401 @@
 
+====================
+     12-09-2020
+====================
+
+   * android
+dea881f manifest: switch to our fork of system/netd
+
+   * art
+b7102e846b Add an option to disable sse4.2 features
+
+   * bionic
+e3c150e47 Add ability to build scudo-free 32-bit libc variant.
+7b8639976 bionic: Support wildcards in cached hosts file
+cc2b85507 bionic: Sort and cache hosts file data for fast lookup
+c9a49c1e4 linker: Convert lineage product variables to soong config variables
+519a618d2 bionic: Squash of pre-P mutex behavior restoration
+fc1fe32d8 Implement per-process target SDK version override.
+f935cf52b libc: Mark libstdc++ as vendor available
+36a43e5c9 linker: Add support for dynamic SHIM libraries
+7182b0a71 Add inaddr.h header file
+
+   * build/make
+de925c04c Source lineage specific envsetup
+0a7f3d709 envsetup: export ANDROID_BUILD_TOP earlier
+381865238 build: Include vendor/extra/BoardConfigExtra.mk if available
+a25a45300 Sync modules required by releasetools
+759bc20c4 Build required modules from default
+179507224 releasetools: Use du -b
+b206b863c Remove empty new-space in dynamic_partition_list and super_$(group)_partition_list
+c9a6d53ac Refactor how MODULES-IN-* is defined
+
+   * build/soong
+0e0bfb7e Add ability to enable scudo-free 32-bit libc variant.
+60ece2da cleanbuild: Add `install` to installclean files
+7e5cbc10 Add support for macOS 11 SDK
+e7c330bf soong: Add equivalent for LOCAL_EXPORT_CFLAGS
+0cf1d1cb Add dumpvars for WITH_SU and WITH_GMS
+1959a9eb soong: Add LINEAGE_VERSION to dumpvars
+5989a575 soong: allow overriding header files
+1666f2c2 soong: Drop lineage soong product variables
+ddf5458d soong: Give priority to modules in exported namespaces for bootjars
+90783142 soong: Squash of lineage-sdk bringup commits
+c743f0c5 soong sbox: Add option to allow copying all generated output
+087b65eb soong: Make sure to preserve lineage product variables
+691b1819 soong: add support for nested structs in variableProperties
+ccfd6365 soong: extend with lineage board flags
+191bf4e2 soong: Add PathForSourceRelaxed
+8122ae5e Reland: Deduplicate APEX variants that would build identically
+c432a7fe Rename ApexName to ApexVariationName
+3eef0072 Add CreateAliasVariation to BottomUpMutatorContext
+3e99975d Restrict replacements of source dependencies with prebuilts
+48509824 Stop java_sdk_library_import from depending on source modules
+b14a8d4d Track the current java_sdk_library(_import) deps
+c07f891e Avoid creating APEX variant for sdk member
+a0a95f16 apexDepsMutator uses WalkDeps
+824d95d2 Remove conditional running of checklast during checkapi
+67fed447 cleanbuild: add *.zip.md5sum to installclean_files
+
+   * development
+4d3d4975f privapp_permissions: Check product privapp_permissions
+
+   * device/generic/goldfish
+4394963 camera: Fix -Wformat warnings
+fbabf0a camera: Set missing functions to NULL
+
+   * device/google/atv
+388260c Disable Traceur on userdebug
+
+   * device/qcom/sepolicy-legacy
+ade08dc3 legacy-common: Resolve camera daemon denial on system_data_root_file
+f875f7d5 legacy-common: Label cam_socket0 file
+
+   * external/libjpeg-turbo
+e9a659a0 Cherry-pick upstream fix for uninitialised reads
+
+   * frameworks/av
+131ab4e2f2 Allow graceful degradation of MediaProfile with broken configuration.
+
+   * frameworks/base
+635c656a34a Allow adjusting progress on touch events.
+fcd1c336989 perf: Add support for HIDL Lineage power HAL
+3874e9c876b LockPatternUtils: Make settings getter and setters protected
+16c3196e163 Check for null callerPackage in getStorageEncryptionStatus
+4037370c32b admin: Restore requireSecureKeyguard interface.
+ab92d93aecc fw/b: Add NotificationGroup class for use by lineage sdk system profiles
+
+   * frameworks/native
+16aef7c2d Add vendor version for libgui
+3df791663 [cleanup] Fix a clang-tidy warning
+77fb8a9ff SurfaceFlingerProperties: Use proper prop scope
+ee89b02d7 SurfaceFlingerProperties: Use proper prop scope
+
+   * frameworks/opt/net/wifi
+cf6fa5668 wifi_hal: add slsi wifi hal support
+
+   * frameworks/opt/telephony
+a69a76fea Telephony: Add option for using regular poll state for airplane mode
+1c2c0c380 2G wants proper signal strength too
+9263b7288 Avoid SubscriptionManager#getUriForSubscriptionId calls with invalid subIds
+2d14a23c9 Remove setIsoCountryProperty method along with partially dead code
+b29ba2062 telephony: Squashed support for simactivation feature
+aa4c7f1c5 Failed to show hold call when user click swap and merge simultaneously
+ce2f337a8 Truncate baseband version string to 45 characters at most
+
+   * hardware/interfaces
+0c6c40703 Camed HAL extension: Added support in HIDL for Extended FD.
+91aa7cc67 keymasterV4_0: Tags support for FBE wrapped key.
+
+   * hardware/nxp/nfc
+512adbd nfc: Restore pn548 support to 1.1 HAL
+
+   * hardware/qcom/audio
+7a1f94f audio: Use generated kernel headers
+
+   * packages/apps/Bluetooth
+17330d5bb Bluetooth string: removed id="sender" in bt_sm_2_1_
+
+   * packages/apps/CarrierConfig
+980db98 Fix voicemail for Bouygues Telecom France
+
+   * packages/apps/Contacts
+ba1671157 Contacts: Make the launch screen follow the system theme
+572563593 Contacts: manually configure dark theme for list
+e48a17529 Contacts: allow framework to do dark theming automatically
+c1974f3ab Contacts: use white nav bar
+3409386b3 Allow calling contacts via specific phone accounts.
+1280855e8 Place EmergencyInfo shortcut on drawer
+60121da1c Place MyInfo shortcut on drawer
+37132210d Contacts: adaptive icon
+ba98ddefc Contacts: define app category
+
+   * packages/apps/DeskClock
+a47f676fd Provide upgrade path for cm-14.1 -> lineage-18.0
+cae4d4cdb DeskClock: Properly align settings
+47af23e4b DeskClock: Move notification channel strings for translation
+4ef6d49f2 DeskClock: Fix german translation of "days"
+ea98b7265 DeskClock: Setup data model before calling super.onStart()
+5c4625eac DeskClock: Fix FAB not being shown everytime
+9ef3d79e0 DeskClock: Replace ViewPager with manual fragment handling
+248c6793c DeskClock: Move navigation bar to bottom
+7829e74d9 DeskClock: also apply disabled color to annotations
+aa0db9f6a DeskClock: Come to the dark side...
+a62d5e840 DeskClock: Modernize timer_setup_time look
+20b30014b DeskClock: Update drawables
+7da2d84e9 DeskClock: Use sans-serif-thin font for the clock widget
+c2d53522c DeskClock: Add some more visible shadow to the clock widget
+a110ac9f0 DeskClock: Use POWER_OFF_ALARM permission
+f086ad892 DeskClock: Add support of power off alarm feature
+bbd803175 DeskClock: Add back flip and shake actions
+88de0c32e DeskClock: adaptive icon
+107b55097 Deskclock: define app category
+8dd096c4c DeskClock: Add sysconfig whitelist xml
+a62e77908 AOSP/DeskClock - Clean up some TODOs and deprecated calls
+0cbc389d4 AOSP/DeskClock - Fix deprecated calls: ScreensaverSettings,SettingsActivity
+c6da36aff AOSP/DeskClock - Upgrade Handler inits to use undeprecated constructor
+676ae03d8 AOSP/DeskClock - Update Fragment related code to use AndroidX
+96c7cd5ba DeskClock: Rework notification channel implementation
+b7718e76e AOSP/DeskClock: Improve AlarmNotification priority to pop up alarm  notification.
+dcefd8798 AOSP/DeskClock - Call executePendingTransactions only if mFragmentManager is not destroyed. Fixes the crash bug. Code matches internal code.
+8376293ee Import translations. DO NOT MERGE
+e37ea1815 AOSP/DeskClock - Updated to sdkVersion 29.
+053cd7132 Change most notfications category
+0f8acd12f Require USE_FULL_SCREEN_INTENT permission
+
+   * packages/apps/DocumentsUI
+b6314dced Remove unused string resources
+d7eda52f8 DocumentsUI: adaptive icon
+ea4cd395d DocumentsUI: define appcategory
+
+   * packages/apps/Launcher3
+80bda874b QuickStep: Google Feed integration
+20d1bd12c Trebuchet: Move Duo into Google folder as per GMS sample integration
+465bea1e0 Trebuchet: Update GMS packages in the default workspaces
+79aa869b6 TrebuchetGo: Add Go specific default workspace
+4cbbef2f4 Launcher3: Add 2x2 workspace grid option
+acad8cc77 Add missing default workspace changes in LauncherFiles
+a0906baad Trebuchet: optimization of searching apps in Chinese
+2fd00ea22 Trebuchet: Add extra privapp permissions xml
+c7ae91524 Trebuchet: Allow enabling icon labels for landscape mode
+3636885c9 Trebuchet: allow disabling workspace edit
+0908ebd80 Trebuchet: implement hidden & protected apps
+85c5e2f52 Trebuchet: add toggle for desktop and drawer labels
+4c9caeb6e Don't discard custom grid on config changes
+6cefc88d6 Specify the component name to start the picker
+582bf7907 Specify the wallpaper picker package
+86e8912ff Properly expose GridOptionsProvider
+274c8e80c Globally disable debug logging
+75e5931cc Launcher3: Retrieve the searchbar padding from device profile
+b437b80f5 QSB: request round search bar
+0b8e64ec3 Disable QSB on first screen by default
+f65d9a996 Change icon drawable padding
+bde22756f Trebuchet: Add 5x6, 5x7 and 6x6 default workspaces
+9ee8671e8 Replace 4x4 grid option with a 4x5 one
+5b88f31bc Trebuchet: Update default workspace
+d46bbd616 Trebuchet: adaptive icon
+f2547daf0 Change app name to Trebuchet
+1d1389bb1 DeviceProfile: fix divide by zero
+d08ccc4cc Launcher3: Can't search out local app by Chinese
+c6fdb71c4 Workspace: Allow resizing any widget
+04f83a21e Launcher3: Stability NullPointer issue
+c8e33078f Launcher3: No Calendarwidget 4x4 widget displayed
+6342af830 Launcher3: exclude from recents
+9bed65d3a Trebuchet: update build configs
+
+   * packages/apps/Nfc
+f0571906 NFC: Adding new vendor specific interface to NFC Service
+264a547b Avoid NFC continuous crash
+
+   * packages/apps/PhoneCommon
+5799e79 Mark dialpad letters as untranslatable.
+
+   * packages/apps/Settings
+160c4af575 get outer NFC preference to listen for changes
+82e6e8ae48 Remove unused translations
+ddcb918afd Set highest priority as default value to Bluetooth codec
+af6dd7371e [Telephony settings] Settings crashes when rotate screen in Preferred network type
+329b7994b9 Fix for incorrect display of preferred network type on UI
+11d0e20141 Avoid unexpected state changes for enhanced preferences
+d59ff4abd1 [Settings] subscription UI should be closed when SIM is removed
+0417b03705 Add NR network type to "Global" mode preference
+dab1304158 Settings: Fix exception in about phone during SIM swap
+6a2fdb073a Prevent errors when updating operator pref summary
+de15d02b93 Improve the performance of displaying preference - multithread.
+3162f57930 Remove "storage type" preference from Settings
+034512ce37 Fix mvno data field summary not update issue
+7990093fbf Fix NPE if default supervisor is not defined
+7943d297d4 Disable 'Mobile data' selection after removing SIM
+b1e143b458 Settings: Hide carrier settings version if empty
+f8b03f239f Preserve icon for "manage space"
+efa41ca369 Button text for app space management is overwritten
+77ca1bd5b2 Usb preference title changed when rotating
+ab5e0ca684 RESTRICT AUTOMERGE Allow LockScreenPattern to be launched in the pinning screen
+ea9d859298 Fix NPE in PanelFragment
+30c892f654 Fix for User edit info dialog during rotation
+1c2b374b8b Settings: Pass Locale.US when formatting refresh rate string
+28945c48f6 Settings: Add preference for KEY_MIN_REFRESH_RATE
+4fd8e72be7 Settings: Check if we have any color modes declared in overlay
+eae4c1f67f Backup: Don't hardcode ignored backup transports
+1733186f24 Settings: Add rotation settings
+9b4f03848c One does not simply become a Developer
+d09824f37e Settings: Add advanced restart switch
+5d1d508b94 Allow the user to change the BackupTransport
+fd58eb52bc Fix resultCodes from WifiPickerActivity
+68f0e48ce5 Settings: Only show gesture navigation if device has a software nav bar
+2c90ab680f Settings: Hide unsupported USB modes automatically
+80fc36cf21 Settings: Set preference controller for all VideoPreference widget usages
+d6a13c5211 BasebandVersionPreferenceController: Trim baseband if needed
+50b7a0204f Settings: Implement hide gestural navigation hint bar [2/5]
+eaa53d0839 Settings: Hide AOD pref is device provides Doze settings
+374406599a hardwareinfo: Hide hardware revision if empty
+d725f70d2a Settings: Forward port pattern visibility settings (2/2)
+c384940f06 Settings: Forward port lock pattern grid size (2/2)
+1f11b8d60e Settings: adaptive icon
+ae860d2bfa Settings: Add a RemotePreference for device-specific doze settings
+cce734e4d3 Settings: Add lockscreen visualizer toggle
+c2b630fa16 Settings: Add toggle for Lockscreen Media Art [2/3]
+3b240e438d Settings: Add back battery and notification lights settings
+b505cdf410 Settings: Add back increasing ring feature (2/2).
+b634a6c9b6 Settings: Fix default value for proximity on wake pref
+dd326a3878 Settings: Add toggle for heads up notifications
+49a329f952 Settings: Use correct icon for ring volume
+3a405b8c03 Settings: Add switch for linked ring and media notification volumes
+a447e9fd89 Settings: Add option to scramble pin layout when unlocking (1/2).
+20454ca6c9 Settings: Add setup UI for minimum delay between an app's notification sounds
+b1c57de92c Settings: battery: Add LineageParts perf profiles
+a6de312b74 Settings: Allow removing livedisplay pref screen with config_enableLiveDisplay
+8c0c8330ef Settings: Add an option to force pre-O apps to use full screen aspect ratio
+8f511ca4a7 Settings: Add high touch sensitivity and touchscreen hovering toggles
+792804c800 Settings: display: Add wake on plug switch
+19cc45e064 fingerprint: Allow devices to configure sensor location
+a541709680 Settings: Allow devices to provide remote gesture preferences
+59932364cb Settings: gesture: Add LineageParts touchscreen gesture settings
+f25a3ae4c8 Settings: Add double tap to sleep preference
+f85657f374 Settings: Add proximity check on wake preference
+559b102c61 Settings: Fix fallback summary for power_button_instantly_locks preference
+db79180efd Settings: support black theme for dark mode [2/4]
+b7b66a3ae5 Add toggle to enable ADB root
+96b4227146 Disable notification channel warnings by default
+3150161659 Expose option to change the device hostname.
+6caa65ba38 Settings: Drop custom preferenceFragmentCompatStyle
+702e03cc70 Settings: Add package name to installed app details
+a0b311ef68 Settings: Add LineageOS legal info
+224fe65e32 Settings: Add LineageOS entries into device info
+205c94ae38 Settings: Depend on lineage platform library
+
+   * packages/apps/Stk
+f8e224a Close Tone Dialog if the requested tone has already been stopped
+4222653 Fix the incorrect title for DISPLAY TEXT dialog.
+e3b91ca Stk: adaptive icon
+
+   * packages/apps/TvSettings
+3a46d1c0 Add rooted development option
+10e4ecb4 Show Trust in security settings
+2b6528fb Add button to shut down device
+726fc37d Settings: Add intent to launch LineageOS platlogo upon multiple taps
+21e6a47f Add build date (ro.build.date from build.prop) to About screen.
+1883cc9a One does not simply become a Developer
+2c8beb95 Add LineageOS version to the About screen
+
+   * packages/apps/WallpaperPicker2
+b6bc22e Return valid wallpaper id for PartnerWallpaperInfo
+
+   * packages/providers/ContactsProvider
+2d36cd93 CallLogDatabase: Try to re-run the version 6 upgrade path
+bc7227b1 ContactsProvider: adaptive icon
+
+   * packages/providers/DownloadProvider
+24fcc9ac DownloadProvider: Add support for manual pause/resume
+c6ffb8f6 DownloadProvider: Display download speed in notification
+2aefac8c Fix "Invalid columns in request:" errors, when there are multiple columns
+
+   * packages/providers/MediaProvider
+114958fe MediaProvider: adaptive icon
+
+   * packages/providers/TelephonyProvider
+f1e77da TelephonyProvider: add upgrade support from lineage-16.0
+a5fe31e Telephony: Upgrade: Also migrate empty strings
+7fa04a5 TelephonyProvider: adaptive icon
+69c1351 Fix MmsSmsDatabaseHelper onUpgrade always destroying the database
+
+   * packages/services/Mms
+645a0b3 Mms: adaptive icon
+b820a00 Add app label
+
+   * packages/services/Telecomm
+f386d064 Telecomm: Squashed phone_type switch support
+276d58d6 Telecomm: adaptive icon
+9b4e194b CallLog: Get rid of warning
+d33f0728 Add back increasing ring feature (1/2).
+a57db689 Telecom: Add sensitive phone numbers hooks
+
+   * packages/services/Telephony
+3dd818704 Telephony: Add ERI configuration for U.S. Cellular
+8adc11d35 MSIM: Fix non-protected broadcasts sent from phone process.
+ff4c49f64 Telephony: Mark enhanced_4g_lte_mode_title_variant as untranslatable
+539d6f2e6 Telephony: adaptive icon
+cc1dd031f Telephony: use Build.DATE to check for system update
+
+   * system/bt
+6f0accdcb Add support to force disable enhanced sco commands
+d70e9712a Revert "Bluetooth HFP: Use WBS by default (1/5)"
+7d3206f38 Changed HID_DEV_MTU_SIZE from 64 to 512
+b22992590 gd: proto: Remove optimize_for = LITE_RUNTIME
+6af99d6ad gd: Remove unneeded optimize_for lite
+
+   * system/core
+e76ffcfc5 fs_mgr: autodetect filesystem type
+185dd0a19 core: mark libsysutils and libdiskconfig recovery_available
+73a022d3c init: Convert lineage product variables to soong config variables
+09c40c8bd logcat: Map '-C' to 'logcat -v color'
+0750b0f9a debuggerd: add Lineage version to tombstones
+972f602d2 healthd: Reinitialize mChargerNames for every battery update
+722c29780 healthd: Add support for HVDCP_3 chargers
+ff1ddfd3c healthd: Add DASH charger type
+ab8d64923 Camera: Add feature extensions
+7bc78d135 init: Add vendor-specific initialization hooks.
+22df0a154 Add wrapped key support
+dcd8dbb02 Squashed import of adb root patches
+ff248cdeb ziptool: restore unzip for recovery
+2dd35c139 adb: Add ro.adb.secure.recovery handling
+ef505854f reboot: allow opting-in to fastbootd
+a8de8c6e2 Revert "Format formattable partitions if mount fails"
+f191610e2 fs_mgr: mount: don't set the block device as ro for recovery
+f1c02e5a1 errno_restorer: Make bool operator explicit
+b0139f320 Remove unneeded optimize_for lite
+462f2f501 [cleanup] Fix a clang-tidy warning
+9ef4d23b1 adb: Look for shell executable in alternate places
+0b265e35d init: don't skip starting a service with no domain if permissive
+
+   * system/sepolicy
+bb4d016d6 Only require compat mapping files if they exist.
+274193692 sepolicy: Allow recovery to alter /
+c032133c5 sepolicy: whitelist recovery from node creation neverallow
+c65d07ce3 sepolicy: Add sdcard_posix_contextmount_type attribute
+
+   * system/vold
+c731e3d vold: skip first disk change when converting MBR to GPT
+bc2566c Switch to exfatprogs compatible fsck parameter
+c27ee42 cryptfs: Fix build for QCOM HW crypto devices
+e51bdd2 Add "changepw" command to vdc.
+740377d vold: Adapt req-crypt based HW disk encryption
+cfc9229 vold: Move QCOM HW FDE inclusion under Lineage namespace
+aa065c3 system: vold: Close crypto block device if it was created
+a3c9ff2 Updates for migrated code upstream
+4b262c4 system: vold: fix block disk encryption to work with metadata encryption
+30e6124 Fix for CTS test CtsAppSecurityHostTestCases
+ad92a41 system: vold: Remove crypto block device creation
+659d376 vold: Add Hardware FDE feature
+c856e2f vold: Bring in more wrapped key changes
+f78e6bc system: vold: Upgrade the FBE key
+8df5a5a vold: Enable legacy support for wrapped key
+7924840 system: vold: Use wrapped key for metadata encryption
+
+   * tools/metalava
+21659a2 [Metalava] don't use reflections
+1cf7675 Limit metalava visibility
+
+   * vendor/lineage
+410d65ac Merge pull request #8 from koron393/11.0
+
