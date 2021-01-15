@@ -3,20 +3,54 @@
 
 #modify values below
 #leave blank if not used
-maintainer="Name (nickname)" #ex: Lup Gabriel (gwolfu)
-oem="OEM" #ex: OnePlus
-device="device codename" #ex: guacamole
-devicename="name of device" #ex: OnePlus 7 Pro
-zip="crdroid zip" #ex: crDroidAndroid-<android version>-<date>-<device codename>-v<crdroid version>.zip
-buildtype="type" #choose from Testing/Alpha/Beta/Weekly/Monthly
-forum="" #https link (mandatory)
-gapps="" #https link (leave empty if unused)
-firmware="" #https link (leave empty if unused)
-modem="" #https link (leave empty if unused)
-bootloader="" #https link (leave empty if unused)
-recovery="" #https link (leave empty if unused)
-paypal="" #https link (leave empty if unused)
-telegram="" #https link (leave empty if unused)
+maintainer:"MLZ (MLZ94)",
+
+         oem:"Asus",
+
+         device:"Asus Zenfone 5",
+
+         filename:"crDroidAndroid-11.0-20200110-X00QD-v7.2.zip",
+
+         download:"https://drive.google.com/file/d/1PY1IPvZaUqQdd0rJfr7EWvLuNa5MtyQr/view?usp=drivesdk",
+
+         timestamp:1608382590,
+
+         md5:"833b0cfda6e9606b11c576f71fbdae09",
+
+         size:850865773,
+
+         version:"7.2",
+
+         buildtype:"Mountly",
+
+         forum:"https://forum.xda-developers.com/t/crdroid-asus-zenfone-5.4217813/",
+
+         gapps:"",
+
+         firmware:"",
+
+         modem:"",
+
+         bootloader:"",
+
+         recovery:"",
+
+         paypal:"patreon.com/MLZ94",
+
+         telegram:"https://t.me/MLZ94"
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #don't modify from here
 script_path="`dirname \"$0\"`"
