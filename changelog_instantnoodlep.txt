@@ -1,414 +1,67 @@
 
 ====================
-     01-31-2021
+     02-12-2021
 ====================
 
-   * kernel/oneplus/sm8250
-3e7eb2eeec13 HACK: lib: Compile out nmi_backtrace for ARM64
-545918da615a Kbuild: Support LLVM Polyhedral Loop Optimizations
-e1475b5ac22f kallsyms: Increase KSYM_NAME_LEN for Clang LTO
-594356fd7261 Kbuild: Select LD_DEAD_CODE_DATA_ELIMINATION with LTO_CLANG
-f94e1ab66d97 arm64: Makefile: Optimize for Kryo 585
-40530235f07c arm64: vdso: Compile vDSO at O3 with Clang
-2d8900909b9f Makefile: Use O3 for Clang
-6d77362a80e9 oneplus: misc: Rewrite    *_info to avoid CFI violations
-f6723ec0318f techpack: data: Cleanup additional CFI violations
-0f051cdad07b Makefile: Globally disable compound-token-split-by-space warnings for Clang
-267ef7562834 kbuild: Globally disable (void-)pointer-to-int-cast warnings for Clang
-e1c018bfec5e treewide: Fix pointer-to-(int|enum)-cast warnings detected by Clang
-cbc70b52c96c Revert "selinux: Relocate ss_initialized and selinux_enforcing to separate 4k"
-726b357ae85e Revert "ANDROID: HACK: arm64, LLVMLinux: use -mno-implicit-float"
-848d8bbf1f60 Revert "msm: kgsl: Add gpu_frequency tracepoint to power trace system"
-a4838566f70a Revert "msm: kgsl: Add gpu_frequency trace during SLUMBER entry and exit"
-52af0ed7f0e9 Revert "arm64: remove redundant FRAME_POINTER kconfig option and force to select it"
-5f7476e11921 cnss2: Load China BDF files for PJ_ID=14+HW_ID=21|22 combo
-afdc79023d83 msm: camera: Fix memory leak
-a2953150212f mm: add Kconfig interface for vmstat interval
-d74967be5a27 drivers: thermal: Don't qualify thermal polling as high priority
-44b5c4374368 Makefile.lib: Stop calling size_append
-f11e9ce1d202 tcp_bbr: centralize code to set gains
-7a091b856329 arm64: bpf: optimize modulo operation
-d3a8667cb50f arm64/bpf: don't allocate BPF JIT programs in module memory
-f703b77e5b71 bpf: add __weak hook for allocating executable memory
-db8159ddbf3c bpf: Allow building BPF JIT without module support on arm64
-de24a3883638 tcp: Enable ECN negotiation by default
-62b5e8d85666 power: Silence debug logging
-8a5bebe33948 power: supply: Classify Battery Monitor Systems as batteries
-3ebd6ace8214 msm: msm_bus: Never compile debugfs-related code
-f22dc2a6b269 msm: msm_bus: Kill transaction logging functionality
-ffa7b6fadc04 cpuidle: lpm-levels: Remove debug event logging
-439ac3a298ea block: disable I/O stats accounting by default
-7900a23e979f gpu: adreno: only compile Adreno 6xx driver
-2c7a87b08d25 drm/msm/sde: Cache register values when performing clock control
-144380e6e7c6 [FIXUP] 2e6421b ("techpack: audio: Remove build timestamp injection")
-64be5847f62b vmlinux.lds.h: Coalesce LLVM dead code elimination sections
-85dffb86bb8b kbuild: Hide CFI shadow option if modules are disabled
-43e9dba1383d kbuild: Allow Clang to merge globals when DLKM support is disabled
-112188438844 arm64: relocatable: Tweak linker flags to yield a smaller Image with LLD
-f48cea09bdca scripts: Support a custom compiler name
-2ee41cb8616b kernel: Add CC_WERROR config to turn warnings into errors
-c857274d2ccb x86/vdso: Handle faults on timens page
-dd4b763a7564 arm64: vdso32: Fix '--prefix=' value for newer versions of clang
-df17453f6d90 kbuild: Don't try to add '-fcatch-undefined-behavior' flag
-b88aad9ee717 ntfs: Fix ntfs_test_inode and ntfs_init_locked_inode function type If the kernel is built with CFI we hit a __cfi_check_fail while mounting a partition
-35a0cb34ac57 msm: cvp: fix KCFI errors
-09cc2a786e63 netfilter: xt_HARDIDLETIMER: fix sysfs callback function type
-10199862a447 treewide: fix callback function type for ndo_start_xmit
-e0844dc0d0c9 objtool: use sh_info to find the base for .rela sections
-9ac9a838d39a kbuild: remove duplicate dependencies from .mod files
-f3a1c22535c5 ANDROID: scs: fix recursive spinlock in scs_check_usage
-8ca73f89208d export: cfi: fix ksymtab addresses
-688301703f4e cfi: Clarify locking under CFI mutex
-16e4befaf129 msm: cleanup: union gsi_channel_scratch
-bb725614a7e1 platform: msm: gsi: Fix symbol versioning failure for gsi_write_channel_scratch
-4149690b0c93 kbuild: get rid of misleading $(AS) from documents
-a4679d9440a7 s390/build: use size command to perform empty .bss check
-347b327f1180 s390: make chkbss work with clang
-10ec2376ac4e fs: ext4: fsync: optimize double-fsync() a bunch
-6c33932778e6 blk-mq: fix corruption with direct issue
-ac0bb813bcff do accept() in LIFO order for cache efficiency
-7734a275492a locking: rwsem: spin faster
-0233266d2daa kernel: time: reduce ntp wakeups
-de55179f03b6 ipv4/tcp: allow the memory tuning for tcp to go a little bigger than default
-16ac2d208169 Increase the ext4 default commit age
-b51418e27c66 cpuidle: don't disable cpuidle when entering suspend
-ca75aa954301 fscrypt: update documentation for direct I/O support
-205480affee9 block: blk-crypto: relax alignment requirements for bvecs in bios
-839539162f30 block: blk-crypto-fallback: handle data unit split across multiple bvecs
-4743266037b4 soc: qcom: smp2p: Remove IRQF_NO_SUSPEND
-570432c494f0 locking/rwsem: Add ACQUIRE comments
-87ef9d9f76b8 lcoking/rwsem: Add missing ACQUIRE to read_slowpath sleep loop
-3fb2251095d0 locking/rwsem: Add missing ACQUIRE to read_slowpath exit when queue is empty
-4752fbc0fd1b locking/rwsem: Don't call owner_on_cpu() on read-owner
-b5c30755f08f locking/rwsem: Guard against making count negative
-541dfe49393c locking/rwsem: Adaptive disabling of reader optimistic spinning
-3cbf739556f7 locking/rwsem: Enable time-based spinning on reader-owned rwsem
-74b701ab59f2 locking/rwsem: Make rwsem->owner an atomic_long_t
-0b0b8c645dbf locking/rwsem: Enable readers spinning on writer
-a16f4696f027 locking/rwsem: Clarify usage of owner's nonspinaable bit
-be49c230bd32 locking/rwsem: Wake up almost all readers in wait queue
-022684521603 locking/rwsem: More optimal RT task handling of null owner
-f7fd6e967e56 locking/rwsem: Always release wait_lock before waking up tasks
-71c7b53a1e23 locking/rwsem: Implement lock handoff to prevent lock starvation
-bb56d0044158 locking/rwsem: Make rwsem_spin_on_owner() return owner state
-a9a2f4c6e6b8 locking/rwsem: Code cleanup after files merging
-08f729c8a1fc locking/rwsem: Merge rwsem.h and rwsem-xadd.c into rwsem.c
-dc7ae66e148b locking/rwsem: Implement a new locking scheme
-804c36425e90 locking/rwsem: Remove rwsem_wake() wakeup optimization
-6c8b0300288a locking/rwsem: Prevent unneeded warning during locking selftest
-af59e761c978 locking/rwsem: Optimize rwsem structure for uncontended lock acquisition
-593308794829 locking/rwsem: Enhance DEBUG_RWSEMS_WARN_ON() macro
-a55ea9b3018c locking/rwsem: Add debug check for __down_read*()
-6c3e51638d9b locking/rwsem: Micro-optimize rwsem_try_read_lock_unqueued()
-fcafd1163704 locking/rwsem: Move rwsem internal function declarations to rwsem-xadd.h
-c0f0535cbb75 locking/rwsem: Move owner setting code from rwsem.c to rwsem.h
-8e40159b5f64 locking/rwsem: Relocate rwsem_down_read_failed()
-560edc279518 locking/rwsem: Optimize down_read_trylock()
-a2199d63761c locking/rwsem: Remove rwsem-spinlock.c & use rwsem-xadd.c for all archs
-7d9d587a57fa locking/rwsem: Exit read lock slowpath if queue empty & no writer
-7b2fbfd7a3d5 locking/rwsem: Remove arch specific rwsem files
-38e910799bbc locking/rwsem: Make owner store task pointer of last owning reader
-5d64eceb4863 preempt: Move PREEMPT_NEED_RESCHED definition into arch code
-65259b445ee2 arm64: cmpxchg: Use "K" instead of "L" for ll/sc immediate constraint
-541cd40fe049 arm64: Avoid masking "old" for LSE cmpxchg() implementation
-f9a1ba3cae03 arm64: Avoid redundant type conversions in xchg() and cmpxchg()
-532b912ceb7b arm64: lse: Prefetch operands to speed up atomic operations
-5930d5db5fc8 arm64: preempt: Provide our own implementation of asm/preempt.h
-b47633c5e319 locking/qspinlock: Remove unnecessary BUG_ON() call
-62174f37e0c6 locking/qspinlock: Handle > 4 slowpath nesting levels
-629a50016d84 locking/pvqspinlock: Extend node size when pvqspinlock is configured
-247899e3c02c locking/spinlocks: Remove an instruction from spin and write locks
-4ba5259e5379 lockref: Limit number of cmpxchg loop retries
-b8ac06608cbe asm-generic/tlb: provide MMU_GATHER_TABLE_FREE
-9f73aeb35076 asm-generic/tlb: rename HAVE_MMU_GATHER_NO_GATHER
-0e3102c6ce6d asm-generic/tlb: rename HAVE_MMU_GATHER_PAGE_SIZE
-55c0bb0a6a2f asm-generic/tlb: rename HAVE_RCU_TABLE_FREE
-1cf4339f2ac7 asm-generic/tlb: add missing CONFIG symbol
-ea9958be9b76 asm-gemeric/tlb: remove stray function declarations
-362d505a5e9c asm-generic/tlb: avoid potential double flush
-0095ca50923a mm/mmu_gather: invalidate TLB correctly on batch allocation failure and flush
-523e0c43601d mm: remove redundant assignment of entry
-b38916f3e80a mm: mmu_gather: remove __tlb_reset_range() for force flush
-15feb3b81a2c arm64: tlbflush: Ensure start/end of address range are aligned to stride
-7456c64ad8ff arm64: mm: enable per pmd page table lock
-f18d9582c022 asm-generic/tlb: Remove tlb_table_flush()
-b6bcd8aefb4c asm-generic/tlb: Remove tlb_flush_mmu_free()
-b25382c790d7 asm-generic/tlb: Remove CONFIG_HAVE_GENERIC_MMU_GATHER
-f5d56042d8af asm-generic/tlb: Remove arch_tlb*_mmu()
-94cd8b90712d asm-generic/tlb: Introduce CONFIG_HAVE_MMU_GATHER_NO_GATHER=y
-5de8da0fd228 asm-generic/tlb, arch: Invert CONFIG_HAVE_RCU_TABLE_INVALIDATE
-5c0a36f4ac2c asm-generic/tlb, ia64: Conditionally provide tlb_migrate_finish()
-200fbae3c1e4 asm-generic/tlb: Provide generic tlb_flush() based on flush_tlb_mm()
-f7a23ef887ea asm-generic/tlb, arch: Provide generic tlb_flush() based on flush_tlb_range()
-98d1a1b7cfc9 asm-generic/tlb, arch: Provide generic VIPT cache flush
-20bf7c677c8d asm-generic/tlb, arch: Provide CONFIG_HAVE_MMU_GATHER_PAGE_SIZE
-dcb7aab4c430 asm-generic/tlb: Provide a comment
-afb4b6533edc arm64: tlbi: Set MAX_TLBI_OPS to PTRS_PER_PTE
-7e16dda63034 arm64: tlb: Rewrite stale comment in asm/tlbflush.h
-cc14ff17169b arm64: tlb: Avoid synchronous TLBIs when freeing page tables
-1421f9f853c1 arm64: tlb: Adjust stride and type of TLBI according to mmu_gather
-49a019d9022d arm64: tlb: Remove redundant !CONFIG_HAVE_RCU_TABLE_FREE code
-a8e996ac5f8c arm64: tlbflush: Allow stride to be specified for __flush_tlb_range()
-c6f5d13523fb arm64: tlb: Justify non-leaf invalidation in flush_tlb_range()
-533d13d3b618 arm64: mm: implement arch_faults_on_old_pte() on arm64
-5cfb7db3070b arm64: cpufeature: introduce helper cpu_has_hw_af()
-007a9aea13c5 arm64: mm: Add ISB instruction to set_pgd()
-6ee21e631033 arm64: mm: avoid redundant READ_ONCE(*ptep)
-7930ae6c44ef arm64: mm: Don't wait for completion of TLB invalidation when page aging
-ce850c11e42f arm64: pgtable: Implement p[mu]d_valid() and check in set_p[mu]d()
-cba28c4fcfb7 arm64: Remove unnecessary ISBs from set_{pte,pmd,pud}
-3d8efb5da9aa arm64: tlb: Add DSB ISHST prior to TLBI in __flush_tlb_[kernel_]pgtable()
-9c7e7d2fdf84 arm64: tlb: Use last-level invalidation in flush_tlb_kernel_range()
-70512b593642 MAINTAINERS: Add entry for MMU GATHER AND TLB INVALIDATION
-b3d548bb5acc mm/memory: Move mmu_gather and TLB invalidation code into its own file
-a82a9cd9c78c asm-generic/tlb: Track which levels of the page tables have been cleared
-ddc4fdff5165 asm-generic/tlb: Guard with #ifdef CONFIG_MMU
-6fb1bd67e12f asm-generic/tlb: Track freeing of page-table directories in struct mmu_gather
-6f5029c3d537 mm: zero-seek shrinkers
-84fc1cb8c43b locking/osq: Use optimized spinning loop for arm64
-90d5321e1ca8 arm64: mremap speedup - enable HAVE_MOVE_PUD
-be1c82e9b054 mm: speedup mremap on 1GB or larger regions
-bd7542750970 mremap: don't allow MREMAP_DONTUNMAP on special_mappings and aio
-771cc4ca10fc mm/mremap: for MREMAP_DONTUNMAP check security_vm_enough_memory_mm()
-54ea1f972975 mm/mremap: account memory on do_munmap() failure
-17624b24259c mm/mmap.c: fix mmap return value when vma is merged after call_mmap()
-a6710f736e6b mm: mmap: fix fput in error path v2
-a98d5b5890d1 mm/mmap: add inline munmap_vma_range() for code readability
-79dd80c93562 mm/mmap: add inline vma_next() for readability of mmap code
-a48ff06d016b mm/mmap.c: replace do_brk with do_brk_flags in comment of insert_vm_struct()
-555b0aa47cfa mm/mmap.c: use helper function allow_write_access() in __remove_shared_vm_struct()
-bbd0bcc2d331 mm: use helper function mapping_allow_writable()
-21f796fd6240 mm/mmap: check on file instead of the rb_root_cached of its address_space
-0e2b7c243b26 mm/mmap: not necessary to check mapping separately
-fe7f65397c7b mm/mmap: leave adjust_next as virtual address instead of page frame number
-b21596e54909 mm/mmap: rename __vma_unlink_common() to __vma_unlink()
-0be871d5cb3a mm: mmap: Fix general protection fault in unlink_file_vma()
-a7cd393461d8 arm64: mremap speedup - Enable HAVE_MOVE_PMD
-5f466b3aadb3 mm: Introduce arch_validate_flags()
-ff30df3c8d85 mm/mremap: start addresses are properly aligned
-56aef7a29c2a mm/mremap: calculate extent in one place
-1ca2a97e839b mm/mremap: it is sure to have enough space when extent meets requirement
-8c30afad97e4 mm: remove unnecessary wrapper function do_mmap_pgoff()
-f3e62dc709ee mm: mmap: merge vma after call_mmap() if possible
-2cf950e9651e mm/mmap: optimize a branch judgment in ksys_mmap_pgoff()
-8247d129f9ee mm/mmap.c: close race between munmap() and expand_upwards()/downwards()
-c662cbd08e59 mm: use false for bool variable
-ac47d76cb19d mm: mmap: fix a typo in comment "compatbility"->"compatibility"
-e9724ff386fa userfaultfd: fix remap event with MREMAP_DONTUNMAP
-cffd38b17a9d mm: Fix MREMAP_DONTUNMAP accounting on VMA merge
-552ed409dfb5 mm/vma: make vma_is_accessible() available for general use
-746a61e83bb3 mm/mremap: add MREMAP_DONTUNMAP to mremap()
-ee4e8f0e4682 mm: mmap: add trace point of vm_unmapped_area
-eab4b78432c3 mmap: remove inline of vm_unmapped_area
-b542070b2540 mm/mremap: Add comment explaining the untagging behaviour of mremap()
-c64c93019df9 mm: Avoid creating virtual address aliases in brk()/mmap()/mremap()
-c42659a46052 mm/mmap.c: get rid of odd jump labels in find_mergeable_anon_vma()
-00e46a47ce7d mm/mmap.c: make vma_merge() comment more easy to understand
-aa634e14a415 mm/mmap.c: use IS_ERR_VALUE to check return value of get_unmapped_area
-a6a3280d35dc mm/mmap.c: rb_parent is not necessary in __vma_link_list()
-3d6ac1ceaffd mm/mmap.c: extract __vma_unlink_list() as counterpart for __vma_link_list()
-c4f310ca2ae9 mm/mmap.c: __vma_unlink_prev() is not necessary now
-ed37481aecad mm/mmap.c: prev could be retrieved from vma->vm_prev
-759d2f539286 mm/mmap.c: remove a never-triggered warning in __vma_adjust()
-9cb754caad37 mm: untag user pointers in mmap/munmap/mremap/brk
-daa2d5a59df8 augmented rbtree: add new RB_DECLARE_CALLBACKS_MAX macro
-af938f3d96c0 mm/mmap.c: refine find_vma_prev() with rb_last()
-0ddbd5938534 x86/mpx, mm/core: Fix recursive munmap() corruption
-4ab8cbf48511 mm,mremap: bail out earlier in mremap_to under map pressure
-c9ab147e2057 mm: fix some typos in mm directory
-ea5d3d066da7 mm/mmap.c: remove some redundancy in arch_get_unmapped_area_topdown()
-c5f95cdb40ae mm: speed up mremap by 20x on large regions
-d4ca7b1eda18 mm/mmap.c: remove verify_mm_writelocked()
-2bc3643609b3 mm: mmap: Allow for "high" userspace addresses
-de013d706808 mm: brk: downgrade mmap_sem to read when shrinking
-77042552588b mm: mremap: downgrade mmap_sem to read when shrinking
-06425bad3309 mm: unmap VM_PFNMAP mappings with optimized path
-ea7613d0aa0a mm: unmap VM_HUGETLB mappings with optimized path
-4670ee2e507a mm: mmap: zap pages with read mmap_sem in munmap
-941ce9ab0928 mm: prevent a warning when casting void* -> enum
-c138baae6c67 arm64/neon: Disable -Wincompatible-pointer-types when building with Clang
-6106435eabb2 arm64/neon: add workaround for ambiguous C99 stdint.h types
-3bde3110bfed arm64: crypto: add NEON accelerated XOR implementation
-56473c755301 arm64: csum: Disable KASAN for do_csum()
-d086c70f84f4 arm64: csum: Optimise IPv6 header checksum
-47c0310894ee arm64: csum: Fix pathological zero-length calls
-f4266b0281dc arm64: Implement optimised checksum routine
-333ad1ef9c45 arm64: lib: Consistently enable crc32 extension
-faac48597c86 arm64/lib: improve CRC32 performance for deep pipelines
-37beb8dd8aad arm64/lib: add accelerated crc32 routines
-5df7e6ab4b50 arm64: cpufeature: add feature for CRC32 instructions
-1dcb587ac069 lib/crc32: make core crc32() routines weak so they can be overridden
-c0a01831767d arm64: Use optimized memcmp
-ab527ae298ca arm64: lib: memory utilities optimization
-b63ea4135e29 lz4: fix kernel decompression speed
-aa1862fda872 lib/lz4/lz4_decompress.c: document deliberate use of `&'
-b8f1ed64434d lz4: do not export static symbol
-ca4f2dbc2748 lib/lz4: update LZ4 decompressor module
-c7618e10130d FROMLIST: arm64: kernel: implement fast refcount checking
-1c60a49b05bd arm64: debug: Separate debug hooks based on target exception level
-eeee1657b559 arm64/kernel: jump_label: Switch to relative references
-4a2cf7839362 locking/static_key: Add support for deferred static branches
-9b9a569e0241 locking/static_key: Fix false positive warnings on concurrent dec/inc
-d825e22093db jump_label: Fix NULL dereference bug in __jump_label_mod_update()
-62a14100f8aa jump_label: Annotate entries that operate on __init code earlier
-286ae758fe41 jump_label: Implement generic support for relative references
-f0abf261f9a7 jump_label: Abstract jump_entry member accessors
-605e22a69631 jump_label/lockdep: Assert we hold the hotplug lock for _cpuslocked() operations
-23c1cf4c858e jump_label: Use static_key_linked() accessor
-c051d4f15e28 mm/vmalloc.c: switch to WARN_ON() and move it under unlink_va()
-88452f35d45b mm/vmalloc.c: get rid of one single unlink_va() when merge
-3db9de77ab25 mm/vmalloc.c: preload a CPU with one object for split purpose
-26695428795b mm/vmalloc.c: remove "node" argument
-573152df6044 mm/vmalloc.c: fix typo in comment
-aa1d4de3ded8 vmalloc: export __vmalloc_node_range for CONFIG_TEST_VMALLOC_MODULE
-4887f7a61342 mm/vmalloc: pass VM_USERMAP flags directly to __vmalloc_node_range()
-e813eb34a7a9 mm/vmalloc: do not call kmemleak_free() on not yet accounted memory
-0be6eefca367 mm/vmalloc.c: make vmalloc_32_user() align base kernel virtual address to SHMLBA
-e024d354da58 mm: convert totalram_pages and totalhigh_pages variables to atomic
-616738f56a88 vfree: add debug might_sleep()
-32fd5904c0bc mm/vmalloc.c: improve vfree() kerneldoc
-2027ad2e9a20 msm: bus_arb: disable debug logging
-de128c359d25 crypto: mxs-dcp - Remove VLA usage of skcipher
-4a4a42770deb crypto: sahara - Remove VLA usage of skcipher
-51c2045a3f4e x86/fpu: Remove VLA usage of skcipher
-bf975bcf6234 s390/crypto: Remove VLA usage of skcipher
-840e4d1f1105 block: replace io_schedule with io_schedule_timeout
-fca1983eb1ec scsi: ufs: disable interrupt in clk-gating
-2c52363affdc scsi: ufs: disable clock scaling
-f5f76c0324ca msm: kgsl: Stop slab shrinker when no more pages can be reclaimed
-76afcdc3b1ad mm: skip swap readahead when process is exiting
-fb3563813106 mm: compaction: Fix bad logging
-76c5fc8b222f mm: compaction: Add automatic compaction mechanism
-f2585f1283e2 workqueue: Implement delayed_work_busy()
-4f4d4b4da401 random: prevent add_input from doing anything
-4e58cb5026c1 binfmt_elf.c: use get_random_int() to fix entropy depleting
-b0d6eb9321ff binder: set binder_(alloc_)debug_mask=0 to suppress logging
-76e72efb6732 msm: kgsl: Report correct GPU frequency in sysfs
-8fe73ecd68a2 scripts/dtc: Update to upstream version v1.6.0-11-g9d7888cbf19c
-6f68888e302d scripts/dtc: Update to upstream version v1.6.0-2-g87a656ae5ff9
-5251b8637713 scripts/dtc: Update to upstream version v1.5.1-22-gc40aeb60b47a
-950b5fe405c3 scripts/dtc: Update to upstream version v1.5.0-30-g702c1b6c0e73
-25c4870b840b scripts/dtc: Update to upstream version v1.5.0-23-g87963ee20693
-ddb2db5ef843 scripts/dtc: Update to upstream version v1.4.7-57-gf267e674d145
-ff79863355fe scripts/dtc: Update to upstream version v1.4.7-14-gc86da84d30e4
-7fdc4e64ddb8 scripts/dtc: Add yamltree.c to dtc sources
-f08964aa97ea sm8250: Inline kona-v2-gpu frequency table with SM8250-AB
-d861c82fc538 sm8250: Remove display ramdump memory region
-067e2278db7c sm8250: Disable expedited RCU grace periods
-18f952aad86c sm8250: Disable debug monitoring
-d6ec5416db0f sm8250: Disable broken IRQ detection
-9d5d7d9f7739 dts: Don't compile legacy dtbs
-3d085cdd4f57 dts: Purge duplicate overlays
-85b790953b26 dts: Disable dm-verity
-982043dca7ab dtc: Silence warnings
-67025108cfff techpack: Hardcode modules list
-9bfa377ae891 .gitignore: Remove techpack and device tree vendor directories
-3973f6e27897 .gitignore: Add object directory to gitignore
-64dbe71ec5b4 qcacld-3.0: Remove redundant -Werror flag
-8df8efe26298 techpack: audio: Remove redundant -Werror flags
-515692275cb7 techpack: audio: Remove redundant -Werror flag from tfa9894
-60668d77de88 arm64: Keep alternative-instruction sections
-14b22278da2a arm64: Allow LD_DEAD_CODE_DATA_ELIMINATION to be selected
-efb29c94b4e2 Makefile: Force ARCH to be arm64
-291c5424fd90 kbuild: Silence noisy GCC warnings up to GCC 10
-2e54f7ffad6f msm: ipa: Fix size check in ipa_debugfs_enable_disable_drop_stats()
-e5cc1e0b91d4 oneplus: tri_state: Eliminate float usage to fix compile errors
-dc5bd63c80ff oneplus: hall: Fix compile errors due to invalid function declarations
-f70d883debfa msm: camera: Comment out unused code with floats in it
-783a355e46de msm: camera: Stub out the camera_debug_util API and compile it out
-2cf3f9503c6f selinux: Remove audit dependency
-1b953fa0edda kernel: Use the stock kona-perf_defconfig for /proc/config.gz
-65543c7aefc0 setlocalversion: Never append a "+" to localversion
-60e7a8aa69c2 s6sy761: fix memory leak from sec_ts_run_rawdata_all()
-d4a874b32b5e s6sy761: use GFP_DMA memory for touch_i2c_read_block()
-05a2e5d515b4 touchscreen: use GFP_DMA memory for touch_i2c_read_block()
-19d76c559593 touchscreen: add a few bp hints
-363cf5cecd6e touchscreen: avoid dynamic memory allocations
-46215ef129f4 touchscreen: avoid unnecessary heap allocations
-91921bc61944 s6sy761: avoid unnecessary heap allocations
-a8890bd0ca45 houston: allow HT_IOC_SCHEDSTAT
-e365c40ba707 fs: add exFAT
-bd3c3a17f6d4 trace: add CONFIG_DISABLE_TRACE_PRINTK option
-ea8574563919 module: always return success
-c67bbed0323a Merge 4.19.172 into neutrino/SM8250_R_11.0
-a5496352c940 Merge 4.19.171 into neutrino/SM8250_R_11.0
+   * device/oneplus/kebab
+e98ee0a kebab: Alert slider positioning
+3326fa6 kebab: Reduce status_bar_padding_end to 48px to match OOS
+9953343 kebab: Set matching status bar padding for landscape mode
+2264c17 kebab: Relocate fwb dimens to dimens.xml
+4a22199 kebab: bluetooth: Disable clean turn on
+b2640bd kebab: Use config_roundedCornerMultipleRadius
+b9172de kebab: Import rounded corners config from OOS
 
-   * packages/apps/Settings
-2dd2222679 KeyboardSettings: Add a RemotePreference for device-specific panel
+   * device/oneplus/sm8250-common
+d74d5620 sm8250-common: fod: Update fod behavior
+6e8eda0a sm8250-common: audio: Remove volume_listener from audio effects
+76ad5521 sm8250-common: DeviceSettings: broadcast EXTRA_SLIDER_POSITION_VALUE
+0e1ca562 sm8250-common: DeviceSettings: Display toasts for slider
+397657cb sm8250-common: Set OPA property to enable google assistant
+49ec34b5 sm8250-common: add WARP charger support
+e3775ff3 sm8250-common: overlay: allow gms to access persistent data partition
+8cd38c0a sm8250-common: overlay: Don't pin camera app in memory
+36ac3c60 sm8250-common: disable proximity usage during doze
+dfe37e6e sm8250-common: restore sepolicy/private
 
-   * prebuilts/clang/host/linux-x86/clang-proton
-742df68 Update to 20210130 build
-
-====================
-     01-30-2021
-====================
+   * external/chromium-webview
+c7ee4db Chomium Webview repository administrative note
 
    * frameworks/base
-a6eff9c92353 AudioService: Remove Analog Dock from fixed-volume devices
+14adf32a83f7 ActivityManagerService: dont be so hectic on cpu battery stats
+b61ff06edb10 SystemUI: Add tuner switches for privacy icons
+bb355078f070 Camera: Ignore torch status update for aux or compsite camera
+45b3f6328c28 Make sensor block package list configurable [1/2]
+0c09f9b4c4f2 base: Add Accelerometer and Linear Acceleration sensors in blocking list
+4ee0fa35312a base: Sensor block per-package switch (1/2)
+b1ba34fe93fd Camera: Don't throw exceptions when value pairs have spaces in them
+9b3f17e9e19c Guard in short-circuit evaluations for stringSplit methods.
+b0cd995b63fa core: Materialize Toast notifications
+4ecdef59098e base: media_seekbar: make it sexy
+182bdb01680d New Crowdin updates (#591)
+b560fae0b950 Bring back "Post a silent notification if screenshot is dismissed"
+dec2c2d5fdce Apply bilinear filter for Ninepatch.
+5cc3fd937dd0 Check ProjectBackwards property for childrens after children's syncProperties().
+e21c3811bf9a Fixed to prevent usagestats file corruption when writing
+b6aa2a7e2614 Allow 0.8 font scale without crashing
 
-   * hardware/google/pixel
-b2333c4 pixel: Add lineage touch hal
+   * hardware/qcom-caf/sm8150/audio
+dc82f3b2e Merge tag 'LA.UM.9.1.r1-08600-SMxxx0.0' into 11.0-caf-sm8150
 
-   * kernel/oneplus/sm8250
-811218eceeaa Linux 4.19.172
-b4da738055ac fs: fix lazytime expiration handling in __writeback_single_inode()
-9f9623fc9340 writeback: Drop I_DIRTY_TIME_EXPIRE
-26b30d36cb5c dm integrity: conditionally disable "recalculate" feature
-440ed9aef50f tools: Factor HOSTCC, HOSTLD, HOSTAR definitions
-acfa7ad7b7f6 tracing: Fix race in trace_open and buffer resize call
-1feeef6cc4c8 HID: wacom: Correct NULL dereference on AES pen proximity
-6e7bfa046de8 futex: Handle faults correctly for PI futexes
-a4649185a98e futex: Simplify fixup_pi_state_owner()
-9d5dbf57d66f futex: Use pi_state_update_owner() in put_pi_state()
-29013e4f4b73 rtmutex: Remove unused argument from rt_mutex_proxy_unlock()
-0e1501f7b1ee futex: Provide and use pi_state_update_owner()
-f03b21494da1 futex: Replace pointless printk in fixup_owner()
-72f38fffa475 futex: Ensure the correct return value from futex_lock_pi()
-7874eee0130a futex: Prevent exit livelock
-7f237695d3f0 futex: Provide distinct return value when owner is exiting
-f9b0c6c556db futex: Add mutex around futex exit
-ab89202056ca futex: Provide state handling for exec() as well
-b45696340f53 futex: Sanitize exit state handling
-226eed1ef71d futex: Mark the begin of futex exit explicitly
-8f9a98a0e00a futex: Set task::futex_state to DEAD right after handling futex exit
-1dd589346a12 futex: Split futex_mm_release() for exit/exec
-9425476fb17a exit/exec: Seperate mm_release()
-095444fad7e3 futex: Replace PF_EXITPIDONE with a state
-3fe0ed7bd732 futex: Move futex exit handling into futex code
-08b227d9f380 Revert "mm/slub: fix a memory leak in sysfs_slab_add()"
-4e5ee86dcb00 gpio: mvebu: fix pwm .get_state period calculation
+   * hardware/qcom-caf/sm8150/display
+6b34300fa Merge tag 'LA.UM.9.1.r1-08600-SMxxx0.0' into 11.0-caf-sm8150
 
-   * packages/apps/ThemePicker
-7611ce0 ThemePicker: Make naming page look the same as the other ones
+   * hardware/qcom-caf/sm8150/media
+02a8f49e Merge tag 'LA.UM.9.1.r1-08600-SMxxx0.0' into 11.0-caf-sm8150
 
-   * tools/repohooks
-d57f9c5 utils: drop Python 2 support
-8349d89 config: drop Python 2 support
+   * packages/apps/Launcher3
+67d555343 New Crowdin updates (#126)
 
-====================
-     01-29-2021
-====================
+   * packages/apps/crDroidSettings
+b6e3ccb5 Add toggle for floating notification dismiss button [2/2]
+4eb92074 Make sensor block package list configurable [2/2]
+e694def6 New Crowdin updates (#707)
 
-   * external/libvpx
-f93b143 libwebm: Update libwebm from upstream
-588a17e Update README.version
-f13a12e libvpx: Update configs for new version
-d0ed084 libvpx: Import updated libvpx v1.9.0+
-
-   * external/libyuv
-f5c7005 libyuv: Compile with -O3
-879f0ae libyuv: Enable legacy types
-75bf46f libyuv: Import updated libyuv from chromium
-
-   * external/sqlite
-04a0449 Update README.version
-
-   * hardware/interfaces
-8fd638af7 wifi: Add provision to create/remove dynamic interface(s).
-
-   * packages/apps/Gallery2
-4e96ca6f3 Gallery2: dark theme
-
-   * packages/apps/Settings
-c98196ffe6 Settings: Remove empty category from Security Settings
+   * vendor/oneplus
+94e0216 op8/p/t: add modded libgf_ud_hal.so and libgf_g6_ud_hal.so
 
