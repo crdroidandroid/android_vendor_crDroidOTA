@@ -1,3 +1,4 @@
+
 ====================
 Highlights & Device Specific Changes:
 ====================
@@ -6,12 +7,10 @@ Build type: Stable
 Device: Xiaomi Mi Mix 2 (chiron)
 Device maintainer: jomadeto
 
-- Initial crDroid 6.16 code base
-- Updated to March security patches
-- Updated kernel to Linux 4.4.261-perf+
+- Fixed Sound settings and Font scale crash on cr6.16
 
 ====================
-     03-12-2021
+     03-13-2021
 ====================
 
 
@@ -25,6 +24,7 @@ Device maintainer: jomadeto
 c8a65c92d Merge 'lineage-17.1' into 10.0
 
    * frameworks/base
+38908bc30e5 Allow 0.8 font scale without crashing
 036af31a610 Add option to vibrate when fully charged [1/3]
 c2c1e0ea974 New translations (#604)
 6b20ac6f17a Battery Fully Charged Sound [1/3]
@@ -777,11 +777,12 @@ e98b428 Merge pull request #5 from Hikari-no-Tenshi/10.0
    * packages/apps/Recorder
 ecbce95 Recorder: Correct WAV header creation
 
-   * packages/apps/crDroidSettings
-7571f419 Merge pull request #719 from Hikari-no-Tenshi/10.0
+   * packages/apps/Settings
+fe622e8113 Revert "Settings: Add LineageParts charging sound settings preference"
 
-   * system/bt
-15c40332a Merge 'lineage-17.1' into 10.0
+   * packages/apps/crDroidSettings
+6ece58b9 New Crowdin updates (#722)
+7571f419 Merge pull request #719 from Hikari-no-Tenshi/10.0
 
    * vendor/lineage
 db06d46a crdroid: Bump to version 6.16
@@ -790,7 +791,7 @@ db06d46a crdroid: Bump to version 6.16
 f9f8eea26 Merge 'lineage-17.1' into 10.0
 
 ====================
-     03-11-2021
+     03-12-2021
 ====================
 
 
@@ -804,6 +805,14 @@ f6453ec5b2ca dm table: fix iterate_devices based device capability checks
 0b4a2c28c343 ALSA: ctxfi: cthw20k2: fix mask on conf to allow 4 bits
 ad83307d1e62 futex: fix spin_lock() / spin_unlock_irq() imbalance
 d68eefc0f605 futex: fix irq self-deadlock and satisfy assertion
+
+   * system/bt
+15c40332a Merge 'lineage-17.1' into 10.0
+
+====================
+     03-11-2021
+====================
+
 
    * packages/apps/crDroidSettings
 c74b26fc New translations (#720)
@@ -823,11 +832,6 @@ c74b26fc New translations (#720)
 
 ====================
      03-08-2021
-====================
-
-
-====================
-     03-07-2021
 ====================
 
 
@@ -866,7 +870,7 @@ b709b65fb2b0 mmc: sdhci-esdhc-imx: fix kernel panic when remove module
 074e7d515783 futex: Ensure the correct return value from futex_lock_pi()
 
 ====================
-     03-06-2021
+     03-07-2021
 ====================
 
 
@@ -883,9 +887,6 @@ a78e3af msm8998-common: Enable smart charging
 63767f9 msm8998-common: Add overlay with fps path
 83f1ed5 msm8998-common: Add overlay to adjust cpuinfo overlay
 
-   * kernel/xiaomi/msm8998
-a94f7b832bf5 Merge remote-tracking branch 'aosp/android-4.4-p' into HEAD
-
    * packages/apps/LineageParts
 2a8d48a Disable charging sound settings parts catalog
 
@@ -895,9 +896,30 @@ b8bd8fb2 Battery Fully Charged Sound [2/3]
 be5d7770 Move charging sound settings to crdroid settings
 
 ====================
+     03-06-2021
+====================
+
+
+   * kernel/xiaomi/msm8998
+a94f7b832bf5 Merge remote-tracking branch 'aosp/android-4.4-p' into HEAD
+
+====================
      03-05-2021
 ====================
 
+
+   * build/make
+00793cf00 Bump Security String to 2021-03-05
+
+   * frameworks/native
+75f7787e5 libbinder: readString*Inplace SafetyNet (II)
+a036cacef libbinder: check null bytes in readString*Inplace
+
+   * frameworks/opt/net/wifi
+cd31d347f Merge tag 'android-security-10.0.0_r52' into staging/lineage-17.1_merge_android-security-10.0.0_r52
+
+   * vendor/qcom/opensource/commonsys/system/bt
+ab54cd0ec SDP: Only start discovery once
 
 ====================
      03-04-2021
@@ -910,38 +932,11 @@ be5d7770 Move charging sound settings to crdroid settings
    * art
 ff92682d8e Merge tag 'android-security-10.0.0_r52' into staging/lineage-17.1_merge_android-security-10.0.0_r52
 
-   * build/make
-00793cf00 Bump Security String to 2021-03-05
-
    * external/v8
 507001d1 Merge tag 'android-security-10.0.0_r52' into staging/lineage-17.1_merge_android-security-10.0.0_r52
 
    * frameworks/base
 41eae4747c3 Merge tag 'android-security-10.0.0_r52' into staging/lineage-17.1_merge_android-security-10.0.0_r52
-
-   * frameworks/native
-75f7787e5 libbinder: readString*Inplace SafetyNet (II)
-a036cacef libbinder: check null bytes in readString*Inplace
-
-   * frameworks/opt/net/wifi
-cd31d347f Merge tag 'android-security-10.0.0_r52' into staging/lineage-17.1_merge_android-security-10.0.0_r52
-
-   * lineage-sdk
-779205cd Merge pull request #9 from Hikari-no-Tenshi/10.0
-
-   * packages/apps/LineageParts
-efd7870 Move Battery fully charged notification to crDroidSettings
-
-   * system/bt
-dbd2f7079 Merge tag 'android-security-10.0.0_r52' into staging/lineage-17.1_merge_android-security-10.0.0_r52
-
-   * vendor/qcom/opensource/commonsys/system/bt
-ab54cd0ec SDP: Only start discovery once
-
-====================
-     03-03-2021
-====================
-
 
    * kernel/xiaomi/msm8998
 04d20538efb7 Merge 4.4.259 into android-4.4-p
@@ -1040,8 +1035,13 @@ b03e8f1e26fe usb: quirks: add quirk to start video capture on ELMO L-12F documen
 795a8c31cabf HID: make arrays usage and value to be the same
 
    * lineage-sdk
+779205cd Merge pull request #9 from Hikari-no-Tenshi/10.0
 ba941437 Add option to vibrate when fully charged [3/3]
 
    * packages/apps/LineageParts
+efd7870 Move Battery fully charged notification to crDroidSettings
 11e365b Add option to vibrate when fully charged [2/3]
+
+   * system/bt
+dbd2f7079 Merge tag 'android-security-10.0.0_r52' into staging/lineage-17.1_merge_android-security-10.0.0_r52
 
