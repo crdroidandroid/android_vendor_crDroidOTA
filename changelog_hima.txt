@@ -1,4 +1,47 @@
 ====================
+     06-08-2021
+====================
+Highlights & Device Specific Changes:
+===================================
+
+Build type: Weekly
+Device: HTC One M9
+Device maintainer: platinumthis
+
+- Removed CPU undervolting due some M9 variants facing bootloops. A Seperat build will be there at XDA for those who want CPU undervolted Rom.
+ 
+~ Set Hexacore Variant 3 little and 3 BIG 
+
+~ Tuned I/O
+====================
+     06-07-2021
+====================
+
+   * packages/apps/Settings
+bd85e62acd Settings: QR Scanner pass proper frame Width and Height
+0b2ce6e71e Merge 'lineage-18.1' into 11.0
+f26c1ec7ef Settings: use framework text colors for SwitchBar
+
+====================
+     06-06-2021
+====================
+
+   * android
+e640c35 manifest: Track clang 12.0.6
+
+   * external/exfatprogs
+1d003c3 Merge branch 'master' of github.com:exfatprogs/exfatprogs into HEAD
+
+   * frameworks/base
+02143306509 New Crowdin updates (#671)
+
+   * packages/apps/Launcher3
+5f98c08fa New Crowdin updates (#154)
+
+   * packages/apps/crDroidSettings
+ba7fd83c New Crowdin updates (#768)
+
+====================
      06-05-2021
 ====================
 
@@ -18,6 +61,7 @@ b8da7ab6c6 make the art thread pool use the exact stack_size
 052390a91 Merge 'lineage-18.1' into 11.0
 
    * frameworks/base
+dc79db3938d Use SystemUI reboot view also for OTA uncrypt
 c103cc1a70e Make releaseSomeActivities() a oneway call.
 5a0466d1eae Add madvising of .odex, .vdex and .art files
 f2f45c1d0a4 Use BinderDeathDispatcher for alarm listeners
@@ -664,11 +708,8 @@ b58a08e49e4 Add crdroid utils
    * packages/apps/Settings
 f198318546 Revert "Add switch to select SBC HD by default [3a/3]"
 
-   * packages/apps/crDroidMusic
-e40031d8 Fix type in gradle
-
-   * vendor/addons
-4630d4c addons: Update music apk
+   * prebuilts/clang/host/linux-x86/clang-r416183c
+3fa423c clang 12.0.6 (based on r416183b) from build 7416131
 
    * vendor/lineage
 5519ce47 sensitive_pn: Add two numbers for Italy
@@ -681,6 +722,12 @@ cd32f9f9 generated_kernel_headers: Also add usr/include/audio to include path
 ====================
      06-04-2021
 ====================
+
+   * packages/apps/crDroidMusic
+e40031d8 Fix type in gradle
+
+   * vendor/addons
+4630d4c addons: Update music apk
 
 ====================
      06-03-2021
@@ -713,10 +760,6 @@ ebe989e Recorder: Remove hardcoded package name references
    * android
 582a7d3 manifest: Sync SM8350 HALs
 
-   * system/memory/lmkd
-f19fcb8 lmkd: Do not treat RSS=0 as a sign of a process being dead
-cad9811 lmkd: Handle cases when proc_get_name() might return NULL
-
    * system/sepolicy
 cef0f31f4 Export missing audio volume properties
 
@@ -732,107 +775,14 @@ dcb96947fe0 SystemUI: use matching padding on both sides of QS detail title
 81aec884244 SystemUI: avoid double ripple in QS detail view
 1d36f44fdef SystemUI: QS: minimize detail view to middle of the button
 
+   * system/memory/lmkd
+f19fcb8 lmkd: Do not treat RSS=0 as a sign of a process being dead
+cad9811 lmkd: Handle cases when proc_get_name() might return NULL
+
 ====================
      05-30-2021
 ====================
 
-   * packages/apps/Launcher3
-09e4fe063 New translations (#153)
-
    * packages/apps/crDroidSettings
 dae19cb5 Remove Screen off FOD preference if declared as not supported by device (#767)
-7c04ad9e New Crowdin updates (#766)
-
-====================
-     05-29-2021
-====================
-
-   * bionic
-eab4cfca3 Revert "pthread_cond: only call futex_wake when there are waiters"
-
-   * frameworks/av
-511f59405c camera: Workaround for GCC-compiled HAL3 drivers
-
-   * frameworks/base
-c0d43e091d2 SystemUI: Remove unused resources
-
-   * packages/apps/Dialer
-f8c0b688a Dialer: Dont change accent color for dark theme
-52615efa5 CallLogFragment: Move Un-registering call log observer to destroy
-50c6184cd Fix Dialer memory leaks
-f8f230c9c AospThemeImpl: fully white might NOT be uninitialized!
-885f388a1 Improve contatcts layout
-2c13f4ac2 Add ability to set full screen photos for calls
-f0e28d2ea Dialer: use system round corner values for searchbox
-de19cad7e Dialer: Fix dark dialogs on light theme
-ef2d2f7a2 Dialer: theme fixes
-2f14452c4 Dialer: welcome to night mode
-3fafed54c CallRecordingAutoMigrator: Handle all exceptions
-ca77004c2 Dialer: Make recording names sortable
-94ce0046c Add autorecord feature
-51a6bd16f Dialer: Enable call recording for all
-028a3d63f Fix selecting phone account dialog show error.
-0bb0059f9 Dialer: Helplines: Fix a few casing issues
-d909a8733 Dialer: Helplines: Use a webview dialog
-
-====================
-     05-28-2021
-====================
-
-   * external/zlib
-b119e47 zlib: Fixup for armv8-2a builds
-d6c1193 Add use of the ARMv8 crc32 instructions when requested.
-c8f6ed3 Adding PMULL based CRC-32 for aarch64
-afa9df7 Android.bp: unroll loops
-26fcfe3 Merge 'upstream-master' into 11.0
-d0e636e [zlib] Do not build zip/unzip tools on WinUWP.
-
-   * frameworks/base
-b1a93f058c5 Explicitly make SBC Dual Channel an optional (HD) codec
-
-   * hardware/qcom-caf/sm8350/display
-a71367e1f sdm: Annotate that kControlWithPostedStartDynSwitch is a fallthrough
-74e948993 libmemutils: Drop proprietary includes
-a627b3cfe display: Use generated kernel headers
-f1b6e6383 display: Fix conflicting soong_namespace imports
-5376f8ffc Add C2D_COLOR_FORMAT_420_P010 to C2D_YUV_FORMAT
-fbdad19c4 Add C2D_FORMAT_BT601_FULLRANGE to C2D_FORMAT_MODE
-b5ce0711d Add C2D_COLOR_FORMAT_420_TP10 to C2D_YUV_FORMAT
-04048a647 display: Use    * pathmap
-
-   * hardware/qcom-caf/sm8350/media
-16e0c932b media: Drop LOCAL_COPY_HEADERS usage
-9a15ac001 media: Use    * pathmap
-
-   * packages/apps/Bluetooth
-aec2c7204 Reimplement SBC Dual Channel in a saner way
-
-   * packages/apps/crDroidSettings
-a75e1837 Power menu background opacity [2/2]
-
-====================
-     05-27-2021
-====================
-
-   * android
-9ad764a manifest: Track QCOM power HAL
-
-   * external/zlib
-5ef44f0 [zlib] Build minizip zip and unzip tools
-
-   * packages/apps/LineageParts
-31373e1 LineageParts: Disable power menu customization
-
-   * packages/apps/Settings
-4448e67d58 Settings: backup: add back-arrow to actionbar
-
-   * packages/apps/crDroidSettings
-c7666bbe crdroid: Add category for power menu actions
-581d2706 Import Powermenu customizations from LineageParts
-
-   * vendor/qcom/opensource/power
-ffe9541 power: Handle launch and interaction hints for trinket
-0960d72 power: Set PowerHAL hwbinder thread to high CFS priority
-2efc8e3 power: Add input group for tap to wake gesture
-96fd8a6 power: Handle launch and interaction hints for sm6150
 
