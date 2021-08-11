@@ -1,4 +1,4 @@
-ighlights & Device Specific Changes:
+Highlights & Device Specific Changes:
 Build type: Monthly
 Device: Google Nexus 5 (hammerhead)
 Device maintainer: Hasan Okarci (frazerecho)
@@ -9,44 +9,171 @@ Telegram: @crdroid_frazerecho
 
 
 ====================
+     08-11-2021
+====================
+
+   * build/soong
+07ca0fed3 soong: java: Specify larger heap size for metalava
+
+   * device/lge/hammerhead
+0ac87c37 Reconfigure Face Unlock
+39b2ed9f  increase partition size & Duplicate Rules set to true
+
+   * frameworks/av
+e44829ba6d Log MediaExtractor entry point to MediaMetrics
+be17c7386a Disable ABI check
+98985145de audioflinger: Fix audio for WifiDisplay
+5b766fafb7 libstagefright_wfd: Adapt to A11 changes
+66cbae6211 libstagefright: Remove libmediaextractor dependency
+14872ab33c Remove libmediaextractor dependency from libstagefright_wfd
+9e4d4b3de1 Revert "Move unused classes out of stagefright foundataion"
+1ce150af88 libstagefright_wfd: video encoder does not actually release MediaBufferBase when done
+d943e43164 stagefright: Fix buffer handle retrieval in signalBufferReturned
+b4402a40a3 stagefright: Fix SurfaceMediaSource getting handle from wrong position issue
+18d368c2bf libstagefright_wfd: libmediaplayer2: compilation fixes
+3798d29d96 Revert "stagefright: remove Miracast sender code"
+c1e7b5addf Revert "Removed unused class and its test"
+
+   * frameworks/native
+abcf72637 Revert "Revert "DispSync: workaround HH hardware vsync issue""
+
+   * hardware/qcom/display
+30b497b947 msm8974: Deprecate usage of cutils/log.h
+3134fe417c msm8974: Don't use gnu-oldstyle field designators
+4b1825050e msm8974: Add display headers lib
+804e736c76 hwc: Validate display ID in hwc interfaces
+9bce98c601 msm8974: libmemtrack: Add open method for msm8974.memtrack
+431507abf3 msm8974: hwc: Set ioprio for vsync thread
+89d29ceac2 msm8974: IQService: Allow more processes to access IPC
+
+   * system/vold
+1ecde62 Utils: Add missing exfat
+c2f9a23 vold: Accept Linux GPT partitions on external SD cards
+fa0a2d4 Fix the group permissions of the sdcard root.
+1e1ca82 vold ext4/f2fs: do not use dirsync if we're mounting adopted storage
+22ca7d2 vold: Mount ext4/f2fs portable storage with sdcard_posix
+d13ae2f vold: Honor mount options for ext4/f2fs partitions
+7768e13 vold: Support internal storage partitions
+26e0a53 vold: Fix fsck on public volumes
+e8698c0 vold: add support for more filesystems for public storage
+
+   * vendor/lge
+3b03261e damn typos
+33a3c5c3 Fix Face Unlock (2/2)
+a5e03255 Fix Face Unlock (1/2)
+
+   * vendor/lineage
+251ac85b soong: add TARGET_HAS_HH_VSYNC_ISSUE conditional
+
+====================
+     08-10-2021
+====================
+
+   * device/lge/hammerhead
+d6d642ad Revert "hammerhead: overlay: Disable wifi AP MAC randomization"
+
+   * frameworks/base
+6a982f1e5eda PastyUtils: set content type to match pasty server header needs
+
+   * packages/apps/Launcher3
+2e160e498 Launcher3: Fix NPE for QuickStep hotseat prediction controller
+
+====================
      08-09-2021
+====================
+
+   * device/lge/hammerhead
+d494892f hammerhead: overlay: Set config_use16BitTaskSnapshotPixelFormat to true
+9e46bf95 hammerhead: overlay: Set config_avoidGfxAccel to true
+6b28d125 hammerhead: Use in-process APK for network stack and tethering
+672de358 hammerhead: Disable codec2
+5add4df5 hammerhead: fastcharge: Build FastCharge HAL
+c9e181d5 hammerhead: fastcharge: Build sepolicy rules
+5ac42205 hammerhead: fastcharge: Import FastCharge HAL
+667092df hammerhead: sepolicy: Reorganize rules
+9a241096 hammerhead: sepolicy: Resolve gpuservice denials
+95cf71a5 hammerhead: sepolicy: Resolve hal_health_default denials
+cdff8e30 hammerhead: sepolicy: Resolve installd denials
+db015951 hammerhead: sepolicy: Resolve permissioncontroller_app denials
+1b3481df hammerhead: sepolicy: Resolve crash_dump32 denials
+fd03d8a5 hammerhead: sepolicy: Resolve incidentd denials
+0a8949c3 hammerhead: sepolicy: Resolve dumpstate denials
+8e64d38f hammerhead: sepolicy: Resolve platform_app denials
+ad7461c0 hammerhead: sepolicy: Resolve system_app denials
+34c1ff46 hammerhead: sepolicy: Resolve mediaserver denials
+7ccabf06 hammerhead: sepolicy: Resolve mediaprovider denials
+42d112a3 hammerhead: sepolicy: Resolve gmscore_app denials
+88ea2f20 hammerhead: sepolicy: Resolve hal_graphics_composer_default denials
+4fa31273 hammerhead: sepolicy: Resolve vold denials
+316f5325 hammerhead: sepolicy: Resolve hal_audio_default denials
+e84806a2 hammerhead: sepolicy: Resolve system_server denials
+e64f360f hammerhead: sepolicy: Resolve clean_scratch_files denials
+eeed4c96 hammerhead: sepolicy: Resolve bootanim denials
+cf62021e hammerhead: sepolicy: Resolve appdomain denials
+2b73bb7d hammerhead: sepolicy: Resolve zygote denials
+95c083f6 hammerhead: Use binderized audio HAL
+2f761eef hammerhead: init: Make encryption action an argument to mkdir
+728bb2ad hammerhead: Move supplicant service init to wpa_supplicant
+4e041c2a hammerhead: manifest: Remove Trust interface entry
+e0e0fdc0 hammerhead: Replace BOARD_CHARGER_ENABLE_SUSPEND with ro.charger.enable_suspend
+86f6bdb9 hammerhead: Kill legacy keystore
+3735074c hammerhead: Remove libhwbinder/libhidltransport deps
+2babc371 hammerhead: Move graphics composer to hwbinder
+529f2a05 hammerhead: sepolicy: Adapt sepolicy for clearkey 1.2 -> 1.3 update
+40c4b609 hammerhead: Enable v1.3 clearkey drm plugin
+58f694bd hammerhead: wifi: Disable WPA2 -> WPA3 upgrade.
+e7ed5324 hammerhead: sepolicy: Remove unused perfprofd.te
+3f163628 hammerhead: sepolicy: Resolve last_kmsg denials
+df17410d hammerhead: camera: Drop usage of LOCAL_COPY_HEADERS
+e8cce92e hammerhead: Define shipping FCM version in the manifest
+651c008c hammerhead: Remove vintf entries that are now fragments
+efd1b827 hammerhead: hidl: Convert to use vintf_fragments
+dfe3e7da hammerhead: hidl: Add interface info to .rc files
+0e6a7349 hammerhead: enable TARGET_HAS_MEMFD_BACKPORT
+04cbf57c hammerhead: Set TARGET_DISABLE_POSTRENDER_CLEANUP := true
+bbc974f2 hammerhead: sepolicy: Camera rules for new root label
+73166ff3 hammerhead: overlay: Disable wifi AP MAC randomization
+defa0b0d hammerhead: overlay: Disable BPF offload for tethering
+06b06593 hammerhead: overlay: Change wifi tether regex
+f5a1edaf hammerhead: overlay: p2p: add p2p regex for tethering modes
+6fb64281 hammerhead: overlay: Move tethering overlays
+d0094b71 hammerhead: wifi: Move wifi related overlays to new location
+9c706cd6 hammerhead: Add gatekeeper software HIDL service.
+6287422b hammerhead: Update loader config for media swcodec to 11
+e6bc4d26 hammerhead: Build health hal
+7e1900f5 hammerhead: Enforce vintf manifest override
+390b6d43 hammerhead: Wifi: Replace config_wifi_dual_band_support
+a69eeec8 hammerhead: Wifi: Remove IWifi hidl entry from manifest.xml
+9f38455e hammerhead: Wifi: Remove hostapd hidl entry from manifest.xml
+edcbcdb1 hammerhead: Wifi: move wpa_supplicant VINTF definition to wpa_supplicant module
+
+   * vendor/lge
+cde8ad28 hammerhead: Use libprotobuf-cpp-lite-v29.so for libwvdrmengine.so
+
+   * vendor/motorola
+26554cf5 msm8937-common: Decommonize charge_only_mode
+
+====================
+     08-08-2021
 ====================
 
    * android
 97ff843 manifest: Switch to clang 13.0.1
 
-   * build/soong
-9e9a53494 soong: java: Specify larger heap size for metalava
-
-   * frameworks/av
-611b5553ff Log MediaExtractor entry point to MediaMetrics
-d420fc3cd9 Disable ABI check
-1ec4df3af9 audioflinger: Fix audio for WifiDisplay
-a0b308ed9c libstagefright_wfd: Adapt to A11 changes
-9710635766 libstagefright: Remove libmediaextractor dependency
-9b2a3665e0 Remove libmediaextractor dependency from libstagefright_wfd
-51fde55570 Revert "Move unused classes out of stagefright foundataion"
-4364a18fec libstagefright_wfd: video encoder does not actually release MediaBufferBase when done
-1f8e8e38ef stagefright: Fix buffer handle retrieval in signalBufferReturned
-8b71890edb stagefright: Fix SurfaceMediaSource getting handle from wrong position issue
-9fb7a39aff libstagefright_wfd: libmediaplayer2: compilation fixes
-24b2bb8a42 Revert "stagefright: remove Miracast sender code"
-aeb6c295f5 Revert "Removed unused class and its test"
+   * device/lge/hammerhead
+e78ee549 hammerhead: Remove now unused voice processing descriptors
+f58d81b6 hammerhead: Disable qcom AEC and NS effects
+7a7420d7 hammerhead: Mount persist with noatime flag
+3fc3aed7 hammerhead: Disable RRO overlays
 
    * frameworks/base
 5cb9b71a8851 KeyguardClockSwitch: Fix missing status view on custom clocks
 
-   * frameworks/native
-2edf0e25f Revert "Revert "DispSync: workaround HH hardware vsync issue""
+   * packages/apps/Launcher3
+51b8b7d24 New Crowdin updates (#169)
 
-   * hardware/qcom/display
-3968de5c2e msm8974: Deprecate usage of cutils/log.h
-5f2f8c8c01 msm8974: Don't use gnu-oldstyle field designators
-f98aa10b5f msm8974: Add display headers lib
-74c748a2b0 hwc: Validate display ID in hwc interfaces
-72aaff6c67 msm8974: libmemtrack: Add open method for msm8974.memtrack
-9db46910d6 msm8974: hwc: Set ioprio for vsync thread
-cfc1673b12 msm8974: IQService: Allow more processes to access IPC
+   * packages/apps/crDroidSettings
+fbe273af New Crowdin updates (#792)
 
    * packages/services/OmniJaws
 f547ab8 Merge pull request #2 from dsfgdadg/11.0
@@ -55,28 +182,11 @@ f547ab8 Merge pull request #2 from dsfgdadg/11.0
    * prebuilts/clang/host/linux-x86/clang-r428724
 7b3bbc9 clang 13.0.1 (based on r428724) from build 7612306
 
-   * system/vold
-6cf8273 Utils: Add missing exfat
-cebc2d9 vold: Accept Linux GPT partitions on external SD cards
-505652d Fix the group permissions of the sdcard root.
-6db6f2d vold ext4/f2fs: do not use dirsync if we're mounting adopted storage
-e8068dc vold: Mount ext4/f2fs portable storage with sdcard_posix
-4f71c53 vold: Honor mount options for ext4/f2fs partitions
-df7a9f8 vold: Support internal storage partitions
-2bd1711 vold: Fix fsck on public volumes
-cb9695c vold: add support for more filesystems for public storage
-
-   * vendor/lge
-42869e9e damn typos
-6ac833af Fix Face Unlock (2/2)
-becb66c6 Fix Face Unlock (1/2)
-
    * vendor/lineage
-1a22f808 soong: add TARGET_HAS_HH_VSYNC_ISSUE conditional
 12438513 crdroid: Default to clang 13.0.1
 
 ====================
-     08-08-2021
+     08-07-2021
 ====================
 
    * android
@@ -84,13 +194,6 @@ e5a005e Merge 'lineage-18.1' into 11.0
 
    * build/make
 51a792b42 Merge 'lineage-18.1' into 11.0
-
-   * device/lge/hammerhead
-def95091 increase partition size & Duplicate Rules set to true
-3c2f02da Reconfigure Face Unlock
-938f1cd9 hammerhead: Remove now unused voice processing descriptors
-08e8130a hammerhead: Disable qcom AEC and NS effects.
-fec8f35e hammerhead: Disable RRO overlays
 
    * device/moto/shamu
 5f6db7e2a merge upstream
@@ -844,9 +947,6 @@ f075a0e99 Merge 'lineage-18.1' into 11.0
    * lineage-sdk
 74026f33 Merge 'lineage-18.1' into 11.0
 
-   * packages/apps/Launcher3
-51b8b7d24 New Crowdin updates (#169)
-
    * packages/apps/LineageParts
 35d5f74 Merge 'lineage-18.1' into 11.0
 
@@ -855,9 +955,7 @@ a4e6266 Merge 'lineage-18.1' into 11.0
 
    * packages/apps/Settings
 550a7e0237 Merge 'lineage-18.1' into 11.0
-
-   * packages/apps/crDroidSettings
-fbe273af New Crowdin updates (#792)
+afcad25a76 Settings: Update drawable for find in page
 
    * packages/services/Telephony
 b1f9ff509 Merge 'lineage-18.1' into 11.0
@@ -867,19 +965,14 @@ b1f9ff509 Merge 'lineage-18.1' into 11.0
 6a2f7e0f soong: Update TARGET_CAMERA_BOOTTIME_TIMESTAMP define
 
 ====================
-     08-07-2021
+     08-06-2021
 ====================
 
    * packages/apps/Settings
-afcad25a76 Settings: Update drawable for find in page
 5408a1c4a2 Settings: Add option to instantly lock app on closing [2/2]
 
    * packages/apps/crDroidSettings
 1de055ff Update strings for app lock
-
-====================
-     08-06-2021
-====================
 
 ====================
      08-05-2021
@@ -892,12 +985,19 @@ afcad25a76 Settings: Update drawable for find in page
      08-04-2021
 ====================
 
-   * android
-eac253c manifest: android-11.0.0_r39 -> android-11.0.0_r40
-
    * build/make
 5f4fa2557 Merge pull request #32 from crdroidandroid/prebuilt-recovery-props
 a0f745da8 build: copy recovery generated props to extracted prebuilt recovery
+
+====================
+     08-03-2021
+====================
+
+   * android
+eac253c manifest: android-11.0.0_r39 -> android-11.0.0_r40
+522a2a5 Merge 'lineage-18.1' into 11.0
+
+   * build/make
 242527308 Merge tag 'android-11.0.0_r40' into staging/lineage-18.1_merge-android-11.0.0_r40
 
    * frameworks/base
@@ -914,20 +1014,6 @@ e4c37ea4ba Merge tag 'android-11.0.0_r40' into staging/lineage-18.1_merge-androi
 
    * vendor/lineage
 49de0250 lineage: Don't enforce inclusion of common compatibility matrix
-
-====================
-     08-03-2021
-====================
-
-   * android
-522a2a5 Merge 'lineage-18.1' into 11.0
-c7d9acc manifest: Track system HIDL tools.
-
-   * system/tools/hidl
-44f4d6a8 prebuilt_hidl_interfaces
-cfffcdce hidl_metadata_test
-
-   * vendor/lineage
 ddaed289 lineage: Add framework compatibility matrix for Lineage HALs.
 2f728ae9 roomservice: add repo to syncable repo list if dir doesn't exist
 51609f3f Move sensitive_pn.xml to product partition
@@ -935,6 +1021,9 @@ ddaed289 lineage: Add framework compatibility matrix for Lineage HALs.
 ====================
      08-02-2021
 ====================
+
+   * android
+c7d9acc manifest: Track system HIDL tools.
 
    * frameworks/native
 863bc4f02 Check if /dev/input exists before accessing the path
@@ -954,29 +1043,7 @@ afa05590d Fix data lost in zram_swap if system rebooted
 dc517d569 Fix checkpoint=disable GC threshold fallback mechanism
 28e7a64ec init: Weaken property override security for SafetyNet spoof
 
-   * system/memory/lmkd
-6865b2c Revert "Merge spl-2020-12-05"
-
-====================
-     08-01-2021
-====================
-
-   * packages/apps/Launcher3
-785b22762 New Crowdin updates (#168)
-
-   * packages/apps/LineageParts
-63437b5 Regenerate contributors cloud
-
-   * packages/apps/crDroidSettings
-efc16271 New Crowdin updates (#790)
-
-====================
-     07-31-2021
-====================
-
-   * frameworks/base
-dda6759718d0 Revert "InputManagerService: Flag when an injected event is a real input"
-
-   * frameworks/native
-23c9f4198 Revert "Use the original device ID when the injected event is unchanged"
+   * system/tools/hidl
+44f4d6a8 prebuilt_hidl_interfaces
+cfffcdce hidl_metadata_test
 
