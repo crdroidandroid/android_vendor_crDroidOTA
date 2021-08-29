@@ -3,18 +3,18 @@
 
 #modify values below
 #leave blank if not used
-maintainer="Name (nickname)" #ex: Lup Gabriel (gwolfu)
-oem="OEM" #ex: OnePlus
-device="device codename" #ex: guacamole
-devicename="name of device" #ex: OnePlus 7 Pro
-zip="crdroid zip" #ex: crDroidAndroid-<android version>-<date>-<device codename>-v<crdroid version>.zip
-buildtype="type" #choose from Testing/Alpha/Beta/Weekly/Monthly
-forum="" #https link (mandatory)
+maintainer="Dhruv Singh (DS1884)" #ex: Lup Gabriel (gwolfu)
+oem="Nokia" #ex: OnePlus
+device="Phoenix" #ex: guacamole
+devicename="Nokia 8.1" #ex: OnePlus 7 Pro
+zip="crDroidAndroid-11.0-20210817-PNX_sprout-v7.9.zip" #ex: crDroidAndroid-<android version>-<date>-<device codename>-v<crdroid version>.zip
+buildtype="Monthly" #choose from Testing/Alpha/Beta/Weekly/Monthly
+forum="https://forum.xda-developers.com/t/rom-11-0-unofficial-crdroid-v7-9-pnx_sprout.4320963/" #https link (mandatory)
 gapps="" #https link (leave empty if unused)
 firmware="" #https link (leave empty if unused)
 modem="" #https link (leave empty if unused)
 bootloader="" #https link (leave empty if unused)
-recovery="" #https link (leave empty if unused)
+recovery="https://drive.google.com/file/d/1jruDDa968pLOG13e5250PxAjxL2YDHVn/view?usp=sharing" #https link (leave empty if unused)
 paypal="" #https link (leave empty if unused)
 telegram="" #https link (leave empty if unused)
 
