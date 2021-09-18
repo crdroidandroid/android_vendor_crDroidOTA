@@ -40,24 +40,24 @@ version=`echo $v_max.$v_min`
 echo '{
   "response": [
     {
-        "maintainer": "'$maintainer'",
-        "oem": "'$oem'",
-        "device": "'$devicename'",
-        "filename": "'$zip_only'",
-        "download": "https://sourceforge.net/projects/crdroid/files/'$device'/'$v_max'.x/'$zip_only'/download",
-        "timestamp": '$timestamp',
-        "md5": "'$md5'",
-        "size": '$size',
-        "version": "'$version'",
-        "buildtype": "'$buildtype'",
-        "forum": "'$forum'",
-        "gapps": "'$gapps'",
-        "firmware": "'$firmware'",
-        "modem": "'$modem'",
-        "bootloader": "'$bootloader'",
-        "recovery": "'$recovery'",
-        "paypal": "'$paypal'",
-        "telegram": "'$telegram'"
+        "maintainer": "'Momin(Patriot06)'",
+        "oem": "'Realme'",
+        "device": "'Realme X3 / SuperZoom (RMX2081)'",
+        "filename": "'crDroidAndroid-11.0-20210914-x3-v7.10.zip'",
+        "download": "",
+        "timestamp": '',
+        "md5": "''",
+        "size": '',
+        "version": "'7.10'",
+        "buildtype": "'Monthly'",
+        "forum": "'https://forum.xda-developers.com/t/rom-11-0-rmx2081-crdroid-unified-unofficial-los.4335385/'",
+        "gapps": "'https://sourceforge.net/projects/flamegapps/files/arm64/android-11/2021-09-12/FlameGApps-11.0-basic-arm64-20210912.zip/download'",
+        "firmware": "'https://download.c.realme.com/flash/Rollbackpack/realme_X3_X3SuperZoom/RMX2081PU_11_OTA_0530_all_2pXGiBpULHIz.ozip'",
+        "modem": "''",
+        "bootloader": "''",
+        "recovery": "''",
+        "paypal": "''",
+        "telegram": "'t.me/patriot_235'"
     }
   ]
 }' >> $device.json
