@@ -1,127 +1,67 @@
-crDroid 6.21 - 31 August 2021 release notes/known issues:
+crDroid 6.22 - 30 September 2021 release notes/known issues:
 
 Common:
-- Vendor blobs from OOS 10.3.12.
-- August ASB merged (so no going back to earlier without formatting /data partition).
-- Awesome Alert Slider! Have you ever wished the alert slider on your OnePlus phone had other, less-useful functions than controlling ringer & notification modes? Me neither! But now you can use it for other things anyway if you so choose, just like those crazy kids with their OnePlus 8 & 9 series phones! In the immortal words of Zoltan Kulle, "Not what I would do, but... when has that stopped you?"
-- Still shipping with forked mcd kernel (arter97 base) r5, modded to build inline with our device tree particulars; updated to CAF msm-4.9 v4.9.280 and reenabled zram for swap (plus upped the background app limit in device tree; should stop killing background apps quite as instantly now). Will keep updated as upstream sources get updated. Why? Because video recording. LOS vanilla, crDroid stock branch (LOS fork with extras), and even newer mcd r6/7 (back to the Radioactive base) are wonderful, except when using them, video recording (or video conference apps like Zoom) crashes after about 10-12 minutes. During a global pandemic, it's probably for the best if your video chat keeps working, so there you go.
-
-cr6-specific:
-- Aux camera doesn't work correctly due to framework issues beyond my control/comprehension. So, still no portrait mode in OnePlusCamera in cr6. 4Kp60 video recording works great; huzzah!
-- Doesn't pass safetynet out of the box, despite many tests with different fingerprints/props. Just use Magisk & enable MagiskHide & possibly install MagiskHidePropsConfig module and be happy. If your bank's app doesn't work, switch to a local credit union and stop feeding the bougie bankers. Smash capitalism!
-- Miraculously (miracastly?) WFD actually still just... works.
+- September ASB merged (so no going back to earlier without formatting /data partition). 
+- Re-imported DeviceExtras ("OnePlus Settings") from Evolution-X, thanks AnierinB! 
+  - Has a couple extra goodies now that it didn't before (not sure if they're all working on cr6), and is part of preparation to track LineageOS' move to an external "oneplus_hardware" repository including a generic "DeviceExtras" repository for all supported devices, with device-specific customizations exposed via overlay instead of hard-coding kernel node paths and dodgy java copy/pasting. 
+- Re-added Lineage doze & corner implementations, seems to work better at getting smooth software anti-aliased corners (although immersive mode is now kinda stuck with rounded corners too, it seems). 
+- Switched kernel again. Everything is in upheaval because of changes upstream with the release of OxygenOS 11 and current rebasing in lineage-18.1 branch, so building against the lineage-18.1 base with most of the extras from AnierinB's fork as used in Evolution-X (very similar to what I had going on in my "stock" fork from the last few months of testing builds that never made it into a release, but they know a lot better what to pick than I do). My older MCD fork was based on a discontinued line of development anyway, and wasn't working right in Android 11, while this one seems to work quite well in both cr6 and cr7. And I was able to record a 48-minute long video in 1080p60 without it shutting down recording or dropping to 30fps, so I'll take it. 
+- Vibration sliders are a little goofy right now, but the settings themselves actually work correctly again (and provide feedback when changed). Right now it seems like the "notification" vibrate level is the only one that changes intensity as you drag it, the other two just use the "notification" intensity while dragging, although the actual levels DO get changed correctly and work when you receive incoming calls or otherwise trigger generic system vibration effects.
+- Remeember when moving the alert slider switch triggered a haptic tick? Pepperidge Farm remembers.
+- Background app killing should be a little less aggressive now (I think we're actually USING zram properly again, and there's some dalvik vm tuning based on actual device RAM). 
 
 Enchilada-specific:
-- LineageOS upstream finally imported OOS antialiased software corner masks, so we can have smoothly rounded corners like fajita. Of course, if it was bothering you in the first place, can I recommend you stop wasting your battery/burning your eyes, and switch to dark mode?
+- Nothing new specifically. But you were already perfect, weren't you? <3 
 
-Other known issues:
-- I guess screen-off gestures were a little screwed up and I didn't realize it. Re-worked the input/synaptics_driver_s3320.c touchpad driver to be less freakin' weird, and now *almost* everything works... except the "up vee" ( ^ ) gesture doesn't work (???). Like, wtf. It's like something else is eating that input scancode before it registers (much like the Button B problems with the goodix fp sensor and USB/BT gamepads on OP6 stock). I'm clueless, use a different gesture. Sorry.
-
+I have no idea why the following changelog date entries are empty; guess the auto changelog thing isn't working. 
 
 ====================
-     09-01-2021
-====================
-
-
-   * device/oneplus/enchilada
-8a01a79 Update README.md
-8fe9e38 enchilada: Update dependencies
-593a706 enchilada: Add & enable TWRP inline custom recovery
-0ee5968 enchilada: overlay: Clean up rounded corner spacing implementation
-
-   * device/oneplus/fajita
-095af4d Update README.md
-d34101e fajita: Update dependencies
-dafbde0 fajita: Disable "Screen Off FOD" option
-f27503c fajita: Add & enable TWRP inline custom recovery
-7947f0d fajita: overlay: Clean up rounded corner spacing implementation
-
-   * device/oneplus/sdm845-common
-0f6542c Update README.md
-84a1d3e sdm845-common: Update dependencies
-
-====================
-     08-31-2021
-====================
-
-
-   * device/oneplus/sdm845-common
-43ae4e4 sdm845-common: Set target kernel clang flags
-fdb9369 sdm845-common: Enable setting vendor props
-d02711a sdm845-common: Update proprietary files
-a3dc558 sdm845-common: Include prebuilt OnePlus Camera
-f4e3482 sdm845-common: Include prebuilt Google Camera
-002c67c sdm845-common: Remove stock camera packages
-7293dd1 sdm845-common: bluetooth: Fix undefined PROPERTY_VALUE_MAX
-2cb32d1 sdm845-common: bluetooth: Switch to a map based BT name
-c284ecf sdm845-common: bluetooth: Move bdroid header to common [3/3]
-7c2b5e0 sdm845-common: Move kernel_defconfig to common [3/3]
-3234f5f sdm845-common: sepolicy: Update for new aod & fod-related sysfs nodes
-96d658f sdm845-common: Rework DeviceSettings
-a661987 sdm845-common: Add OnePlus camera support
-d8adb78 sdm845-common: Implement DeviceSettings
-d66e3d0 sdm845-common: livedisplay: Remove livedisplay pieces in preparation for DeviceSettings
-5f6d3ec sdm845-common: livedisplay: Add Anti Flicker support
-28978a9 sdm845-common: overlay: Enable crDroid features & customization
-
-====================
-     08-30-2021
-====================
-
-
-   * kernel/oneplus/sdm845
-34f0633b4ceb input: synaptics: s3320: No    *_info.h/boot_mode.h for you!
-19ad1d39aea3 input: synaptics: s3320: Don't expose single tap gesture on enchilada
-789260197a81 input: synaptics: s3320: Expose every possible gesture
-9819985215b3 drivers: input: Import Synaptics driver
-73f79ee6000c input: Nuke existing Synaptics s3320 driver
-08af0ea50664 drivers: input: qpnp-power-on: Import OnePlus changes
-
-====================
-     08-29-2021
+     09-30-2021
 ====================
 
 
 ====================
-     08-28-2021
-====================
-
-
-   * frameworks/base
-ba0bb9202831 New Crowdin updates (#709)
-
-   * packages/apps/crDroidSettings
-c38d3a1e New Crowdin updates (#801)
-
-====================
-     08-27-2021
+     09-29-2021
 ====================
 
 
 ====================
-     08-26-2021
+     09-28-2021
 ====================
 
 
 ====================
-     08-25-2021
+     09-27-2021
 ====================
 
 
 ====================
-     08-24-2021
+     09-26-2021
 ====================
 
 
-   * tools/extract-utils
-72d5bdf fixup! extract_utils: Add support for overriding packages
-3749ce5 extract_utils: Add support for overriding packages
-eed0c8c extract_utils: Skip colored echo when piped
-f12ce8b extract_utils: Add a bit of color to the output
-ac8ec32 extract_utils: Introduce colored echo helper function
+====================
+     09-25-2021
+====================
+
 
 ====================
-     08-23-2021
+     09-24-2021
+====================
+
+
+====================
+     09-23-2021
+====================
+
+
+====================
+     09-22-2021
+====================
+
+
+====================
+     09-21-2021
 ====================
 
 
