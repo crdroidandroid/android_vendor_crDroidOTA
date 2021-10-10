@@ -1,0 +1,201 @@
+crDroid 7.10 - 30 September 2021 release notes/known issues:
+
+Common:
+- September ASB merged (so no going back to earlier without formatting /data partition).
+- Re-imported DeviceExtras ("OnePlus Settings") from Evolution-X, thanks AnierinB!
+- Has a couple extra goodies now that it didn't before (not sure if they're all working on cr6), and is part of preparation to track LineageOS' move to an external "oneplus_hardware" repository including a generic "DeviceExtras" repository for all supported devices, with device-specific customizations exposed via overlay instead of hard-coding kernel node paths and dodgy java copy/pasting.
+- Re-added Lineage doze & corner implementations, seems to work better at getting smooth software anti-aliased corners (although immersive mode is now kinda stuck with rounded corners too, it seems).
+- Switched kernel again. Everything is in upheaval because of changes upstream with the release of OxygenOS 11 and current rebasing in lineage-18.1 branch, so building against the lineage-18.1 base with most of the extras from AnierinB's fork as used in Evolution-X (very similar to what I had going on in my "stock" fork from the last few months of testing builds that never made it into a release, but they know a lot better what to pick than I do). My older MCD fork was based on a discontinued line of development anyway, and wasn't working right in Android 11, while this one seems to work quite well in both cr6 and cr7. And I was able to record a 48-minute long video in 1080p60 without it shutting down recording or dropping to 30fps, so I'll take it.
+- Vibration sliders are a little goofy right now, but the settings themselves actually work correctly again (and provide feedback when changed). Right now it seems like the "notification" vibrate level is the only one that changes intensity as you drag it, the other two just use the "notification" intensity while dragging, although the actual levels DO get changed correctly and work when you receive incoming calls or otherwise trigger generic system vibration effects.
+- Remeember when moving the alert slider switch triggered a haptic tick? Pepperidge Farm remembers.
+- Background app killing should be a little less aggressive now (I think we're actually USING zram properly again, and there's some dalvik vm tuning based on actual device RAM).
+
+cr7-specific:
+- Do you like WFD (wifi display)? Want it to work again? Okay, enjoy (with OOS 11 firmware).
+- eBPF also seems to be fixed with OOS 11 firmware, meaning per-app data accounting is functioning again, yay!
+
+Enchilada-specific:
+- Nothing new specifically. But you were already perfect, weren't you? <3
+
+====================
+     09-30-2021
+====================
+
+====================
+     09-29-2021
+====================
+
+   * packages/apps/TvSettings
+4184ec1f [2/2] Add battery info to tvsettings device info
+
+====================
+     09-28-2021
+====================
+
+   * device/oneplus/fajita
+656da32 fajita: overlay: Customize status bar spacing
+1dd094a fajita: overlay: We do not have an RGB LED on fajita
+d7d85f2 fajita: overlay: Set default hotspot ssid
+388da54 fajita: Set build fingerprint for system, vendor, and odm
+f5e3dad fajita: bluetooth: Move bdroid header to common [2/3]
+589d38b fajita: Move "device/oneplus/common" Soong namespace to common [1/2]
+cc8270b fajita: fod: Set thread to high CFS priority
+
+   * device/oneplus/sdm845-common
+e91bdd3 sdm845-common: Enable setting vendor props
+bc3ffae sdm845-common: Include prebuilt OnePlus Camera
+922f27b sdm845-common: Include prebuilt Google Camera
+4992445 sdm845-common: Remove stock camera packages
+11bb9be sdm845-common: Use media profiles from /vendor directly
+1cbcd1e sdm845-common: BoardConfig: Remove virtual framebuffer
+fec2879 sdm845-common: props: Explicitly enable iorap
+ccb1d6f sdm845-common: overlay: configure SQLite to operate in MEMORY mode
+2d805e7 sdm845-common: overlay: Enable Adaptive Sleep
+42caab4 sdm845-common: overlay: Don't pin launcher app in memory
+eb279ff sdm845-common: overlay: Don't pin camera app in memory
+5935f1c sdm845-common: Set dalvik vm props based on ram size
+a8c4aa8 sdm845-common: Add support to set client package name
+33c59e5 sdm845-common: DeviceExtras: Customize for crDroid
+d2f805f sdm845-common: DeviceExtras: Add touchboost mode switch & QS tile
+aad9ddb sdm845-common: DeviceExtras: Add earpiece/microphone gain preferences
+
+   * frameworks/base
+93d9a1b48c11 Merge 'lineage-18.1' into 11.0
+
+   * packages/apps/crDroidSettings
+d46109ab Change share link for all languages
+
+====================
+     09-27-2021
+====================
+
+   * frameworks/base
+118931188c9c LockPatternView: Fix a11y+BiometricPrompt related OOB exception
+
+   * kernel/oneplus/sdm845
+3c8d4d5c5d32 configs: Rename to device tree expected defconfig
+8f81b1978a17 Makefile: Move -Wno-unused-but-set-variable out of GCC only block
+22e05f52fb10 Squashed safetynet commits based on work of Alexey Dobriyan, Kerneltoast and tbalden
+
+====================
+     09-26-2021
+====================
+
+   * frameworks/base
+6d5ef12772b2 display: Fix night display matrix in unmanaged color modes
+b3ffecaef648 display: NightDisplay: Use chromatic adaptation when possible
+9d17cc6377fd display: ChromaticAdaptation: Fix matrix formatting in logs
+0832523af68a display: ColorBalance: Add support for non-linear native color spaces
+5cacefd32ec7 display: Improve matrix formatting for easier debugging
+593442912893 display: Create common chromatic adaptation tint controller
+c4c9c4b4d73c display: Use CAT16 for display white balance transform
+ef764c11150c graphics: Add CAT16 chromatic adaptation transform
+6960313dd750 display: Add simple RGB color balance transform
+01a75b2461a2 Revert "Pre-emptively take a snapshot when finishing an activity before changing visibility"
+9913d52609aa display: Perform screen-off fade out animation in linear sRGB
+28b6f0bfa0a9 New translations (#719)
+c76d8ee1275d Merge pull request #717 from we-r-friends-collab/11.0
+
+   * frameworks/native
+a5363018e SurfaceFlinger: Use TARGET_DISPLAY_USE_SMOOTH_MOTION flag
+
+   * packages/apps/Launcher3
+4013a1818 New Crowdin updates (#177)
+
+   * packages/apps/crDroidSettings
+0920904c New Crowdin updates (#808)
+
+   * vendor/lineage
+8e455148 soong: Add TARGET_DISPLAY_USE_SMOOTH_MOTION flag
+
+====================
+     09-25-2021
+====================
+
+   * bootable/recovery
+b1bf3eae recovery: Drop useless version date
+
+   * device/lineage/atv
+288a0d6 atv: Enable new Settings Two-Panel UI
+
+   * frameworks/base
+1ee172540cf8 SystemUI: Reorder QS Tiles
+
+   * frameworks/native
+ebfaf7c65 SurfaceFlinger: Add SmoMo support
+
+   * packages/apps/Settings
+399de8f0d6 Settings: Make lottie animations non clickable
+
+   * packages/apps/TvSettings
+78533455 TwoPanelSettings: Add shut down button
+7cff3782 Add Lineage advanced reboot options
+e70e301f TvSettings: add Buttons-section to System settings
+
+====================
+     09-24-2021
+====================
+
+====================
+     09-23-2021
+====================
+
+   * kernel/oneplus/sdm845
+66b7d11dec4b boeffla_wl_blocker: don't block wakelocks by default
+85e4580c0250 boeffla_wl_blocker: update to wakelock blocker driver v1.1.0
+c7bfc8aeef0a boeffla_wl_blocker: update to wakelock blocker driver v1.0.1
+13bfec56d9a8 boeffla_wl_blocker: add generic wakelock blocker driver v1.0.0
+a1ece82a78d0 net/wireguard: merge v1.0.20210606
+07a358b74b6a fs: sync: set proper permissions for fsync_enabled
+ce05e35e46db fs: sync: Avoid calling fdget without fdput
+615fce760c8b Added fsync on/off support.
+693cc7b5cd09 defconfig: enable zen IO scheduler
+2abbdf691390 zen-iosched: cast parameters to unsigned long
+b6865771e9f6 block: zen: fix build on 3.18 kernel
+26a6d04388c9 block: add zen IO scheduler
+e4962d74da8d fs: default to noatime
+b708a44b9bd5 wcd934x: add null checks to prevent crash on hardware variants
+68bc31fabf0e wcd934x: add speaker gain settings for 6T
+89c247053e88 wcd934x: remove speaker gain settings for 6T
+ab96cbfa9c67 wcd934x: remove headphone gain options for 6T
+33d49e8713ce wcd934x: sound control: reset headphone digital gain to user value
+da6ed4dc3dd6 wcd934x: add sound control
+
+====================
+     09-22-2021
+====================
+
+   * device/lineage/atv
+890435e atv: Declare soong namespace
+
+   * frameworks/base
+3b46ef1258c2 One more Build.FINGERPRINT to Build.DATE change
+
+   * packages/apps/GoogleCamera
+cbd2aa7 GoogleCamera: Override Snap & Camera2 packages
+
+   * packages/apps/OnePlusCamera
+023b3a2 OnePlusCamera: Override Snap & Camera2 packages
+
+   * vendor/addons
+6dd3b08 addons: Add RobotoCondensed fonts to product partition
+
+====================
+     09-21-2021
+====================
+
+   * android
+f275fbe manifest: Track system/vold
+
+   * device/lineage/atv
+9407546 atv: add KeyHandler
+
+   * system/vold
+0a43947 vold: Build exfatprogs & declare support of exFAT.
+
+   * tools/repohooks
+b0a69d5 android_test_mapping_format: cleanup - "void" funcs don't need explicit ->None.
+
+   * vendor/lineage
+336c66d6 apns: Update Vodafone NL
+
