@@ -3,20 +3,20 @@
 
 #modify values below
 #leave blank if not used
-maintainer="Debdeep (debdeep199X)" #ex: Lup Gabriel (gwolfu)
-oem="Realme" #ex: OnePlus
-device="RMX2061" #ex: guacamole
-devicename="Realme 6 Pro" #ex: OnePlus 7 Pro
-zip="crDroidAndroid-11.0-20211010-RMX2061-v7.11.zip" #ex: crDroidAndroid-<android version>-<date>-<device codename>-v<crdroid version>.zip
-buildtype="Monthly" #choose from Testing/Alpha/Beta/Weekly/Monthly
-forum="https://forum.xda-developers.com/t/rom-crdroid-android-11-r-unofficial.4343243/" #https link (mandatory)
+maintainer="Name (nickname)" #ex: Lup Gabriel (gwolfu)
+oem="OEM" #ex: OnePlus
+device="device codename" #ex: guacamole
+devicename="name of device" #ex: OnePlus 7 Pro
+zip="crdroid zip" #ex: crDroidAndroid-<android version>-<date>-<device codename>-v<crdroid version>.zip
+buildtype="type" #choose from Testing/Alpha/Beta/Weekly/Monthly
+forum="" #https link (mandatory)
 gapps="" #https link (leave empty if unused)
 firmware="" #https link (leave empty if unused)
 modem="" #https link (leave empty if unused)
 bootloader="" #https link (leave empty if unused)
 recovery="" #https link (leave empty if unused)
 paypal="" #https link (leave empty if unused)
-telegram="t.me/debdeep199X" #https link (leave empty if unused)
+telegram="" #https link (leave empty if unused)
 
 #don't modify from here
 script_path="`dirname \"$0\"`"
