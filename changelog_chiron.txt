@@ -1,38 +1,31 @@
 ====================
 Highlights & Device Specific Changes:
 ====================
-
 Build type: Stable
 Device: Xiaomi Mi Mix 2 (chiron)
 Device maintainer: jomadeto
 
-- Initial crDroid 7.12 code base
-- Updated to November security patches
-- Updated kernel to Linux 4.4.291-perf+
-- Update Graphics (OpenGL ES) to 3.2 V@0490.0
-- Update Graphics (Vulkan) from LA.UM.8.2.r1-07500-sdm660.0
+- Remove latest OpenGL and Vulkan drivers added in previous rom.
+- Add OpenGL ES 3.2 V@490.0 (09/02/20) extracted from taimen-user-11-RP1A.201005.004.A1-6934943-release-keys.
+- Add Vulkan 1.1.128 taimen-user-11-RP1A.201005.004.A1-6934943-release-keys.
 
+====================
+     11-10-2021
+====================
+
+   * device/xiaomi/msm8998-common
+7a1ebc0 msm8998-common: Add required GPU props
+2c5864a msm8998-common: Update OpenGL and Vulkan drivers
+
+   * packages/apps/TvSettings
+e4c2915d TvSettings: use dark color for Wifi SUW
+
+   * vendor/xiaomi
+03801b8 msm8998-common: Update OpenGL and Vulkan drivers
 
 ====================
      11-09-2021
 ====================
-
-   * device/xiaomi/msm8998-common
-06a3382 msm8998-common: Update Graphics (Vulkan) from LA.UM.8.2.r1-07500-sdm660.0
-b747bd7 msm8998-common: Update Graphics (OpenGL ES) and Vulkan (Android R)
-
-   * packages/apps/Launcher3
-f2458e3fe New translations (#187)
-
-   * packages/apps/crDroidSettings
-447dc8fb New Crowdin updates (#821)
-
-   * packages/providers/MediaProvider
-9d2c4024 Merge tag 'android-security-11.0.0_r49' into staging/lineage-18.1_merge-android-security-11.0.0_r49
-
-   * vendor/xiaomi
-9042dcd msm8998-common: Update Graphics (Vulkan) from LA.UM.8.2.r1-07500-sdm660.0
-e3635da msm8998-common: Update Graphics (OpenGL ES) and Vulkan blobs
 
 ====================
      11-08-2021
@@ -803,6 +796,7 @@ c3d9f56a sdk: Map to ro.modversion
 245e3890d Merge 'lineage-18.1' into 11.0
 
    * packages/apps/Launcher3
+f2458e3fe New translations (#187)
 bb40dc5d3 Merge 'lineage-18.1' into 11.0
 
    * packages/apps/LineageParts
@@ -831,8 +825,14 @@ bd94c0478b Merge 'lineage-18.1' into 11.0
 05dea75 SetupWizard: Bring it on our side
 d8ba2e1 Ship as crDroid based on LOS
 
+   * packages/apps/crDroidSettings
+447dc8fb New Crowdin updates (#821)
+
    * packages/inputmethods/LatinIME
 12e173f8d Merge 'lineage-18.1' into 11.0
+
+   * packages/providers/MediaProvider
+9d2c4024 Merge tag 'android-security-11.0.0_r49' into staging/lineage-18.1_merge-android-security-11.0.0_r49
 
    * packages/services/Telephony
 ed5237d41 Merge 'lineage-18.1' into 11.0
@@ -863,8 +863,18 @@ ed5237d41 Merge 'lineage-18.1' into 11.0
      11-05-2021
 ====================
 
+   * vendor/lineage
+6c3a6323 gms: fail build if exported option doesn't exist
+
+====================
+     11-04-2021
+====================
+
    * packages/apps/Launcher3
 0ed6a7edc New Crowdin updates (#184)
+
+   * packages/apps/Settings
+d425d42710 Merge tag 'android-security-11.0.0_r49' into staging/lineage-18.1_merge-android-security-11.0.0_r49
 
    * packages/apps/crDroidSettings
 07bd30b8 New Crowdin updates (#818)
@@ -875,31 +885,15 @@ b68c54a Add NPE protection to prevent illegal CaptivePortal in the intent
 c5ee9d1 Fix captive portal downloads on private DNS
 2044e60 Move min/target_sdk_version to java_defaults
 
-   * vendor/lineage
-6c3a6323 gms: fail build if exported option doesn't exist
-
-====================
-     11-04-2021
-====================
-
-   * build/make
-41c7f4334 Bump Security String to 2021-11-05
-
-   * packages/apps/Settings
-d425d42710 Merge tag 'android-security-11.0.0_r49' into staging/lineage-18.1_merge-android-security-11.0.0_r49
-
-   * vendor/nxp/opensource/pn5xx/halimpl
-a1c1929a OOBW in phNxpNciHal_process_ext_rsp
-
-   * vendor/nxp/opensource/sn100x/halimpl
-e38c7e68 OOBW in phNxpNciHal_process_ext_rsp
-
 ====================
      11-03-2021
 ====================
 
    * android
 637c257 Track our own forks for 2021-11 ASB patching
+
+   * build/make
+41c7f4334 Bump Security String to 2021-11-05
 
    * external/gptfdisk
 7a661db Merge tag 'android-security-11.0.0_r49' into staging/lineage-18.1_merge-android-security-11.0.0_r49
@@ -916,27 +910,6 @@ d91113064 Merge tag 'android-security-11.0.0_r49' into staging/lineage-18.1_merg
 
    * hardware/nxp/nfc
 e159927 Merge tag 'android-security-11.0.0_r49' into staging/lineage-18.1_merge-android-security-11.0.0_r49
-
-   * kernel/xiaomi/msm8998
-8a5b8c8b0a4c Merge 4.4.291 into android-4.4-p
-e0018f4c9325 Linux 4.4.291
-c0b5302e3a74 sctp: add vtag check in sctp_sf_violation
-629d2823abf9 sctp: use init_tag from inithdr for ABORT chunk
-d4ba730c0dca nios2: Make NIOS2_DTB_SOURCE_BOOL depend on !COMPILE_TEST
-e72dce9afbdb regmap: Fix possible double-free in regcache_rbtree_exit()
-1ee34b2e09c2 net: lan78xx: fix division by zero in send path
-3d08ac538f02 mmc: sdhci: Map more voltage level to SDHCI_POWER_330
-b52275031a9e mmc: dw_mmc: exynos: fix the finding clock sample value
-a7b31dea4444 mmc: vub300: fix control-message timeouts
-b89f4537d7fd Revert "net: mdiobus: Fix memory leak in __mdiobus_register"
-d880b93227a2 nfc: port100: fix using -ERRNO as command type mask
-e215f19d8107 ata: sata_mv: Fix the error handling of mv_chip_id()
-65695c856070 usbnet: fix error return code in usbnet_probe()
-b9eba0a4a527 usbnet: sanity check for maxpacket
-91548920e44e ARM: 8819/1: Remove '-p' from LDFLAGS
-ec08eceae9b8 ARM: 9139/1: kprobes: fix arch_init_kprobes() prototype
-4126bca85a04 ARM: 9134/1: remove duplicate memcpy() definition
-fab287a309ee ARM: 9133/1: mm: proc-macros: ensure *_tlb_fns are 4B aligned
 
    * packages/apps/Bluetooth
 2d2b807b0 Merge tag 'android-security-11.0.0_r49' into staging/lineage-18.1_merge-android-security-11.0.0_r49
@@ -982,18 +955,43 @@ e490aac Merge tag 'android-security-11.0.0_r49' into staging/lineage-18.1_merge-
    * system/tools/hidl
 4ca5e6b5 Merge tag 'android-security-11.0.0_r49' into staging/lineage-18.1_merge-android-security-11.0.0_r49
 
+   * vendor/nxp/opensource/pn5xx/halimpl
+a1c1929a OOBW in phNxpNciHal_process_ext_rsp
+
+   * vendor/nxp/opensource/sn100x/halimpl
+e38c7e68 OOBW in phNxpNciHal_process_ext_rsp
+
 ====================
      11-02-2021
 ====================
 
-   * device/lineage/atv
-870aaf9 Add netflix config app
+   * kernel/xiaomi/msm8998
+8a5b8c8b0a4c Merge 4.4.291 into android-4.4-p
+e0018f4c9325 Linux 4.4.291
+c0b5302e3a74 sctp: add vtag check in sctp_sf_violation
+629d2823abf9 sctp: use init_tag from inithdr for ABORT chunk
+d4ba730c0dca nios2: Make NIOS2_DTB_SOURCE_BOOL depend on !COMPILE_TEST
+e72dce9afbdb regmap: Fix possible double-free in regcache_rbtree_exit()
+1ee34b2e09c2 net: lan78xx: fix division by zero in send path
+3d08ac538f02 mmc: sdhci: Map more voltage level to SDHCI_POWER_330
+b52275031a9e mmc: dw_mmc: exynos: fix the finding clock sample value
+a7b31dea4444 mmc: vub300: fix control-message timeouts
+b89f4537d7fd Revert "net: mdiobus: Fix memory leak in __mdiobus_register"
+d880b93227a2 nfc: port100: fix using -ERRNO as command type mask
+e215f19d8107 ata: sata_mv: Fix the error handling of mv_chip_id()
+65695c856070 usbnet: fix error return code in usbnet_probe()
+b9eba0a4a527 usbnet: sanity check for maxpacket
+91548920e44e ARM: 8819/1: Remove '-p' from LDFLAGS
+ec08eceae9b8 ARM: 9139/1: kprobes: fix arch_init_kprobes() prototype
+4126bca85a04 ARM: 9134/1: remove duplicate memcpy() definition
+fab287a309ee ARM: 9133/1: mm: proc-macros: ensure *_tlb_fns are 4B aligned
 
 ====================
      11-01-2021
 ====================
 
    * device/lineage/atv
+870aaf9 Add netflix config app
 6f04664 Revert "atv: Move atv.setup.bt_remote_pairing from vendor to product"
 
    * packages/apps/Dialer
@@ -1007,11 +1005,4 @@ e1efc2e45 Automatic translation import
 
    * packages/inputmethods/LatinIME
 7b138adec Automatic translation import
-
-====================
-     10-31-2021
-====================
-
-   * device/lineage/atv
-f6161b7 atv: Move atv.setup.bt_remote_pairing from vendor to product
 
