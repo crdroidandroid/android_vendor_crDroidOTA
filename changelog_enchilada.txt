@@ -1,67 +1,9 @@
-crDroid 6.22 - 30 September 2021 release notes/known issues:
+Changes since official v6.22 release:
+- October ASB (Android Security Bulletin) merged.
+- Rebased device tree and kernel tree on lineage-17.1 base with carefully-curated improvements from lineage-18.1, rather than 18.1 with a million reverts (messssy, even if squashed).
+- Decommonized & updated oneplus-fwk, which was basically only there to try and support OOSCam v3, and that didn't work, so oh well. Shipping with OOSCam V2, which works except for depth effect (no portrait mode still, sorry), so pretty much it's good for 60fps video and basic photos.
+- Dropped built-in GCam (go ahead and use your favorite port still, but now there's more room in system partition for bigger GApps).
+- Seriously, lots of cleanup under the hood; prepping for "frozen" device & kernel trees to shift to security-update-only maintenance releases. 
 
-Common:
-- September ASB merged (so no going back to earlier without formatting /data partition). 
-- Re-imported DeviceExtras ("OnePlus Settings") from Evolution-X, thanks AnierinB! 
-  - Has a couple extra goodies now that it didn't before (not sure if they're all working on cr6), and is part of preparation to track LineageOS' move to an external "oneplus_hardware" repository including a generic "DeviceExtras" repository for all supported devices, with device-specific customizations exposed via overlay instead of hard-coding kernel node paths and dodgy java copy/pasting. 
-- Re-added Lineage doze & corner implementations, seems to work better at getting smooth software anti-aliased corners (although immersive mode is now kinda stuck with rounded corners too, it seems). 
-- Switched kernel again. Everything is in upheaval because of changes upstream with the release of OxygenOS 11 and current rebasing in lineage-18.1 branch, so building against the lineage-18.1 base with most of the extras from AnierinB's fork as used in Evolution-X (very similar to what I had going on in my "stock" fork from the last few months of testing builds that never made it into a release, but they know a lot better what to pick than I do). My older MCD fork was based on a discontinued line of development anyway, and wasn't working right in Android 11, while this one seems to work quite well in both cr6 and cr7. And I was able to record a 48-minute long video in 1080p60 without it shutting down recording or dropping to 30fps, so I'll take it. 
-- Vibration sliders are a little goofy right now, but the settings themselves actually work correctly again (and provide feedback when changed). Right now it seems like the "notification" vibrate level is the only one that changes intensity as you drag it, the other two just use the "notification" intensity while dragging, although the actual levels DO get changed correctly and work when you receive incoming calls or otherwise trigger generic system vibration effects.
-- Remeember when moving the alert slider switch triggered a haptic tick? Pepperidge Farm remembers.
-- Background app killing should be a little less aggressive now (I think we're actually USING zram properly again, and there's some dalvik vm tuning based on actual device RAM). 
-
-Enchilada-specific:
-- Nothing new specifically. But you were already perfect, weren't you? <3 
-
-I have no idea why the following changelog date entries are empty; guess the auto changelog thing isn't working. 
-
-====================
-     09-30-2021
-====================
-
-
-====================
-     09-29-2021
-====================
-
-
-====================
-     09-28-2021
-====================
-
-
-====================
-     09-27-2021
-====================
-
-
-====================
-     09-26-2021
-====================
-
-
-====================
-     09-25-2021
-====================
-
-
-====================
-     09-24-2021
-====================
-
-
-====================
-     09-23-2021
-====================
-
-
-====================
-     09-22-2021
-====================
-
-
-====================
-     09-21-2021
-====================
-
-
+Known bugs:
+??? It's old and most any issues are gonna be things involving framework, which won't get updated. But if you like photography, you might like this better than Android 11, because of GCam ports that like to apply postprocessing that won't work under R.
