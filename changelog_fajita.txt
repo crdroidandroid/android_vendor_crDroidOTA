@@ -1,193 +1,259 @@
-Changes since official v7.10 release:
-- October ASB (Android Security Bulletin) merged.
-- Imported blobs from OOS 11.1.1.1 firmware (myself, because LuK is busy. YOLO).
-- OOSCam v3 works now! :party: Pulled directly from OOS 11.1.1.1 OTA payload APKs.
-- Imported upstream LineageOS "android_hardware_oneplus" updates, with unified DeviceExtras ("OnePlus Settings") additions by AnierinB from Evolution-X.
-- Imported upstream CAF updates to hardware/qcom-caf/sdm845/display/ repo that Lineage hasn't merged yet.
-- Added overlay to require swiping up now to enable Face Unlock on secure lock screen (as though we had pop-up camera hardware), to make it more cumbersome to use. Stop using faceunlock if you value your security.
-- Removed built-in GCam to free up room in system partition (and no longer conflicts with MJL ports).
-- Kernel compiler updated to clang v13.0.3
-- Fixed wifi not turning on in some edge situations; dropped LOS commits about HDD initialization, added qcacld-3.0 changes from mcd kernel instead.
-- Rip out KCal and changing panel modes in DeviceExtras ("OnePlus Settings") and go back to LiveDisplay. *sighs* Fixes the HDR/color thing (composite mode problem in HWC it seems).
-- Merged OnePlusOSS 11.1.1.1 kernel sauce update. 
-- Updated overlay to fix Night Light's torrid love affair with orange (that came from a set of much-improved colorspace mapping changes merged into crDroid upstream from kdrag0n's ProtonAOSP work, which exposed a problem in LOS default overlay values).
-- Dropped some stuff from kernel that won't be supported in cr8/A12 l(ike safetynet hacks that didn't work, usb2.0 slightly faster charging that might ruin your motherboard or mess with onboard voltage regulator, kcal pieces, boeffla wl blocker driver, dynamic fsync, etc.).
+crDroid 7.13 - December 2021 ASB release notes/known issues:
+Changelog since cr7.11 official release - October ASB:
+- Merged November ASB from upstream.
+- Dropped a lot of optional kernel stuff in preparation for Android 12/crDroid 8 support. Long story short, there are a lot of things that are beyond the scope of my expertise to maintain, and go against the spirit of the official maintainer agreement for crDroid 8.0 going forward.
+- Dropped DeviceExtras ("OnePlus Settings") in preparation for Android 12/crDroid 8 support.
+What does that mean for you?
+- Display modes are moved back to Settings > Display > LiveDisplay (which has a crap UI for it; putting up a modal dialog over a dimming layer over the preview image, instead of having a USEFUL preview image that's fully-visible as you make changes).
+- No more vibration intensity sliders.It was half-broken anyway in OnePlus Settings.
+- No more FPS counter overlay, boeffla wakelock blocker driver, USB2.0 fast charge current mod, superfluous I/O schedulers, overdriven audio gain, etc. Sorry, can't do much about that.
+- If you want a well-tuned & tested kernel with lots of extra options, I recommend backing up the boot partition then flashing MCD kernel by @mcdachpappe, available at https://github.com/mcdachpappe/android_kernel_oneplus_sdm845/releases/. Use EXKM, FKM, or if you're broke, SmartPack Kernel Manager (free, available on F-Droid).
+- Switched display panel handling entirely to work like OOS kernel, and incorporated commits from oneplus_sm8150-common to match (almost; couldn't move to oneplus_hardware version yet since we're not building vendor yet).
+- Imported wifi stack from CAF tag LA.UM.9.3.r1-02800-sdm845.0, with modifications backported from MCD kernel to fix not being able to turn wifi radio back on in some edge cases & reduce logspam (delayed hdd initialization or something).
+- Dropped SmartPixels feature (this has been half broken since Android 11 launch -- you can't operate controls in a view that's classified as a "secure setting" if a full-screen overlay is happening, which is exactly what SmartPixels is).
+- Reverted "swipe up for face unlock" gesture requirement. You shouldn't use FaceUnlock for security; it's a convenience feature and makes your phone less secure. Now that you've been warned, I'll make it easier if you still insist on getting yourself in trouble. Will likely be dropped in crDroid 8 anyway (there's a very good reason Google dropped it from AOSP several versions ago).
 
-Known bugs:
-Yo dawg, it's not my place to tell me how to use your phone, but...
-- Don't use AppLock on fajita unless you like rando FOD circles showing up everywhere and screwing up nightlight and such.
-- Don't use FaceUnlock either; it's the Motorola implementation, Google removed the official one for a darn good reason. Sometimes causes FOD circle to get left on because some aspect of biometric sensor handling & sercurity handling doesn't realize that faceunlock got there first and doesn't dismiss the FOD view.
-I dont' know why those add-on features were merged into crDroid when they don't work correctly with phones that have a FOD fingerprint sensor. Please feel free to open issues on https://github.com/crdroidandroid/android_frameworks_base and let the core developers know that those imitation security features break actual hardware security features of your phone. All bug reports about it to me will be ignored as I'm going to consider using them to be unsupported.
+At this point at the end of November I was ready to release crDroid v7.12, but there was an audio bug that was popping up for a small handful of both enchilada AND fajita users where no audio would be picked up/recorded by any mic when trying to record video or use speech recognition. Wasn't willing to put that out with such a show-stopper issue. That's why there was no official November release of cr7.12 pushed to OTA.
+Turns out the issue was using Google Hotword Enrollment ("Hey Google"). As soon as folks disabled that, boom! Audio recording worked again everywhere.
+
+Changelog continued (since v7.12, unreleased to OTA but available for testing in Telegram channel - come help test!):
+- Merged December 2021 ASB from upstream.
+- Reverted that "power: fg-gen3" kernel commit that was causing logspam for everyone (sorry DASH charger users, you won't get accurate time-until-full info... but if you cared about your battery, you wouldn't burn it with DASH charging anyway). If you want to just plug it in and be happy, please let me recommend using the built-in Smart Charging feature (or better yet, Advanced Charging Controller module for Magisk).
+- Downgraded OnePlus Camera back to v2 again. The only way version 3 was working with our prebuilt vendor was with some ugly sepolicy haxx that I really can't justify (and required changes to some core ROM repositories that are beyond my area of responsibilty or capacity to maintain). I know the photo quality isn't quite as good, but really you should be using Google Camera for photo quality, and only use OnePlus Camera if you need 60fps video. Urnyx05, DMGC, Nikita, BSG, etc. all make truly excellent Google Camera ports that work well on OP 6 series.
+- Much additional trimming & slimming & optimizing in preparation for source-built vendor and Android 12/crDroid 8 bringup.
+- Attempting to bring in multiple vibration intensities again now that we've dropped "OnePlus Settings". They don't really work yet, but I have a custom HAL now based on android_hardware_oneplus (which we can't fully utilize yet since we're still on prebuilt vendor for now) that should get us closer.
+- Using updated proprietary blobs imported from OxygenOS 11.1.2.2, and updated qcom-caf audio/display/media HALs with CAF tag LA.UM.9.3.r1-02800-sdm845.0 merged.
+- Kernel now building with clang 14 from upstream.
+- Fixed Night Light being wayyyy too orange, even at the least-intense setting. Check the github if you want the long explanation. TL;DR version: crDroid handles hardware color overlay transforms more accurately now (credit to kdrag0n/ProtonAOSP), but that exposed a bad default value that was being used for Night Light intensity color temperatures inherited from LineageOS.
+
+Fajita-specific:
+- If you use App Lock and/or Face Unlock, you'll likely run into issues with the FOD circle view starting to flicker randomly into view when it shouldn't be there (like it's not dismissing properly because one part of the security handling is fighting with or doesn't notify the other part that it's done and doesn't need to try to accept a fingerprint any longer). As a knock-on effect, this will also cause "Disable Night Light when FOD is visible" to freak out.
+
+Other known issues:
+- Google Hotword recognition is kinda broken right now (on more than one custom ROM/device), and will cause some screw-up that prevents microphone audio from being allowed to go anywhere else if it's enabled.
+- The "up vee" /\ screen-off gesture, left-to-right single finger swipe, and right-to-left single finger swipe screen-off gestures don't work (maybe?), all the other ones do. I don't know why. Sorry.
+- You tell me!
+
+Other stuff:
+- I've taken on the impossible and am trying to do my own implementation of source-built vendor, because I have no idea how to interpret & duplicate what they've already done with Syberia (which is enchilada-only, anyway). By the time it actually WORKS, I'll probably be able to understand WTH they did there, but... that's kind of the point. Building vendor from source (so the ROM installer zip will flash the vendor partition as well as DTBO, System, and vbmeta as it does currently) will fix a lot of quirks/inconsistencies/limitations that we've been plagued with since the beginning of custom ROMs for OnePlus SDM845 (6/6T), and get us closer to feature parity with OP 7/8/9 series in being able to use android_hardware_oneplus repositories and be ready for a proper Android 12/crDroid 8 bringup.
+It doesn't quite boot to the point I can get ADB access yet (hangs at "bootloader unlocked" warning screen), but it's doing SOMETHING and trying to mount internal storage via MTP, so we're not just dead in the water. fstab and QTI bootctrl seem to be doing the right things so far. Next step: go dig through stock init scripts & vendor props. If I can get ADB working again in stock recovery, I can get pstore/ramoops logs and be able to make real progress a lot faster.
 
 ====================
-     11-11-2021
+     12-31-2021
 ====================
-
-   * device/oneplus/enchilada
-f3e306b enchilada: overlay: Customize status bar spacing
-1f1a522 enchilada: overlay: Set default hotspot ssid
-efdc09b enchilada: Set build fingerprint for system, vendor, and odm
-4e4430d enchilada: bluetooth: Move bdroid header to common [1/3]
-4484fc6 enchilada: Remove Lineage pocketmode
-bf89c25 enchilada: Rebase on lineage-18.1 as of October 2021 & set up for crDroid
-
-   * device/oneplus/fajita
-d8a5ee8 fajita: overlay: Customize status bar spacing
-c17df92 fajita: overlay: We do not have an RGB LED on fajita
-0a306a4 fajita: overlay: Set default hotspot ssid
-106718d fajita: Set build fingerprint for system, vendor, and odm
-7ef71bb fajita: fod: Enable FOD support & customization options
-2373596 fajita: Rebase on lineage-18.1 as of October 2021 & set up for crDroid
 
    * device/oneplus/sdm845-common
-7b1584b sdm845-common: overlay: Fix hyper orange night light
+cc4db0a sdm845-common: vibrator: Add vibration interface
+695b599 sdm845-common: Update blobs to OxygenOS 11.1.2.2
+8d218e4 sdm845-common: init: Rework init [3/3]
+4dcc3c6 sdm845-common: init: Add init to handle dalvik props based on sysram
+40200de sdm845-common: livedisplay: Rework the way we handle display modes
+1e4caaa sdm845-common: livedisplay: Reset display mode prop on modeID == 0
+873a4cd sdm845-common: livedisplay: Modify for OOS-style nodes
+d568987 sdm845-common: livedisplay: Implement IAntiFlicker interface
+b511a07 sdm845-common: livedisplay: Uprev to 2.1
+03ab094 sdm845-common: overlay: Fix hyper orange night light
+4aa60f0 sdm845-common: packages: Include prebuilt OnePlus Camera
+e743bcb sdm845-common: packages: Add Google Camera support
+194cb87 sdm845-common: packages: Remove stock camera packages
+210ed6a sdm845-common: props: Explicitly enable iorap
+e5bbaa5 sdm845-common: overlay: Enable Adaptive Sleep
+8adb81d sdm845-common: overlay: configure SQLite to operate in MEMORY mode
+38c6e7c sdm845-common: overlay: Don't pin launcher app in memory
+2e6c18f sdm845-common: overlay: Don't pin camera app in memory
+ab9d2b7 sdm845-common: overlay: Enable multiple vibration intensities
+028d50d sdm845-common: overlay: Enable crDroid features & customization
+d80d7b3 sdm845-common: cleanup: Nuke qti-telephony-common injection
+b4e6821 sdm845-common: cleanup: Fix AVB flags
+4f7bfa0 sdm845-common: cleanup: Remove obsolete dex settings
+e41ac70 sdm845-common: cleanup: Remove USE_XML_AUDIO_POLICY_CONF
+d66c20c sdm845-common: cleanup: Update priv app permission whitelist
+9e341e8 sdm845-common: cleanup: Add missing permissions
+80cb881 sdm845-common: cleanup: Put that thing back where it came from
+17b999f sdm845-common: cleanup: Nuke pocketmode app
+fd163a9 sdm845-common: BoardConfig: Pass LLVM=1 for kernel
+1088f18 sdm845-common: BoardConfig: Remove virtual framebuffer
+4cde2e6 sdm845-common: BoardConfig: Remove obsolete TARGET_BOARD_PLATFORM_GPU
+e3f38e9 sdm845-common: Rebase on lineage-18.1 as of December 2021
+
+   * frameworks/base
+583d454e31ac InputMethodUtils: Fix system bootloop when no IME found
+91d0908a564e New Crowdin updates (#735)
+6017446e1055 Battery Styles: Fix signal icon padding with Hidden style
 
    * kernel/oneplus/sdm845
-babdb98c004d Synchronize codes for Oneplus 6/6T OxygenOS 11.1.1.1
-ad7534a3029e Add HT_IOC_COLLECT ioctl call for data export to userspace
-f50d32e411d2 To prevent Kernel Bug add null check in houston
-5b0c2cc7c4b0 High power consumption in Real AOD 17819
-f96e3bf183dd Add subsystem crash reason record and notify it by uevent
-caeaf114959c Add sysfs nodes for EFPS
-3fb74f482415 enable load bytes helper for filter/reuseport progs
-bb7e0f04f279 Adding mutex_lock instead of mutex_trylock
-ff38b35a6907 qcacld-3.0: Do not allow any wakelocks to be held
-abec2bab11fc drivers: qcacld: reverse fw-provided mac addr
-09e2e3569c6c qcacld-3.0: Fix compiler warnings
-fc44df9499ef qcacld-3.0: drop a little bit of debug
-4f82b00a1a6b qcacld-3.0: Disable build tagging
-16becb4d77fd qcacld-3.0: default_config: tone down debugging
-104e3a935af9 qcacld-3.0: nuke Kconfig-based configuration entirely
-f76a7cca0c18 qcacld-3.0: Load driver during kernel init when not built as a module
-61732ea4e6e3 qcacld-3.0: Revert some LOS changes
-35aa25700028 qcacld-3.0: initialize variables to avoid errors during compilation
-f78f7195480d qcacld-3.0: Disable build timestamp
-702f6987ef9b qcacld-3.0: always force user build
-ef8e8a1f3e2d qcacld-3.0: disable -Werror
-b3a2a102620d qcacld-3.0: Select necessary wireless extensions
-df9ad11b04e8 defconfig: Update for crDroid
-051d275382d5 defconfig: enable zen IO scheduler
-4de89b9471ee zen-iosched: cast parameters to unsigned long
-0fa815543253 block: zen: fix build on 3.18 kernel
-3ab121cefaa3 block: add zen IO scheduler
-6cc7e01e1d43 fs: default to noatime
-a38253c371eb wcd934x: add null checks to prevent crash on hardware variants
-764e75cc9954 wcd934x: add speaker gain settings for 6T
-8aada801ff28 wcd934x: remove speaker gain settings for 6T
-a5a44a7d105e wcd934x: remove headphone gain options for 6T
-98227e2c3422 wcd934x: sound control: reset headphone digital gain to user value
-581739736b13 wcd934x: add sound control
-8dfa523d4ea3 configs: Enable TTL and HL flags
-ab48bbabcf64 adrenoboost: disable by default
-a00c10b82687 adrenoboost: finetuning algorithm - scale it a bit down
-ccca7963b47f msm_adreno_tz: add adrenoboost parameter
-3b4fdd8773a0 msm_performance: simplify touchboost check and process
-10a644090e6c msm_performance: don't limit min and max cpu freq
-6604cc6f06e3 cpufreq: cpu-boost: don't boost if input_boost_ms is <= 0
-00bb45022568 cpufreq: cpu-boost: don't boost over user set max freq
-e23212e6514c drivers: cpu-boost: optimize policy update loop on input cpufreq boost
-95535e9be87b cpufreq: cpu-boost: set interval between consecutive boosts to be at least the duration of the boost instead of a bigger value
-8da85979483f workqueue: change permissions to allow root control of wq_power_efficient toggle
-62b4ce82a21b Makefile: Fix GCC_TOOLCHAIN_DIR prefix for Clang cross compilation
-0e5a86748361 drm/msm/sde: add sysfs node in dpu driver to provide fps
-b1edea23e2ac leds-qpnp-haptics: add separate node for call vibration
-a35b262e11b4 leds-qpnp-haptics: add separate nodes for tap and notifications
-9ff6c16e1384 leds-qpnp-haptics: allow user adjustment
-af91af3ba598 defconfig: Enable basic tracing for IORap
-90a4f67aaf15 defconfig: Enable wireguard
-bd693e2dbbdb net: wireguard: Import wireguard v1.0.20210606
-0bbcc3983bb1 tri_state_key: Create tri_state node to match OP8/9 behavior
-3a0166bca7d2 drm: msm: Import OxygenOS R codes for display panel handling
-01960b5c871a drm: msm: Stop reinventing the wheel
-1a219dd56113 Makefile: Move -Wno-unused-but-set-variable out of GCC only block
+3b6d947d3274 input: synaptics: s3320: add haptic feedback control sysfs
+dde593e81041 qpnp-haptics: reduce log spam
+7986fe89d834 leds-qpnp-haptics: add separate node for call vibration
+0dc08901a086 leds-qpnp-haptics: add separate nodes for tap and notifications
+16734638603a leds-qpnp-haptic: allow disabling vibration
+de6fa3c50ac9 leds-qpnp-haptics: allow user adjustment
+5479ac047b34 leds-qpnp-haptics: expose vibrator
+4d8c8762bc15 qpnp-haptics: Synchronize codes for OnePlus 6/6T OxygenOS 11
+9fab0044c3d3 Revert "Revert "power: fg-gen3: Report TIME_TO_FULL_NOW property""
+ab11e28d2af0 defconfig: Update for crDroid
+2ee88485ad74 Synchronize codes for Oneplus 6/6T OxygenOS 11.1.1.1
+0c1c4082a906 Add HT_IOC_COLLECT ioctl call for data export to userspace
+d33e84ddf73d To prevent Kernel Bug add null check in houston
+21988ec5dafa High power consumption in Real AOD 17819
+b2873c89ea70 Add subsystem crash reason record and notify it by uevent
+c6a453981c5a Add sysfs nodes for EFPS
+8e2376fbfd92 enable load bytes helper for filter/reuseport progs
+da3455a5c1fd Adding mutex_lock instead of mutex_trylock
+3934768047f7 qcacld-3.0: Do not allow any wakelocks to be held
+a50bf0cff750 drivers: qcacld: reverse fw-provided mac addr
+c93356ebf2f2 qcacld-3.0: Fix compiler warnings
+76bf28f861ed qcacld-3.0: drop a little bit of debug
+6346845498c1 qcacld-3.0: Disable build tagging
+7d5091b43d80 qcacld-3.0: default_config: tone down debugging
+752fd45396c3 qcacld-3.0: nuke Kconfig-based configuration entirely
+0dfd3bffab61 qcacld-3.0: Load driver during kernel init when not built as a module
+3961afbeb2ef qcacld-3.0: initialize variables to avoid errors during compilation
+d181e8f76af0 qcacld-3.0: Disable build timestamp
+c58ad90f94cd qcacld-3.0: always force user build
+d6e423fd676d qcacld-3.0: disable -Werror
+d28fc0ca47df qcacld-3.0: Select necessary wireless extensions
+051898356d1d drivers: staging: Build qcacld-3.0
+066a57427278 Add 'drivers/staging/fw-api/' from https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/fw-api/
+c7ffaad36db6 Add 'drivers/staging/qca-wifi-host-cmn/' from https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn/
+170bd46f5f4c Add 'drivers/staging/qcacld-3.0/' from https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qcacld-3.0/
+fede591918b4 drivers/staging: Remove existing wifi drivers
+d01e6e969e0c defconfig: Enable wireguard
+ff130bd0b1ae net: wireguard: Import wireguard v1.0.20210606
+699df1eb1434 tri_state_key: Create tri_state node to match OP8/9 behavior
+113911ae2bf6 drm: msm: Synchronize codes for OxygenOS 11
+6176f6b7f53a Makefile: Move -Wno-unused-but-set-variable out of GCC only block
+c706f546e8ac lib/string.c: implement stpcpy
+58c0993b0aa0 sdm845: Rebase on lineage-18.1 as of December 2021
+
+   * packages/apps/Launcher3
+cc47eb4d0 New Crowdin updates (#193)
+
+   * packages/apps/crDroidSettings
+7e8523fe New Crowdin updates (#832)
+a1747911 crdroid: Update battery style
 
 ====================
-     11-10-2021
-====================
-
-====================
-     11-09-2021
-====================
-
-====================
-     11-08-2021
-====================
-
-====================
-     11-07-2021
-====================
-
-====================
-     11-07-2021
-====================
-
-====================
-     11-06-2021
-====================
-
-   * device/oneplus/sdm845-common
-c77b928 sdm845-common: Fixup offline charging
-365d235 sdm845-common: Update blobs from OxygenOS 11.1 [1/2]
-a867e70 sdm845-common: Enable setting vendor props
-ae16780 sdm845-common: Include prebuilt OnePlus Camera
-dabf2f5 sdm845-common: Add Google Camera support
-a3a3cc2 sdm845-common: Remove stock camera packages
-6b2135a sdm845-common: props: Explicitly enable iorap
-70a4638 sdm845-common: Set dalvik vm props based on ram size
-5998bab sdm845-common: Set target kernel clang flags
-91d7604 sdm845-common: overlay: Enable Adaptive Sleep
-e16d6a7 sdm845-common: overlay: configure SQLite to operate in MEMORY mode
-77a1ceb sdm845-common: overlay: Don't pin launcher app in memory
-3af7083 sdm845-common: overlay: Don't pin camera app in memory
-05ba7a9 sdm845-common: Configure & ship DeviceExtras
-cb71553 Revert "sdm845-common: Adjust for recent tri state key changes"
-489e086 sdm845-common: overlay: Enable crDroid features & customization
-8e765e6 sdm845-common: selinux: ignore neverallows
-519e51a sdm845-common: cleanup sepolicy: Fix paths & update for OOS 11
-58f2563 sdm845-common: cleanup overlay: Prep for crDroid customizations
-a6f1177 sdm845-common: cleanup packages: Remove Lineage pocketmode
-5109447 sdm845-common: cleanup packages: Remove Lineage Trust HAL
-f59890a sdm845-common: BoardConfig: Remove virtual framebuffer
-e79ac6f sdm845-common: Remove obsolete TARGET_BOARD_PLATFORM_GPU
-cade1ac sdm845-common: Rebase on lineage-18.1 as of October 2021 & set up for crDroid
-
-   * packages/apps/Settings
-378a571f48 Settings: Adjust wifi lottie animation layout
-
-   * packages/apps/TvSettings
-09ec9871 TvSettings: Trust
-7b690528 Revert "Show Trust in security settings"
-
-====================
-     11-05-2021
+     12-30-2021
 ====================
 
    * frameworks/base
-220fc3082681 SystemUI: Show FPSInfo Tile only if supported
+8f012b18d989 Battery Styles: Back port style changes from A12 implementation
+2d0891e7f984 Allow to wake the screen instead of pulsing [1/2]
+e2df931b5332 Add switch for vpn and data saver
+4b245b06ca00 SystemUI: Improve pocket mode layout
+7b8a9dd8ab07 base: Redo Pocket mode view like OOS
+3687b5b9af42 Fix an edge case in KeyguardUpdateMonitor pocket callback
+2feed18668c4 core: PinSet: fixup and improve code
+f73000d1bdad core: PinSet: Cache pin algorithms
 
-   * packages/apps/TvSettings
-9d14f69a TwoPanelSettingsOverlay: add CEC settings
-
-   * vendor/lineage
-6c3a6323 gms: fail build if exported option doesn't exist
-
-====================
-     11-04-2021
-====================
-
-   * packages/apps/Launcher3
-0ed6a7edc New Crowdin updates (#184)
+   * packages/apps/Settings
+7102e10e3b Settings: Add permission to hold wake lock
 
    * packages/apps/crDroidSettings
-07bd30b8 New Crowdin updates (#818)
-
-   * packages/modules/CaptivePortalLogin
-b68c54a Add NPE protection to prevent illegal CaptivePortal in the intent
-735a73a Remove webview from the view system before destroying webview
-c5ee9d1 Fix captive portal downloads on private DNS
-2044e60 Move min/target_sdk_version to java_defaults
+1231adad Doze: Also disable doze on charge if AOD is enabled
+470a2636 Doze: Allow to wake the screen instead of pulsing [2/2]
+c49b7da2 Doze: Disable sensor service if AOD is enabled
 
 ====================
-     11-03-2021
+     12-29-2021
 ====================
+
+====================
+     12-28-2021
+====================
+
+   * frameworks/base
+0dda8c83ee79 Apply more null checks for  WindowManager
+06d1c4dceec0 QS Footer: Trivial fixes for running services button
+
+   * hardware/qcom-caf/sdm845/audio
+91ee504f4 Merge tag 'LA.UM.9.3.r1-02800-sdm845.0' of https://source.codeaurora.org/quic/la/platform/hardware/qcom/audio into 11.0-caf-sdm845
+
+   * hardware/qcom-caf/sdm845/display
+c10fda9da Merge tag 'LA.UM.9.3.r1-02800-sdm845.0' of https://source.codeaurora.org/quic/la/platform/hardware/qcom/display into 11.0-caf-sdm845
+
+   * hardware/qcom-caf/sdm845/media
+8f4b2104f Merge tag 'LA.UM.9.3.r1-02800-sdm845.0' of https://source.codeaurora.org/quic/la/platform/hardware/qcom/media into 11.0-caf-sdm845
+
+   * packages/apps/DeskClock
+5be410c55 DeskClock: Update nightmode checkbox state to reflect preference value
+
+   * packages/apps/crDroidSettings
+ea8e25f7 Doze: Fix pocket gesture force enabled while using handwave
+5ecfcb7f crdroid: Exclude ANBI from search results if not supported
+
+====================
+     12-27-2021
+====================
+
+   * device/oneplus/enchilada
+ec1b1fd enchilada: Rework init [1/3]
+
+   * device/oneplus/fajita
+9758fa2 fajita: Rework init [2/3]
+
+   * frameworks/base
+abb52860c322 Pulse: Fix up navbar layout logic
+9ea6b2a106eb Pulse: fix NPE when navbar is hidden
+
+   * packages/apps/Settings
+163095d8de Merge pull request #107 from Hikari-no-Tenshi/11.0
+48d0116ece Fix device name change
+
+   * vendor/addons
+fb46f7f addons: Update Google Sans font
+fa41a4d addons: Update SamsungOne font
+
+   * vendor/oneplus
+398a2da sdm845-common: Update blobs to OxygenOS 11.1.2.2
+
+====================
+     12-26-2021
+====================
+
+   * frameworks/base
+992779019cae New Crowdin updates (#733)
+
+   * packages/apps/Launcher3
+5707c6066 New translations (#192)
+
+   * packages/apps/crDroidSettings
+18c0b038 New Crowdin updates (#830)
+
+====================
+     12-25-2021
+====================
+
+   * frameworks/base
+618da35c0522 fix google widget timing issue
+c02a4e1ef355 Allow to disable qs footer warnings [1/2]
+
+   * packages/apps/crDroidSettings
+99aaafbe Allow to disable qs footer warnings [2/2]
+
+====================
+     12-24-2021
+====================
+
+   * packages/apps/crDroidSettings
+a5cd801a crdroid: Pulse ambient light dependent on doze notification
+
+====================
+     12-23-2021
+====================
+
+   * system/update_engine
+3c9098f3 Merge pull request #1 from Hikari-no-Tenshi/11.0
+b3c87fa6 update_engine: Always disable signature and downgrade checks
+
+====================
+     12-22-2021
+====================
+
+   * external/arm-optimized-routines
+4510220 Merge branch 'master' of https://github.com/ARM-software/optimized-routines into 11.0
+
+   * vendor/addons
+d118137 addons: Cleanup pixel sysconfigs
 
