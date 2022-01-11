@@ -18,7 +18,7 @@ recovery="" #https link (leave empty if unused)
 paypal="" #https link (leave empty if unused)
 telegram="" #https link (leave empty if unused)
 dt="" #https://github.com/crdroidandroid/android_device_<oem>_<device_codename>
-commondt=""#https://github.com/crdroidandroid/android_device_<orm>_<SOC>-common
+commondt="" #https://github.com/crdroidandroid/android_device_<orm>_<SOC>-common
 kernel="" #https://github.com/crdroidandroid/android_kernel_<oem>_<SOC>
 
 
