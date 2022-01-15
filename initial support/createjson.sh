@@ -35,6 +35,7 @@ linenr=`grep -n "ro.system.build.date.utc" $buildprop | cut -d':' -f1`
 timestamp=`sed -n $linenr'p' < $buildprop | cut -d'=' -f2`
 zip_only=`basename "$zip_name"`
 md5=`md5sum "$zip_name" | cut -d' ' -f1`
+sha256=`sha256sum "$zip_name" | cut -d' ' -f1`
 size=`stat -c "%s" "$zip_name"`
 version=`echo "$zip_only" | cut -d'-' -f5`
 v_max=`echo "$version" | cut -d'.' -f1 | cut -d'v' -f2`
@@ -51,6 +52,7 @@ echo '{
         "download": "https://sourceforge.net/projects/crdroid/files/'$device'/'$v_max'.x/'$zip_only'/download",
         "timestamp": '$timestamp',
         "md5": "'$md5'",
+        "sha256": "'$sha256'",
         "size": '$size',
         "version": "'$version'",
         "buildtype": "'$buildtype'",
