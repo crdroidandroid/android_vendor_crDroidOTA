@@ -1,9 +1,151 @@
-Changes since official v6.22 release:
-- October ASB (Android Security Bulletin) merged.
-- Rebased device tree and kernel tree on lineage-17.1 base with carefully-curated improvements from lineage-18.1, rather than 18.1 with a million reverts (messssy, even if squashed).
-- Decommonized & updated oneplus-fwk, which was basically only there to try and support OOSCam v3, and that didn't work, so oh well. Shipping with OOSCam V2, which works except for depth effect (no portrait mode still, sorry), so pretty much it's good for 60fps video and basic photos.
-- Dropped built-in GCam (go ahead and use your favorite port still, but now there's more room in system partition for bigger GApps).
-- Seriously, lots of cleanup under the hood; prepping for "frozen" device & kernel trees to shift to security-update-only maintenance releases. 
+crDroid 6.27
 
-Known bugs:
-??? It's old and most any issues are gonna be things involving framework, which won't get updated. But if you like photography, you might like this better than Android 11, because of GCam ports that like to apply postprocessing that won't work under R.
+Changelog since v6.23 release:
+- Merged Android Security Bulletins through February 2022 from upstream.
+- Whatever changed upstream in the ROM proper (not likely much; they want to freeze it besides security updates).
+- Reimplemented DeviceSettings based on crDroid 7 version (no more greyed-out things that don't actually work in Android 10).
+- Backported updated display panel handling in device tree and kernel to match crDroid 7 (panel color modes are in LiveDisplay now). FOD on fajita is still kinda crap with OOS 10 firmware, but oh well.
+- Little more tidying/tightening in device tree & kernel for moving to maintenance-only releases.
+- Imported current wireguard VPN kernel-mode driver.
+
+Known issues:
+- I dunno, the usual. You tell me.
+- OnePlus Camera will just remain on v2 because I couldn't fix whatever's broken in vendor and/or sepolicy to make v3 work with OOS 10.3.12 firmware/Android 10.
+
+Build type: Monthly
+Device: OnePlus 6T (fajita)
+Device maintainer: Jordan Whiteley (Terminator_J)
+Required firmware: OxygenOS 10.3.12
+
+====================
+     03-08-2022
+====================
+
+
+   * device/oneplus/sdm845-common
+fea6c43 sdm845-common: packages: Include prebuilt OnePlus Camera
+da4d86d sdm845-common: Add Google Camera support
+5c779b0 sdm845-common: Remove stock camera packages
+6eb3e8d sdm845-common: packages: Implement DeviceSettings
+1a03595 sdm845-common: livedisplay: Rework the way we handle display modes
+3cc394c sdm845-common: livedisplay: Modify for OOS-style nodes
+c859d8b sdm845-common: livedisplay: Tidy up
+be90842 sdm845-common: LiveDisplay: Remove SunlightEnhancement
+3746926 sdm845-common: Fixup offline charging
+ab70868 sdm845-common: Update blobs from OOS 10.3.12
+9a49179 sdm845-common: vendor: Fix typo in pinned binary blob list
+3010391 sdm845-common: props: Allow more background apps
+a56cb52 sdm845-common: props: Explicitly enable iorap
+d677b6d sdm845-common: Set target kernel clang flags
+027e60d sdm845-common: overlay: Enable Adaptive Sleep
+2a755c5 sdm845-common: overlay: configure SQLite to operate in MEMORY mode
+65344fa sdm845-common: overlay: Don't pin launcher app in memory
+ddc026d sdm845-common: overlay: Don't pin camera app in memory
+b37531e sdm845-common: overlay: Enable crDroid features & customization
+48b9a08 sdm845-common: cleanup sepolicy: Fix paths & address some denials
+6c90577 sdm845-common: cleanup overlay: Prep for crDroid customizations
+de4a195 sdm845-common: cleanup packages: Remove Lineage doze
+277312e sdm845-common: cleanup packages: Remove Lineage pocketmode
+c905fe1 sdm845-common: cleanup packages: Remove Lineage Trust HAL
+4af85c1 sdm845-common: Decommonize oneplus-fwk [3/3]
+e95196b sdm845-common: Move "device/oneplus/common" Soong namespace to common [2/2]
+6403c81 sdm845-common: BoardConfig: Remove virtual framebuffer
+60dcff2 sdm845-common: Remove obsolete TARGET_BOARD_PLATFORM_GPU
+f13835f sdm845-common: Rebase & set up for crDroid
+1c76c04 sdm845-common: overlay: Drop config_deviceLightCapabilities overlay
+ec9b3c7 sdm845-common: Set TARGET_KERNEL_CONFIG := enchilada_defconfig
+fd9c6ba sdm845-common: sepolicy: Allow init to write to vendor_sysfs_usb_supply
+d1f9465 sdm845-common: Restore correct usb config during early boot
+c3bcbfd sdm845-common: sepolicy: Allow init to mount on /vendor/overlay
+f664909 sdm845-common: sepolicy: Let livedisplay access vendor_hal_display_color
+17f9dca sdm845-common: oneplus-fwk: Implement android.os.OPDiagnoseManager
+1e0a725 sdm845-common: doze: Enable proximity sensor check for raise to wake
+a5ee750 sdm845-common: Strip out StatsLog uses from NxpSecureElement.apk
+2741f23 sdm845-common: libcvface_api: Return non-null handle during tracker creation
+18600c3 sdm845-common: Stub out vendor TelephonyResCommon overlay
+f133902 sdm845-common: Restrict aux cameras only to OnePlus Camera
+0b3b628 sdm845-common: doze: Introduce raise to wake gesture
+3687d71 sdm845-common: doze: Add vector icons
+2b2bde6 sdm845-common: Set vendor prop for RF version
+
+====================
+     03-07-2022
+====================
+
+
+   * frameworks/av
+e7e80f1711 camera: Allow to use boottime as timestamp reference
+
+====================
+     03-06-2022
+====================
+
+
+   * device/oneplus/enchilada
+78342d3 enchilada: oneplus-fwk: Add more OnePlus bits
+95fa1bc enchilada: oneplus-fwk: Implement android.os.OPDiagnoseManager
+c2f74d8 enchilada: Decommonize oneplus-fwk [1/3]
+6f2af50 enchilada: Init oneplus-fwk based on SyberiaOS
+cb9df9b enchilada: Add & enable TWRP inline custom recovery
+1162a35 enchilada: overlay: Customize status bar spacing
+934c2c6 enchilada: overlay: Set default hotspot ssid
+9c88064 enchilada: Set build fingerprint for system
+ebe05fd enchilada: Remove Lineage pocketmode
+38b7fca enchilada: Rebase on lineage-18.1 as of February 2022 & set up for crDroid
+
+   * device/oneplus/fajita
+d4a4ef7 fajita: oneplus-fwk: Add more OnePlus bits
+20d0e69 fajita: oneplus-fwk: Implement android.os.OPDiagnoseManager
+c5e3d33 fajita: Decommonize oneplus-fwk [2/3]
+bb0874f fajita: Init oneplus-fwk based on SyberiaOS
+7dc6e7e fajita: Add & enable TWRP inline custom recovery
+89c48e8 fajita: overlay: Customize status bar spacing
+6504ccd fajita: overlay: We do not have an RGB LED on fajita
+645ef55 fajita: overlay: Set default hotspot ssid
+ba2b74d fajita: Set build fingerprint for system
+b65daa0 fajita: Move "device/oneplus/common" Soong namespace to common [1/2]
+9410e59 fajita: fod: Set thread to high CFS priority
+6fd3026 fajita: fod: Enable FOD support & customization options
+188dd8b Revert "fajita: Switch to hardware/oneplus components"
+201825b fajita: Rebase on lineage-18.1 as of February 2022 & set up for crDroid
+
+   * device/oneplus/sdm845-common
+b8a796a sdm845-common: manifest: Remove Trust interface entry
+e4be1b1 sdm845-common: Drop dummy libplatformconfig
+4148962 sdm845-common: Stub out libcvface_api.so
+6311be3 sdm845-common: sepolicy: Allow vendor_init to check encryption status of system_data_file
+604e322 sdm845-common: Replace BOARD_CHARGER_DISABLE_INIT_BLANK with ro.charger.disable_init_blank
+013d6bf sdm845-common: Set BPF support level
+e4e1293 sdm845-common: overlay: Add translatable="false" tags to ims package overlays
+3c9e9ff sdm845-common: overlay: Remove old configuration and use new config for MMTEL/RCS
+e70b845 sdm845-common: overlay: Update in pinned files.
+087dfa4 sdm845-common: Align resource ids used in NxpNfcNci.apk with framework.jar
+eb1d978 sdm845-common: Patch ApduServiceInfo class init in com.nxp.nfc.jar
+0f8cb96 sdm845-common: Manually patch out libmetricslogger.so dependency
+a284914 sdm845-common: Update blobs from OOS 10.3.10
+6befeb1 sdm845-common: RIP qti-telephony-common
+d90cbff sdm845-common: Switch to standalone extract utils
+a8bfa86 sdm845-common: Add local OpFeatures implementation
+ba492a4 sdm845-common: sepolicy: Switch away from hal_attribute() macro
+172acad sdm845-common: lights: Statically link {libbase, libutils}
+67c6466 sdm845-common: gpt-utils: Drop unnecessary include
+2429905 sdm845-common: Build libhidltransport and libhwbinder
+2800068 sdm845-common: Remove libhwbinder/libhidltransport deps
+4ff7fe5 sdm845-common: Rebase on lineage-17.1 stable as of February 2022
+
+   * frameworks/base
+cff2cf016d75 camera: Allow selected camera apps to skip unconfigure
+
+   * kernel/oneplus/sdm845
+19f0ee88cdbd configs: Enable TTL and HL flags
+807951487825 net/wireguard: Update wireguard to v1.0.20211208
+c6d8b0712d02 drm/msm: skip sde_dbg compilation altogether
+2587d557ff9c drm/msm/sde: Remove register write debug logging
+1a550f72baaa drm/msm/sde: Omit debug logging code
+d934b72b4f86 drm/msm: Omit SDE event log and most debugfs code
+650fde5c8fb3 gpu: drm: use power efficient workingqueues
+3ed9b970c5dd drm:msm: use power efficient workingqueues
+378dd2b58e65 drivers/gpu/drm: Fix GCC 11 compiler warnings
+
+   * vendor/lineage
+2c5b96ac soong: Backport TARGET_CAMERA_BOOTTIME_TIMESTAMP variable
