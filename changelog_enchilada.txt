@@ -1,14 +1,11 @@
-crDroid 7.15
+crDroid 7.16
 
-Changelog since v7.14 release:
-- Merged February 2022 Android Security Bulletin from upstream.
+Changelog since v7.15 release:
+- Merged March 2022 Android Security Bulletin from upstream.
 - Whatever the devs changed upstream (not much? they're busy with cr8).
-- DeviceSettings is back, woo! Long story, but having it fixes the alert slider notification bubble correctly tracking physical switch position. Moved DC dimming & HBM/AutoHBM back out of LiveDisplay, and put vibration sliders and alert slider control back in.
-- OnePlus OOSCam uprevved back to v3, now without the ugly/insecure "IGNORE_NEVERALLOWS := TRUE" selinux haxx.
-- Cleanup build props (note to self: it doesn't help to add props to vendor.prop and odm.prop files when we DON'T BUILD VENDOR FROM SOURCE, derp).
-- General device tree tidying (got carried away with prep for source-built vendor & Android 12).
-- I reworked display panel handling in the kernel AGAIN; should be ready now to switch to UDFPS going forward into the future in Android 12. Should also reduce/eliminate the eye-melting blink of HBM when turning the screen on. Big thanks to mcdachpappe for curating the shamelessly-kanged commits.
-- Imported current wireguard VPN kernel-mode driver.
+- Built-in Updater app no longer has the accidental Magisk dependency, huzzah! (so you don't need to flash magisk just to do a "local installation" update from Settings > System > Updater).
+- Kernel clean-up (addresses some warnings, fixes some cross-compilation & clang-vs-gcc compilation flags that were causing errors with move to newer clang 14.0.2 kernel compiler).
+- Cleanup device tree a little (don't need to build copies of libs we already have blobbed out from proprietary-files.txt, save a little space — thanks SevralT)
 
 Build type: Monthly
 Device: OnePlus 6 (enchilada)
@@ -16,149 +13,25 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     03-06-2022
+     04-03-2022
 ====================
 
-   * device/oneplus/sdm845-common
-e94cdded sdm845-common: packages: Include prebuilt OnePlus Camera
-7b8c0f71 sdm845-common: packages: Add Google Camera support
-acffc56f sdm845-common: packages: Remove stock camera packages
-df8cc3b7 sdm845-common: packages: Implement DeviceSettings
-
-   * kernel/oneplus/sdm845
-78b56d616320 configs: Enable TTL and HL flags
+   * packages/apps/Launcher3
+16de4c9d25 New Crowdin updates (#219)
 
 ====================
-     03-05-2022
+     04-01-2022
 ====================
 
-   * device/oneplus/sdm845-common
-5a58148f sdm845-common: tri-state-key: Bring back daemon
-622c74dd sdm845-common: LiveDisplay: Strip AntiFlicker & SunlightEnhancement
-52ddda78 sdm845-common: vendor: Update blobs to OxygenOS 11.1.2.2
-e4d88ced sdm845-common: props: Allow more background apps
-6e5a6893 sdm845-common: props: Explicitly enable iorap
-4e92802d sdm845-common: livedisplay: Rework the way we handle display modes
-d9afb625 sdm845-common: livedisplay: Reset display mode prop on modeID == 0
-cdd8b4f6 sdm845-common: livedisplay: Modify for OOS-style nodes
-bf56a931 sdm845-common: livedisplay: Implement IAntiFlicker interface
-88b987f3 sdm845-common: livedisplay: Uprev to 2.1
-d5205a69 sdm845-common: overlay: Fix hyper orange night light
-6444ddb5 sdm845-common: overlay: Enable Adaptive Sleep
-ffe53e62 sdm845-common: overlay: configure SQLite to operate in MEMORY mode
-a3ac12c5 sdm845-common: overlay: Don't pin launcher app in memory
-f1133c73 sdm845-common: overlay: Don't pin camera app in memory
-6c5919d8 sdm845-common: overlay: Enable multiple vibration intensities
-f98f919f sdm845-common: overlay: Enable crDroid features & customization
-3a0b20aa sdm845-common: cleanup: sepolicy: nfc
-
-====================
-     03-04-2022
-====================
-
-   * kernel/oneplus/sdm845
-c01610bd84fd [FIXUP] "drm: msm: Refactor fod dimming"
-a5bc06edab35 drm: msm: Refactor fod dimming
-73edd40d39d0 drm: msm: Rework PLANE_PROP_ALPHA handling
-0353e5384c22 Apply display mode unconditionally after turning on panel.
-13d16aab8424 drm: msm: Symlink main DSI display sysfs to its parent (MDSS)
-3b04aacde05d drm: msm: Add support for display modes.
-ef94d640ea8f drm: msm: Add support for high brightness mode (HBM)
-ddf911ddc398 drm: msm: Restore previous display brightness when enabling display.
-6a3639729bc7 display: strip op mode strings from sysfs
-1e9749896931 drm/msm/sde: add sysfs node in dpu driver to provide fps
-63907ca7ec7a gpu: drm: use power efficient workingqueues
-03f83d807593 drm:msm: use power efficient workingqueues
-8b1457fcd83a drivers/gpu/drm: Remove remaining OnePlus additions
-bc2c90fa763c gpu/drm/msm: Silence panel modes log spam
-a93da85b9788 msm: dsi-display: backlight_min shouldn't be lower than 1
-3d269c377345 drm-msm-dsi: add backlight min option
-a54abf3e2bc9 drm/msm: skip sde_dbg compilation altogether
-264cf95bc02c drm/msm/sde: Remove register write debug logging
-6c6a9f3132d0 drm/msm/sde: Omit debug logging code
-956d648b70db drm/msm: Omit SDE event log and most debugfs code
-dc431b391bfe drivers/gpu/drm: Fix GCC 11 compiler warnings
-0b849976ab8b drm: Synchronize codes for Oneplus 6T OxygenOS 11/ Oneplus 6 OxygenOS 11
-d5622192cbeb drm: [SQUASH] Revert LineageOS display panel handling commits
-b8a343b1a9d7 Synchronize codes for Oneplus 6/6T OxygenOS 11.1.2.2
-0c2c9579e1a4 {Fix for USB Eye-diagram Near and OTG test failure}
-db8cbbdbe65e {Debug patch for fixing USB eye-diagram failure}
-ca2c2af84e6b input: synaptics: s3320: add haptic feedback control sysfs
-3cb4375c44ae qpnp-haptics: reduce log spam
-4f7c5a2f1ba4 leds-qpnp-haptics: add separate node for call vibration
-23e24a0ad18d leds-qpnp-haptics: add separate nodes for tap and notifications
-cad0e238b1c2 leds-qpnp-haptic: allow disabling vibration
-6e99a3a3be9d leds-qpnp-haptics: allow user adjustment
-77a4c07c24a1 leds-qpnp-haptics: expose vibrator
-1a010498c8e0 qpnp-haptics: Synchronize codes for OnePlus 6/6T OxygenOS 11
-286fc9293fdd Revert "Revert "power: fg-gen3: Report TIME_TO_FULL_NOW property""
-0540ecaf9aed defconfig: Update for crDroid
-68327da9d2c4 Synchronize codes for Oneplus 6/6T OxygenOS 11.1.1.1
-ea6a8e757ad8 Add HT_IOC_COLLECT ioctl call for data export to userspace
-60a75e0144f5 To prevent Kernel Bug add null check in houston
-5d79ade17d2d High power consumption in Real AOD 17819
-15ba46f82195 Add subsystem crash reason record and notify it by uevent
-027a5c5a54ba Add sysfs nodes for EFPS
-ec2733bd1493 enable load bytes helper for filter/reuseport progs
-aaa938c63790 Adding mutex_lock instead of mutex_trylock
-1ba1a836f11f qcacld-3.0: Free a bunch of pkts at once
-82bdd27cedde Reapply f611619e ("qcacld: reduce log spam")
-a3b24d800b32 Reapply c65600ea ("qcacld: nuke rx_wakelock code entirely")
-a170e4f83c86 Reapply 9dbef905 ("qcacld-3.0: Fix regulatory domain country names")
-fae1219da94b qcacld-3.0: Do not allow any wakelocks to be held
-28724f21f738 drivers: qcacld: reverse fw-provided mac addr
-14c0ee9fb6a4 qcacld-3.0: Fix compiler warnings
-f6b07d629178 qcacld-3.0: drop a little bit of debug
-a4bf18d1aeda qcacld-3.0: Disable build tagging
-fd6fd972b1fc qcacld-3.0: default_config: tone down debugging
-11dc5ee4a8c3 qcacld-3.0: nuke Kconfig-based configuration entirely
-b43f577b8f50 qcacld-3.0: Load driver during kernel init when not built as a module
-b060faf08685 qcacld-3.0: initialize variables to avoid errors during compilation
-1e72f03a93d4 qcacld-3.0: Disable build timestamp
-d8103ea303c7 qcacld-3.0: always force user build
-8084414b80dc qcacld-3.0: disable -Werror
-38dff502619e qcacld-3.0: Select necessary wireless extensions
-3524e1963625 drivers: staging: Build qcacld-3.0
-f289df903302 Add 'drivers/staging/fw-api/' from https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/fw-api/
-fcb20974e6e0 Add 'drivers/staging/qca-wifi-host-cmn/' from https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn/
-c97a3814e066 Add 'drivers/staging/qcacld-3.0/' from https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qcacld-3.0/
-bc27623a3e58 drivers/staging: Remove existing wifi drivers
-1162133a315f defconfig: Enable wireguard
-73b76b051a4f net/wireguard: Update wireguard to v1.0.20211208
-4e4b9729c9f1 net: wireguard: Import wireguard v1.0.20210606
-aed9be3be611 tri_state_key: Create tri_state node to match OP8/9 behavior
-
-====================
-     03-03-2022
-====================
-
-   * device/oneplus/sdm845-common
-c2edc2c3 sdm845-common: cleanup: Nuke qti-telephony-common injection
-c78cb00f sdm845-common: cleanup: Fix AVB flags
-604e6dac sdm845-common: cleanup: Remove USE_XML_AUDIO_POLICY_CONF
-e364f7bc sdm845-common: cleanup: Add missing permissions
-
-====================
-     03-02-2022
-====================
-
-   * system/sepolicy
-bc0961bc7 sepolicy: allow system app to access sysfs_leds
-
-====================
-     03-01-2022
-====================
+   * packages/apps/Launcher3
+a0e0ae30c4 New translations (#214)
 
    * packages/apps/crDroidSettings
-0db09290 New Crowdin updates (#879)
+f95488ea New translations (#897)
 
 ====================
-     02-28-2022
+     03-31-2022
 ====================
 
-====================
-     02-27-2022
-====================
-
-   * packages/apps/crDroidSettings
-9eb3eab3 New Crowdin updates (#878)
+   * external/chromium-webview
+daa29c1 Update arm{,64} Chromium Webview to 100.0.4896.58
