@@ -17,6 +17,7 @@ In order for a device to be OTA compliant, there are a few things to know.
         "download": "https://sourceforge.net/projects/crdroid/files/<device codename>/<crversion>/crDroidAndroid-12.0-<date>-<device codename>-v<crversion>.zip/download",
         "timestamp": 0000000000,
         "md5": "abcdefg123456",
+        "sha256": "abcdefg123456",
         "size": 123456789,
         "version": "<crversion>",
         "buildtype": "Testing/Alpha/Beta/Weekly/Monthly",
