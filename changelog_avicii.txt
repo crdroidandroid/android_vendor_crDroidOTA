@@ -6,6 +6,8 @@
 d0666ec avicii: update power profile entries
 
    * device/oneplus/sm7250-common
+f016658 Revert "Revert "sm7250-common: Force OPCam into MultiResolution""
+fbab56d sm7250-common: Disable debug.sf.enable_hwc_vds
 579a610 sm7250-common: Enable Average-QP feedback from Encoder to ECO
 079a17c sm7250-common: Codec2: Set minQP to 1 for IMS VT Call
 32c0a8e sm7250-common: nuke non-existent oneplus gpudriver prop
@@ -31,7 +33,8 @@ f398b28 sm7250-common: Unpin updatable-media from memory
 1b0cce6 sm7250-common: cleanup aosp Codec2 modules
 
    * kernel/oneplus/sm7250
-1c3020ec8a30 Revert "disp: msm: sde: Only clear dim layers when necessary"
+dcdabde4a3d0 i2c: busses: Add avicii specific ESD fix
+86e20c7219ba Revert "disp: msm: sde: Only clear dim layers when necessary"
 ddea6017eec9 oneplus: aw8697: Correcting vibration rhythm
 e9993956f6cb Revert "mm/vmalloc.c: don't dereference possible NULL pointer in __vunmap()"
 c6430e0bee8d lito-perf_defconfig: Regenerate config
@@ -318,16 +321,12 @@ b325beffa1 Launcher3: Return if launcher is null in notifyRecentsOfOrientation
      06-27-2022
 ====================
 
-   * build/make
-941f14a4c9 Merge pull request #40 from ShevT/12.1
-
    * frameworks/base
 3c8b4c49c1dd New Crowdin updates (#866)
 799f903f89e3 Change the wakeup alarms for "light-doze-maintenance step" to non-wakeup alarms
 a6350ec667c1 AudioService: Fix issue with linked notification volume
 8f649862e36d Merge 'lineage-19.1' into 12.1
 484c59b972c1 SystemUI: screenshot: add delay for long-press partial screenshot
-45cefae04e40 SystemUI: screenshot: close QS after launching long screenshot activity
 
    * frameworks/native
 fb1b39bc0d opengl: tests: Add explict android:exported flag to manifests
@@ -359,15 +358,33 @@ f33be7a05f Don't call entry callbacks when moving to JITed from interpreter
 8d2e1890b2 Add a null check for suppressed exception.
 137f069a3a Only madvise for jank-perceptible processes
 7310178393 Avoid inopportune GC with explicit gc() call
-29670ac99d Force inlining in `CodeInfo` constructors.
+
+   * build/make
+941f14a4c9 Merge pull request #40 from ShevT/12.1
 
    * frameworks/base
+45cefae04e40 SystemUI: screenshot: close QS after launching long screenshot activity
 92abcecfe2bd SystemUI: screenshot: disable magnification for partial screenshots
 834defa7e31a SystemUI: screenshot: add extra crop boundaries
 e110cba8fecf SystemUI: screenshot: remove duplicate clamping on move action
 13429c61674c SystemUI: screenshot: remove misplaced call to set crop view padding
 1ce45bc32ce8 SystemUI: screenshot: open long screenshot activity for partial screenshots
 61c48a1384ae Revert "SystemUI: Prevent loop with display timeout"
+
+   * packages/apps/GameSpace
+521fcf1 New Crowdin updates (#11)
+
+   * packages/apps/crDroidSettings
+94e3278d New Crowdin updates (#936)
+
+====================
+     06-25-2022
+====================
+
+   * art
+29670ac99d Force inlining in `CodeInfo` constructors.
+
+   * frameworks/base
 69ffd1778904 Clear BCB if space allocation failed
 90870a969494 ParcelableHolder: assert stability on read
 87ffb64ec2d5 Store pending override config instead of creating ActivityClientRecord
@@ -377,40 +394,16 @@ a3774d327f5c Fix inaccuracy in biometric timeout
 586c3ed5fb35 Block animation transfer after surface animation finishes.
 9f31dd040e8c Fix content insets calculation error when taking task snapshot.
 681456cad77a AudioService: PlaybackActivityMonitor: fix exploding list
-
-   * packages/apps/GameSpace
-521fcf1 New Crowdin updates (#11)
-
-   * packages/apps/Launcher3
-e0af3b0588 Launcher3: Restore blur depth on configuration change
-
-   * packages/apps/crDroidSettings
-94e3278d New Crowdin updates (#936)
-
-====================
-     06-25-2022
-====================
-
-   * frameworks/base
 04c86198b198 SystemUI: Set custom scrim alpha in ScrimState
 56e40800a5f7 SystemUI: Remove trace counter from ScrimState
 8e86c52a7b83 Revert "SystemUI: Use color accent for charging animation"
 
-   * hardware/qcom/camera
-5a517ca2 msm8998: camera: Switch to display_headers lib include
-
    * packages/apps/Launcher3
+e0af3b0588 Launcher3: Restore blur depth on configuration change
 af4958f5f3 Launcher3: Set hotseat icons to 4 for 4_by_5 grid
 bac5c184b1 Launcher3: Add device category for additional profiles
 310bec5e08 Launcher3: Sort device profiles
 d4ca0f705c Launcher3: Adjust the icon size to the grid size
-cb7212a996 Launcher3: Update icons from lawnicons_teamfiles
-
-   * vendor/lineage
-18ba40dd kernel: Move TARGET_KERNEL_ADDITIONAL_FLAGS to kernel task
-9499e403 config: Don't pass CFLAGS_MODULE="-fno-pic" if using LLVM
-a9667c36 kernel: Switch to AOSP DTC instead of using scripts/dtc
-c6140232 kernel: Use LLVM's substitutes for GNU binutils if possible
 
 ====================
      06-24-2022
@@ -430,6 +423,9 @@ db5f5d2f38a8 services: fix a synchronization issue in CachedAppOptimizer
    * frameworks/native
 ef81c36184 Merge branch 'lineage-19.1' into 12.1
 
+   * hardware/qcom/camera
+5a517ca2 msm8998: camera: Switch to display_headers lib include
+
    * packages/apps/Camera2
 a31a99491 Camera2: remove unused drawables
 581cc9bf6 Camera2: remove duplicate getDisplayRotation()
@@ -438,6 +434,7 @@ a31a99491 Camera2: remove unused drawables
 4ec4b86 GameSpace: Improve strings
 
    * packages/apps/Launcher3
+cb7212a996 Launcher3: Update icons from lawnicons_teamfiles
 d4573e5cf8 TaskViewUtils: add a null check on topMostSimulators array
 
    * system/sepolicy
@@ -459,5 +456,9 @@ b75432d vold: Accept Linux GPT partitions on external SD cards
 74a24d6 vold: add support for more filesystems for public storage
 
    * vendor/lineage
+18ba40dd kernel: Move TARGET_KERNEL_ADDITIONAL_FLAGS to kernel task
+9499e403 config: Don't pass CFLAGS_MODULE="-fno-pic" if using LLVM
+a9667c36 kernel: Switch to AOSP DTC instead of using scripts/dtc
+c6140232 kernel: Use LLVM's substitutes for GNU binutils if possible
 d0b8053d build: Disable ABI checks
 
