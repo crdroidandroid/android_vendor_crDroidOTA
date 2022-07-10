@@ -1,0 +1,331 @@
+crDroid 8.6
+
+Changelog since Android 11...?
+I dunno, there have been a ton of test builds since EdwinMoq & Luk1337 started the huge undertaking of building vendor from source, which was needed for the Android 12 bringup in the first place.
+(No thanks to OnePlus, who couldn't make a proper GSI-compatible vendor partition in OxygenOS 11.x; that's essentially why it took so long)
+Anyway, after months & months, here's the initial official crDroid 8.x commit:
+- Merged Android Security Bulletins up to June 2022 from upstream.
+- We're finally building vendor from source, huzzah!
+- Everything is ugly and funny sizes and statusbar stuff & display cutout handling is all a mess and it's all Google's fault.
+- There are still kinks to be worked out due to how recently we started building vendor from source, but it's coming along and already definitely daily-driver material.
+- OxygenOS Camera & Gallery work pretty much flawlessly. On a related note, I hate sepolicy a lot, but got somewhat better at it.
+
+Known issues:
+- For single-press "Screen-off UDFPS" to work on fajita, you need something else enabled that keeps the screen digitizer awake (like turning on DT2W or set up a screen-off gesture).
+- Basically everything that's still funky in upstream LineageOS:
+-- No audio passed to remote display when casting via wifi display/miracast.
+-- Enchilada has no display cutout antialiasing (it uses NoCutoutOverlay, which allows for "Hide" mode in Developer Options > Display cutout, but that currently causes it not to render the software cutout pat>
+-- Enchilada still doesn't properly display the "Battery estimate" in the statusbar when pulling down the QS/Notification shade.
+-- Fajita might get ugly blank space at the top of the screen after rebooting before first unlock. After first unlock it's fine.
+-- Up-arrow screen-off gesture doesn't work (something else is eating that keycode); all the rest work with the caveat that single side swipes don't work unless they're BOTH assigned to an action.
+-- The NFC stack will crash if something tries to *read* data from the phone. So NFC payments via Google Wallet/Pay/whatever-it-is-this-week should work, but Android Beam/Nearby Sharing will fail and require >
+
+Build type: Monthly
+Device: OnePlus 6T (fajita)
+Device maintainer: Jordan Whiteley (Terminator_J)
+Required firmware: OxygenOS 11.1.2.2
+
+====================
+     07-09-2022
+====================
+
+   * device/oneplus/enchilada
+a83fb6a enchilada: cleanup: Overlays
+accc820 enchilada: Update build props
+67c38b0 enchilada: Update power_profile.xml
+59f99a2 enchilada: overlay: Update power profile to match framework change
+7e35dfb enchilada: overlays: Add cutout approximation
+
+   * device/oneplus/fajita
+efbfca0 fajita: cleanup: Overlays
+e9e024c fajita: Update build props
+7af6491 fajita: Update power_profile.xml
+1189f2e fajita: overlay: Update power profile to match framework change
+
+   * device/oneplus/sdm845-common
+54b6b5b0 Revert "Revert "sdm845-common: Specify device has a notch""
+a03c0e6a sdm845-common: audio: Fixup! Finish removing vorbis
+4fff0339 sdm845-common: audio: Add hotword input for hotword mic concurrency
+61068d93 sdm845-common: common.mk: make dex2oat go fast
+47581247 sdm845-common: overlay: Update config_ims_rcs_package to use new ImsService
+021eaf06 sdm845-common: overlay: Enable Battery Health
+949c0612 sdm845-common: Enable blur
+41ca43aa sdm845-common: Disable debug.sf.latch_unsignaled from prop.
+2bec1319 sdm845-common: rootdir: Fixup! Finish disabling UFS clock scaling
+e98b78f4 sdm845-common: vendor: Add cnss_diag to proprietary files
+1efce694 sdm845-common: cleanup: Fix up sepolicy & init scripts
+a02fb560 sdm845-common: overlay: Exempt packages from privacy indicator
+579dbd1e sdm845-common: props: Enable AAC frame control for BT HAL
+7b2b2048 sdm845-common: props: Force triple frame buffers
+592327e5 sdm845-common: sepolicy: Add permission for cnss-daemon to write in persist folder
+7d158457 sdm845-common: wifi: Enable nl broadcast logging and disable packet logging
+0ca5342d sdm845-common: wifi: Disable WLAN Firmware loggings
+1e0fe339 sdm845-common: wifi: Disable RX wakelock feature
+3a1b4ed1 sdm845-common: props: Enable QCRIL radio power saving
+7133d1a0 sdm845-common: init: Change perms to hide Magisk in banking apps
+54f9a03f sdm845-common: wifi: Relax RSSI thresholds
+0c7a02d0 sdm845-common: wifi: Import Syberia config
+2f53e8f7 sdm845-common: Add missing IMS symlinks
+3eddc19d sdm845-common: sepolicy: Make sake ims.apk great again
+f7228978 sdm845-common: sepolicy: Address denials
+196e6d2f sdm845-common: zram: Tuning, sepolicy
+1f59222b sdm845-common: overlay: CarrierConfig: Disable config_update_service_status
+259bd96d sdm845-common: sepolicy: Fixup OnePlus Camera sepolicy
+2870b021 sdm845-common: sepolicy: Let oneplus camera have its own domain
+adf4ccc4 sdm845-common: packages: Include prebuilt OnePlus Camera
+e1528a7a sdm845-common: packages: Add Google Camera support
+9c942ece sdm845-common: packages: Remove Snap camera app
+4ffefd68 sdm845-common: DeviceExtras: Move init actions to 'on boot completed'
+c4a0756f sdm845-common: DeviceExtras: Configure & ship DeviceExtras
+95979836 sdm845-common: livedisplay: Drop SunlightEnhancement & AntiFlicker
+61bc85c8 sdm845-common: rootdir: Clean up some display stuffs
+578ac2a5 sdm845-common: livedisplay: Sync with sm8150-common
+3faeb0df sdm845-common: tri-state-key: Switch to vendor
+7c01baff sdm845-common: overlay: Fix hyper orange night light
+e8318552 sdm845-common: overlay: configure SQLite to operate in MEMORY mode
+8982caf7 sdm845-common: overlay: Don't pin camera app in memory
+bc6a4c74 sdm845-common: overlay: Enable crDroid features & customization
+4d364e20 sdm845-common: cleanup: Remove obsolete overlays
+cb6c3d76 sdm845-common: cleanup: Remove obsolete tethering overlays
+f3db3312 sdm845-common: overlay: Enable HFP inband ringtone
+6542eca3 sdm845-common: overlay: Enable config_powerDecoupleInteractiveModeFromDisplay
+37b798e9 sdm845-common: overlay: Add Ethernet type in network attributes
+2c747faa sdm845-common: Nuke qti thermal hal
+8ffaad71 sdm845-common: BoardConfig: Pass LLVM=1 for kernel
+7248c444 sdm845-common: f2fs: Re-enable f2fs-formatted userdata support
+263f60bd sdm845-common: vendor: Fixup! Decommonize more blobs [3/3]
+b24e6c71 sdm845-common: vendor: Add halide/hexagon blobs
+78ed7eff sdm845-common: cleanup: Address sepolicy denials
+7ef1aeb2 sdm845-common: cleanup: AB_OTA_UPDATER is BoardConfig variable.
+666fb179 sdm845-common: init: Add init script to set properties per variant
+57b373b4 sdm845-common: crdroid: Rebase on lineage-19.1 as of June 2022
+6867263c sdm845-common: sepolicy: Address init denials regarding socket_device
+c137a33b sdm845-common: sepolicy: Add write permission to proc file system
+3af10200 sdm845-common: sepolicy: Allow writing WLAN driver/fw version into property
+894376be sdm845-common: Allow sensors HAL to read fp_irq
+31f95983 sdm845-common: sepolicy: allow vendor_init to write to blkio
+d240cd35 sdm845-common: sepolicy: Address power HAL denials
+21e14ebe sdm845-common: rootdir: Enable display idle_state mechanism
+06962dba sdm845-common: Remove IO read_ahead_kb tune
+4dd31cff sdm845-common: rootdir: Add SchedTune configuration
+38675ec0 sdm845-common: rootdir: Remove CAF's stune configuration
+5dfb1025 sdm845-common: rootdir: Kang governor settings from crosshatch
+e5fd04eb sdm845-common: rootdir: Remove qcom input boost
+3ee012d9 sdm845-common: rootdir: Change the weight of blkio background group
+52ad87a5 sdm845-common: rootdir: Apply runtime blkio settings
+f23f89a6 sdm845-common: rootdir: Kang runtime cpuset from crosshatch
+5673d56f sdm845-common: ueventd: Don't modify permissions of /dev/hw_random
+52b9a02f sdm845-common: rootdir: drop boot-time toggle on clkscale_enable
+3cd51dfd sdm845-common: init.qcom.power.rc: Disable watermark_scale_factor
+52656bb0 sdm845-common: Remove vendor-ril lib path property trigger
+
+   * kernel/oneplus/sdm845
+60c114134068 [PORT] drivers/power: Add interface for battery idle mode
+85cacdeaee51 power/supply: qpnp-fg-gen3: Fix boundary check on ESR measurement current
+780576eac7cf qpnp-fg-gen3: Limit how frequently fg data can be queried
+4783ac634af6 power: qpnp-fg-gen3: Fix soc not keeping full after charging overnight
+618f81a96463 bq27541: optimize and fix timer operations
+27b7796e22fb power: Silence charging loggers
+86f094566ac4 qcom: battery: Reduce log spam
+b8c50b475b29 drivers/power_supply/qcom: Sync with MCD kernel
+20bc39b8701d Revert "Revert "power: fg-gen3: Report TIME_TO_FULL_NOW property""
+c3bd51f829ca drm: dsi: Disable notify_fppress on panel off
+8f850e2552a2 zram: Set lz4 as default compression algorithm
+9e9bae9e2c3e zram: Move default compression algorithm choice to Kconfig
+cd21ace0822e wcd934x: add null checks to prevent crash on hardware variants
+27a52c519971 wcd934x: add speaker gain settings for 6T
+eb151b4e0cf1 wcd934x: remove speaker gain settings for 6T
+b81a428e863a wcd934x: remove headphone gain options for 6T
+e56f8d0c20fd wcd934x: sound control: reset headphone digital gain to user value
+028d6a313db2 wcd934x: add sound control
+ee37a99aa3cb drivers: misc: implement usb fast charge mode
+61b15ffb30a8 configs: Enable TTL and HL flags
+2c89d8122425 drm/msm/sde: add sysfs node in dpu driver to provide fps
+57b8e8e70037 gpu: drm: use power efficient workingqueues
+571d48993560 drm:msm: use power efficient workingqueues
+ac7baacd3c5f {Fix for USB Eye-diagram Near and OTG test failure}
+bc583cbc9035 {Debug patch for fixing USB eye-diagram failure}
+e5580b7c2970 leds-qpnp-haptics: add separate node for call vibration
+8cff5894461d leds-qpnp-haptics: add separate nodes for tap and notifications
+9b4035fca679 leds-qpnp-haptic: allow disabling vibration
+21693b465608 leds-qpnp-haptics: allow user adjustment
+47f0bad56b76 leds-qpnp-haptics: expose vibrator
+1fee4fd66f77 Adding mutex_lock instead of mutex_trylock
+c4f4eeab3f1c input: synaptics: s3320: Silence log spam
+d8113710ef8b s3320: disable unused CONFIG_SYNAPTIC_RED
+aef3af33b191 input: synaptics: s3320: add haptic feedback control sysfs
+5da237a7bea9 Synchronize codes for Oneplus 6/6T OxygenOS 11.1.1.1
+f93f0a5e0712 Add HT_IOC_COLLECT ioctl call for data export to userspace
+4fa02f423256 To prevent Kernel Bug add null check in houston
+b3215db6d9c4 High power consumption in Real AOD 17819
+eb6369516d8c Add sysfs nodes for EFPS
+b116994b07d2 enable load bytes helper for filter/reuseport progs
+22cf3da81e09 qcacld-3.0: Free a bunch of pkts at once
+41f34732761d Reapply f611619e ("qcacld: reduce log spam")
+2f18e9c142fe Reapply c65600ea ("qcacld: nuke rx_wakelock code entirely")
+c9da520439b8 Reapply 9dbef905 ("qcacld-3.0: Fix regulatory domain country names")
+a97d88374187 qcacld-3.0: Do not allow any wakelocks to be held
+fb1cc146ae01 drivers: qcacld: reverse fw-provided mac addr
+06ace46a9622 qcacld-3.0: Fix compiler warnings
+c410a1751fba qcacld-3.0: drop a little bit of debug
+dca20ff17409 qcacld-3.0: default_config: tone down debugging
+0ce11984f2fe Reapply "qcacld-3.0: nuke Kconfig-based configuration entirely"
+aebeb1db23d5 qcacld-3.0: Load driver during kernel init when not built as a module
+b7a56ce161b7 qcacld-3.0: initialize variables to avoid errors during compilation
+50e311843ecb qcacld-3.0: Disable build timestamp
+f85e90d8bbaf qcacld-3.0: always force user build
+971bf130f00b qcacld-3.0: disable -Werror
+20391cf2e0b5 qcacld-3.0: Select necessary wireless extensions
+ff3d4913ccf1 qcacld-3.0: [SQUASH] Revert some wlan changes
+3a010b398da0 defconfig: Enable wireguard
+0fc42dfbfb6c net: wireguard: Update wireguard to v1.0.20211208
+8849dbf3aeac net: wireguard: Import wireguard v1.0.20210606
+9edb051290ad tri_state_key: Create tri_state node to match OP8/9 behavior
+d780b3190755 drm: msm: Fix OnePlus's typo in display panel dtsis
+18956978b93f drm: msm: Import OnePlus color gamut mode switching code
+123a76f7e8db Revert "drm: msm: Symlink main DSI display sysfs to its parent (MDSS)"
+cf5854e81028 Revert "kernel: Add CC_WERROR config to turn warnings into errors"
+015464eb2846 Revert "ARM64: configs: Enable CONFIG_CC_WERROR"
+749df362b69d Makefile: Move -Wno-unused-but-set-variable out of GCC only block
+9ef279917563 crdroid: Update for defconfig for crDroid
+b7a6aea8802c crdroid: Rebase on lineage-19.1 as of June 2022
+22fa03fffe69 ARM64: configs: enchilada: Disable some MSM drivers
+
+====================
+     07-07-2022
+====================
+
+   * device/oneplus/sdm845-common
+70fdf684 sdm845-common: power: Keep powersaving disabled during boottime
+b6dd6aff sdm845-common: Enable UFS boottime setting
+be3f1e4e sdm845-common: Adjust charger state CPUs
+23bb1c83 sdm845-common: charger: Powersaving in charger mode
+d78e74eb sdm845-common: Don't trigger low power on charger mode
+fca1be01 sdm845-common: Remove unused services and property triggers
+665b37f0 sdm845-common: Create power init script
+bbd04010 sdm845-common: Change readahead to 128KiB on post-boot.
+22ad1691 sdm845-common: Don't use deadline
+31f11258 sdm845-common: Runtime/boottime readahead tuning
+3898c2b8 sdm845-common: I/O tuning
+558015b0 sdm845-common: rootdir: Nuke CAF's read_ahead_kb tuning
+bddc8f61 sdm845-common: rootdir: Don't configure zram in init.qcom.post_boot.sh
+bd7c57d5 sdm845-common: rootdir: Don't modify ownership of ondemand cpufreq nodes
+6661231a sdm845-common: rootdir: Remove unnecessary configurations
+278b7472 sdm845-common: rootdir: Don't install test apps
+055fbb61 sdm845-common: rootdir: Remove different soc support from post_boot script
+1024c6f6 sdm845-common: rootdir: Remove printk loglevel setup from init.qcom.sh
+1b16a865 sdm845-common: rootdir: Remove unnecessary early_boot script
+0c1d0123 sdm845-common: rootdir: Remove unnecessary class_core script
+f2eae3fe sdm845-common: rootdir: Remove conditional starting of msmirqbalance and don't disable it
+5018bcf0 sdm845-common: Delete class_main init shell script
+
+====================
+     07-06-2022
+====================
+
+   * device/oneplus/sdm845-common
+a577af06 Revert "sdm845-common: Specify device has a notch"
+
+   * device/qcom/sepolicy_vndr
+7847a983 sepolicy_vndr: generic: Fix compile after merge
+
+   * external/arm-optimized-routines
+8f37fc2 Merge branch 'master' of https://github.com/ARM-software/optimized-routines into 12.1
+2be3834 string: Optimize string functions with shrn instruction
+
+   * frameworks/base
+b03526699922 New Crowdin updates (#867)
+
+   * hardware/qcom-caf/sm8250/audio
+5b61833d1 Merge tag 'LA.UM.9.12.r1-14300-SMxx50.0' into staging/lineage-19.1_merge-LA.UM.9.12.r1-14300-SMxx50.0
+
+   * packages/apps/GameSpace
+233f3cf New Crowdin updates (#13)
+
+   * packages/apps/Launcher3
+90a92287dd New Crowdin updates (#250)
+
+   * packages/apps/Updater
+ae1487b New translations (#34)
+
+   * packages/apps/crDroidSettings
+e8f0a218 New Crowdin updates (#938)
+
+====================
+     07-05-2022
+====================
+
+   * frameworks/base
+15fd187897a3 QS: Define state for sound tile
+
+====================
+     07-04-2022
+====================
+
+   * external/arm-optimized-routines
+94ed5b9 string: simplify M-profile strlen PACBTI epilogue
+9776149 string: simplify M-profile memchr PACBTI epilogue
+
+   * frameworks/base
+12b3dfced0e7 fixup! SystemUI: Clean up and fix QQS Brightness slider padding
+
+   * vendor/lineage
+c9c9057f Revert "config: Disable remote keyguard animation until it's fixed"
+20718972 device_config: Disable always screen on
+
+====================
+     07-02-2022
+====================
+
+   * device/oneplus/enchilada
+43192bb enchilada: bluetooth: Update bdroid_buildcfg.h for QTI BT stack
+88a0f87 enchilada: vendor: Fixup! Decommonize more blobs [1/3]
+aa07af0 enchilada: packages: Remove LineageOS PocketMode
+
+   * device/oneplus/fajita
+30fe6b9 fajita: overlay: Clean up statusbar overlays
+e1c5f8f fajita: bluetooth: Update bdroid_buildcfg.h for QTI BT stack
+e981852 fajita: vendor: Fixup! Decommonize more blobs [2/3]
+
+   * frameworks/base
+81e57f6d5cb1 SystemUI: Fix QS mobile icon disappearing on theme switch
+90f5534929ce SystemUI: Add current divider config for lockscreen charging
+
+====================
+     07-01-2022
+====================
+
+   * frameworks/base
+0176b743911a SystemUI: Clean up and fix QQS Brightness slider padding
+0936bfcbca52 SystemUI: Fix QS clock overlapping on UI mode change
+f54ef7bfad56 Make DPC respect overlaid min/max brightness values
+6fd563c330b1 display: Force a reset if brightness adjustment is changed directly
+e017b84da7b9 display: Restore brightness adjustment on boot
+2a0f0380950d display: Don't reset brightness adjustment on clearUserDataPoints()
+01c5b4cceda3 display: Don't let "extra dim" affect brightness adjustment
+
+   * hardware/oneplus
+0edadda DeviceExtras: uibench: Convert switch to else-if
+028109a DeviceExtras: Nuke doze
+124d96e DeviceExtras: Adapt for crDroid
+
+   * packages/apps/Messaging
+da0c9aa SimIconView: Don't intercept touch events when there's nothing to do
+8dc00eb Messaging: Do not check preferred sim if conversation sim exist
+
+   * packages/apps/Settings
+92dd9446c6 Settings: Add thumb for balance slider
+
+   * vendor/oneplus/apps
+a273bca sdm845: Add camera from OOS 11.1.2.2
+
+====================
+     06-30-2022
+====================
+
+   * frameworks/base
+370c02161ca0 SystemUI: Fix suspicious spaces around mobile icons
+
+   * hardware/qcom-caf/sm8250/audio
+93d1f384d audio: configs: Don't advertise vorbis offloading support
+
