@@ -1,174 +1,87 @@
-crDroid 7.19
+crDroid 7.20
 
-Changelog since v7.16 release:
-- Merged April, May, and June 2022 Android Security Bulletins from upstream.
+Changelog since v7.19 release:
+- Merged July 2022 Android Security Bulletins from upstream.
 - Whatever the devs changed upstream (not much? they're busy with cr8).
-- I honestly don't remember. I've made *some* cleanup tweaks to things since official 7.16, but the test builds for 7.17, 7.18, and now 7.19 were essentially untouched.
-- crDroid 7.x for OP6-series is in maintenance release mode now; not under active development, just merging monthly security patches as long as they're available.
 
-Build type: Monthly
+Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
 Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     06-30-2022
+     07-13-2022
 ====================
 
-   * device/oneplus/enchilada
-464f6f5 enchilada: Remove LineageOS PocketMode
-8925e86 enchilada: overlay: Customize status bar spacing
-64b0d6b enchilada: overlay: Set default hotspot ssid
-8db6114 enchilada: Rebase on lineage-18.1 as of June 2022
+   * build/make
+2832ab707b Merge 'lineage-18.1' into 11.0
 
-   * device/oneplus/fajita
-4206910 fajita: overlay: Customize status bar spacing
-b9abc0c fajita: overlay: We do not have an RGB LED on fajita
-60b1a8d fajita: fod: Enable FOD support & customization options
-a5588a1 fajita: overlay: Set default hotspot ssid
-aa0a9ed fajita: Rebase on lineage-18.1 as of June 2022
+   * frameworks/base
+646414f426ab Mute BatteryStatsImpl CPU uid readers log
+194e60d3f263 Merge 'lineage-18.1' into 11.0
 
-   * device/oneplus/sdm845-common
-67865188 sdm845-common: packages: Include prebuilt OnePlus Camera
-16b0cc06 sdm845-common: packages: Add Google Camera support
-61f7d144 sdm845-common: packages: Remove stock camera packages
-c0f6aee6 sdm845-common: packages: Implement DeviceSettings
-e4e50abf sdm845-common: tri-state-key: Bring back daemon
-f4a10ef6 sdm845-common: LiveDisplay: Strip AntiFlicker & SunlightEnhancement
-030709b4 sdm845-common: vendor: Update blobs to OxygenOS 11.1.2.2
-a0b86e70 sdm845-common: props: Allow more background apps
-87c280d0 sdm845-common: props: Explicitly enable iorap
-339ab354 sdm845-common: livedisplay: Rework the way we handle display modes
-9e01e8fb sdm845-common: livedisplay: Reset display mode prop on modeID == 0
-2ebc45a0 sdm845-common: livedisplay: Modify for OOS-style nodes
-9c6c734c sdm845-common: livedisplay: Implement IAntiFlicker interface
-7b1fc216 sdm845-common: livedisplay: Uprev to 2.1
-5f1ef2de sdm845-common: overlay: Fix hyper orange night light
-583e68ab sdm845-common: overlay: Enable Adaptive Sleep
-94b575a3 sdm845-common: overlay: configure SQLite to operate in MEMORY mode
-c39debda sdm845-common: overlay: Don't pin launcher app in memory
-c7e5d4f7 sdm845-common: overlay: Don't pin camera app in memory
-866b59f1 sdm845-common: overlay: Enable multiple vibration intensities
-2114daf4 sdm845-common: overlay: Enable crDroid features & customization
-84349282 sdm845-common: cleanup: sepolicy: nfc
-8713d5b1 sdm845-common: cleanup: Nuke qti-telephony-common injection
-e918bcc7 sdm845-common: cleanup: Fix AVB flags
-1f106480 sdm845-common: cleanup: Remove USE_XML_AUDIO_POLICY_CONF
-06f0c7a8 sdm845-common: cleanup: Add missing permissions
-251437a9 sdm845-common: cleanup: Put that thing back where it came from
-cbd3de47 sdm845-common: cleanup: Nuke pocketmode app
-1c466585 sdm845-common: BoardConfig: Pass LLVM=1 for kernel
-2f39bd19 sdm845-common: BoardConfig: Remove virtual framebuffer
-a7b59eb5 sdm845-common: BoardConfig: Remove obsolete TARGET_BOARD_PLATFORM_GPU
-3cf263a8 sdm845-common: Rebase on lineage-18.1 as of June 2022
+   * frameworks/opt/telephony
+3e2a758008 Merge 'lineage-18.1' into 11.0
 
-   * kernel/oneplus/sdm845
-8975092399f3 drm: msm: Fix OnePlus' typo in display panel dtsi's
-3e03df34b987 touchscreen: Fix warnings
-761da5873739    *_info: Remove redefinition of totalram_pages
-c8d12fa89f08    *_info: Fix snprintf size argument too large warnings
-7117c371572f oneplus: Fix unused variable warnings
-a7cec2f71945 techpack: audio: tfa9874: fix implicit conversion from enumeration type
-7c71a14d2b52 techpack: audio: fix 'snprintf' size argument being too large
-759cbb36c503 soc: qcom: minidump: Fix strlcpy usage
-00a8964eaa2e mmc: sdio: Fix strlcpy usage
-62c6a6147029 scripts: Silence a few more dtc warnings
-a6a7d8df73f3 scripts: Silent gpios_property dtc warnings by default
-3259b78e8f18 kbuild: disable new dtc graph and unit-address warnings
-8a7d4a4a093d scripts: turn off some new dtc warnings by default
-9744ddb81d93 scripts: re-enable some now fixed dtc warnings
-99657377e72d kbuild: add dtc as dependency on .dtb files
-489155748383 kbuild: fix W= option checks for extra DTC warnings
-eb946851edd7 configs: Enable TTL and HL flags
-9405409c7aaf [FIXUP] "drm: msm: Refactor fod dimming"
-83f2e8225c2e drm: msm: Refactor fod dimming
-5929b1828445 drm: msm: Rework PLANE_PROP_ALPHA handling
-e5181551db5c Apply display mode unconditionally after turning on panel.
-523491273c2b drm: msm: Symlink main DSI display sysfs to its parent (MDSS)
-caa655ff25ca drm: msm: Add support for display modes.
-4f93db2636ba drm: msm: Add support for high brightness mode (HBM)
-3e0445fb98f5 drm: msm: Restore previous display brightness when enabling display.
-fc16d46cf64a display: strip op mode strings from sysfs
-75b50e086aa6 drm/msm/sde: add sysfs node in dpu driver to provide fps
-3278c803d044 gpu: drm: use power efficient workingqueues
-c76dba8502ed drm:msm: use power efficient workingqueues
-0d4e4e1c9ef0 drivers/gpu/drm: Remove remaining OnePlus additions
-b809052cd6a1 gpu/drm/msm: Silence panel modes log spam
-45f44f8386f3 msm: dsi-display: backlight_min shouldn't be lower than 1
-b18bf5d119ee drm-msm-dsi: add backlight min option
-17b41a4c42e4 drm/msm: skip sde_dbg compilation altogether
-747b3c5ea128 drm/msm/sde: Remove register write debug logging
-858087bf4597 drm/msm/sde: Omit debug logging code
-4825f5a0c847 drm/msm: Omit SDE event log and most debugfs code
-cb21daab2fda drivers/gpu/drm: Fix GCC 11 compiler warnings
-7af17a95cee8 drm: Synchronize codes for Oneplus 6T OxygenOS 11/ Oneplus 6 OxygenOS 11
-538f63259f88 drm: [SQUASH] Revert LineageOS display panel handling commits
-15078bbd5eaf Synchronize codes for Oneplus 6/6T OxygenOS 11.1.2.2
-fa647f6db052 {Fix for USB Eye-diagram Near and OTG test failure}
-b6e707b490f4 {Debug patch for fixing USB eye-diagram failure}
-0e1728f26087 input: synaptics: s3320: add haptic feedback control sysfs
-bd7c3c98946a qpnp-haptics: reduce log spam
-377d17c7634f leds-qpnp-haptics: add separate node for call vibration
-49b67bb63bd4 leds-qpnp-haptics: add separate nodes for tap and notifications
-aa0f0ab5211f leds-qpnp-haptic: allow disabling vibration
-9e4891cdc771 leds-qpnp-haptics: allow user adjustment
-d6bdfe24feb6 leds-qpnp-haptics: expose vibrator
-7ab12819875b qpnp-haptics: Synchronize codes for OnePlus 6/6T OxygenOS 11
-7d04f8ece669 Revert "Revert "power: fg-gen3: Report TIME_TO_FULL_NOW property""
-8494fa436f54 defconfig: Update for crDroid
-db00bc4202ae Synchronize codes for Oneplus 6/6T OxygenOS 11.1.1.1
-87b834b32ae0 Add HT_IOC_COLLECT ioctl call for data export to userspace
-2c758d969810 To prevent Kernel Bug add null check in houston
-5da29e7a90cf High power consumption in Real AOD 17819
-91d847cb5b7d Add subsystem crash reason record and notify it by uevent
-ad293722e281 Add sysfs nodes for EFPS
-9cdcf22102ab enable load bytes helper for filter/reuseport progs
-0301e83c116a Adding mutex_lock instead of mutex_trylock
-67347e549e77 qcacld-3.0: Free a bunch of pkts at once
-a821c303dad2 Reapply f611619e ("qcacld: reduce log spam")
-5cf7747fcfc1 Reapply c65600ea ("qcacld: nuke rx_wakelock code entirely")
-bfc2d3720fef Reapply 9dbef905 ("qcacld-3.0: Fix regulatory domain country names")
-8b55360e42cb qcacld-3.0: Do not allow any wakelocks to be held
-d54ea3f37cdb drivers: qcacld: reverse fw-provided mac addr
-0436962f09e9 qcacld-3.0: Fix compiler warnings
-92cf4a1ffcff qcacld-3.0: drop a little bit of debug
-d63f01825439 qcacld-3.0: Disable build tagging
-fe45d1615553 qcacld-3.0: default_config: tone down debugging
-f26e086d4d2c qcacld-3.0: nuke Kconfig-based configuration entirely
-a9de8edeb19a qcacld-3.0: Load driver during kernel init when not built as a module
-3203c27eb504 qcacld-3.0: initialize variables to avoid errors during compilation
-e38cadcb33a0 qcacld-3.0: Disable build timestamp
-7be4734b3bfc qcacld-3.0: always force user build
-977e0eeea569 qcacld-3.0: disable -Werror
-ea6560f0f1cd qcacld-3.0: Select necessary wireless extensions
-8ed9856e529a drivers: staging: Build qcacld-3.0
-e112c872d77d Add 'drivers/staging/fw-api/' from https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/fw-api/
-e90f36469f7c Add 'drivers/staging/qca-wifi-host-cmn/' from https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn/
-764370c8e491 Add 'drivers/staging/qcacld-3.0/' from https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/wlan/qcacld-3.0/
-3c8d084cadef drivers/staging: Remove existing wifi drivers
-85997b5517c7 defconfig: Enable wireguard
-f267e07a3e20 net/wireguard: Update wireguard to v1.0.20211208
-422a69bef27b net: wireguard: Import wireguard v1.0.20210606
-20ef8e0d8b32 tri_state_key: Create tri_state node to match OP8/9 behavior
-137aa59616c7 Makefile: Move -Wno-unused-but-set-variable out of GCC only block
-fea46dfe4481 sdm845: Rebase on lineage-18.1 as of June 2022
+   * packages/apps/Settings
+17208783d8 Merge 'lineage-18.1' into 11.0
 
-   * system/sepolicy
-e3257afb2 sepolicy: allow system app to access sysfs_leds
+   * vendor/lineage
+3b6f3263 crdroid: Bump to version 7.20
 
-   * vendor/oneplus/apps
-a273bca sdm845: Add camera from OOS 11.1.2.2
+   * vendor/qcom/opensource/commonsys/system/bt
+4b4924075 Merge 'lineage-18.1' into 11.0
 
 ====================
-     06-29-2022
+     07-11-2022
 ====================
 
-   * system/sepolicy
-998269d5a Merge 'lineage-18.1' into 11.0
+   * build/make
+31aeb4d736 Bump Security String to 2022-07-05
 
 ====================
-     06-27-2022
+     07-07-2022
 ====================
 
-   * packages/apps/Launcher3
-21730a57bc New Crowdin updates (#248)
+   * external/chromium-webview/patches
+8213420 Update Chromium Webview to 103.0.5060.71
+
+   * frameworks/base
+391f017fb11d Merge tag 'android-security-11.0.0_r57' of https://android.googlesource.com/platform/frameworks/base into staging/lineage-18.1_merge_android-security-11.0.0_r57
+
+   * frameworks/opt/telephony
+e52741cd2f Merge tag 'android-security-11.0.0_r57' of https://android.googlesource.com/platform/frameworks/opt/telephony into staging/lineage-18.1_merge_android-security-11.0.0_r57
+
+   * packages/apps/KeyChain
+e1442b3 Merge tag 'android-security-11.0.0_r57' of https://android.googlesource.com/platform/packages/apps/KeyChain into staging/lineage-18.1_merge_android-security-11.0.0_r57
+
+   * packages/apps/Settings
+c1d72d1c6d Merge tag 'android-security-11.0.0_r57' of https://android.googlesource.com/platform/packages/apps/Settings into staging/lineage-18.1_merge_android-security-11.0.0_r57
+
+   * system/bt
+4f7d67ad5 Merge tag 'android-security-11.0.0_r57' of https://android.googlesource.com/platform/system/bt into staging/lineage-18.1_merge_android-security-11.0.0_r57
+
+   * vendor/qcom/opensource/commonsys/system/bt
+1021c2072 Security: Fix out of bound read in AT_SKIP_REST
+d65a2d613 Check Avrcp packet vendor length before extracting length
+529049544 Security: Fix out of bound write in HFP client
+
+====================
+     07-06-2022
+====================
+
+   * external/chromium-webview/prebuilt/arm64
+f2e7ccb Update Chromium Webview arm64 prebuilt to 103.0.5060.71
+
+   * external/chromium-webview/prebuilt/x86
+2a599b3 Update Chromium Webview x86 prebuilt to 103.0.5060.71
+
+   * packages/apps/crDroidSettings
+1ee8f430 New Crowdin updates (#939)
+
+====================
+     07-05-2022
+====================
+
+   * external/chromium-webview/prebuilt/arm
+079557e Update Chromium Webview arm prebuilt to 103.0.5060.71
