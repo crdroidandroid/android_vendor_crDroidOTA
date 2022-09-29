@@ -1,20 +1,28 @@
-crDroid 8.7
+crDroid 8.8
 
-Changelog since 8.6
-- Merged July 2022 ASB from upstream.
-- Fixed cutout antialiasing in enchilada.
-- Added "NoCutoutOverlay" to fajita in order to allow for "Hide" mode in Developer Options > Display cutout.
-- Blurred wallpaper for Recents background in default launcher now; long-press in blank area of home screen & choose "Settings" to test new options. Change the background opacity if you're having trouble with text legibility (dark text on dark wallpaper with light mode enabled, for example).
+Changelog since 8.7 release
+- Merged August 2022 ASB from upstream.
+- Moved OnePlusCamera & OnePlusGallery out of system partition into vendor/priv-apps/ to save space in system (should allow for bigger Google Apps packages if you insist on using something other than MindTheGapps) -- Should work fairly seamlessly coming from 8.7 official, but see installation notes below if you have trouble with OPCam or OPGallery after updating.
+- Enabled support for exFAT-formatted USB OTG drives (depends on kernel support, in case you flash a custom kernel). Technically it should allow ANY vold-supported filesystems to work, with functional kernel support, but I've only tested exFAT (works), and NTFS (doesn't work).
+- New QuickSettings tile customization options from your friendly neighborhood crDroid dev team!
+- Enchilada: Something about fingerprint blobs from upstream in Lineage. It'll probably ask you to re-enroll fingerprints.
+- Enchilada: At some point I guess battery estimate got fixed, and I didn't notice because some overlay in MinMicroG seems to override it back to not working. Sucks to be me.
+- Adjust AOD a little bit, should hopefully wake up more reliably, AND be a little brighter by default (so you can, y'know, read it).
+- Fajita: UDFPS should suck a lot less. This was probably my fault for a couple releases there; sorry.
+- Dropped SmartPixels because it's ugly af and buggy; use framework dimming ("Extra Dim") if you want the screen so dim that you can't read anything.
 
 Known issues:
-- For single-press "Screen-off UDFPS" to work on fajita, you need something else enabled that keeps the screen digitizer awake (like turning on DT2W or set up a screen-off gesture).
-- Basically everything that's still funky in upstream LineageOS:
--- No audio passed to remote display when casting via wifi display/miracast.
--- Enchilada still doesn't properly display the "Battery estimate" in the statusbar when pulling down the QS/Notification shade.
+- Basically just everything that's still funky in upstream LineageOS:
+-- No audio passed to remote display when casting via wifi display/miracast (will get fixed soon, but didn't make the cut for this month).
 -- There's ugly blank space at the top of the screen after rebooting before first unlock. After first unlock it's fine.
 -- Up-arrow screen-off gesture doesn't work (something else is eating that keycode); all the rest work with the caveat that single side swipes don't work unless they're BOTH assigned to an action.
 -- The NFC stack will crash if something tries to *read* data from the phone. So NFC payments via Google Wallet/Pay/whatever-it-is-this-week should work, but Android Beam/Nearby Sharing will fail and might require a reboot to enable NFC again.
 - Maintainer is busy af in real life and takes forever to get releases out.
+
+Installation notes:
+- I've had some people end up having privileged permissions not getting copied when using the built-in updater, which results in a bootloop at boot animation. I can't fix it for you, but if this happens to you, DON'T PANIC. You should be able to get an "adb logcat" during the bootloop on your computer with USB cable connected, and search the output for "fatal" to figure out which package is having the fatal error about missing privileged permissions. Then you can get a root shell in built-in recovery and mount system as read-write, or fastboot boot SIDDK's latest TWRP 3.6.2_12-2 or newer TWRP boot img files if you'd rather do it that way, and manually remove the offending Google app package that's missing its permissions. Check <mountpoint>/system/addon.d/ to find out if there's a rogue OTA survival script copying things over that doesn't belong there (this might have been a bug from earlier versions of Nik Gapps). You may find that just removing everything in system/addon.d/ and then reboot to recovery & manually re-flash the MindTheGapps & Magisk installers (assuming that's what you're using) before rebooting back to system and running the update will help make sure you only have what you should have in there.
+- If you experience issues with OnePlusCamera & OnePlusGallery after updating, first get App Info and clear storage & cache for both. You might have luck with "update" installing the same apk version in-place (it will ask if you want to update the app, even though it's the same version). I used OP Camera v3.14.40, which is available from here: https://www.apkmirror.com/apk/oneplus-ltd/oneplus-camera/oneplus-camera-3-14-40-release/oneplus-camera-3-14-40-android-apk-download/ and OP Gallery v4.0.297, available from here: https://www.apkmirror.com/apk/oneplus-ltd/oneplus-gallery/oneplus-gallery-4-0-297-release/oneplus-gallery-4-0-297-2-android-apk-download/
+
 
 Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
@@ -22,242 +30,48 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     07-25-2022
-====================
-
-   * frameworks/base
-d5dd3f107bcc GameSpace: Fix issue with multiple users
-
-   * packages/apps/GameSpace
-9c144f6 GameSpace: Fix inconsistencies for multi-user usage
-
-====================
-     07-24-2022
-====================
-
-   * frameworks/base
-2e523d06e1d5 PixelPropsUtils: Fix issue with text select and copy
-
-   * packages/apps/GameSpace
-94ef747 New Crowdin updates (#16)
-
-   * packages/apps/Launcher3
-15b9d371f3 Launcher3: Fix NPE on getRecentTasks
-3b41372074 New translations (#258)
-
-   * packages/apps/crDroidSettings
-486be5b8 New Crowdin updates (#945)
-
-   * vendor/lineage
-39f446d5 apns: Update mobily APN for prepaid connection
-
-====================
-     07-23-2022
-====================
-
-   * external/sqlite
-f54e452 sqlite: Update to version 3.39.2
-
-====================
-     07-22-2022
-====================
-
-   * frameworks/base
-add0846abcbc Merge pull request #875 from PacMM79/12.1
-
-   * vendor/lineage
-878d2fb7 crdroid: Fix and improve changelog script
-
-====================
-     07-21-2022
+     09-15-2022
 ====================
 
    * device/oneplus/sdm845-common
-740d96bf sdm845-common: Properly set display density props
-d80f3c46 sdm845-common: audio: Fixup! Finish removing vorbis
-11811cd8 sdm845-common: audio: Add hotword input for hotword mic concurrency
-6305eac2 sdm845-common: common.mk: make dex2oat go fast
-bb0829f7 sdm845-common: overlay: Update config_ims_rcs_package to use new ImsService
-f5db9a6d sdm845-common: overlay: Enable Battery Health
-7989fec4 sdm845-common: Enable blur
-c5864962 sdm845-common: Disable debug.sf.latch_unsignaled from prop.
-5988cfeb sdm845-common: rootdir: Fixup! Finish disabling UFS clock scaling
-f7523a9a sdm845-common: vendor: Add cnss_diag to proprietary files
-c8fde04b sdm845-common: cleanup: Fix up sepolicy & init scripts
-91bf9ce5 sdm845-common: overlay: Exempt packages from privacy indicator
-bbe979bd sdm845-common: props: Enable AAC frame control for BT HAL
-0a6877f4 sdm845-common: props: Force triple frame buffers
-6985f91c sdm845-common: sepolicy: Add permission for cnss-daemon to write in persist folder
-3320bf44 sdm845-common: wifi: Enable nl broadcast logging and disable packet logging
-87520fc3 sdm845-common: wifi: Disable WLAN Firmware loggings
-f6aa67a7 sdm845-common: wifi: Disable RX wakelock feature
-3521a910 sdm845-common: props: Enable QCRIL radio power saving
-29b74995 sdm845-common: init: Change perms to hide Magisk in banking apps
-e0105215 sdm845-common: wifi: Relax RSSI thresholds
-372e91a4 sdm845-common: wifi: Import Syberia config
-bb214ecf sdm845-common: Add missing IMS symlinks
-bb626e09 sdm845-common: sepolicy: Make sake ims.apk great again
-a8a57fc5 sdm845-common: sepolicy: Address denials
-02c12407 sdm845-common: zram: Tuning, sepolicy
-3695d416 sdm845-common: overlay: CarrierConfig: Disable config_update_service_status
-c29cac64 sdm845-common: sepolicy: Fixup OnePlus Camera sepolicy
-0e8c1e30 sdm845-common: sepolicy: Let oneplus camera have its own domain
-f220497c sdm845-common: packages: Include prebuilt OnePlus Camera
-8944a8dd sdm845-common: packages: Add Google Camera support
-49cb6336 sdm845-common: packages: Remove Snap camera app
-6d479a4a sdm845-common: DeviceExtras: Move init actions to 'on boot completed'
-304645c6 sdm845-common: DeviceExtras: Configure & ship DeviceExtras
-877f20cf sdm845-common: livedisplay: Drop SunlightEnhancement & AntiFlicker
-5e091496 sdm845-common: rootdir: Clean up some display stuffs
-a55322c8 sdm845-common: livedisplay: Sync with sm8150-common
-76d0fce9 sdm845-common: tri-state-key: Switch to vendor
-b44d049d sdm845-common: overlay: Fix hyper orange night light
-865f80f3 sdm845-common: overlay: configure SQLite to operate in MEMORY mode
-f934e60b sdm845-common: overlay: Don't pin camera app in memory
-56950356 sdm845-common: overlay: Enable crDroid features & customization
-8247343b sdm845-common: cleanup: Remove obsolete overlays
-ab16da7a sdm845-common: cleanup: Remove obsolete tethering overlays
-ec663e53 sdm845-common: overlay: Enable HFP inband ringtone
-ad36a9ab sdm845-common: overlay: Enable config_powerDecoupleInteractiveModeFromDisplay
-6b751764 sdm845-common: overlay: Add Ethernet type in network attributes
-34aaba78 sdm845-common: Nuke qti thermal hal
-17b8958f sdm845-common: BoardConfig: Pass LLVM=1 for kernel
-c11c48e2 sdm845-common: f2fs: Re-enable f2fs-formatted userdata support
-8de61b10 sdm845-common: vendor: Fixup! Decommonize more blobs [3/3]
-9d6185ef sdm845-common: vendor: Add halide/hexagon blobs
-0da1db6f sdm845-common: cleanup: Address sepolicy denials
-0fde9f70 sdm845-common: cleanup: AB_OTA_UPDATER is BoardConfig variable.
-d5433264 sdm845-common: init: Add init script to set properties per variant
-df811d58 sdm845-common: crdroid: Rebase on lineage-19.1 as of July 2022
-
-   * frameworks/base
-a035b6417052 Status bar: Update notification count overlay
-930d850e207d DozeSensors: only use proximity sensor if supported
-
-   * system/sepolicy
-42fae6e15 Merge 'lineage-19.1' into 12.1
-
-   * vendor/oneplus
-71f343bc vendor: Ignore oneplus apps dir
-
-====================
-     07-20-2022
-====================
-
-   * frameworks/base
-4a00129dde25 base: Prevent NPE for Demo mode
-15076f91e564 SystemUI: doze: add config for long press sensors that need a proximity check
-5e2eecc1280a SystemUI: doze: add config for double tap sensors that need a proximity check
-26b020116bef Partially revert "Assume sensors perform prox check"
-48e10e334261 New Crowdin updates (#872)
-
-   * packages/apps/GameSpace
-029c8ed New Crowdin updates (#15)
-
-   * packages/apps/Launcher3
-2137b4dddb New Crowdin updates (#255)
-
-   * packages/apps/crDroidSettings
-b1942c0c New Crowdin updates (#943)
-
-   * system/sepolicy
-43e581436 fixup! private: Exempt system_app from adbd_config_prop neverallow
-
-====================
-     07-19-2022
-====================
-
-   * device/lineage/atv
-4cf3172 Support restarting adb when adb port prop is set
-
-   * packages/apps/TvSettings
-ceaaf19f5 Settings: Implement ADB over network
-
-   * system/sepolicy
-b2ea519f4 private: Exempt system_app from adbd_config_prop neverallow
-
-====================
-     07-18-2022
-====================
-
-   * frameworks/base
-887eb18774a8 Skip less boring notification check when reTicker mode is active
-
-   * packages/apps/GameSpace
-b005836 GameSpace: Change tile enabled/disabled case for consistency
-03d7aaa GameSpace: Re-sort ringer mode
-44a2269 GameSpace: Remove unimplemented method from Danmaku service
-543a489 GameSpace: Properly filter duplicated notification
-700b54c GameSpace: Port in-game danmaku feature
-9d452ca GameSpace: Let's take advantage of reTicker
-896f675 GameSpace: Rearrange strings
-6a6d4b9 GameSpace: Adjust views to avoid overlap
-2764f18 GameSpace: Drop disable heads up option
-564bc4b GameSpace: Expose icon in launcher
-ed80343 GameSpace: Fix panel view not losing focus when touching outside
-9afc445 GameSpace: Fix default ringer mode value
-559907a GameSpace: Add do not change option to ringer mode
-
-   * packages/apps/Launcher3
-76b6b5d72b Launcher3: Add themed icon for GameSpace
-
-====================
-     07-17-2022
-====================
-
-   * vendor/lineage
-ff8a2258 overlay: Convert NetworkStack overlay to an RRO package
-
-====================
-     07-16-2022
-====================
-
-   * art
-2beabda933 Unlock suspend count lock before dumping threads
-58a566d884 Fix the empty profile slow down the dex2oat
-
-   * device/oneplus/enchilada
-12db928 Revert "enchilada: Disable config_fillMainBuiltInDisplayCutout"
-393b7d0 enchilada: cleanup: Overlays
-14f3c3e enchilada: Update build props
-5478fb2 enchilada: Update power_profile.xml
-750b986 enchilada: overlay: Update power profile to match framework change
-0f99ec2 enchilada: overlays: Add cutout approximation
-
-   * device/oneplus/fajita
-56c5205 fajita: Implement NoCutOutOverlay
-680d23a fajita: cleanup: Overlays
-d75641f fajita: Update build props
-c52ee35 fajita: Update power_profile.xml
-987357a fajita: overlay: Update power profile to match framework change
-
-   * hardware/oneplus
-0e4cd34 DeviceExtras: uibench: Convert switch to else-if
-313b7d1 DeviceExtras: Nuke doze
-23d22e7 DeviceExtras: Adapt for crDroid
-efdf5f5 DeviceExtras: Import RenderingJitter test from FWB
-ae6b99a New Crowdin updates (#1)
-f3e989b DeviceExtras: Force portrait screenOrientation for Kcal & PanelSettings
-e8d5128 DeviceExtras: Show warning dialogue on first launch
-42981b3 DeviceExtras: Touch: Add Google Search action
-effac54 DeviceExtras: Touch: Add Google Maps action
-749ce06 DeviceExtras: Touch: Add DeviceExtras action
-18f6390 hardware: Initial OnePlus DeviceExtras 6.5 import!
-165fd82 hardware: oneplus-fwk: Add more OnePlus bits
-cb13a3c aidl: vibrator: Update vibration effects
-a93f3a8 aidl: vibrator: Fix vibration effects and vibration based on duration
-0978a1f interfaces: Add vendor.oneplus.hardware.CameraMDMHIDL@1.0
-887f6cc crdroid: Rebase on lineage-19.1 as of July 2022
-
-   * packages/apps/Launcher3
-3a81da33c3 Launcher3: Add new icons from lawnicons
-2216a0450e Launcher3: Add toggles for recent quick actions
-e88fca50f8 Launcher3: Add recents and app drawer opacity customization
-4a926f94b9 Launcher3: Move grid style recents settings
-9eaeaf2e4b Launcher3: Add Recents section
-ed3f292f0f Revert "Launcher3: Update launcher preference icons"
-5fbdc61e82 Launcher3: Add option to control wallpaper zooming
-
-   * packages/apps/crDroidSettings
-964c6702 NotificationLightSettings: Fix NPE when led pulse not supported
-
+0b4c4b73 sdm845-common: sepolicy: Fixup! OnePlusCamera
+84f9efd5 sdm845-common: audio: Fixup! Finish removing vorbis
+1a104338 sdm845-common: audio: Add hotword input for hotword mic concurrency
+5583333e sdm845-common: audio: Enable AAC frame control for BT HAL
+ef1c83a8 sdm845-common: ux: Make dex2oat go fast
+94142241 sdm845-common: ui: Enable blur
+93e542b3 sdm845-common: ui: Exempt packages from privacy indicator
+0a5e0475 sdm845-common: wifi: Add cnss_diag to proprietary files
+42a5f19d sdm845-common: wifi: Add permission for cnss-daemon to write in persist folder
+5c24c09c sdm845-common: wifi: Enable nl broadcast logging and disable packet logging
+d568f1f9 sdm845-common: wifi: Disable WLAN Firmware loggings
+9db55df6 sdm845-common: wifi: Disable RX wakelock feature
+2d74e1c7 sdm845-common: radio: Enable QCRIL radio power saving
+3d15f348 sdm845-common: wifi: Relax RSSI thresholds
+a117f42d sdm845-common: wifi: Import Syberia config
+44fca5ac sdm845-common: telephony: Disable config_update_service_status in CarrierConfig
+161a8c89 sdm845-common: ims: Allow IMS features by default
+6de3e7a1 sdm845-common: ims: Enable vt for this device
+353b39e2 sdm845-common: ims: Use CodeAurora ImsService implementation for RCS
+d5621fe4 sdm845-common: ims: Add missing IMS symlinks
+84a56a06 sdm845-common: ims: Make sake ims.apk sepolicy great again
+3b76dbd1 sdm845-common: cleanup: Fix up sepolicy & init scripts
+67788d87 sdm845-common: sepolicy: Address denials
+0368038a sdm845-common: zram: Tuning, sepolicy
+c76208e0 sdm845-common: sepolicy: Fixup OnePlus Camera sepolicy
+ddc1e39a sdm845-common: sepolicy: Let oneplus camera have its own domain
+2530f9a7 sdm845-common: packages: Include prebuilt OnePlus Camera
+4357e75d sdm845-common: packages: Add Google Camera support
+186b6929 sdm845-common: packages: Remove Snap camera app
+6e90a1f2 sdm845-common: DeviceExtras: Move init actions to 'on boot completed'
+027771da sdm845-common: DeviceExtras: Configure & ship DeviceExtras
+b6404cce sdm845-common: livedisplay: Drop SunlightEnhancement & AntiFlicker
+10afd8bd sdm845-common: display: Clean up some init script stuffs
+c01eacc5 sdm845-common: display: Sync LiveDisplay with sm8150-common
+a2d74d8e sdm845-common: display: Properly set display density props
+860a61ea sdm845-common: display: Disable debug.sf.latch_unsignaled from prop
+f42bbec9 sdm845-common: display: Force triple frame buffers
+6876824d sdm845-common: tri-state-key: Switch to vendor
+06d4d1db sdm845-common: overlay: Fix hyper orange night light
+77163e19 sdm845-common: overlay: Don't pin camera app in memory
+8ab780e0 sdm845-common: crdroid: Enable crDroid features & customization
