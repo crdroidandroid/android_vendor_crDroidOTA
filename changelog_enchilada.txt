@@ -1,28 +1,26 @@
-crDroid 8.8
+crDroid 8.0
 
-Changelog since 8.7 release
-- Merged August 2022 ASB from upstream.
-- Moved OnePlusCamera & OnePlusGallery out of system partition into vendor/priv-apps/ to save space in system (should allow for bigger Google Apps packages if you insist on using something other than MindTheGapps) -- Should work fairly seamlessly coming from 8.7 official, but see installation notes below if you have trouble with OPCam or OPGallery after updating.
-- Enabled support for exFAT-formatted USB OTG drives (depends on kernel support, in case you flash a custom kernel). Technically it should allow ANY vold-supported filesystems to work, with functional kernel support, but I've only tested exFAT (works), and NTFS (doesn't work).
-- New QuickSettings tile customization options from your friendly neighborhood crDroid dev team!
-- Enchilada: Something about fingerprint blobs from upstream in Lineage. It'll probably ask you to re-enroll fingerprints.
-- Enchilada: At some point I guess battery estimate got fixed, and I didn't notice because some overlay in MinMicroG seems to override it back to not working. Sucks to be me.
-- Adjust AOD a little bit, should hopefully wake up more reliably, AND be a little brighter by default (so you can, y'know, read it).
-- Fajita: UDFPS should suck a lot less. This was probably my fault for a couple releases there; sorry.
-- Dropped SmartPixels because it's ugly af and buggy; use framework dimming ("Extra Dim") if you want the screen so dim that you can't read anything.
+Changelog since 8.8 release
+- Merged September 2022 ASB from upstream.
+- Change kernel to use EdwinMoq's display mode handling commit from LineageOS gerrit (merges in OOS R-11 code in with UDFPS changes for Android 12), since my "OOS Color Modes" commit had some problems.
+- Smart Charging is back! Check in Settings > crDroid Settings > Miscellaneous (uses input_suspend sysfs node; you should still use AccA if you want battery idle mode support using a dual-node setup with input_suspend and op_disable_charge).
+- Audio routes correctly over WiFi Display now! Also, remote USB mouse/keyboard control of phone from destination (if they exist on display device).
+- Talked to the crDroid dev team and got the prebuilt "70-velvet.sh" OTA survival script removed from our system/addon.d/ inclusions; should resolve some bootloop scenarios when updating.
+- Neobuddy89 fixed the unkillable bluetooth statusbar icon.
+- Re-added TWS support (missing in 8.7 & 8.8, whoops) for bluetooth earbuds.
+- Importing some USB fixes backported from Google's 4.9 Android kernel sources as requested by @Sebastian.
+- Fixes to clang/llvm compilation errors & warnings backported from lineage-20.
+- Streamlining/tidying in preparation for Android 13.
 
 Known issues:
-- Basically just everything that's still funky in upstream LineageOS:
--- No audio passed to remote display when casting via wifi display/miracast (will get fixed soon, but didn't make the cut for this month).
--- There's ugly blank space at the top of the screen after rebooting before first unlock. After first unlock it's fine.
--- Up-arrow screen-off gesture doesn't work (something else is eating that keycode); all the rest work with the caveat that single side swipes don't work unless they're BOTH assigned to an action.
--- The NFC stack will crash if something tries to *read* data from the phone. So NFC payments via Google Wallet/Pay/whatever-it-is-this-week should work, but Android Beam/Nearby Sharing will fail and might require a reboot to enable NFC again.
-- Maintainer is busy af in real life and takes forever to get releases out.
+- The usual LineageOS Android 12 things.
+- HBM will now be turned off when the screen goes off. That's how the OnePlus OxygenOS display panel handling codebase works. AutoHBM in DeviceExtras will still turn it back on if you enable that feature & the ambient light level is bright enough (like direct sunlight). Not a bug.
+- (fajita-only) The "Pocket detection" toggle in crDroid Settings > Miscellaneous will interfere with "Screen off UDFPS" (crDroid Settings > Lock screen > UDFPS customization) and "Prevent accidental wakeup" (Display settings). If you use it, turn off the others, or you might run into the screen-won't-turn-on issue. Personally, I would just disable the "Pocket detection" toggle on fajita.
 
 Installation notes:
-- I've had some people end up having privileged permissions not getting copied when using the built-in updater, which results in a bootloop at boot animation. I can't fix it for you, but if this happens to you, DON'T PANIC. You should be able to get an "adb logcat" during the bootloop on your computer with USB cable connected, and search the output for "fatal" to figure out which package is having the fatal error about missing privileged permissions. Then you can get a root shell in built-in recovery and mount system as read-write, or fastboot boot SIDDK's latest TWRP 3.6.2_12-2 or newer TWRP boot img files if you'd rather do it that way, and manually remove the offending Google app package that's missing its permissions. Check <mountpoint>/system/addon.d/ to find out if there's a rogue OTA survival script copying things over that doesn't belong there (this might have been a bug from earlier versions of Nik Gapps). You may find that just removing everything in system/addon.d/ and then reboot to recovery & manually re-flash the MindTheGapps & Magisk installers (assuming that's what you're using) before rebooting back to system and running the update will help make sure you only have what you should have in there.
-- If you experience issues with OnePlusCamera & OnePlusGallery after updating, first get App Info and clear storage & cache for both. You might have luck with "update" installing the same apk version in-place (it will ask if you want to update the app, even though it's the same version). I used OP Camera v3.14.40, which is available from here: https://www.apkmirror.com/apk/oneplus-ltd/oneplus-camera/oneplus-camera-3-14-40-release/oneplus-camera-3-14-40-android-apk-download/ and OP Gallery v4.0.297, available from here: https://www.apkmirror.com/apk/oneplus-ltd/oneplus-gallery/oneplus-gallery-4-0-297-release/oneplus-gallery-4-0-297-2-android-apk-download/
-
+- In case of bootloop (boot animation stuck for longer than about 2 minutes and never gets to lock screen), reboot to recovery and manually flash the ROM zip either via ADB sideload from computer, or from a FAT32-formatted USB thumb drive via OTG, then reboot to recovery again, and re-flash your same Google Apps/microG/Magisk/whatever install zips (again via ADB sideload or USB OTG), and reboot system. This *should* take care of any lingering errors with old things getting stuck in your /system/addon.d/ directory that might be trying to preserve old privileged system apps without privileged permissions (which is what causes those boot loops in the first place).
+- The built-in OTA updater in Settings > System > Updater goes a lot faster if you go into Updater preferences and toggle on "prioritize updater process", and make sure the screen stays on by using the Caffeine QS tile, or "never sleep while charging" toggle in Developer Options, or changing your Display timeout to 30 minutes.
+- See XDA thread for other troubleshooting other common installation issues including problems with OxygenOS Camera & Gallery.
 
 Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
@@ -30,48 +28,22 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     09-15-2022
+     10-08-2022
 ====================
 
-   * device/oneplus/sdm845-common
-0b4c4b73 sdm845-common: sepolicy: Fixup! OnePlusCamera
-84f9efd5 sdm845-common: audio: Fixup! Finish removing vorbis
-1a104338 sdm845-common: audio: Add hotword input for hotword mic concurrency
-5583333e sdm845-common: audio: Enable AAC frame control for BT HAL
-ef1c83a8 sdm845-common: ux: Make dex2oat go fast
-94142241 sdm845-common: ui: Enable blur
-93e542b3 sdm845-common: ui: Exempt packages from privacy indicator
-0a5e0475 sdm845-common: wifi: Add cnss_diag to proprietary files
-42a5f19d sdm845-common: wifi: Add permission for cnss-daemon to write in persist folder
-5c24c09c sdm845-common: wifi: Enable nl broadcast logging and disable packet logging
-d568f1f9 sdm845-common: wifi: Disable WLAN Firmware loggings
-9db55df6 sdm845-common: wifi: Disable RX wakelock feature
-2d74e1c7 sdm845-common: radio: Enable QCRIL radio power saving
-3d15f348 sdm845-common: wifi: Relax RSSI thresholds
-a117f42d sdm845-common: wifi: Import Syberia config
-44fca5ac sdm845-common: telephony: Disable config_update_service_status in CarrierConfig
-161a8c89 sdm845-common: ims: Allow IMS features by default
-6de3e7a1 sdm845-common: ims: Enable vt for this device
-353b39e2 sdm845-common: ims: Use CodeAurora ImsService implementation for RCS
-d5621fe4 sdm845-common: ims: Add missing IMS symlinks
-84a56a06 sdm845-common: ims: Make sake ims.apk sepolicy great again
-3b76dbd1 sdm845-common: cleanup: Fix up sepolicy & init scripts
-67788d87 sdm845-common: sepolicy: Address denials
-0368038a sdm845-common: zram: Tuning, sepolicy
-c76208e0 sdm845-common: sepolicy: Fixup OnePlus Camera sepolicy
-ddc1e39a sdm845-common: sepolicy: Let oneplus camera have its own domain
-2530f9a7 sdm845-common: packages: Include prebuilt OnePlus Camera
-4357e75d sdm845-common: packages: Add Google Camera support
-186b6929 sdm845-common: packages: Remove Snap camera app
-6e90a1f2 sdm845-common: DeviceExtras: Move init actions to 'on boot completed'
-027771da sdm845-common: DeviceExtras: Configure & ship DeviceExtras
-b6404cce sdm845-common: livedisplay: Drop SunlightEnhancement & AntiFlicker
-10afd8bd sdm845-common: display: Clean up some init script stuffs
-c01eacc5 sdm845-common: display: Sync LiveDisplay with sm8150-common
-a2d74d8e sdm845-common: display: Properly set display density props
-860a61ea sdm845-common: display: Disable debug.sf.latch_unsignaled from prop
-f42bbec9 sdm845-common: display: Force triple frame buffers
-6876824d sdm845-common: tri-state-key: Switch to vendor
-06d4d1db sdm845-common: overlay: Fix hyper orange night light
-77163e19 sdm845-common: overlay: Don't pin camera app in memory
-8ab780e0 sdm845-common: crdroid: Enable crDroid features & customization
+   * frameworks/base
+5a96d2b14dcf SystemUI: Fix tuner pref for bluetooth
+939674eedf42 New Crowdin updates (#899)
+
+   * packages/apps/Dialer
+5dae1b131 New translations cr_strings.xml (Spanish) (#26)
+
+   * packages/apps/GameSpace
+fd2d345 New translations (#27)
+
+   * packages/apps/Launcher3
+65ca720612 New Crowdin updates (#283)
+
+   * packages/apps/crDroidSettings
+cbd1852c New Crowdin updates (#973)
+
