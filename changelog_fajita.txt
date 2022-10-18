@@ -1,7 +1,8 @@
-crDroid 7.21
+crDroid 7.22
 
-Changelog since v7.20 release:
-- Merged August 2022 Android Security Bulletins from upstream.
+Changelog since v7.21 release:
+- Merged September 2022 Android Security Bulletins from upstream.
+- Added exFAT support for USB OTG drives (how about that, something new).
 - Whatever the devs changed upstream (not much? they're busy with cr8).
 
 Build type: Monthly (-ish)
@@ -10,112 +11,47 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     08-23-2022
+     09-30-2022
 ====================
 
-   * vendor/oneplus
-e006d96 vendor: Ignore oneplus apps dir
+   * device/oneplus/sdm845-common
+f8cc840f sdm845-common: fstab: TESTING Enable all supported USB OTG filesystems
+
+   * kernel/oneplus/sdm845
+adb556365e2c fs: Enable exFAT support from drivers/oneplus
+
+   * vendor/oneplus/apps
+4dd193f sdm845: Add OnePlusGallery to hiddenapi allowlist
+8f31061 sdm845: Use presigned cert for Camera & Gallery
+f097107 sdm845: Add camera from OOS 11.1.2.2
 
 ====================
-     08-21-2022
+     09-25-2022
 ====================
 
-   * frameworks/base
-1c5a5a9b2efb New translations (#889)
-
-   * packages/apps/Launcher3
-98f93ea5d6 New Crowdin updates (#270)
-
-   * packages/apps/crDroidSettings
-266d3016 New Crowdin updates (#953)
+   * vendor/addons
+8363ae3 Move bootanimation to product
+e659cae overlay: Use -television instead of -large-notouch for atv
+f96bae8 overlay: update default wallpaper for large-notouch
 
 ====================
-     08-19-2022
+     09-23-2022
 ====================
 
-   * external/chromium-webview/patches
-0b5bf7d Update Chromium Webview to 104.0.5112.97
-
-   * external/chromium-webview/prebuilt/arm
-9ca6364 Update Chromium Webview arm prebuilt to 104.0.5112.97
-
-   * external/chromium-webview/prebuilt/arm64
-f885027 Update Chromium Webview arm64 prebuilt to 104.0.5112.97
-
-   * external/chromium-webview/prebuilt/x86
-eb439a3 Update Chromium Webview x86 prebuilt to 104.0.5112.97
+   * android
+74fbde4 Merge 'lineage-18.1' into 11.0
 
 ====================
-     08-16-2022
-====================
-
-   * frameworks/base
-d793a9d1fad6 Merge pull request #888 from Hikari-no-Tenshi/11.0-debug
-61fa5edfca77 OpaLayout: Less logging
-14738cc1855d NavigationModeController: Mute debug logging.
-e846db7b20bb FODAnimation: Disable DEBUG
-
-====================
-     08-15-2022
+     09-22-2022
 ====================
 
    * bionic
-48ace963f Re-enable LTO for linker
+5943fd929 Revert "Re-enable LTO for linker"
 
-   * frameworks/base
-62ad24c949bd PixelPropsUtils: Update fingerprints to Android 13 August 2022 release
-f0239bb3937b BluetoothControllerImpl: Backport synchronize connected devices
-
-   * frameworks/native
-a314c8b566 SF: Scheduler: vote max for NOTIFICATION_SHADE
-996e6ed4bc SF: Scheduler: Follow A12 voting sequence
-47d7a095f3 SF: Scheduler: add more window types to consider NoVote
-
-====================
-     08-14-2022
-====================
-
-   * bootable/recovery
-cfefd4bc recovery: Skip verifying packages altogether
-594de4fa Revert "recovery: New install/progress animation"
-711a707d recovery: rebrand to crDroid
-
-   * build/soong
-de2229f7a soong: cc: Enable global O3
-
-   * frameworks/base
-e0a495e2ac5e SystemUI: Remove excess margin from data saver icon
-b15ffdf3b459 Fix bug in Blend that did not use options.
-22232159968b Fix virtual display cannot be relased.
-e42b5219cfe1 Changing max SampleRate limits for raw audio decoder
-55992d138b7c AutofillManager: Turn off logging by default
-94d682c7d467 Link dialog radius to config_dialogCornerRadius
-2a120156d839 SystemUI: Better QS detail clip animation
-9a02867fa377 Battery Styles: Hide plus when showing battery percentage inside icon
-06e996386d7b Pulse: Set current Refresh rate as FPS animation value
-468eeda6efbc DataSwitchTile: Update SIMs QS icons
-df1e975d6b7c base: fix list style alert dialog to use system font
-749c7dab4047 base: Update few drawables
-2bb8cbb0d07e base: Update ic_doc_folder drawable to MD2
-1988f1356387 base: Use MD2 icon for missed call notification
-17ea2242c022 BluetoothControllerImpl: fetch battery level from any device
-812374336b1d BluetoothControllerImpl: synchronize mConnectedDevices access
-6e9846ae24fc AudioService: catch RuntimeException for IServiceManager.getService
-9c4d6d8da29d PreviewInflater: Fix issue with google dialer widget on keyguard
-6c88fa7d803d SystemUI: Fix pulseOut fails before fully pulsing
-6b059ee13002 base: log spill when dragging
-9afa03ca5aa0 frameworks: Fix null pointer issue in ArrayAdapter
-c6b3073cccfd InputWrapper: Opt out early if session == null
-1a382730d6c2 AudioService: PlaybackActivityMonitor: fix exploding list
-242a84175934 AudioService: Fix issue with linked notification volume
+   * packages/apps/Contacts
+611aa9225 Merge pull request #4 from Hikari-no-Tenshi/11.0
+e67be20f8 Fix white background on dark themes in Expanding Entry Card View
 
    * packages/apps/crDroidSettings
-fd01f8a7 crdroid: doze: Fix handwave & proximity pulse conflict
+5985494a New Crowdin updates (#969)
 
-   * vendor/lineage
-0c507312 overlay: Update SettingsProvider defaults
-fdf8caa7 config: Optimize Launcher3 and Settings for speed
-cb5dac07 crdroid: Fix and improve changelog script
-2389935c apns: Update mobily APN for prepaid connection
-9eb7444c build: Override host metadata
-b18628e9 build: Disable ABI checks
