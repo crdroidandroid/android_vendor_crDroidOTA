@@ -13,8 +13,8 @@ In order for a device to be OTA compliant, there are a few things to know.
         "maintainer": "Name (nickname)",
         "oem": "OEM",
         "device": "Device Name",
-        "filename": "crDroidAndroid-12.0-<date>-<device codename>-v<crversion>.zip",
-        "download": "https://sourceforge.net/projects/crdroid/files/<device codename>/<crversion>/crDroidAndroid-12.0-<date>-<device codename>-v<crversion>.zip/download",
+        "filename": "crDroidAndroid-12.1-<date>-<device codename>-v<crversion>.zip",
+        "download": "https://sourceforge.net/projects/crdroid/files/<device codename>/<crversion>/crDroidAndroid-12.1-<date>-<device codename>-v<crversion>.zip/download",
         "timestamp": 0000000000,
         "md5": "abcdefg123456",
         "sha256": "abcdefg123456",
@@ -78,7 +78,7 @@ chmod +x createjson.sh
 ### 3.2 Update build ###
 1. Clone this repo locally
 ```
-git clone https://github.com/crdroidandroid/android_vendor_crDroidOTA -b 12.0
+git clone https://github.com/crdroidandroid/android_vendor_crDroidOTA -b 12.1
 ```
 2. Change to the directory where you cloned this repo (android_vendor_crDroidOTA) and fetch updates from repo.
 ```
