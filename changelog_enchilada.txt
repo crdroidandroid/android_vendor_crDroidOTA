@@ -1,10 +1,8 @@
-crDroid 8.11
+crDroid 8.12
 
-Changelog since 8.10 release
+Changelog since v8.11 release:
 - Merged November ASB & changes from upstream LineageOS device/kernel/vendor trees.
-- Updated device tree with a couple bug fixes that came to light in Android 13 testing.
-- Updated kernel commit stack with updates from MCD r19 (thanks, Danny <3).
-- Adreno GPU driver should no longer aggressively downlock GPU below 40% battery life, making everything terrible even if CPU frequencies were unaffected.
+- Whatever the ROM dev teams changed upstream in LineageOS and crDroid sources (not much? they're busy with Android 13).
 - Other misc fixes ... probably.
 
 Known issues:
@@ -13,7 +11,8 @@ Known issues:
 Thankfully this seems to be fixed in crDroid 9 (Android 13), so I definitely recommend upgrading if that's a problem for you.
 
 Installation notes:
-- In case of bootloop (boot animation stuck for longer than about 2 minutes and never gets to lock screen), reboot to recovery and manually flash the ROM zip either via ADB sideload from computer, or from a FAT32-formatted USB thumb drive via OTG, then reboot to recovery again, and re-flash your same Google Apps/microG/Magisk/whatever install zips (again via ADB sideload or USB OTG), and reboot system. This *should* take care of any lingering errors with old things getting stuck in your /system/addon.d/ directory that might be trying to preserve old privileged system apps without privileged permissions (which is what causes those boot loops in the first place).
+- In case of bootloop (boot animation stuck for longer than about 2 minutes and never gets to lock screen), reboot to recovery and manually flash the ROM zip either via ADB sideload from computer, or from a FAT32-formatted USB thumb drive via OTG, then reboot to recovery again, and re-flash your same Google Apps/microG/Magisk/whatever
+install zips (again via ADB sideload or USB OTG), and reboot system. This *should* take care of any lingering errors with old things getting stuck in your /system/addon.d/ directory that might be trying to preserve old privileged system apps without privileged permissions (which is what causes those boot loops in the first place).
 - The built-in OTA updater in Settings > System > Updater goes a lot faster if you go into Updater preferences and toggle on "prioritize updater process", and make sure the screen stays on by using the Caffeine QS tile, or "never sleep while charging" toggle in Developer Options, or changing your Display timeout to 30 minutes.
 - See XDA thread for other troubleshooting other common installation issues including problems with OxygenOS Camera & Gallery.
 
@@ -23,29 +22,18 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     12-07-2022
+     01-08-2023
 ====================
 
-   * packages/apps/Dialer
-ec386fef6 New translations cr_strings.xml (Spanish, Venezuela) (#36)
+   * packages/apps/Updater
+a8b2177 New translations (#45)
+
+   * packages/apps/crDroidSettings
+da988047 New translations (#1004)
+
+====================
+     01-05-2023
+====================
 
    * packages/apps/Launcher3
-7af83c06f7 New Crowdin updates (#300)
-
-====================
-     12-05-2022
-====================
-
-   * external/dtc
-6c6c2f9 libfdt: fdt_path_offset_namelen: Reject empty paths
-
-   * packages/apps/EmergencyInfo
-5cad118 Prevent exfiltration of system files via avatar picker.
-2c8f66f Revert "Prevent exfiltration of system files via user image settings."
-
-   * vendor/nxp/opensource/pn5xx/halimpl
-4895fd35 OOBR in NxpMfcReader::SendIncDecRestoreCmdPart2
-
-   * vendor/nxp/opensource/sn100x/halimpl
-d7d33dd4 OOBR in NxpMfcReader::SendIncDecRestoreCmdPart2
-
+91a45c7e0b Launcher3: Update icons from lawnicons
