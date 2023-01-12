@@ -1,12 +1,9 @@
-crDroid 7.24
+crDroid 7.25
 
-Changelog since v7.23 release:
-- Merged November 2022 Android Security Bulletins from upstream.
-- Updated the kernel exFAT driver from the ancient OnePlus version to arter97's maintained version, same as in Android 12 & 13.
-- Updated included OnePlus Gallery app to v4.0.297 (requires a Google account to download expansion pack)..
-- Build & ship ih8sn inline (was already getting "Device is certified" out of the box in Play Store, maybe this will help with other banking apps & such).
-- Whatever the devs changed upstream (not much? they're busy with cr9).
-- This is likely the last release, since I'm focusing on cr9.x (Android 13) primarily now in my limited available volunteer time.
+Changelog since v7.24 release:
+- Merged December 2022 Android Security Bulletins from upstream.
+- Whatever the ROM dev team changed upstream in LineageOS and crDroid sources (not much? they're busy with Android 13).
+- Made some changes that hopefully help with enabling IMS features (VoLTE, VoWiFi, video calling) by default in case some carrier configs aren't updated. If it still didn't help you, I'm sorry; issues in Android 11 at this point are basically can't fix/won't fix.
 
 Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
@@ -14,58 +11,64 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     11-28-2022
+     12-19-2022
 ====================
 
    * device/oneplus/sdm845-common
-f5b4751e sdm845-common: ih8sn: Build & ship ih8sn inline
-ceeff15f sdm845-common: fstab: TESTING Enable all supported USB OTG filesystems
-5dfdd7c9 sdm845-common: packages: Include prebuilt OnePlus Camera
-
-   * kernel/oneplus/sdm845
-236143a3eee5 fs: exfat: Enable Arter97's exFAT driver
-42e4d22b56db fs: exfat: Import Arter97's exfat-linux driver
-6c48a44e4782 drivers: oneplus: Nuke OnePlus' ancient exFAT driver.
-
-   * vendor/oneplus/apps
-1a7f7a7 sdm845: Update OnePlus Gallery to v4.0.297
+a4167bb8 sdm845-common: telephony: Enable VoLTE and VoWIFI for all carriers
+dfbb0e53 sdm845-common: telephony: Disable config_update_service_status in CarrierConfig
+6e3740d6 sdm845-common: ims: Allow IMS features by default
+7f542cd3 sdm845-common: ims: Enable vt for this device
 
 ====================
-     11-26-2022
-====================
-
-   * packages/apps/Contacts
-17b299a2e Merge pull request #5 from Hikari-no-Tenshi/11.0
-f140af89f Inherit from dark styles for dark themes
-
-====================
-     11-25-2022
-====================
-
-   * tools/repohooks
-c9b193c Merge "Send clang-format path when invoking aidl-format"
-e19860b Send clang-format path when invoking aidl-format
-
-====================
-     11-24-2022
+     12-17-2022
 ====================
 
    * packages/apps/crDroidSettings
-0849a194 New Crowdin updates (#989)
+95dae85b New Crowdin updates (#995)
 
 ====================
-     11-19-2022
+     12-12-2022
 ====================
 
-   * bootable/recovery
-29696482 Merge 'lineage-18.1' into 11.0
+   * android
+0224a9b Merge 'lineage-18.1' into 11.0
 
    * build/make
-ac4990a8ff Merge 'lineage-18.1' into 11.0
+72f4472ad6 Merge 'lineage-18.1' into 11.0
 
    * frameworks/base
-7e0727a5985f Merge 'lineage-18.1' into 11.0
+6fe6e0374947 PixelPropsUtils: Update fingerprints to December 2022
+cfc2f9e841b8 Update fingerprint overlays position
+dfe9917e9a20 Merge 'lineage-18.1' into 11.0
 
-   * packages/apps/crDroidSettings
-dc477f5a New Crowdin updates (#986)
+   * frameworks/native
+6a37c2c100 Merge 'lineage-18.1' into 11.0
 
+   * packages/apps/PermissionController
+a11ad0a3f Merge 'lineage-18.1' into 11.0
+
+   * packages/apps/Settings
+08e7936d44 Merge 'lineage-18.1' into 11.0
+
+   * packages/services/Telecomm
+54b23a90d Merge 'lineage-18.1' into 11.0
+
+   * vendor/lineage
+3ef94f4f crdroid: Bump to version 7.25
+
+   * vendor/qcom/opensource/commonsys/packages/apps/Bluetooth
+b7407dc81  Merge 'lineage-18.1' into 11.0
+
+   * vendor/qcom/opensource/commonsys/system/bt
+00cc2be5f Merge 'lineage-18.1' into 11.0
+
+====================
+     12-11-2022
+====================
+
+   * packages/apps/Settings
+fb80ba54c8 Add FLAG_SECURE for ChooseLockPassword and Pattern
+
+   * vendor/qcom/opensource/commonsys/packages/apps/Bluetooth
+8996090d9 Fix URI check in BluetoothOppUtility.java
