@@ -1,29 +1,32 @@
-crDroid 9.0
+crDroid 9.0-December
 
-Changelog for initial Android 13 release (notable changes moving forward from Android 12 device trees/kernel):
-- Merged November ASB & changes from upstream LineageOS device/kernel/vendor trees.
-- It's a new major Android version; if you want to see changes since previous testing builds, join the Telegram group.
-- Kernel updated to 4.9.333 with updates merged from Google's AOSP 4.9 LTS repository (thanks to BananaFunction).
-- Updated my stack of kernel commits, including refreshed wifi & power commits and numerous other tweaks from MCD kernel r19 (thanks, Danny! <3).
-- Kernel adreno driver should no longer aggressively try to downclock GPU below 40% battery (causing everything to be sluggish regardless of CPU settings).
-- NFC stack is now built from source, and some security authentication apps might struggle running under Android 13. NFC itself seems to be working fine & Google Wallet for contactless payment seems to be working fine.
-- I would've gotten this release out a month ago except it took that long to figure out how to get OnePlus Camera & Gallery back to 100% working again (huge thanks to Weritos & jabashque).
-- Dropped "Multiple intensities" vibration option from Accessibility/haptics, since it never actually worked correctly. Use DeviceExtras for controlling vibration strength.
-- Look, DASH charging & Smart Charging and a bunch of other things took way more work to figure out how to get them to behave (nearly) the same as they did before than they should have.Takes time to make it appear like a simple, easy update.
+Changelog since v9.0-November release:
+- Merged December ASB & changes from upstream LineageOS device/kernel/vendor trees.
+- Google updated everything in AOSP 13.0_r16 with a rebased... base with over 10K commits difference than November 13.0_r13; so LineageOS had to essentially bring up Android 13 all over again, and we had to redo our customizations all over again on top of that. Can't just git merge.
+- Bug with NFC stack crashing when device entered deep sleep is now squashed; things like Google Pay/Wallet lagging out or QS tiles being non-responsive for several seconds (when NFC tile was visible) on wakeup should be fixed. Thanks to LineageOS team, and whoever it was that filed the bug-report properly.
+- Bug with stuttering HD audio with some bluetooth receiver chipsets should also be fixed (thanks again to LineageOS team).
+- Updated DeviceExtras to 7.2 (based on AB's current implementation in hardware/oneplus/ over at Evolution-X), re-added HBM/AutoHBM in DeviceExtras because I wanted the easter egg back. It's technically in two places now, you don't have to enable it in DeviceExtras if you're happy configuring it in LiveDisplay, but this way it's adjustable.
+- Kernel updated to 4.9.336 with changes merged from 4.9 LTS (thanks to BananaFunction for figuring out the merges from AOSP 4.9-q, LineageOS android_kernel_qcom_sdm845, and others).
+- Since I grabbed all the "use power efficient workqueues" commits from MCD kernel already, I actually added the toggle to DeviceExtras to allow you to enable the functionality. Probably saves some power, possibly while actually improving performance; try it out.
+- Updated min/max/default values for Vibration sliders in DeviceExtras. Now you can just drag it all the way to zero to turn off. Huzzah!
+- Import custom sdm845-specific vibrator AIDL from SyberiaOS OP6 12.0 branch (based on earlier qcom opensource version, but with modifications from Xiaomi sdm845 who also use the same led-qpnp-haptic.c vibration driver that we do), update ndk for Android 13. Seems to work for all effect types (even if they don't feel very different from each other), including "TICK", which means the "haptic tick on back gesture" preference actually does something, yay! DeviceExtras intensity sliders still seem to work to control different vibration types, so this might be the best combination going forward.
+- Deliberately, maliciously ruined everyone's life and removed Google Camera & Aperture from list of packages allowed to use the second rear camera sensor BECAUSE IT'S ABSOLUTE SHITE. If this is truly a problem, I can recommend a good therapist.
+- Updated APNs to include "ia" type for any apn with "default" type that didn't already include "ia". I guess Android 13 needs this, and should help solve connectivity issues for some folks.
+- Updated statusbar/corner spacing & padding. You're going to hate it. I hate it too. There were changes to how burn-in protection worked, and some calculations for padding/insets in the statusbar views/viewports. Default values in framework (especially pertaining to some customization features) are fighting themselves & it looks dumb. This is the best workaround at the moment, since burn-in protection is basically non-optional for OLED panels. Trust me when I say I'll keep working on it for future releases; but the ROM team have already merged 9.1/January ASB and I need to stick a pin in this release for now.
+- Hope you all had Happy Holidays, Joyous Solstice, Chag Channukah Sameach, God Jule, Happy Kwanzaa, Merry Christmas, and wish you a Happy New Year!
 
 Known issues:
-- Users upgrading from 8.x should plan on doing a clean flash, and again, MindTheGapps is the recommended Google Apps package. If you don't, you might have issues with NFC, OnePlus Camera/Gallery, itchiness, frequent/painful urination, and in very few cases spontaneous human combustion. Safety not guaranteed.
-- Smart charging doesn't always stop exactly at the specified percentage when using a DASH charger or when device is in deep sleep. That's as smart as it gets for initial Android 13 release.
-- "Haptic feedback on Back gesture" feature doesn't actually work yet. Needs investigation after we worry about updating to December ASB sources.
-- Haptic feedback for tri-state-key disappears when you turn off "touch feedback" haptics now, when it wasn't like that before. Android 13, amirite?
-- Custom fonts don't apply properly to 3rd party apps. It's in the crDroid GitHub issue tracker already.
+- Statusbar/corner default padding looks uglier now. I know, I'm working on it. If you leave the screen on for more than 10 minutes you'll see everything start moving around (both inward toward notch AND outward toward edges); it was getting cut off when it would move outward before. Until they fix framework java for non-AOD burn-in protection to make sure it doesn't go too far wide, it's gonna probably have to stay like this.
+- Some custom launchers don't work right still, probably. Android 13 growing pains!
+- Smart charging doesn't always stop exactly at the specified percentage when using a DASH charger or when device is in deep sleep.
+- Custom fonts don't apply properly to 3rd party apps. It's in the GitHub issue tracker already.
+- Some carriers seem to have trouble with mobile data enabling; not sure why exactly. Hopefully it's fixed in 9.1; this shouldn't be a regression compared to 9.0-November at least.
 - You tell me, with logs!
 
 Installation notes:
-- Plan on doing a clean flash when changing major Android system versions (so if you're coming from crDroid 8, and want to give me a bug report, because I'll ignore you otherwise). Back up your data first of course. After this initial clean flash for Android 13, it should be fine to just use the built-in Updater in Settings > System > Updates for future updates.
-- If you're coming from stock or another ROM, reboot to bootloader and fastboot flash the boot.img for your device (enchilada or fajita) to both boot slots, then reboot to bootloader again *so it actually loads the new recovery ramdisk*.
-- YOU SHOULD INSTALL FROM CRDROID RECOVERY, since we can't do a clean flash from built-in updater, and we DON'T want to run addon.d scripts because you need to update to a newer GApps package. So follow the regular adb sideloading process from recovery (reboot recovery, format data if doing clean install, adb sideload ROM zip, reboot recovery to trigger slot switch, adb sideload GApps/microG/magisk/whatever, reboot system).
-- See XDA thread for troubleshooting installation issues, or other common issues including problems with OxygenOS Camera & Gallery.
+- In case of bootloop (boot animation stuck for longer than about 2 minutes and never gets to lock screen), reboot to recovery and manually flash the ROM zip either via ADB sideload from computer, or from a FAT32-formatted USB thumb drive via OTG, then reboot to recovery again, and re-flash your same Google Apps/microG/Magisk/whatever install zips (again via ADB sideload or USB OTG), and reboot system. This *should* take care of any lingering errors with old things getting stuck in your /system/addon.d/ directory that might be trying to preserve old privileged system apps without privileged permissions (which is what causes those boot loops in the first place).
+- The built-in OTA updater in Settings > System > Updater goes a lot faster if you go into Updater preferences and toggle on "prioritize updater process", and make sure the screen stays on by using the Caffeine QS tile, or "never sleep while charging" toggle in Developer Options, or changing your Display timeout to 30 minutes.
+- See XDA thread for other troubleshooting other common installation issues including problems with OxygenOS Camera & Gallery.
 
 Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
@@ -31,146 +34,42 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     12-13-2022
+     01-12-2023
 ====================
 
-   * frameworks/base
-80848dad661b PowerManacerService: Fix hard reboot with 'Reset Battery Stats' enabled for Smart Charging
+   * vendor/lineage
+dfcfcecb apns: Added IA APN types to all default type APNs
+f48e259c apns: Format xml spacing
 
 ====================
-     12-09-2022
+     01-07-2023
 ====================
 
-   * packages/apps/Aperture
-6a7ebbb Aperture: Allow adding additional video configurations
-a07126e Aperture: Associate video qualities to available framerates
-
-====================
-     12-08-2022
-====================
-
-   * frameworks/base
-0f6d89e9018b fixup! Rewrite trust USB restriction handling
-
-   * packages/apps/Aperture
-87f64b8 Aperture: Calculate intrinsic zoom ratio from view angle degrees
-b9a77ee Aperture: Rename zoomRatio to intrinsicZoomRatio
-da18065 Aperture: Introduce Sensor interface
-43c6a75 Aperture: Drop logical multi-camera support in lens selector
-467c781 Aperture: Implement image/video stabilization
-54d565b Aperture: Implement video framerate switch
-5048d2e Aperture: Add code for Camera2 interop
-6b71eb5 Aperture: Move to AndroidX Media3 for video capture preview
-5216c09 Aperture: Don't handle keypresses when capture preview is open
-
-   * packages/inputmethods/LatinIME
-fd734764d LatinIME: Theme swipe elements with Material You styling
-
-====================
-     12-07-2022
-====================
-
-   * device/google/atv
-a1807ac Partially revert "Enabling Apex in BT"
-
-   * frameworks/base
-b0e1754ea054 New Crowdin updates (#914)
-
-   * packages/apps/Dialer
-6f94a5b13 New translations (#37)
+   * frameworks/opt/telephony
+cfb852b7f2 telephony: Use case insensitive check for plmn-spn
+cf6eb30fc6 telephony: Check for LTE_CA in physical channel config
 
    * packages/apps/Launcher3
-cdef41062d New Crowdin updates (#299)
-
-   * packages/apps/crDroidSettings
-ce978484 New Crowdin updates (#992)
+baaedfb1a8 Launcher3: Do not skip search animation for app icons
 
 ====================
-     12-06-2022
-====================
-
-   * frameworks/av
-e3f8fb28b3 libcameraservice: add TARGET_CAMERA_NEEDS_CLIENT_INFO_LIB
-7925761bd6 Revert "DNM Revert "Camera: Add support for readout timestamp""
-
-   * frameworks/base
-b375b48372c6 Revert "DNM Revert "Camera: Add support for readout timestamp""
-87f5354d6bff RELAND MediaCodec: don't cache buffers until requested
-2ce3f2dc6a99 audio: add support for extended formats
-a00b91f3295c Revert "Power menu styles: Initial checkin for T [1/2]"
-
-   * packages/apps/Jelly
-b43dfea Jelly: Fix CoarseFineLocation lint issue
-cb3ab6e Jelly: Skip null MIME types in file chooser
-
-   * packages/apps/crDroidSettings
-b30cbcf6 Revert "crdroid: Power menu styles [2/2]"
-
-====================
-     12-05-2022
+     01-06-2023
 ====================
 
    * frameworks/base
-ff6bd5165eb3 Screenrecord: Add summary for HEVC encoding
-89d468e064f7 Screenrecord: Add an option to use HEVC
-983b5b4febc5 Screenrecord: Slightly optimize loading/saving preferences
-6f114cc0d071 Screenrecord: Allow to reduce 3 second screen record timer
-81f5beb57a8c Revert "Fix network leaks with split-tunnel VPNs"
+73472bdaa422 camera: Add backwards-compatible CaptureResultExtras constructor
+e8e3ad6a29ce NetworkTraffic: Remove screen on/off trigger again
 
 ====================
-     12-04-2022
+     01-04-2023
 ====================
-
-   * android
-e4cb9f3 Merge 'lineage-20.0' into 13.0
-0484170 manifest: Track our own android_external_avb
-
-   * bionic
-b7fc80a70 libc: Add TARGET_ALTERNATIVE_FUTEX_WAITERS
-
-   * build/make
-29a2881a5 build: dont include tasks from tests and platform_testing
-656277bcc sign_target_files_apks: Fix avbtool usage
-4a210d36e Use Unix epoch time for build number
-fa5f8b7e1 Don't build QuickSearchBox
-2c43b8654 Fix potential error for sys.platform
-41de3c3f6 core: Disable Dalvik lock contention logging
-1d2964035 combo: Add cortex-a76 to known v8-2a cores
-887f49f90 Fix coredump_enable() in envsetup.sh
-f1fae202c envsetup.sh: cleanup ccache echo
-46d59071e envsetup: Fix indentation in ccache code snippet
-38b161836 envsetup: export the CCACHE_DIR if its not set
-60cfd2b81 envsetup: Prefer setting ccache compress as command line parameter
-55c053ae4 Automatically set CCACHE_EXEC to the system's ccache
-a78a6492d build: execute changelog generator script
-8cfee7245 build: Add ANSI name and build info
-5a2bd3f5c Make build ID simple
-01fb3feb1 build: Always use release-keys
-43471cabb build: Add backuptool by default
-ffbcdc1ed envsetup: Automatically set CCACHE_EXEC to the system's ccache
-e6432e97d build: Add ro.crdroid.device
 
    * frameworks/base
-4b9b00e9ecc7 Change DropboxRateLimiter to rate limit proto tombstones and regular tombstones separately.
-26b0516e4a38 fix MediaRouter error callback
-1489d6d646e1 Fix BluetoothRouteProvider unsync randon crash
-73ece58359d4 Apply wakelock for notification sound
-1497ef9f4617 Change the order of Notification writeToParcel
-4c9b806df305 Do not assistant delay for media notifications
-3451b6503c39 Return no optmization info for package "android".
-81036f144222 neko/Cat: Mark FLAG_IMMUTABLE PendingIntent with FLAG_MUTABLE
-0053aaf3819f frameworks: Reset battery stats [1/3]
-9bc67ce4c7d3 BatteryStatsImpl: Stop resetting battery stats after reboot
+0ee0d5e8fa0f SystemUI: Update IMS states and update icon when necessary
+fcb54ed85fb5 MobileSignalController: Try register IMS callback when listening
+27b83fca6085 fixup! Battery Styles: Clean up for more customizations
+33106766eab6 fixup! Battery Styles: Re-evaluate system theme on QS battery location change
 
-   * packages/apps/Dialer
-39289a330 use aidl: local_include_dirs
-
-   * packages/apps/Settings
-ca402053d7 Only one channel is reserved for WifiP2pSettings
-7a9f345e72 Settings: Reset battery stats [2/3]
-
-   * packages/apps/crDroidSettings
-5fd62763 crdroid: Reset battery stats [3/3]
-
-   * packages/services/Telecomm
-fdb1f3da8 Fix dark navigationBar background in some telephony settings pages
+   * packages/apps/Launcher3
+b421b38f64 Launcher3: Add toggle to show/hide app drawer search bar
+f8c6d741bc Launcher3: Fix rtl layout error
