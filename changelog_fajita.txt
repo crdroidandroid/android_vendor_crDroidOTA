@@ -1,12 +1,12 @@
-crDroid 8.12
+crDroid 8.13
 
-Changelog since v8.11 release:
-- Merged November ASB & changes from upstream LineageOS device/kernel/vendor trees.
+Changelog since v8.12 release:
+- Merged January 2023 Android Security Bulletin & any changes from upstream LineageOS device/kernel/vendor trees (lineage-19.1 branch).
 - Whatever the ROM dev teams changed upstream in LineageOS and crDroid sources (not much? they're busy with Android 13).
 - Other misc fixes ... probably.
 
 Known issues:
-- The usual LineageOS Android 12 things.
+- The usual LineageOS Android 12 things (mostly that big ugly blank spot at the top after reboot before unlocking).
 - (fajita-only) The "Pocket detection" toggle in crDroid Settings > Miscellaneous will interfere with "Screen off UDFPS" (crDroid Settings > Lock screen > UDFPS customization) and "Prevent accidental wakeup" (Display settings). If you use it, turn off the others, or you might run into the screen-won't-turn-on issue. Personally, I was just dealing with having to press the power button a few extra times, because disabling "Pocket detection" ended up with me almost calling emergency services several times a day.
 Thankfully this seems to be fixed in crDroid 9 (Android 13), so I definitely recommend upgrading if that's a problem for you.
 
@@ -14,7 +14,7 @@ Installation notes:
 - In case of bootloop (boot animation stuck for longer than about 2 minutes and never gets to lock screen), reboot to recovery and manually flash the ROM zip either via ADB sideload from computer, or from a FAT32-formatted USB thumb drive via OTG, then reboot to recovery again, and re-flash your same Google Apps/microG/Magisk/whatever
 install zips (again via ADB sideload or USB OTG), and reboot system. This *should* take care of any lingering errors with old things getting stuck in your /system/addon.d/ directory that might be trying to preserve old privileged system apps without privileged permissions (which is what causes those boot loops in the first place).
 - The built-in OTA updater in Settings > System > Updater goes a lot faster if you go into Updater preferences and toggle on "prioritize updater process", and make sure the screen stays on by using the Caffeine QS tile, or "never sleep while charging" toggle in Developer Options, or changing your Display timeout to 30 minutes.
-- See XDA thread for other troubleshooting other common installation issues including problems with OxygenOS Camera & Gallery.
+- See XDA thread for troubleshooting other common issues including problems with OxygenOS Camera & Gallery.
 
 Build type: Monthly (-ish)
 Device: OnePlus 6T (fajita)
@@ -22,18 +22,54 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     01-08-2023
+     01-21-2023
 ====================
 
-   * packages/apps/Updater
-a8b2177 New translations (#45)
+   * packages/apps/Dialer
+89a86fb76 New Crowdin updates (#41)
 
    * packages/apps/crDroidSettings
-da988047 New translations (#1004)
+740f8650 New translations (#1007)
 
 ====================
-     01-05-2023
+     01-18-2023
 ====================
 
-   * packages/apps/Launcher3
-91a45c7e0b Launcher3: Update icons from lawnicons
+   * android
+5068985 Merge 'lineage-19.1' into 12.1
+
+   * build/make
+c83bfc5f5 Merge 'lineage-19.1' into 12.1
+
+   * frameworks/base
+3497f2a1722e PixelPropUtils: Update fingerprints from January 2023
+709cb8863f92 Merge branch 'lineage-19.1' of https://github.com/LineageOS/android_frameworks_base into 12.1
+
+   * hardware/interfaces
+ad7dacef1 Merge 'lineage-19.1' into 12.1
+
+   * packages/apps/LineageParts
+99a1b9b Merge 'lineage-19.1' into 12.1
+
+   * packages/apps/Settings
+4962600b84 Merge 'lineage-19.1' into 12.1
+
+   * packages/inputmethods/LatinIME
+94aef8d74 Merge 'lineage-19.1' into 12.1
+
+   * packages/modules/Wifi
+0d7bd79b9 Merge 'lineage-19.1' into 12.1
+
+   * packages/services/Telecomm
+927469557 Merge 'lineage-19.1' into 12.1
+
+   * packages/services/Telephony
+710bd2f8d Merge 'lineage-19.1' into 12.1
+
+   * vendor/lineage
+f064786e backuptool: Unmount v3 partitions during backup
+33782133 charger: Ensure every generated image is 8-bit
+4c7857d6 crdroid: Bump version to 8.13
+
+   * vendor/qcom/opensource/commonsys/system/bt
+cad709ecc Merge 'lineage-19.1' into 12.1
