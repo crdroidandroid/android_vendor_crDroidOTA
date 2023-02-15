@@ -1,25 +1,14 @@
-crDroid 9.1
+crDroid 9.1 hotfix 1
 
-Changelog since v9.0-December release:
-- January 2023 Android Security Bulletin merged from upstream.
-- Device trees/hardware/kernel/vendor changes pulled from LineageOS (updated kernel now supports compressed apexes, should have a little more free space in system partition now).
-- Kernel rebased on top of LineageOS (which itself was rebased on top of the LineageOS/android_kernel_qcom_sdm845 kernel base). Then re-applied updates like 4.9.337 LTS merges & CLO tag LA.UM.10.3.r1-01700 (thanks to BananaFunction), re-imported newer wifi drivers since they seem to perform better (faster reconnects to known 5GHz networks after restart or coming back into range, better link speed) & applied updated commit stacks for those, and finally my stack of modifications for crDroid (mostly pulled from MCD kernel, thanks to Danny).
-- Now using modified charging info flag; fixes charging status info on AOD screen, and when DASH charging (so SmartCharging feature stops much closer to target percentage).
-- Custom font support in material apps working again (including keyboard), woo! Some apps (Gboard anyway, if installed as user app) still need to have custom font reapplied after reboot.
-- Lots of updates to Parallel Spaces functionality: now you can enable Google Apps for spaces only (and disable on main profile -- careful with this!).
-- Lockscreen action buttons (lower left & right) are back! See Settings > crDroid Settings > Lock Screen to change button target actions. Note: QR code scanner uses the built-in Lineage "Aperture" camera. If you like this feature, stop "debloating" the camera apps, ffs.
-- More art & bionic optimizations in crDroid source (OPCamera still works, yay).
-- Statusbar spacing & burn-in protection behavior corrected finally; stays where it should be, so now I can put it back out toward the edges where it was.
-- Fixed "edge long-swipe gesture" actions, woo!
-- Fixes for a few more "themed icons" getting found & applied, updated Lawnicons import.
-- Fixed "widget that should be 1 grid row high will only resize down to 2 rows high, after I've increased the vertical number of grid rows to 5x6 or 5x7 from 5x5 to fit more things on my screen" problem in Launcher, yaaaasssss (this has annoyed me FOREVER). :partying_face:
-  - And a big :middle_finger: to Google for treating our phones with > 6-inch screens like preschool toys instead of pocket computers any time we try to fit more useful information on the display at once.
-- Got some other changes merged in crDroid project, including fixing "back gesture is actually logically prevented from working at all on lowest sensitivity setting", and adding ability to tweak thickness of navigation pill.
-- Fix for bluetooth audio disconnecting on some chipsets that do encrypted handshake but then drop back to unencrypted for streaming since they don't do a2dp offloading.
-- Re-enabled hfp inband ringing; now your bluetooth headphones/speaker will play your custom ringtone instead of their built-in generic jingle when there's an incoming call.
-- Upstream fixes to PixelProps for SafetyNet attestation, updated translations, bionic optimizations, more framework bug fixes, probably some other things fixed as well.
+Changelog since v9.1 release:
+Fixes for the following issues:
+- Play Integrity API (SafetyNet) never passing after Google changed something on their end a few days ago (updated PixelProps in framework, fixed).
+- Themed icons crashing when enabled, with an olx.com app added to home screen (updated LawnIcons, fixed).
+- Pixel Launcher (and probably a couple other 3rd-party launchers) crashing with an error about Binder Tracing (no-op function stub added to framework, fixed).
+- One person hated having statusbar stuff shifted down to align with bottom of notch. I liked it better that way, but oh well. Doesn't kill me to stay closer to Lineage... well it does, but that's a different rant (put it mostly back up, but I also kind of don't care because Lineage is an uneven mess so I'm gonna do what I want to make it look good -- fixed-ish).
 
 Known issues:
+- Carrier name *still* goes off on walkabout under the rounded corners on lockscreen after a bit, I'm going to need to do a lot more work for figuring out overlay priority.
 - People don't read documentation.
 - You tell me, with logs!
 
@@ -34,17 +23,145 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     02-04-2023
+     02-12-2023
 ====================
 
    * frameworks/base
-5a688c744867 Revert "SystemUI: Clean up redundancy in BurnInProtection"
+249c36eaa171 Revert "SystemUI: fix duplicated creation of KeyguardStatusBarViewController"
+510871ae41b4 SystemUI: BurnInProtectionController: offset less aggressively
+f34b144286bd SystemUI: Enable statusbar burn-in protection by default
+6617203e05da SystemUI: Implement burn-in protection for status/navbar
+25dbe3be422e Revert "SystemUI: add burnIn protection"
+67a07f80095d Revert "SystemUI: Update statusbar burn-in protection shift base padding when orientation changed"
+0d5d5ab652bd Revert "SystemUI: Clean up redundancy in BurnInProtection"
+e80988de7f80 ActivityManager: Add stub implementation of enableBinderTracing
+
+   * vendor/addons
+8ae23e2 addons: Add more package names for themed icons
+1db2403 fixup! addons: Remove google prebuilt leftovers
+
+====================
+     02-11-2023
+====================
+
+   * frameworks/base
+13d6d8e24729 Add YCBCR_P010 in switch content in ImageUtil getNumPlanes.
+815f5cdd1cea Camera: Fix size list parceling
+777b09a9bcf5 Camera: Remove 3 processed streams combination for stream use case
+cf1b4a951c87 Avoid Installer APP ANR when starting install in main thread
+6d9dc64a48f6 Safely handle the case of BroadcastOptions being null.
+970ef78b4c7c NotificationShade: Make blur crossfading more gradual
+52fe68227bd5 Toast: Solve the NPE problem in session.java
+436c86077cc3 Camera: Avoid possible NPE after extension session configuration
+14bc46c9f869 Handle graceful exit with constants
+63de74ad5bf9 PowerStatsService: Prevent NPE in BatteryTrigger.
+8a6768d281e6 Fix background activity start.
+aeffbbc3054e UI: Adjust default navbar layouts
+c2bd99be5d49 CachedAppOptimizer : Pageout File pages during system compaction
+
+   * system/core
+da85e07f0 Fix scudo fault address processing.
+
+   * vendor/addons
+4f0c998 addons: Update themed icons
+
+====================
+     02-10-2023
+====================
+
+   * external/tinycompress
+d155968 tinycompress: plugin: Set codec params in SETUP state
+
+   * packages/modules/Bluetooth
+f2dc3ebf60 Revert "Drop connection when atttempting to disable encryption"
+
+====================
+     02-09-2023
+====================
+
+   * frameworks/base
+75d0d5d38560 PixelPropsUtils: Make CTS/Play Integrity pass again
+
+   * packages/apps/Launcher3
+9d580584ec Launcher3: Match hotseat background with app drawer scrim
+fbb461ed4e Launcher3: Add customization to set hotseat background opacity
+
+   * vendor/qcom/opensource/interfaces
+e0f8d46 interfaces: Add perf 2.3 interface
+
+====================
+     02-08-2023
+====================
+
+   * bionic
+eacac22bd on 64-bit, zero the leading stack canary byte
+fa457a272 replace VLA formatting with dprintf-like function
+4325a3674 replace brk and sbrk with stubs
+960d25c49 mntent_test: don't assume /proc isn't the first mount.
+9bfc2788b Nullability check for stat module
+ea4cabf1c Purge memory.
+4a7e0d316 Nullability check for quota module
+8005060c5 Add BIONIC_COMPLICATED_NULLNESS as _Null_unspecified
+9ade06c7d Nullability check for sysinfo module
+7d26ee54c Nullability check for unistd module
+
+   * external/jemalloc_new
+b5b76a72 jemalloc: always assume overcommitting memory
+7f943b14 jemalloc: remove THP support
+8dd8e2cc jemalloc: disable config parsing altogether
+04882243 jemalloc: remove deprecated size_classes.h
+
+   * frameworks/av
+c57a4f0042 Fix mic address augmenting in APM
+
+   * frameworks/base
+e35e0783227e Toast app icon display is inconsistent for system apps
+
+   * packages/apps/Aperture
+5003810 Aperture: Redo settings appbar using M3 guidelines
+a290b23 Aperture: Reformat code
+c02cafd Aperture: Add support for Assistant actions
+d5ed0c1 Aperture: Use ?attr/isLightTheme for light status bar
+
+   * packages/apps/Launcher3
+e6089dd2eb Launcher3: Add light theme support for translucent hotseat background
+129cf0eb46 Launcher3: Make music search icon colorful
+d1ab0f0487 Launcher3: Optional music search toggle for QSB
+
+====================
+     02-07-2023
+====================
+
+   * frameworks/base
+d75eed7a203f SystemUI: Allow limiting AOD & ambient display refresh rate via overlay.
+
+   * hardware/interfaces
+e5ce55b5f Revert "Camera: Update HIDL overrideFormat from HAL"
+
+====================
+     02-06-2023
+====================
+
+   * art
+29815c67a3 OnDeviceRefresh::GetSystemServerImagePath support system_ext partition
+
+   * hardware/qcom-caf/msm8953/audio
+550559a89f audio: hal: msm8974: Add support for msm8917-sku5-snd-card
+43db6a413e audio: hal: msm8974: Allow to override mixer file name with prop
+d5d1085af5 audio: hal: msm8974: msm8952-mtp/sku(m/1/2) switch to internal_codec
+f3de73c950 audio: Add support for msm8920-sku7-snd-card
+
+   * packages/apps/Aperture
+8361807 Aperture: Fix photo -> video shutter button color transition
+c9a4dc6 Aperture: Make video duration text more readable
+2fe339d Aperture: Use M3 colors for shutter button
+
+====================
+     02-05-2023
+====================
+
+   * frameworks/base
 4bd38222670f New Crowdin updates (#945)
-87f38b658303 Convert argument to intent in ChooseTypeAndAccountActivity
-fd2b3cc18908 Use rule package name in addAutomaticZenRule; specify "android" for all system apps
-a5202782523f Add BT LE headset check for voice call to update the icon
-d35058af07d8 Disallow clicks on privacy chip before provisioned
-ee7f335f3c24 UI can Enable/Disable VCP and CSIP
 
    * packages/apps/Dialer
 f6208c32b New translations (#44)
@@ -60,14 +177,16 @@ f6208c32b New translations (#44)
 fffe376e crdroid: smart charging: decrease minimum charging limit (#1021)
 4bcd8c98 New Crowdin updates (#1018)
 
+   * packages/modules/Bluetooth
+e7f12ea3db gd: hci: Ignore unexpected status events
+f5d0da4869 Additionally check le_set_event_mask command resturn status with UNSUPPORTED_LMP_OR_LL_PARAMETER
+
    * vendor/addons
-3a2b854 overlay: Add more package names for themed icons
-5abd9b7 fixup! addons: Remove google prebuilt leftovers
 16d1d68 addons: Import nothing font changes from NOS 1.5
 75419cf addons: Update icons from lawnicons
 
 ====================
-     02-03-2023
+     02-04-2023
 ====================
 
    * art
@@ -80,6 +199,11 @@ fffe376e crdroid: smart charging: decrease minimum charging limit (#1021)
 385bca7cf6 fixup! Camera: Skip stream size check for whitelisted apps
 
    * frameworks/base
+87f38b658303 Convert argument to intent in ChooseTypeAndAccountActivity
+fd2b3cc18908 Use rule package name in addAutomaticZenRule; specify "android" for all system apps
+a5202782523f Add BT LE headset check for voice call to update the icon
+d35058af07d8 Disallow clicks on privacy chip before provisioned
+ee7f335f3c24 UI can Enable/Disable VCP and CSIP
 a6bb00ec4c0c Revert "Revert "SystemUI: Hide oos clear all if reticker enable""
 32293166577b Revert "fixup! fw/b: Add support for allowing/disallowing apps on cellular, vpn and wifi networks"
 
@@ -87,190 +211,8 @@ a6bb00ec4c0c Revert "Revert "SystemUI: Hide oos clear all if reticker enable""
 3333fae5f Partially Revert "Dialer: A little bit of You"
 
 ====================
-     02-02-2023
+     02-03-2023
 ====================
 
    * frameworks/av
 fe95be6e36 C2BqBuffer: resolve 3 way deadlock
-
-   * packages/modules/Bluetooth
-27949205f6 Revert "Drop connection when atttempting to disable encryption"
-
-====================
-     02-01-2023
-====================
-
-   * bionic
-379a7d828 Nullability check for nl_types module
-4892d5321 Nullability check for fcntl module
-afcd03314 linker: Fallback to argv[0] to get the executable info
-
-   * frameworks/base
-9c6907aade0c Don't warn for displays with no input device matching.
-593f21ef320d Check NULL for Drm object
-09ede67f71cf SystemUI: fix duplicated creation of KeyguardStatusBarViewController
-
-   * packages/apps/Aperture
-8bc073f Aperture: Fix lint error in string containing '%' sign
-cc51ebb Aperture: Remove unused string
-
-====================
-     01-31-2023
-====================
-
-   * frameworks/base
-88bf8727a425 Fix NPE when finishing remote animation
-9d68150429f4 Revert^2 "DisplayPowerController: Fix mismerge in proximity check"
-21fabdae4795 SystemUI: Also blur power sub-menus
-a02034fadcc2 SystemUI: Blur the power menu
-
-   * packages/apps/Aperture
-d2bb840 Aperture: Add ripple animation for QR CardView
-af8d7de Aperture: Add Wi-Fi QR handling
-abf6bb5 Aperture: Use @android:color/{black,white}
-1abba95 Aperture: Set navigation bar color to black
-b836b48 Aperture: Add DPP QR handling
-
-====================
-     01-30-2023
-====================
-
-   * bionic
-a19996605 Add (no-op) ifuncs for SVE optimized routines.
-5d74961be Track upstream arm-optimized-routines changes.
-8cfdfc10f Revert "libc: arm64: Merge MTE versions of strcpy/stpcpy/strcmp/strncmp"
-
-   * external/arm-optimized-routines
-b85db74 Merge branch 'master' of https://android.googlesource.com/platform/external/arm-optimized-routines into HEAD
-3faa1b0 Merge tag 'v23.01' of https://github.com/ARM-software/optimized-routines into HEAD
-
-====================
-     01-29-2023
-====================
-
-   * external/chromium-webview/patches
-35ec1f0 Update Chromium Webview to 109.0.5414.118
-
-   * external/chromium-webview/prebuilt/arm
-c23aafa Update Chromium Webview arm prebuilt to 109.0.5414.118
-
-   * external/chromium-webview/prebuilt/arm64
-1411b09 Update Chromium Webview arm64 prebuilt to 109.0.5414.118
-
-   * external/chromium-webview/prebuilt/x86
-4d206b8 Update Chromium Webview x86 prebuilt to 109.0.5414.118
-
-   * frameworks/base
-34145062965b New Crowdin updates (#938)
-12e2c6b1eae3 Fix disabling power menu completely on secured locscreen
-a4d5ce8145f2 SystemUI: Fix multiple QS background scrim issues
-c73061732852 SystemUI: Do not show dismiss button on headsup
-1c4d7c5fb0a2 Revert "SystemUI: Hide oos clear all if reticker enable"
-b89fc079c178 NetworkTraffic: Handle flooding network requests
-
-   * packages/apps/Dialer
-e94e1d61c New translations (#43)
-
-   * packages/apps/Launcher3
-1469ff973e New translations cr_strings.xml (French) (#320)
-72d2aaa61d Merge pull request #321 from Terminator-J/13.0-widgetfix
-
-   * packages/apps/Settings
-d8ee9b624a Merge pull request #135 from MLZ94/13.0
-fd43ba62ee Revert "Settings: PowerUsageSummary: open advanced usage on header click"
-
-   * packages/apps/crDroidSettings
-2af21e42 New Crowdin updates (#1014)
-
-====================
-     01-28-2023
-====================
-
-   * frameworks/base
-ad0be56435dd SystemUI: Fix expanded QS clock color
-b0a2f833bdfb SystemUI: Re-evaluate theme when adjusting status bar clock text size
-2028e604e0fb SystemUI: Allow making Navigation Pill thinner [1/2]
-c5c2c9640b8b SystemUI: Allow Configuring Navbar Radius [1/2]
-
-   * packages/apps/Launcher3
-8e09992d6b Allow widgets to have 1 row as minimum size
-
-   * packages/apps/Settings
-af44097fba Settings: Allow making Navigation Pill thinner [2/2]
-fce8639635 Settings: Allow Configuring Navbar Radius [2/2]
-c8b3b49924 Merge pull request #133 from Terminator-J/13.0-fixbackgesture
-
-   * packages/apps/crDroidSettings
-e9621290 crdroid: Add strings for gesture navbar radius
-
-====================
-     01-27-2023
-====================
-
-   * bionic
-ce704dd11 linker_namespace: move sonames instead of copying
-
-   * frameworks/base
-5735528fbd03 fixup! Introduce customizable navbar and hardware buttons [1/3]
-
-   * packages/apps/Aperture
-c754f66 Aperture: Use a proper divider
-80c8de1 Aperture: Enable translucent navigation bar in settings
-cc3d0e2 Aperture: Draw under display cutouts
-205364a Aperture: Simplify camera mode buttons themes
-ccb8028 Aperture: Don't set Roboto Mono everywhere
-3d2073f Aperture: Give light theme on settings for light mode users
-72781eb Aperture: Get proper M3 dialogs in settings
-6523bb6 Aperture: Set status bar background color to transparent in settings
-f8a86a0 Aperture: Get dynamic colors going
-
-   * packages/apps/Launcher3
-2ea6c0c548 Revert "Launcher3: Improve logic for building themed icons map"
-
-   * packages/apps/Settings
-84812ab0a1 Settings: Fix gestures saving parameters
-
-   * packages/apps/ThemePicker
-d1e8406 Revert "ThemePicker: Drop default permissions"
-
-   * system/core
-3671b728d Merge 'lineage-20.0' into 13.0
-
-====================
-     01-26-2023
-====================
-
-   * bionic
-46968021d Nullability check for utmp module
-
-   * external/arm-optimized-routines
-ffea11c Build SVE routines.
-
-   * external/jemalloc_new
-2d4ace3c Enable fast thread locals for dealloc-only threads.
-323a595c jemalloc_internal_types.h: Use alloca if __STDC_NO_VLA__ is defined
-
-   * frameworks/base
-4bb8c2c3a620 New Crowdin updates (#935)
-75015ea6167a SystemUI: Disable lockscreen album art by default [1/2]
-e93298e83c3d SystemUI: Introduce Google TV remote controls keyguard affordance [1/2]
-f3863c87a11b Catch IllegalArgumentException for invalid phone id
-
-   * frameworks/native
-a67781a5fd DO NOT MERGE: SF: Fix a race between layer creation and apply transaction
-02fff9e60d Check for null data buffer in AParcel_marshal
-
-   * frameworks/opt/telephony
-4449991d77 Instantiate displayInfo nonNull
-
-   * packages/apps/Aperture
-bcf92fd Aperture: Fix InflateParams warning
-3900cfe Aperture: LensSelectorLayout: Add JVM overloads for optional fields
-
-   * packages/apps/Launcher3
-74f264b62d New Crowdin updates (#319)
-
-   * packages/apps/crDroidSettings
-f9b8fc97 New Crowdin updates (#1011)
-098f8739 crdroid: Disable lockscreen album art by default [2/2]
-15fcdf73 crdroid: Introduce Google TV remote controls keyguard affordance [2/2]
