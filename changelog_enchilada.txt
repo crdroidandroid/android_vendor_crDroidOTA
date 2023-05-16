@@ -1,17 +1,19 @@
-crDroid 9.3
+crDroid 9.4
 
-Changelog since v9.2 hotfix 1 (01 April) release:
-- 9.3 includes the Android 13 "QPR2" merge. It was huge and took forever and this is how AOSP does things now. Every three months, woo! A lot of time & effort at every level went into making this feel like a small incremental update rather than the major rewrite it was.
-- March 2023 ASB merged.
+Changelog since v9.3 (19 April) release:
+- April 2023 ASB merged.
 - Device trees/hardware/kernel/vendor changes pulled from LineageOS.
-- Hidden/protected apps settings now actually stick after reboot even for user apps.
-- Unlinked ringtone & notification volumes are now implemented in a different fashion by AOSP directly, which requires a compile-time config flag, rather than a secure setting runtime toggle like how LineageOS' implementation used to use. So it's hard-coded on now (or off, but I turned it on for these builds). I did my best to re-add the volume panel dialog slider for notification volume, but as before, it's only actually visible when the notification AudioManager stream is active, and shortly thereafter.
-- aptX and aptX-HD blobs dropped from proprietary files; now using Qualcomm's officially-available encoder implementation. Tested working, in case you were worried.
-- Updated kernel commits from bananafunction's stable lineage-20 branch. Re-applied a couple Qualcomm/CLO bugfixes/updates that were overzealously reverted as part of the "see if camera will crash less" set from 9.2 hotfix 1.
-- Tuning some memory (and i/o readahead) values to make it a little less kill-background-process happy. And by "some values" I mean literally switched from deprecated lmk kernel driver to using Android LMKD with values from crosshatch (also sdm845 with similar RAM); seems slightly less kill-happy, battery life still good. Sweet.
-- Updated burn-in protection code. Fixed statusbar spacing on keyguard to align with unlocked view, and make it so statusbar items won't go under notch anymore on enchilada (and fix corresponding value on fajita just in case). It's perfect now; keep your fabricated screenshots purporting to show things getting cut off to yourself because I won't believe you. Also, I can't stop you from adding things to the left side or making your clock ungodly long, and causing even 2 notification icons to go under the notch. That's not a bug, that's just you doing silly things with our extended customization. Android won't switch to the overflow dot until after there are more than 4 notification icons present. Works As Intended(tm).
-- Tune WiFi to prefer sticking to currently-selected network a little more strongly again, and to be less inclined to roam from 5GHz to 2.4GHz if already on a 5GHz network.
-- "Misc tweaks and bugfixes".
+- crDroid:
+  - Neobuddy managed to re-implement the "Unlinked ringtone & notification volumes" settings toggle & sliders properly, even better than my hack, in Settings > Sound & vibration, woo! Legend.
+  - SystemUI should crash less often from Connection Manager "too many messages". _\*knocks on wood\*_
+- Device-specific:
+  - Updated kernel commits from bananafunction's stable lineage-20 branch.
+  - Revert the "GL backpressure" commits from device tree; they were making the UI more janky.
+  - The resurgence of "BlackScreenOS" on fajita in 9.3 should be squashed again. I might even try fixing it this way in Android 12.1 as well (for the two people still using that; don't say I never did anything for you :P ).
+  - Fixed white slivers showing up at top screen corners on lockscreen on enchilada when using light theme.
+  - Re-added Smart Pixels (it still looks ugly af, and I hate it, but it's at least smart enough to disable itself during UDFPS scan on fajita now, so might as well).
+  - AFTER THREE YEARS I finally realized there were some overlayable configs for sensor-based doze customization timing. Adjusted timing so that ambient display pulses when you actually tilt/pick the thing up/take it out of your pocket, rather than 2.5 seconds later. Amazing.
+- "Misc tweaks and bugfixes" (dropped a useless debug charging driver that wasn't doing anything except generate more logspam).
 
 Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
@@ -19,167 +21,73 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     04-16-2023
+     05-06-2023
 ====================
-
-   * frameworks/base
-3a5d97c0e18d Merge pull request #972 from bluehomewu/13.0
-b1c652bd07b8 base: Support for device specific input Filter
-c9acc116d06a base: Add SmartSwitchChanged api
-3e66dac9194a SystemUI: Enable media player surface ripple on button press
-5343ec4693d7 SystemUI: VolumeDialog: add support for unlinked ringer streams
-
-   * packages/apps/Launcher3
-b65d59f60f Launcher3: Enable SHOW_DOT_PAGINATION
-38084a8330 Launcher3: Update themed icon map on enabling themed icons
 
    * vendor/addons
-d87f45d addons: Fixup broken icon(s)
-c5a0c89 fixup! addons: Remove google prebuilt leftovers
-afb9d8b addons: Clean up themed icons
-0c26efe addons: Update themed icons
+8332ca0 addons: Fixup broken icon(s)
+ec5692b fixup! addons: Remove google prebuilt leftovers
 
 ====================
-     04-15-2023
+     05-02-2023
 ====================
-
-   * art
-161f86a9b1 Clean up creating constant locations.
-cdc676d722 Clean up `IsZeroBitPattern(HInstruction*)` usage.
-0d72b5b7f6 Mark graph visitor classes as final.
-686a877beb Optimize String's length/isEmpty for constant strings
-eeda49f3cb Inline unimplemented intrinsics
-8dec71a447 Add dirty object sorting to dex2oat ImageWriter
-385776b902 Don't assume that the profile exists.
-dd7870baa9 Optimize boot-image dirty object layout
-46cd16b938 ART: Fix mutator lock annotations for new clang++.
-
-   * build/soong
-ef9a8c932 Only dexpreopt system server jars for the primary arch
-38076e413 use "speed-profile" if a system server jar has a profile
-31dece7c7 Disable deferred tracing in R8
-
-   * device/qcom/sepolicy_vndr-legacy-um
-e52af6e4 bengal: Correct sysfs_wakeup paths
-
-   * frameworks/base
-e9639a6b8961 services: Enable default proactive kills
-6f663e7dae1b base: Remove more hardcoded fonts
-d022be7403f1 SystemUI: Align keyguard carrier text with status bar
-0a42d6120f07 Fix crash with HW assist button
-
-   * frameworks/native
-9342520438 sf: Reset validateWasSkipped in PostCommit phase
-83db2a839f Avoid vsync enabled when in DOZE mode (AOD).
-7c194df52c Skip transaction processing if the surface damage stays the same in Layer::setSurfaceDamageRegion.
-8a2f64372b Revert "SurfaceFlinger: Disable early release optimization"
-
-   * packages/apps/Launcher3
-915500463d Launcher3: Fix crash in SurfaceTransactionApplier
-25a0ae85e6 Launcher3: Fix monkey crash in createSurfaceParams
-b2ae0916b1 fixup! Launcher3: Vibrate on double tap to sleep
-
-   * vendor/lineage
-5f97be83 overlay: Move default status bar height to no-rro
-
-====================
-     04-14-2023
-====================
-
-   * frameworks/base
-670c121f6f60 Support per-UID VPN lockdown policy
-d38cd64e1bd9 New Crowdin updates (#970)
-1960928b4b57 fixup! Implement firewall status bar indicator
-1919210485ad NPMS: Check if UID is disallowed by transports
-c00170a5457e Track and send allowed transports to Connectivity
-0d2c752dd485 Do not consider transports for restricted mode
-579a69cbda8f fixup! Pause apps feature
-a243a05caf01 Stop unsuspending packages in profiles
-794c38d4a142 Add managed profile support for cross profile intents
-4c25908d2dce Pause apps feature
-c9605eff4a9f PixelPropsUtils: Add support for Asphalt 9 (#969)
-77149bc0db67 DNM Revert "hwui: CanvasContext: Reduce the timeout for dequeueing buffers"
-dd0e17a0aac8 SystemUI: Prevent InternetDialog crashing system
-0366c1efeb3c SystemUI: Clean up battery callback in CollapsedStatusBar
-c53ab3c5386b SystemUI: Switch to TunerService for CollapsedStatusBar
-4d75a063773a SettingsLib: Update 5G+ icon to Silk design
-
-   * packages/apps/Launcher3
-567435ab9a Merge pull request #336 from awakened1712/crdroid-13-pr
-cdc93406ce New Crowdin updates (#337)
 
    * packages/apps/crDroidSettings
-493e0541 New Crowdin updates (#1045)
-
-   * packages/modules/Connectivity
-32e990ed8 Keep UID in lockdown when present in any range
-5ac3debb1 Expose new isUidCurrentlyDisallowedByPolicy
-66dd1eac3 Set allowed UIDs for networks based on policies
-cf69bb3ea Always drop non-VPN ingress in lockdown mode
+43a15ab2 crDroid Settings: Add our build server host
 
 ====================
-     04-13-2023
+     05-01-2023
 ====================
 
-   * packages/apps/Launcher3
-0926c7cc7b Launcher3: PageIndicatorDots: null pointer Exception
+   * android
+e31d205 manifest: Switch latest clang to 17.0.1
+
+   * frameworks/base
+7b4da8877fd2 binder - include calling PID/UID in uncaught remote exception code
+d7c9cbc22614 Clear calling identity before calling to DeviceIdleController
+1ff6a1878b07 Fix cursor not blinking when view re-added to layout
+1927b5e136c0 Fixed UID mismatch in telephony registry
+d868cd527449 View: Prevent NPEs when initiating surface drag
+48f18e873709 Revert "DragSurface: destroy surfacecontrol in view site"
+a026881f6c52 ActivityThread: Prevent a NPE caused by null configuration
+c50c1f644b89 PhoneWindowManager: Pocket Judge: Don't mess with power button to reject call
+9a717fe80da5 base: Pocket Judge: Don't go to sleep while on call
+72a6da9003dd Skip screen on animation when wake and unlock via biometrics
+3fa4f6cd8f07 Revert "SystemUI: Fix keyguard statusbar"
+
+   * prebuilts/clang/host/linux-x86/clang-latest
+c885130 clang 17.0.1 (based on r487747b)
+
+   * vendor/addons
+13d31f3 addons: Update themed icons
 
 ====================
-     04-12-2023
+     04-30-2023
 ====================
+
+   * frameworks/av
+934d9b93fb fix crash of create global effect
+a7bd342a16 Update AudioEffect callers to new interface
+b237b4507c C2AllocatorGralloc: fix handle is null cause NE
+a40c595560 httplive: fix use-after-free
+7471a25142 media: fix resource leak when dlsym failed
+926b7d27dc C2SoftAacEnc: Fixed illegal memory access issue
+
+   * frameworks/base
+f2081600497e SystemUI: Fix optional ripple animation issue
+8ac9bd62f3b4 QSPanel: Prevent systemui crash when adjusting tiles height
+e517900e6874 WindowManager: finally proper desktop mode handling
+1d482c55e554 pocket mode: Update style to latest OOS specs
+b3a95bc98556 PixelPropsUtils: Spoof ROG Phone 3 for FIFA Mobile
+1cf9de730795 SystemUI: Enable cast tile without Wi-Fi connection
+f7bbdd993eed SystemUI: CastTile: Open cast settings on long click
+bffed805bfc3 SystemUI: Fix crash in cast tile for non-carrier wifi
+4b9eaeef1589 HWUI: reset buffer state only for ES3 context
+be2eaf8b4f6e Merge pull request #983 from DroidFreak32/13.0
+317967d66f52 KeyguardStatusBarView: Clean up cruft
+fece82a0fe88 Extend kill button to notification conversation guts
+907401994d9f Merge pull request #982 from DroidFreak32/patch-1
+1ed32d6c39f0 LessBoring: fixup LessBoring preventing bubbles
 
    * frameworks/native
-01d1f1da2f Skip dumping backtraces for cached processes
-8ddfc272df Fix unintended buffer canceling
-
-   * hardware/qcom-caf/wlan
-79ccbda wcnss-service: Remove setup_wlan_driver_ath_prop()
-ccf7898 Reading the serialno property is forbidden
-405fcce wcnss_service: Deal with mdm-detect too
-0f9526e wcnss: Build and dlopen wcnss_qmi_client as a shared library
-
-   * packages/apps/Launcher3
-c7efd38216 Launcher3: Adjust QSB width to align with hotseat
-
-====================
-     04-11-2023
-====================
-
-   * frameworks/base
-5b20c03070a9 base: Fix smart charging bug
-
-   * packages/apps/Launcher3
-661cc6f826 New Crowdin updates (#335)
-17e49c1eb3 Launcher3: Add light theme for taskbar background
-7c536e26ed Launcher3: Follow all apps background for taskbar slide in view
-
-====================
-     04-10-2023
-====================
-
-   * device/qcom/sepolicy_vndr-legacy-um
-b7dd1e17 sepolicy: Allow qti_init_shell to set proc_watermark_scale_factor.
-42c32852 Sepolicy:Add rules for init-qti-dcvs-sh
-f98c9bae sepolicy_vndr: Allow getprop for persist.debug.trace property
-04b5abe0 legacy/qva: label extcon files
-fee38be8 generic: Label more discard_max_bytes sysfs
-
-   * frameworks/base
-216c6fb5cba6 Revert "SystemUI: qs_security_footer_background: Restore the intended look"
-49e138663064 New Crowdin updates (#965)
-b45f95d62bfc SystemUI: Use better icon for camera keyguard affordance
-
-   * packages/apps/Aperture
-a5741ab Aperture: Add toggle for FFC horizontal flip
-
-   * packages/apps/Dialer
-e232aa81a New Crowdin updates (#54)
-
-   * packages/apps/GameSpace
-626074c New Crowdin updates (#43)
-
-   * packages/apps/crDroidSettings
-126b17a6 New Crowdin updates (#1040)
-
-   * system/core
-9d3d4a888 init.rc disable bootreceiver traces by default
+cc1debaaa9 opengl: fix resource leak when dlsym failed
