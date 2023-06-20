@@ -1,30 +1,31 @@
-crDroid 9.5
+crDroid 9.5-r2
 
-Changelog since v9.4 (09 May) release:
-- May 2023 ASB merged.
+Changelog since v9.5 (03 June) release:
 - Device trees/hardware/kernel/vendor changes pulled from LineageOS.
+- Still May 2023 ASB, since the June security bulletin requires merging QPR3, which the ROM team is currently working hard at finishing.
 - crDroid:
-  - Updated kernel clang version to 17.0.2.
-  - Lots of stuff I imagine, I dunno. Haven't been paying attention because I'm always a month behind.
+  - I managed to re-add independent Battery Styles for QS shade compared to statusbar (and battery estimate if you have "turbo", Google's DeviceHealthServices) installed. Enjoy it while it lasts; everything will be ruined again with the QPR3 merge here in a bit. :D
+  - At least a couple things I'd imagine, I dunno. Haven't been paying attention because I'm always a month behind.
 - Device-specific:
-  - Updated kernel commits from bananafunction's lineage-20 branch & upstream LineageOS lineage-20 branch.
-  - Much thanks to @snnbyyds for inspiration to dig into crosshatch (Pixel 3XL) trees, and whose work on OP6-series for PixelExperience also helped me figure out a few other things.
-  - Added ZRAM writeback for uncompressible pages & configured to mostly match crosshatch (Pixel 3XL, also sdm845).
-  - Dropped ZRAM to 25% of system RAM (crosshatch only shipped with 8GB, but we have more hardware variants) & tuned a little more.
-  - Some more composition tuning to make it smoove & reduce jank; should help a bit when pulling down shade or on lockscreen with active mediaplayer session visible.
-  - Further block device I/O, cgroup & PSI virtual memory pressure tracking tuning.
-  - I thought I managed to add back USB-OTG support in recovery, so you can load from a USB thumbdrive instead of ONLY ever being able to flash via ADB sideloading in Android 13, but now it's not working again? Dunno there, I'll keep working on it, maybe...
-  - Reverted kernel commits that attempted to lock GPU thermal throttling off by making sysfs node write-once-then-read-only... they were actually locking throttling ON for the last few months, leading the governor to attempt to decrease GPU freqs once the phone got up to operating temperatures (30-40C). Instead, added control to DeviceExtras to allow controlling Adreno thermal throttling from there. If you want to prioritize CPU over GPU, turn it on. If you want to prioritize graphical smoothness, turn it off.
-  - Dropped -O3 optimization flag in kernel Makefile back down to -02; should be less crash-dumpy about camera stuff now.
-  - For the clang nerds in the back, enabled LLVM_IAS (clang inline assembler) in kernel finally. Whoops, that wasn't getting used automatically even with LLVM=1 enabled... guess we were using gnu binutils assembler before.
-  - Also finished enabling VDSO compat and 32-bit VDSO compat cross-compile in kernel, might help speed up... something? That wasn't actually getting built before at any rate, now it is.
-  - "Misc tweaks and bugfixes" (dropped another unused charging driver, "qnovo", that wasn't doing anything except making more things show up in sysfs that we don't care about; regular and DASH charging seem unaffected).
-- Overall it seems _slightly_ more battery hungry if you're doing things that utilize kgsl (GPU acceleration) on a regular basis -- so turn off that QS shade background transparency, or turn on GPU throttling. Just feels technically a little smoother, a few more things done right, performance feels good overall.
+  - Updated kernel commits from bananafunction's lineage-20-test branch & upstream LineageOS lineage-20 branch.
+  - Dropped ZRAM writeback (meh, less thrashing on the flash storage pls).
+  - Dropped a few more of the overly-ambitious changes from 9.5 that didn't seem to actually do much, except make it a little more battery-hungry. I think battery life is back where we want it to be.
+  - Re-added the "squash revert" commit in kernel to help with some of the camera usage causing drops to Qualcomm Crashdump mode. But honestly, it's going to keep being a thing with newer Google Camera ports. If you need stability for lots of photos, stick with a GCam port (like DMGC or Urnyx05) based on v7.3 or v7.4 for best results.
+  - "Misc tweaks and bugfixes".
+- If it feels like it's still slightly too battery hungry, turn on the "GPU Throttling" toggle in DeviceExtras to save a little bit more (may cause a little more jank in gaming).
+
+Other notes:
+- I updated my "elite build" NikGapps package, and 16 June or newer builds of crDroid-op6 now include a few extra packages in there that should help with some app compability going forward (added DeviceSetup, GooglePartnerSetup, DeviceHealthServices, and CarrierServices).
+
 - And if you come to the TG channel, I've got a little something something for you kernel-wise that isn't going into the official release build. :D
 
-Please test:
-- Is it more magical?
-- Is it, in fact, less cra[shdum]ppy?
+- If you're experiencing DRASTIC battery draining, that usually indicates that there's a Google Apps permissions problem, and you should download updated MindTheGapps or NikGapps packages, reboot to recovery, dirty flash the ROM zip, reboot to recovery again, and dirty flash all the updated versions of your necessary Google Apps & addons zips, and then reboot back to system. It's not a ROM problem; I have vanilla users (folks who run without any Google Apps or microG) who get nearly 24h of screen-on time.
+
+- If you're experiencing a boot loop, do the same thing. I've also had the built-in updater act REALLY weird on occasion. So please, please, read about how slot-switching works in the first post, and actually follow the instructions: If you run into problems with a boot loop, get into recovery (unplug USB, hold down power + volumeUp button until you get to bootloader, then enter recovery), adb sideload the ROM zip, Advanced > Reboot recovery, adb sideload the latest version of your Google Apps or microG package if using (and Magisk if using), THEN reboot to system.
+
+*Failing to reboot to recovery after the ROM installer zip has completed, means it won't switch slots, and you won't have any GApps installed into the new system partition, and everything will be terrible.*
+
+- If you get problems with Google Play Store or Android Setup complaining that you need to connect to wi-fi in order to download updates, go into Settings > Apps > "See all __ apps" > [overflow menu] "Show system", then for Android Setup, Google Play Services, and Google Play Store, get app info and make sure to toggle on Network Access for all of them (or turn it off & back on), clear app cache, and then reboot as quickly as possible after. That should get them to realize they CAN connect to the internet after all.
 
 Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
@@ -32,53 +33,73 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     06-02-2023
+     06-20-2023
 ====================
 
-   * vendor/addons
-dfffe51 fixup! addons: Remove google prebuilt leftovers
+   * build/make
+f4ba092f3 build_image: get squashfs partition size from image size
 
 ====================
-     05-31-2023
+     06-18-2023
 ====================
 
-   * bionic
-31b7b88c8 Fix elftls_dl#dtv_resize with HWASan
+   * packages/apps/crDroidSettings
+e819ce24 Reapply "crdroid: Remove battery estimates pref if turbo not present"
 
 ====================
-     05-26-2023
-====================
-
-   * bionic
-39bd322a1 Nullability check for xattr module.
-a1f2ccc53 Nullability check for inet module.
-c1ffb2b85 Nullability check for shm module.
-8bac320ef Fix the *return* types in the arm64 dynamic function dispatch.
-
-   * device/lineage/sepolicy
-5b29156 sepolicy: Label LinearmotorVibratorService
-
-   * frameworks/av
-84e18ac36c NuPlayer: signal video scaling mode to components that queue to IGBR
-
-   * frameworks/base
-226a368ef8b8 Fix NullPointerException in GestureDetector
-
-   * system/core
-792a4ae03 ueventd: Wait for runtime apex before running external firmware handler
-
-   * system/sepolicy
-ef0675329 Allow media server configurable flags to be read from anywhere
-9d73c7538 Allow ueventd to read apexd property
-
-   * vendor/addons
-2feff5d addons: Fixup broken icon(s)
-
-====================
-     05-25-2023
+     06-17-2023
 ====================
 
    * frameworks/base
-84a682b1e8e6 base: Add overlay to mock oplus LinearmotorVibratorService
-1873de158651 base: Add mock oplus LinearmotorVibratorService
-ec8b93cc2ee2 Hide hidden apps from all apps except system
+78d4d27ec4d9 Battery Styles: [TESTING] Disable QS Battery Location for now
+
+   * packages/apps/crDroidSettings
+bc16afea Battery Styles: [TESTING] Disable QS Battery Location for now
+
+====================
+     06-16-2023
+====================
+
+   * packages/apps/crDroidSettings
+75cf51c1 Battery Styles: Add customization for QS
+
+====================
+     06-12-2023
+====================
+
+   * frameworks/base
+fce901cf0e55 BatteryMeterView: Fix NPE that occurs when onDensityOrFontScaleChanged() is called.
+33c31b2b3faa Battery Styles: Add customization for QS
+8bf576869825 Add QS battery customization in LargeScreenShadeHeader
+
+====================
+     06-11-2023
+====================
+
+   * frameworks/base
+dc2b09671c2c NetworkTraffic: Fix leaking receivers
+8909970f5f08 Allow a drawn reported activity to keep screen brightness
+96f30437f72b Fix wrong permission state changed being notified
+3c9c88f438c0 Handle ArrayIndexOutOfBoundsException for install_sessions.xml
+f19658afd4bb Fix the problem that AccessibilityNodeInfo maybe null and cause a crash.
+9219af12458b Flush output buffers when command is complete
+af7d7c7f7193 fixup! [RESTRICT AUTOMERGE] Add BubbleMetadata detection to block FSI
+2c11388782f9 Fix test failure caused by incorrect string
+98ee04b1adf0 Fix issues with setRemotePlaybackInfo
+dc718f4ed2e4 Add BubbleMetadata detection to block FSI
+c6b068f3c5ac Enforce DevicePolicyManager.setUserControlDisabledPackages in AppStandbyController
+f5fae8420312 Allow filtering of services
+75a01f689678 Use PendingIntent for media click action over lockscreen
+f786f8be5f54 Check key intent for selectors and prohibited flags
+fb37d0dab82f Prevent RemoteViews crashing SystemUi
+453566cba6fe Wait for preloading images to complete before inflating notifications
+f5351d789e39 Remove Activity if it enters PiP without window
+f2fd2c68d35c Prevent sharesheet from previewing unowned URIs
+24f4add5b9d0 Add listener once for volume row animation
+
+   * packages/apps/DeskClock
+6498d63e4 DeskClock: Match navigation bar color with the app
+a1e0200d4 DeskClock: Adjust accent colors
+
+   * vendor/lineage
+b0ba30d7 config: Disable ART debug
