@@ -1,31 +1,23 @@
-crDroid 9.5-r2
+crDroid 9.6
 
-Changelog since v9.5 (03 June) release:
+Changelog since v9.5r2 (20 June) release:
+- June 2023 Android Security Bulletin merged.
+- QPR3 merged from AOSP -- your favorite feature is probably missing or works differently or moved again. Sorry. Please cope gracefully.
 - Device trees/hardware/kernel/vendor changes pulled from LineageOS.
-- Still May 2023 ASB, since the June security bulletin requires merging QPR3, which the ROM team is currently working hard at finishing.
+  - Lineage [Battery] Health now included; Smart/adaptive battery charging is now in Settings > Battery and is a much better implementation that seems to support battery-idle mode correctly with our kernel. Sweet!
+  - Single-touch wake & unlock: Due to upstream changes, you may now have to make sure to go into Settings > Security > Face & Fingerprint Unlock > Fingerprints and enable the toggle for one-touch screen wake & unlock in order for real FP sensor (enchilada) for wake & unlock with a single touch to keep working. The equipvalent screen-off UDFPS (fajita) feature might require you to toggle the setting off & back on a couple times in Settings > crDroid Settings > Lock Screen > UDFPS Customization before it works again.
 - crDroid:
-  - I managed to re-add independent Battery Styles for QS shade compared to statusbar (and battery estimate if you have "turbo", Google's DeviceHealthServices) installed. Enjoy it while it lasts; everything will be ruined again with the QPR3 merge here in a bit. :D
-  - At least a couple things I'd imagine, I dunno. Haven't been paying attention because I'm always a month behind.
+  - Neobuddy found/fixed a memory leak with QS shade that was causing a lot of the reported stutters/lags. SystemUI should stop being so crashy after a few days, and hopefully people will stop complaining about pulling down the shade being not so smooth. Honestly, I never really had the problem with NikGapps on the tester enchilada or an old install of MindTheGapps on my daily driver fajita.
+  - Sorry that your favorite feature is missing. I'll promise to look very concerned about it as I just spend the next few months merging security updates without really changing anything because I'm busy af in real life.
 - Device-specific:
-  - Updated kernel commits from bananafunction's lineage-20-test branch & upstream LineageOS lineage-20 branch.
-  - Dropped ZRAM writeback (meh, less thrashing on the flash storage pls).
-  - Dropped a few more of the overly-ambitious changes from 9.5 that didn't seem to actually do much, except make it a little more battery-hungry. I think battery life is back where we want it to be.
-  - Re-added the "squash revert" commit in kernel to help with some of the camera usage causing drops to Qualcomm Crashdump mode. But honestly, it's going to keep being a thing with newer Google Camera ports. If you need stability for lots of photos, stick with a GCam port (like DMGC or Urnyx05) based on v7.3 or v7.4 for best results.
-  - "Misc tweaks and bugfixes".
-- If it feels like it's still slightly too battery hungry, turn on the "GPU Throttling" toggle in DeviceExtras to save a little bit more (may cause a little more jank in gaming).
+  - Re-updated kernel commits from bananafunction's lineage-20-test branch, I dunno, everything seems fine. Reintroduced the squashed "revert some OnePlus Camera driver-specific changes" commit because it was getting crashdumpy again, but honestly, it's happening on vanilla LineageOS as well, so I'm done worrying about it. I'm sorry it happens, definitely above my pay grade; your most stable bet is going to be a v7.3 or v7.4 based GCam mod like DMGC or Urnyx05, which are old.
+- "Misc tweaks & bugfixes." :D
 
-Other notes:
-- I updated my "elite build" NikGapps package, and 16 June or newer builds of crDroid-op6 now include a few extra packages in there that should help with some app compability going forward (added DeviceSetup, GooglePartnerSetup, DeviceHealthServices, and CarrierServices).
-
-- And if you come to the TG channel, I've got a little something something for you kernel-wise that isn't going into the official release build. :D
-
-- If you're experiencing DRASTIC battery draining, that usually indicates that there's a Google Apps permissions problem, and you should download updated MindTheGapps or NikGapps packages, reboot to recovery, dirty flash the ROM zip, reboot to recovery again, and dirty flash all the updated versions of your necessary Google Apps & addons zips, and then reboot back to system. It's not a ROM problem; I have vanilla users (folks who run without any Google Apps or microG) who get nearly 24h of screen-on time.
-
-- If you're experiencing a boot loop, do the same thing. I've also had the built-in updater act REALLY weird on occasion. So please, please, read about how slot-switching works in the first post, and actually follow the instructions: If you run into problems with a boot loop, get into recovery (unplug USB, hold down power + volumeUp button until you get to bootloader, then enter recovery), adb sideload the ROM zip, Advanced > Reboot recovery, adb sideload the latest version of your Google Apps or microG package if using (and Magisk if using), THEN reboot to system.
+Other notes / Known issues:
+- Recommended GApps is my "elite build" NikGapps config. Download it from https://sourceforge.net/projects/nikgapps/files/Elite-Releases/crDroid-op6/NikGapps-T/
+- Look, practically EVERY SINGLE ISSUE anyone has had lately (massive battery drains or weird slowdowns/jank or things FCing or bootloops) are caused by problems with installation/updating or bad downloads or bad USB cables and gets resolved by flashing with a good cable from the built-in recovery. Reboot to recovery, adb sideload the current ROM zip, Advanced > reboot recovery (so the slots switch), adb sideload the latest release of your preferred Google Apps/microG/Magisk zip, reboot system, and leave the thing plugged in overnight and your problems will almost assuredly be over.
 
 *Failing to reboot to recovery after the ROM installer zip has completed, means it won't switch slots, and you won't have any GApps installed into the new system partition, and everything will be terrible.*
-
-- If you get problems with Google Play Store or Android Setup complaining that you need to connect to wi-fi in order to download updates, go into Settings > Apps > "See all __ apps" > [overflow menu] "Show system", then for Android Setup, Google Play Services, and Google Play Store, get app info and make sure to toggle on Network Access for all of them (or turn it off & back on), clear app cache, and then reboot as quickly as possible after. That should get them to realize they CAN connect to the internet after all.
 
 Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
@@ -33,73 +25,246 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     06-20-2023
-====================
-
-   * build/make
-f4ba092f3 build_image: get squashfs partition size from image size
-
-====================
-     06-18-2023
-====================
-
-   * packages/apps/crDroidSettings
-e819ce24 Reapply "crdroid: Remove battery estimates pref if turbo not present"
-
-====================
-     06-17-2023
+     07-06-2023
 ====================
 
    * frameworks/base
-78d4d27ec4d9 Battery Styles: [TESTING] Disable QS Battery Location for now
+d376fa5e140d Revert "SystemUI: Enable new back gesture affordance"
+66c833c86bfc Keyguard: Allow user configurable fingerprint wake-and-unlock
+71ba45e08ba5 Revert "Keyguard: Allow user configurable fingerprint wake-and-unlock"
+
+   * packages/apps/Settings
+752ea47c95 Settings: Show single-touch wakeup setting on rear & front fps devices
+
+====================
+     07-04-2023
+====================
+
+   * device/lineage/sepolicy
+1ff6546 Merge pull request #20 from Astridxx/13.0
+
+   * packages/apps/Dialer
+86520eda9 New translations (#64)
+
+   * packages/apps/GameSpace
+2b14818 New translations (#48)
 
    * packages/apps/crDroidSettings
-bc16afea Battery Styles: [TESTING] Disable QS Battery Location for now
+dd2079d New Crowdin updates (#1059)
 
 ====================
-     06-16-2023
+     07-03-2023
+====================
+
+   * device/lineage/sepolicy
+502405b lineage: Make Health service discoverable by Settings app
+
+   * frameworks/base
+92150da62f4e SystemUI: Enable new back gesture affordance
+b77a77fc6bf0 fixup! base: Add support for parallel space
+23100985a547 Remove QS data usage feature
+
+====================
+     07-02-2023
 ====================
 
    * packages/apps/crDroidSettings
-75cf51c1 Battery Styles: Add customization for QS
+a907e1f Remove QS footer data usage
 
 ====================
-     06-12-2023
+     07-01-2023
+====================
+
+   * lineage-sdk
+2c87bf39 Handle more custom DNS migration
+c3b37ea2 Migrate Cloudflare DNS mode to hostname
+a5d2e127 Migrate side FPS settings
+f759a6cd lineage-sdk: Bring our icon
+4f297ad3 lineage-sdk: Add restart SystemUI in Advanced Reboot [2/2]
+f89348bb lineage-sdk: Update few default key assignments
+fbc6fa8d lineage-sdk: Add backend for handling missing button actions
+ee5c56de lineage-sdk: Fix settings pref switch for multi-user
+19366255 lineage-sdk: Properly set default value for switch pref
+e7d695b4 Allow value to hide the clock
+124213e2 NotificationLights: Allow overriding for all apps [1/2]
+d17808d6 Add toggle to allow advanced restart on secured lockscreen[1/2]
+b5ed2654 Battery light: 100% charged level (3/3)
+33d7c472 sdk: Add On-The-Go Mode to power menu constants
+ea685f48 Add more device key actions [1/3]
+65b470eb Add device key action to take screenshot [1/3]
+22acae1c Add device key action to toggle flashlight [1/3]
+cf726236 lineage-sdk: Remove setting loading for FORCE_SHOW_NAVBAR
+95b95ed6 sdk: Try loading default setting value for switch
+92fac3b3 sdk: Set summary automatically if required
+8af806ab Add settings for brightness slider improvements
+d83c3f76 Network traffic mode for status bar [1/3]
+b0634a03 Allow value 3 for status bar quick pull down
+05687ee4 lineage-sdk: Enable advanced reboot by default
+8630a5a7 sdk: Replace los versioning
+a81df557 sdk: Kill trust interface hint on first boot
+9d9b0857 Disable by livedisplay by default
+9f94af93 Ship as crDroid based on LOS
+d487fb50 Automatic translation import
+
+   * packages/apps/Settings
+04f73726b7 fixup! Hide SFPS wakeup setting when it's not supported
+364ee4c5d1 fixup! Settings: Add switch to unlink ringtone and notifications volume [2/2]
+
+====================
+     06-30-2023
+====================
+
+   * android
+a3b2451 manifest: Track clang 17.0.3
+
+   * art
+403f3e7b55 Disable the shared memory optimization for methods in non-zygote mode.
+
+   * frameworks/av
+c2915985e9 av: Nuplayer: Declare 24Bit Packed & 32Bit support
+1f9c418c01 av: ACodec: Import support of Pcm32bit channel
+4d18e4acd1 av: Audio Policy: Increase Max Sample Rate Hz to 384k
+40a4ca29c4 Add buffer usage for more consumers
+bd78f4e0c0 CCodec: clear deadline after component start returns
+
+   * frameworks/base
+4a53f6315799 Always set last report configuration for starting window.
+53d72d8629a1 Unfreeze the surface when the transition is done
+82835d574a72 Improve first opaque activity candidate detection
+d042e58a48eb Skip letterboxing if the activity below is embedded
+2c18b12b4522 Prevents activity being stopped while folding/unfolding device
+902fd4887234 Fixes foldable autorotation setting being out of sync in QS and Settings
+1b83d51aae47 Invalidate buffers on transform change
+e2be1b019dc2 Update the timing of clearing SplitRequest
+94584b9ef6c3 Fix split cannot active if app trampoline launch new task
+b9893a09cf2e Fix deadlock in BaseDataProducer.
+12219cb9a857 WallpaperService: Fix half black wallpaper after rotating quickly
+ad3bb97a57a0 Refresh layout parameter for bounds change from relayout
+6fbd4824d4c3 Add toggle to enable brightness slider haptic feedback [1/2]
+13991e4b9a37 Fix: avoid the potential attack on SlicePermissionActivity
+b4e379c02dd5 Prevent crash in AccountManager after profile removal.
+acf33c830750 avoid NPE when getPreferredActivitiesInternal
+
+   * frameworks/native
+68f1d8e495 Add pending command buffer reset
+
+   * packages/apps/crDroidSettings
+fa1d171 Add toggle to enable brightness slider haptic feedback [2/2]
+
+   * prebuilts/clang/host/linux-x86/clang-latest
+fb6119a clang 17.0.3 (based on r498229)
+
+====================
+     06-29-2023
 ====================
 
    * frameworks/base
-fce901cf0e55 BatteryMeterView: Fix NPE that occurs when onDensityOrFontScaleChanged() is called.
-33c31b2b3faa Battery Styles: Add customization for QS
-8bf576869825 Add QS battery customization in LargeScreenShadeHeader
+14213d973abf Fix NPE with void android.view.VelocityTracker.clear()
+
+   * vendor/addons
+0fd210f addons: Fixup broken icon(s)
 
 ====================
-     06-11-2023
+     06-28-2023
 ====================
+
+   * android
+d81fe65 manifest: Track our new apps fork
 
    * frameworks/base
-dc2b09671c2c NetworkTraffic: Fix leaking receivers
-8909970f5f08 Allow a drawn reported activity to keep screen brightness
-96f30437f72b Fix wrong permission state changed being notified
-3c9c88f438c0 Handle ArrayIndexOutOfBoundsException for install_sessions.xml
-f19658afd4bb Fix the problem that AccessibilityNodeInfo maybe null and cause a crash.
-9219af12458b Flush output buffers when command is complete
-af7d7c7f7193 fixup! [RESTRICT AUTOMERGE] Add BubbleMetadata detection to block FSI
-2c11388782f9 Fix test failure caused by incorrect string
-98ee04b1adf0 Fix issues with setRemotePlaybackInfo
-dc718f4ed2e4 Add BubbleMetadata detection to block FSI
-c6b068f3c5ac Enforce DevicePolicyManager.setUserControlDisabledPackages in AppStandbyController
-f5fae8420312 Allow filtering of services
-75a01f689678 Use PendingIntent for media click action over lockscreen
-f786f8be5f54 Check key intent for selectors and prohibited flags
-fb37d0dab82f Prevent RemoteViews crashing SystemUi
-453566cba6fe Wait for preloading images to complete before inflating notifications
-f5351d789e39 Remove Activity if it enters PiP without window
-f2fd2c68d35c Prevent sharesheet from previewing unowned URIs
-24f4add5b9d0 Add listener once for volume row animation
+cb201d77c8ab KeyguardBouncer: Don't delay showing if face auth running
+8ef305a827b0 PixelPropsUtils: Spoof gms with Pixel 2
+ee19f55fb256 core: Enable wake-and-unlock by default if power button is fps
+5123b9e7d141 Keyguard: Allow user configurable fingerprint wake-and-unlock
+eaf0af5f4dd9 PixelPropUtils: Add more processes for GMS spoof
+6c2c038c0557 PixelPropsUtils: Do not spoof restore, pixelmigrate and setupwizard
+9271ca76b716 PixelPropsUtils: Adjust Tensor workaround
+20da740104fa PixelPropsUtils: Switch from POCO F4 to POCO F5
 
-   * packages/apps/DeskClock
-6498d63e4 DeskClock: Match navigation bar color with the app
-a1e0200d4 DeskClock: Adjust accent colors
+   * lineage-sdk
+e6258aa7 ChargingControl: Handle cancel toggle correctly if bypass is not supported
+7f1c3b99 ChargingControl: Add cancel toggle for limit done notification
+9ada9b1b ChargingControl: Reset internal states on settings change
+c2dbc740 ChargingControl: Set a small margin for devices with bypass support
+
+   * packages/apps/Jelly
+950988c Jelly: M3
+a644d26 Jelly: New URL bar
+44ab38b Jelly: Remove timestamp based history background color
+5083615 Jelly: Remove background from empty lists icon
+6e4b89a Jelly: Use AndroidX preference attributes
+aaf50f9 Jelly: Don't apply tints directly on icons drawables
+fb0c39c Jelly: Nuke favicon based accent color change
+b846fae Jelly: Use camel case for layout IDs
+5ef8a0f Jelly: Use MaterialToolbar back button
+1041284 Jelly: Use lazy getters for views
+a4aa4da Jelly: SettingsActivity: Use the new method for inflating fragments
+1ed2274 Jelly: SettingsActivity: Use better Kotlin syntax
+b6afc07 Jelly: SettingsActivity: Rename settings fragment class
+ba85b55 Jelly: MainActivity: Use better Kotlin syntax
+757e8c3 Jelly: MainActivity: Rename class attributes' names
+d60eb1d Jelly: webview: Use better Kotlin syntax
+0309838 Jelly: webview: Rename class attributes' names
+59b832a Jelly: utils: Use better Kotlin syntax
+172cdbb Jelly: ui: Fix secure icon showing
+17a8a47 Jelly: ui: Use better Kotlin syntax
+33c650c Jelly: ui: Rename class attributes' names
+cd7582c Jelly: suggestions: Fix typo
+1bdfc55 Jelly: suggestions: Use better Kotlin syntax
+eae9762 Jelly: suggestions: Rename class attributes' names
+09da4aa Jelly: history: Use better Kotlin syntax
+0416d6c Jelly: history: Rename class attributes' names
+b998168 Jelly: favorite: Use better Kotlin syntax
+d9b4e87 Jelly: favorite: Rename class attributes' names
+5f49d56 Jelly: Disable Jetifier
+6b50949 Jelly: Reformat code
+9094b05 Jelly: Use ?attr/isLightTheme
+4764c54 Jelly: Rename app theme to Theme.Jelly
+1333655 Jelly: Move to SPDX license headers
+c89a447 Jelly: Remove unused import
+80a748d Jelly: Add newline at the end of files where needed
+4465010 Jelly: Get rid of wildcard imports
+f12b272 Jelly: Introduce NoSuggestionProvider
+6209588 Jelly: Use ranges in suggestion provider
+
+   * packages/apps/crDroidSettings
+90f768b crdroid: Add nav bar expanded layout
+
+   * vendor/addons
+3824da8 addons: Update themed icons
 
    * vendor/lineage
-b0ba30d7 config: Disable ART debug
+12b0a100 crdroid: Bump to version 9.6
+
+====================
+     06-27-2023
+====================
+
+   * frameworks/av
+99a912605f Reset staticInfo if static meta fetch fails
+9a0e1c0014 Fix cts fail AudioTrackTest#testPlaybackHeadPositionIncrease
+eaeadea364 cameraserver: Fix floating point truncation for getUHRMaxJpegBufferSize
+087d4cbe96 Break cyclic binder dependency
+33640eb9bc codec2: change to support multiple fences for single output.
+9f82adc9e2 Camera: Increase precapture end timeout
+486032e700 libmkvextractor: Remove unused local filed rangeSpecified
+
+   * frameworks/base
+04729b759dfd Fix system reboot in systm_server caused by SensorPrivacyService
+2dd7cb73ccc1 Watchdog and sluggishness due to multiple virtual displays created by third party apps
+2c5db34c8fd7 SourceStampVerification Return more specific error code when verification fails
+9fa373d358c8 Early return when mA2dp is null (disconnected) to avoid null object reference
+7d6e406c25ac Increase timeout for UIAutomation
+d97e9bde89fc Respect timeout multiplier in PermissionControllerManager
+bf388283ef58 Make private, single-assignment fields "final" in android.content.
+4be745b4c835 fix(#Magnification): mis-use non resoure id in resource getter when magnification capability setup
+87d3cc57b12f Usb: Fix incorrect mapping of port mode constants
+35c8d6c22359 Revert "ExifInterface: Use FileDescriptors whenever we can."
+719285b15400 Revert "Use a ExifInterface ctor with a file descriptor as a parameter"
+25e800402007 Fix resource leak caused by TypedArray type
+a595929b1ada Simplify UserHandle.equals
+d229411a4d4c Ensure ActivityManagerInternal instance is non-null
+420d427d3a5f Add listener once for volume row animation
+acd54af94a4c Delay tryToRebind if application exit reason is LMK
+484478c55c5d Device stuck in boot due to ArrayIndexOutOfBoundsException
+7e43687a1705 Sometimes Screen does not wake up while receiving whatsapp video call
