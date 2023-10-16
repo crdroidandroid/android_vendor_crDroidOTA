@@ -1,23 +1,23 @@
-crDroid 9.8
+crDroid 9.9
 
-Changelog since v9.7 (29 July) release:
-- August 2023 Android Security Bulletin (android-13.0.0_r67) merged from AOSP.
+Changelog since v9.8 (03 September) release:
+- September 2023 Android Security Bulletin (android-13.0.0_r75) merged from AOSP.
 - Upstream changes to ROM sources from LineageOS & crDroid merged.
 - crDroid:
-  - OTA Updater (Settings > System > Updater) goes hella fast now, woo!
-  - AOSP keyboard theme should be better.
+  - So technically it wasn't merged until just this last week, but I got a fix in for the "merge" button missing from crDroid stock dialer, so you can create conference calls without having to use a 3rd-party dialer again, woo!
 - Any device-specific device trees/hardware/kernel/vendor changes pulled from LineageOS.
-  - Fixed fastboot 'flash-all' command for enchilada & fajita.
+  - Technically, the Lineage folks updated QTI thermal HAL temperature limits for SDM845.
+  - Not much? I dunno, Edwin is busy on the 4.19 kernel bringup as a prerequisite for Android 14 right now.
 - Device-specific:
-  - Stealing updated Adreno & RenderScript blobs from PixelExperience (which were kanged from slightly newer stock releases from other SDM845-based devices like crosshatch).
+  - I think I figured out the two things that kept causing all the battery drain after ~3 days of uptime. It's not doing it any more, FINALLY.
   - Updated kernel commits from bananafunction's lineage-20-test branch.
-  - Reverting to using QTI lowmemorykiller kernel driver instead of AOSP lmkd for now. Will probably reincorporate it when switching over to libperfmgr at the same time since they work better together.
-  - Couple of kernel driver updates for things like zstd, lz4, xfrm, cgroup & psi support even if we're not switching over to psi for memory pressure tracking yet.
+  - Since Google Photos was still freaking out about device overheating even with the more lax "skin" threshold limits in hardware/qcom, I imported HAL into device tree and changed it to use a different sensor name instead ('quiet-therm-adc' instead of 'xo-therm-adc'; still has safe shutdown limits but doesn't automatically set off a warning in Google Photos when trying to do a backup). Now we get a little better performance/temperature control, rather than just dropping the HAL entirely.
+  - Played with kernel graphics-related commits and performance tuning stuff from PixelExperience and even MCD kernel a lot, and ultimately, I think I ended up paring back more things that I'd added in recent months. Battery life seems fine, reponsiveness/smoothness is good, reduced some jankiness when under load, even Golf Blitz seems to stop lagging in the middle of a match.
+  - Didn't get around to importing libperfmgr & lmkd again; not sure if I'm going to bother with it in 9.x or save that for crDroid 10.x/Android 14, since things seem to be doing so well now. But it's on the to-do list.
 - "Misc tweaks & bugfixes." :D
 
 Other notes / Known issues:
-- There's power drain after 3-4 days of uptime, related to system_server and kernel wakelock tracking, but only when GApps/microG are installed. This has been a thing for a few months, I'm not sure what's going on. For now, just reboot the device after a few days.
-- Recommended GApps is my "elite build" NikGapps config. Download it from https://nikgapps.com/Terminator-J and enjoy.
+- Recommended GApps is my "elite build" NikGapps config. Download it from https://nikgapps.com/Terminator-J and enjoy. If you haven't updated the zip file in a while, you should get the 10 October or newer version and do the update from recovery using the latest NikGapps elite build zip.
 - Audio (and probably a few other things) is always a little screwy at first boot after a clean install. Finish the initial setup wizard without restoring everything, and reboot as soon as possible. Then it nags you to complete setup, and you can restore all your stuff at that point. It'll be a lot happier.
 - Bluetooth & NFC & even some mobile data functionality may be problematic compared to stock OxygenOS. With Android 13 and above, we *can't* just use the prebuilt QTI libs from vendor any more & have to use the source-built generic AOSP versions instead due to changes in how AOSP does things, and Qualcomm having dropped support for SDM845 two years ago.
 
@@ -28,153 +28,3 @@ Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
 Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
-
-====================
-     08-29-2023
-====================
-
-   * packages/apps/Nfc
-bdc05cbc Fix Android Beam
-
-====================
-     08-28-2023
-====================
-
-   * hardware/qcom-caf/thermal
-377c718 thermal_hal: Update skin temperature threshold for lito
-
-   * vendor/lineage
-58bf1495 crdroid: Bump to version 9.8
-707c60fc kernel: Handle additional flags earlier
-62a183fe vendor: Add TARGET_CAMERA_USES_NEWER_HIDL_OVERRIDE_FORMAT
-41262928 crdroid: Bump to version 9.7
-0e1b2b0f soong: Add CAMERA_NEEDS_CLIENT_INFO_LIB_OPLUS
-ec580e05 overlay: Offload WM shell to another thread
-ff0a7187 overlay: Set components from pixel device
-293a158c crdroid: Update Pixel props
-ef0a3520 common: Enable R8 optimizations for system_server and SystemUI
-a3b1c67c overlay: Settings: Show memory usage in app info
-83dd0c77 overlay: Partially disable gms chimera service
-8336b4f1 overlay: Add google OTA to global disabledComponent
-5eb70093 overlay: Allow gms to access persistent data partition
-fdbb7bed crdroid: Introduce App Lock [4/4]
-38f5ec5f prebuilts: sdk: Add latest preference-ktx library
-a76132f5 overlay: Enable QR Code scanner on Lock Screen
-e721793b soong: Add CAMERA_NEEDS_CLIENT_INFO_LIB
-663c48d0 soong: Add support to set vendor tag with client package name
-d9f8c3f5 soong: Remove unused cflags for TARGET_ALTERNATIVE_FUTEX_WAITERS
-e5291c1b crdroid: Minimize debug info
-84763744 overlay: Settings: Set styles/wallpaper picker action name
-99ac73ca crdroid: Build ParallelSpace
-859c3798 soong: Add TARGET_ALTERNATIVE_FUTEX_WAITERS
-839de39e crdroid: Inherit several Android Go configurations
-54e001b5 crdroid: Speed profile services and wifi-service to reduce RAM and storage
-6e8c5f43 soong: Add TARGET_CAMERA_BOOTTIME_TIMESTAMP conditional
-5a0d066a overlay: Add tethering to location exemption
-1f1b00a9 crdroid: qcom: Allow a device to manually override which HALs it wants to use
-2fdb6870 bacon: remove additional echo
-248ed51b createjson.sh: generate blank device json file on unofficial
-3c55fdb0 overlay: Add SystemUI to location extra packages
-9d3fc7c8 overlay: Add OmniJaws to location extra packages
-06db8b32 build: Disable ABI checks
-60a4a1a3 roomservice: get me some crDroid
-9c4d2d14 Revert "roomservice: Use mirror manifest instead of search API"
-6d8b6367 Revert "roomservice: Read all local manifests"
-dfa18296 overlay: Update SettingsProvider defaults
-c1cc5c5a config: Properly disable blur on app launch
-6b114e11 apns: Update mobily APN for prepaid connection
-a5950d6f config: Cleanup and update common props from Pixel
-8885e077 config: Optimize Launcher3 and Settings for speed
-9b1d287a build: Override host metadata
-9f0be865 apns: Grameenphone uses APN 'gpinternet'
-cc42b782 Revert "overlay: Default to Seedvault backup transport"
-fbeb0b61 crdroid: Generate OTA json at build time
-0d929be7 crdroid: Drop custom adb drawable
-2fc9f671 crdroid: Clean up wallpaper overlay
-23fb8376 crdroid: Moved bootanimation to addons
-2f2a2452 build: Ship as crDroid based on LOS
-99ad034b crdroid: Remove TrebuchetOverlay
-33b1fc1a crdroid: Add changelog script
-3ade73b6 kernel: Support copying modules to recovery
-0d1608e3 kernel: Support Qualcomm merge_dtbs script
-
-   * vendor/qcom/opensource/power
-dbb7b13 power: Unbreak isModeSupported() for DOUBLE_TAP_TO_WAKE and LAUNCH
-
-====================
-     08-27-2023
-====================
-
-   * frameworks/base
-7297218f7fa1 PixelPropsUtils: Partial spoofing improvement
-13faf9fc266e SystemUI: Fix class cast exception when animating play/pause button
-8ee19a3d6c51 Bluetooth: fix NullPointerException during bluetooth turning off
-cbcd8bd7cd35 Fix logspam from AppIdleHistory on first boot
-
-   * packages/inputmethods/LatinIME
-81d0e8117 LatinIME: Default to Material You theme
-04dc9ce6b LatinIME: Add libjni_latinimegoogle for swype
-c79845938 LatinIME: Fix NPE in KeyboardTheme
-
-   * packages/modules/Bluetooth
-e698aba34e Fix unexpected pairing failures after CTKD
-f0b92c0052 Fix null playstate update from players.
-
-====================
-     08-26-2023
-====================
-
-   * android
-327cd7c manifest: Track modules/Bluetooth
-
-   * packages/apps/Updater
-4f0df22 New Crowdin updates (#54)
-007f66d Update Crowdin configuration file
-c61dd70 Correct changelog URL (#41)
-f005707 Updater: Point 13.0 sources
-9f1c831 Revert "Updater: layout: activity_updates: add spacing.."
-9ecae33 Updater: Update parsed info whenever data is refreshed
-ea5cf3a Updater: Add support links and some more info
-2ea91b8 Updater: Use headline font for activity header
-5c0252a Updater: adapt to new changelog url
-d09e670 Updater: Hide recovery update option by default
-0d7971c Updater: Nuke Lineage's website on installation blocked dialog
-f06a6ae Updater: Initial adaption for crdroid
-aff4dc5 Updater: Change package name to avoid conflict
-45172e8 Ship as crDroid based on LOS
-
-   * packages/inputmethods/LatinIME
-c86b5e8f4 LatinIME: Add icons to settings items
-
-   * packages/modules/Bluetooth
-106fad626b Fix when gatt disconnect too fast, RC pair fail
-949ea2bf33 Replace constructs with an if check to avoid crashes when nullptr happens
-45ab253374 Fix crash when terminating big during streaming
-1ed3d6153f LeAudio: Fix possible volume control delay
-fc848fe716 Throw error when notification is larger than max attribute value
-4ef624fc46 floss: Fix unknown error for pairing failure
-8690010d14 Fix jni crash when get field of adType
-00cae0eb4a Fix L2CAP PTS issue
-18f4d1f877 Validate periodic_sync before use in SyncLost to fix crash
-
-====================
-     08-25-2023
-====================
-
-   * android
-3fa0bba Merge 'lineage-20.0' into 13.0
-bc704ed lineage: Switch to our own fork of hardware/libhardware_legacy
-1b545b3 Merge 'lineage-20.0' into 13.0
-3310fdc qcom: Remove sdm660 display group
-4e127cd qcom: Correct core-utils-vendor group
-
-   * frameworks/av
-7bf03202f8 codec2: Change a Info print into Verbose
-eb57689828 CCodec: Use pipelineRoom only for HW decoder
-0b1299673e Codec2: queue a empty work to HAL to wake up allocation thread
-e0c94f9863 CCodec: Control the inputs to avoid pipeline overflow
-fa937d1405 codec2: Use numClientBuffers to control the pipeline
-
-   * hardware/qcom-caf/wlan
-4b250ac qcwcn: Address format compilation issues
-07cd5bf Merge tag 'LA.VENDOR.13.2.0.r1-16100-KAILUA.0' of https://git.codelinaro.org/clo/la/platform/hardware/qcom/wlan into HEAD
