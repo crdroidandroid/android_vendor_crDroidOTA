@@ -1,28 +1,26 @@
-crDroid 9.9
+crDroid 9.10
 
-Changelog since v9.8 (03 September) release:
-- September 2023 Android Security Bulletin (android-13.0.0_r75) merged from AOSP.
+Changelog since v9.9 (15 October) release:
+- October 2023 Android Security Bulletin (android-13.0.0_r75) merged from AOSP.
 - Upstream changes to ROM sources from LineageOS & crDroid merged.
 - crDroid:
-  - So technically it wasn't merged until just this last week, but I got a fix in for the "merge" button missing from crDroid stock dialer, so you can create conference calls without having to use a 3rd-party dialer again, woo!
+  - A number of fixes for some bugs here & there including QS tile layout, long-swipes in navigation gestures, statusbar logo customization...
+  - ...and a fix for a massive power drain that happens as a side effect of our PixelProps spoofing in framework once the security patch level gets too old and GMS (Google Play Services) starts trying to download an update that it's CERTAIN exists because, after all, we're a Pixel! Annnnd there's no update to download because we're not a Pixel. Wow. No wonder the issue always appeared to be fixed during testing every month, then came back by the time I got ready to release.
 - Any device-specific device trees/hardware/kernel/vendor changes pulled from LineageOS.
-  - Technically, the Lineage folks updated QTI thermal HAL temperature limits for SDM845.
-  - Not much? I dunno, Edwin is busy on the 4.19 kernel bringup as a prerequisite for Android 14 right now.
+  - There's been some little fixes & tweaks going on, and some cleanup in kernel especially that resolves some issues with newer clang versions (yay).
 - Device-specific:
-  - I think I figured out the two things that kept causing all the battery drain after ~3 days of uptime. It's not doing it any more, FINALLY.
+  - Lots of cleanup and getting rid of extra stuff that wasn't helping or was actively hurting; prepping for Android 14 benefits everyone!
   - Updated kernel commits from bananafunction's lineage-20-test branch.
-  - Since Google Photos was still freaking out about device overheating even with the more lax "skin" threshold limits in hardware/qcom, I imported HAL into device tree and changed it to use a different sensor name instead ('quiet-therm-adc' instead of 'xo-therm-adc'; still has safe shutdown limits but doesn't automatically set off a warning in Google Photos when trying to do a backup). Now we get a little better performance/temperature control, rather than just dropping the HAL entirely.
-  - Played with kernel graphics-related commits and performance tuning stuff from PixelExperience and even MCD kernel a lot, and ultimately, I think I ended up paring back more things that I'd added in recent months. Battery life seems fine, reponsiveness/smoothness is good, reduced some jankiness when under load, even Golf Blitz seems to stop lagging in the middle of a match.
-  - Didn't get around to importing libperfmgr & lmkd again; not sure if I'm going to bother with it in 9.x or save that for crDroid 10.x/Android 14, since things seem to be doing so well now. But it's on the to-do list.
+  - Added slider to allow control of flar2's AdrenoBoost kernel driver so you can make it ramp up GPU sooner/longer in response to touch & utilization (gives you a way to control performance/responsiveness vs battery life a little more).
+  - Didn't get around to importing libperfmgr & lmkd yet again; not sure if I'm going to bother with it in 9.x or save that for crDroid 10.x/Android 14, since things seem to be doing so well now. But it's on the to-do list.
 - "Misc tweaks & bugfixes." :D
 
 Other notes / Known issues:
 - Recommended GApps is my "elite build" NikGapps config. Download it from https://nikgapps.com/Terminator-J and enjoy. If you haven't updated the zip file in a while, you should get the 10 October or newer version and do the update from recovery using the latest NikGapps elite build zip.
 - Audio (and probably a few other things) is always a little screwy at first boot after a clean install. Finish the initial setup wizard without restoring everything, and reboot as soon as possible. Then it nags you to complete setup, and you can restore all your stuff at that point. It'll be a lot happier.
 - Bluetooth & NFC & even some mobile data functionality may be problematic compared to stock OxygenOS. With Android 13 and above, we *can't* just use the prebuilt QTI libs from vendor any more & have to use the source-built generic AOSP versions instead due to changes in how AOSP does things, and Qualcomm having dropped support for SDM845 two years ago.
-
-Personal note:
-- I have had a very busy & stressful summer and autumn so far, and I'm prioritizing family & work & real life in general over volunteer device maintaining. I'm sorry updates are late, but this is how it's going to go if I want to be able to continue doing this in the long term. But I haven't permanently dropped official support; we have some site automation & cleanup scripts that Gabriel runs periodically that will drop devices that have missed more than one version. Nothing tragic happened, thankfully!
+- For some reason the "QR Code Scanner" lockscreen shortcut option is greyed-out until you add the "QR Scanner" QS tile; then it becomes available & works. ROM devs know, low-priority issue I guess.
+- My Mazda is having some serious problems with low power below ~3000rpm. If anyone wants to pay me to take a couple weeks off work so I can put the car in the shop & work on the ROM, that'd be awesome.
 
 Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
