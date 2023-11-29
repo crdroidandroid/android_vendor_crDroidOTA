@@ -1,28 +1,79 @@
-crDroid 9.10
+crDroid 9.11
 
-Changelog since v9.9 (15 October) release:
-- October 2023 Android Security Bulletin (android-13.0.0_r75) merged from AOSP.
+Changelog since v9.10 (03 November) release:
+- November 2023 Android Security Bulletin (android-13.0.0_r75) merged from AOSP.
 - Upstream changes to ROM sources from LineageOS & crDroid merged.
 - crDroid:
-  - A number of fixes for some bugs here & there including QS tile layout, long-swipes in navigation gestures, statusbar logo customization...
-  - ...and a fix for a massive power drain that happens as a side effect of our PixelProps spoofing in framework once the security patch level gets too old and GMS (Google Play Services) starts trying to download an update that it's CERTAIN exists because, after all, we're a Pixel! Annnnd there's no update to download because we're not a Pixel. Wow. No wonder the issue always appeared to be fixed during testing every month, then came back by the time I got ready to release.
+  - I dunno, stuff. Built-in Dialer should be less likely to crash in previously-problematic scenarios, especially when certain bluetooth devices are connected.
+  - Updated PixelPropUtils, repeatedly over the last couple weeks. Play Integrity (SN) should be passing again (until Google changes things on their end YET AGAIN -- it's always going to be a cat & mouse game).
+  - If you noticed that the "use pure black" toggle under "Settings > Display > Dark THeme" submenu was missing, well, it's back.
 - Any device-specific device trees/hardware/kernel/vendor changes pulled from LineageOS.
-  - There's been some little fixes & tweaks going on, and some cleanup in kernel especially that resolves some issues with newer clang versions (yay).
+  - More little stuff, Edwin's finally been getting some of his modifications merged, yay! Some audio-related property updates (sync with OxygenOS a little where useful).
 - Device-specific:
-  - Lots of cleanup and getting rid of extra stuff that wasn't helping or was actively hurting; prepping for Android 14 benefits everyone!
-  - Updated kernel commits from bananafunction's lineage-20-test branch.
-  - Added slider to allow control of flar2's AdrenoBoost kernel driver so you can make it ramp up GPU sooner/longer in response to touch & utilization (gives you a way to control performance/responsiveness vs battery life a little more).
-  - Didn't get around to importing libperfmgr & lmkd yet again; not sure if I'm going to bother with it in 9.x or save that for crDroid 10.x/Android 14, since things seem to be doing so well now. But it's on the to-do list.
+  - More cleanup; prepping for Android 14 benefits everyone!
+  - Updated kernel commits from bananafunction.
+  - RIP OOS-style display panel handling. LineageOS kernel commits for panel modes still bother me, deeply, personally, but... it seems like DC Dimmin- *cough* "Anti Flicker" no longer causes micro-fades on enchilada when screen brightness is turned down, so we'll just go with it. Fixes issues with sRGB gamut not being maintained when transitioning from fullscreen HDR content to other apps or turning panel off & back on again quickly. Perhaps the real treasure was the friendships we made along the way.
+  - Didn't get around to importing libperfmgr & lmkd yet again; not sure if I'm going to bother with it in 9.x or save that for crDroid 10.x/Android 14, or just "never"... since things seem to be doing so well now. But it's on the to-do list to at least try.
 - "Misc tweaks & bugfixes." :D
 
-Other notes / Known issues:
-- Recommended GApps is my "elite build" NikGapps config. Download it from https://nikgapps.com/Terminator-J and enjoy. If you haven't updated the zip file in a while, you should get the 10 October or newer version and do the update from recovery using the latest NikGapps elite build zip.
-- Audio (and probably a few other things) is always a little screwy at first boot after a clean install. Finish the initial setup wizard without restoring everything, and reboot as soon as possible. Then it nags you to complete setup, and you can restore all your stuff at that point. It'll be a lot happier.
-- Bluetooth & NFC & even some mobile data functionality may be problematic compared to stock OxygenOS. With Android 13 and above, we *can't* just use the prebuilt QTI libs from vendor any more & have to use the source-built generic AOSP versions instead due to changes in how AOSP does things, and Qualcomm having dropped support for SDM845 two years ago.
+Known issues:
+- The AOSP bluetooth stack in A13+ doesn't like the car stereo in one guy's Renault and audio stutters _just in voice call mode_ (BT SCO; media audio is fine). Same issue with official LineageOS, bug report is opened but no traction on it, sadly. If you drive a Renault, consider upgrading.
+- The entire release cycle of Android 13, the built-in Dialer app actually can't just pop on top with the fullscreen "incoming call" interface. Works fine when the screen is *off*, but if you want to actually see something over top of everything else when someone calls you and the phone is already awake, you need to enable Heads-Up Notifications (and I recommend using the "less boring notifications" toggle in crDroid Settings, unless you actually WANT all the spam from spywar- *cough* social media apps blocking your view constantly, you sick puppy). I've raised the issue multiple times with the ROM dev team, dunno what to do at this point.
 - For some reason the "QR Code Scanner" lockscreen shortcut option is greyed-out until you add the "QR Scanner" QS tile; then it becomes available & works. ROM devs know, low-priority issue I guess.
-- My Mazda is having some serious problems with low power below ~3000rpm. If anyone wants to pay me to take a couple weeks off work so I can put the car in the shop & work on the ROM, that'd be awesome.
+- The extra "Lock Screen" security options are missing due to an overlay in NikGapps which combines Security & Privacy settings fragments into a new layout, which clobbers our ROM layout. I'm working with Nikhail to figure it out, so in the mean time you can either use the current MindTheGapps arm64 13.0 release (if you feel like clean installing or resetting runtime permissions), or manually search Settings for "Quick Unlock" to find that screen.
 
 Build type: Monthly (-ish)
-Device: OnePlus 6 (enchilada)
+Device: OnePlus 6T (fajita)
 Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
+
+====================
+     11-24-2023
+====================
+
+   * frameworks/base
+1290e1c683d6 BatteryStyles: Use getScaleFactor for BatteryBar
+
+====================
+     11-20-2023
+====================
+
+   * packages/apps/Dialer
+03a912e71 New Crowdin updates (#81)
+
+   * packages/apps/GameSpace
+9e451fb New Crowdin updates (#55)
+
+   * packages/apps/Launcher3
+f3e04acbf7 New Crowdin updates (#371)
+
+   * packages/apps/crDroidSettings
+3afb15e New Crowdin updates (#1077)
+
+====================
+     11-18-2023
+====================
+
+   * frameworks/native
+4830408c72 Native: ProducerListener: Import ON_BUFFER_DETACHED Changes
+
+   * packages/apps/Dialer
+ba3125850 Dialer: Apply proper dialog styling to dialog_call_subject
+5e8e6f87f Dialer: Fix crash when missing BLUETOOTH_CONNECT permission
+
+====================
+     11-16-2023
+====================
+
+   * device/qcom/sepolicy-legacy-um
+bd547fc2 sepolicy: Label QTI health AIDL service
+
+   * device/qcom/sepolicy_vndr-legacy-um
+cdc9c1ea sepolicy_vndr: Label QTI health AIDL service
+
+   * frameworks/base
+a0f187fd5227 PixelPropUtils: Make play integrity pass again
+7371ddf1e47f Merge 'lineage-20.0' into 13.0
+
+   * packages/apps/Settings
+cba0f2bcde Settings: Grab screen resolution drawables from cheetah-td1a.220804.031-factory-6152f6f3
