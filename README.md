@@ -71,7 +71,7 @@ After you contacted [Gabriel on Telegram](https://telegram.me/gwolf2u), and have
 ### 3.2 Update build ###
 1. Clone this repo locally
 ```
-git clone https://github.com/crdroidandroid/android_vendor_crDroidOTA -b 14.0
+git clone git@github.com:crdroidandroid/android_vendor_crDroidOTA.git -b 14.0
 ```
 2. Change to the directory where you cloned this repo (android_vendor_crDroidOTA) and fetch updates from repo.
 ```
