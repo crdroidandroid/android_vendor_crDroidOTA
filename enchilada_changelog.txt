@@ -1,0 +1,132 @@
+crDroid 10.0
+
+Initial Android 14 release:
+- November 2023 Android Security Bulletin (android-14.0.0_r14) merged from AOSP.
+- Imported current lineage-21 branches of our device-specific files (device trees, hardware/oneplus components, kernel, and vendor blobs):
+  - Including some stuff EdwinMoq is waiting for approval for in the LOS Gerrit.
+  - We're now including firmware built-in! So just get updated to OOS 11.1.2.2 in one slot, then proceed with flashing, and it will update the destination slot. Fantastic!
+- Device-specific:
+  - Still using QTI perfd & kernel lmk driver, with kernel 4.9 for now. We're doing extensive testing of a move to libperfmgr & lmkd, but for official releases at the moment, sticking with what's known to work well & be a good balance of battery & performance.
+  - Updated kernel commits from bananafunction.
+  - Compiling kernel with clang 17.0.4.
+  - We're now shipping with retrofitted dynamic partitions (and compressed vendor filesystem image), in order to free up ~700MB of additional space for larger Google Apps packages! Please do not panic. It's a one-time conversion procedure that involves things you should already have, and a couple additional fastboot commands. After that, updating will be the same as it ever was.
+  - No OnePlus Camera or Gallery (yet...? dunno yet).
+  - DeviceExtras tidied up & working well.
+  - Tons of tidying & cleanup & making sure the changes over stock LineageOS actually DO something useful.
+  
+Known issues:
+- Upstream crDroid/LineageOS/Qualcomm/Google issues:
+  - Blurs are very resource-intensive, and I can't disable them by default while keeping the capability intact. For best experience & battery life, go to Settings > Display and disable "window-level blurs". If you want it to look pretty without too much lag/stutter, go to Settings > DeviceExtras and turn "AdrenoBoost" all the way up to 3, but be aware this will consume more battery.
+  - Google has been on a rampage against custom ROMs and unlocked bootloaders being able to spoof Play Integrity in a meaningful way, and seems to be requiring hardware-backed integrity (which is currently not spoofable) for Pay/Wallet. It has always been a cat & mouse game, and they can change the rules on their end at any time. Currently a new install will show up with "Device Certified" in Play Store, but that might change any time and is not considered a bug.
+  - Media playback has problems in Android 14 on sdm845 devices using the generic lineage qcom sdm845 kernel base; where changing resolution/bitrate/stream parameters in the same stream instance fails to continue playback across the "jump" (like with YouTube when trying to switch between ads). This is most noticeable in YouTube. I cannot recommend NewPipe enough as an alternative, until a solution is found (like update to kernel 4.19 & media HALs gets finalized).
+  - As of Android 13, we're using the source-built AOSP implementations for bluetooth & NFC, since it's not possible to continue with the old prebuilt QTI vendor blobs & implementation. Some things don't work as well; nothing I can do about it.
+  - The "QR Code Scanner" lockscreen shortcut option does not get enabled for use until you add the "QR Scanner" QS tile.
+- crDroid OP6/6T-specific issues:
+  - It's... actually really good right now. Time to merge 14.0 QPR1 and ruin everything! :D
+
+Build type: Monthly (-ish)
+Device: OnePlus 6 (enchilada)
+Device maintainer: Jordan Whiteley (Terminator_J)
+Required firmware: OxygenOS 11.1.2.2
+
+====================
+     12-11-2023
+====================
+
+   * system/sepolicy
+f7b1f769f Making sys.boot.reason.last restricted
+
+====================
+     12-10-2023
+====================
+
+   * frameworks/base
+b12877115230 SystemUI: Add QS Panel Style [1/3]
+ed116375d985 BrightnessController: Update icon state for auto bg icon
+b9d9fbe762f6 SystemUI: Add A11 QS UI Style [1/3]
+2ed98633fa98 Allow setting quick QS rows [1/2]
+d7604ee439db SystemUI: Tune QS Panel bottom padding
+32ed56b5bfe5 SystemUI: Refactor brightness slider paddings
+cce15a8ca689 SystemUI: Implement Split notification shade changes [SQUASH]
+60c041048ce0 Keystore: Spoof locked bootloader on local attestations
+cda1db1dec8e New Crowdin updates (#1043)
+
+   * packages/apps/Dialer
+a39ea1cd5 New translations (#89)
+
+   * packages/apps/GameSpace
+33242de New Crowdin updates (#61)
+
+   * packages/apps/Launcher3
+68324dbf82 New Crowdin updates (#385)
+
+   * packages/apps/crDroidSettings
+062daa4 crdroid: Make QS tile style and QS panel style exclusive
+e819e08 crdroid: Add QS Panel Style [3/3]
+b25f44c crdroid: A11 QS UI Style [3/3]
+406f72b Allow setting quick QS rows [2/2]
+321a9f0 SystemUI: Update default columns for landscape
+37e1156 New Crowdin updates (#1094)
+
+   * vendor/addons
+1995cd93 addons: qs: Do not modify columns/rows
+be1811c3 addons: qs: Replace dimens for corner radius
+5b816a66 addons: qs: Add missing color resource
+b8fc25d5 addons: Add QS Panel Style [2/3]
+14523405 addons: Add A11 QS UI Style [2/3]
+
+====================
+     12-09-2023
+====================
+
+   * android
+31c64b5 manifest: Track server configurable flags
+
+   * frameworks/native
+8480896748 Enable AutoFDO for libbinder_ndk
+
+   * vendor/pixel-framework
+ffd64ad SystemUIGoogle: Target Launcher3
+
+====================
+     12-07-2023
+====================
+
+   * external/sqlite
+e271b7e Enable AutoFDO for sqlite
+
+   * frameworks/base
+7eba2957b4aa PixelPropsUtils: Update spoof fingerprint
+ff112a752fff Revert "PixelPropUtils: Use overlay for spoofBuildGms"
+5c07f932ae66 Island: Now playing and notification listening enhancements
+
+   * packages/apps/crDroidSettings
+bbe8f84 crdroid: Add island now playing settings
+
+   * packages/services/OmniJaws
+5de7c47 OmniJaws: Do not apply tint for weather widget by default
+
+====================
+     12-06-2023
+====================
+
+   * vendor/pixel-framework
+1f5686a SystemUIGoogle: Add smartspace weather only if enabled properly
+
+====================
+     12-05-2023
+====================
+
+   * frameworks/base
+9a3b27970e66 pm: Check all packages for signature spoofing
+566df6007c55 VolumeDialogImpl: Attempt fixing initial dialog position
+fc12e621bd20 Frameworks: add NoSuchElementException catch
+bd4dd585d7ba config: set customizedMaxCachedProcesses to platform default
+2c86b2f71ae6 Island: Return if sbn.notification.contentIntent is NULL
+a069230a13cb Island: Implement Now Playing music ticker
+
+   * packages/apps/Settings
+13eec82130 Settings: Remove screen off udfps preference
+
+   * packages/apps/crDroidSettings
+a826cec crdroid: Bring back screen-off UDFPS toggle
