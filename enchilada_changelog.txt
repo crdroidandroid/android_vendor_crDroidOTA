@@ -1,0 +1,393 @@
+crDroid 10.0
+
+Initial Official Android 14 release:
+- December 2023 Android Security Bulletin (android-14.0.0_r17) merged from AOSP.
+- Imported current lineage-21 branches of our device-specific files (device trees, hardware/oneplus components, kernel, and vendor blobs):
+  - Including some stuff EdwinMoq is waiting for approval for in the LOS Gerrit.
+  - We're now including firmware built-in! So just get updated to OOS 11.1.2.2 in one slot, then proceed with flashing, and it will update the destination slot. Fantastic!
+- Device-specific:
+  - We're now shipping with retrofitted dynamic partitions (and compressed vendor filesystem image), in order to free up ~700MB of additional space for larger Google Apps packages! Please do not panic. It's a one-time conversion procedure that involves things you should already have, and a couple additional fastboot commands. After that, updating will be the same as it ever was.
+  - FINALLY making the switch to AOSP libperfmgr and lmkd for performance/memory management. It tends to be a little smoother, at the expense of a little bit of battery life, compared to sticking with QTI perfd. However, we'll have to make the jump to kernel 4.19 within a few months anyway, so might as well get used to it now (and maybe work on tuning the scheduler in kernel instead).
+  - Updated kernel commits from bananafunction.
+  - Compiling kernel with clang 17.0.4.
+  - No OnePlus Camera or Gallery (yet...? dunno yet).
+  - DeviceExtras tidied up & working well.
+  - Tons of tidying & cleanup & making sure the changes over stock LineageOS actually DO something useful.
+
+Known issues:
+- Upstream crDroid/LineageOS/Qualcomm/Google issues:
+  - Blurs are very resource-intensive, and I can't disable them by default while keeping the capability intact. For best experience & battery life, go to Settings > Display and disable "window-level blurs". If you want it fancy but more battery-hungry, leave blurs enabled and go to Settings > DeviceExtras and turn "AdrenoBoost" all the way up to 3 instead.
+  - Google has been on a rampage against custom ROMs and unlocked bootloaders being able to spoof Play Integrity in a meaningful way, and seems to be requiring hardware-backed integrity ("strong integrity", which is currently not spoofable) for Pay/Wallet. It has always been a cat & mouse game, and they can change the rules on their end at any time. Currently a new install will show up with "Device Certified" in Play Store, but will probably fail to allow Pay/Wallet to be enabled once you install that. This is not considered a bug; if a ROM-wide fix becomes available, it'll be incorporated.
+  - Media playback has problems in Android 14 on sdm845 devices using the generic lineage qcom sdm845 kernel base; where changing resolution/bitrate/stream parameters in the same stream instance fails to continue playback across the "jump" (like with YouTube when trying to switch between ads). This is most noticeable in YouTube. I cannot recommend NewPipe enough as an alternative, until a solution is found (like update to kernel 4.19 & media HALs gets finalized).
+  - As of Android 13, we're using the source-built AOSP implementations for bluetooth & NFC, since it's not possible to continue with the old prebuilt QTI vendor blobs & implementation. Some things don't work as well; nothing I can do about it.
+  - The "QR Code Scanner" lockscreen shortcut option does not get enabled for use until you add the "QR Scanner" QS tile.
+  - Choosing a different color for Notification/Charging LED in crDroid Settings works, but the crDroid Settings activity crashes afterward when you hit "Ok" on the color picker modal dialog. The devs know & have logs, they'll get to it (not exclusive to enchilada, happens to any device with color notification/charging LED).
+- crDroid OP6/6T-specific issues:
+  - Our haptic feedback implementation continues to suck. Thanks, Qualcomm, for the crappy kernel driver that your AIDL interface hardly talks to and was effectively abandoned one year later when sm8150 came out!
+  - I dunno, it's actually really really good right now! All the issues I can think of are basically not device-specific, but functions of ROM source or decisions that Google & Qualcomm & OnePlus have made.
+
+Build type: Monthly (-ish)
+Device: OnePlus 6 (enchilada)
+Device maintainer: Jordan Whiteley (Terminator_J)
+Required firmware: OxygenOS 11.1.2.2
+
+====================
+     12-31-2023
+====================
+
+   * art
+ef7fd4c160 art_cc_defaults: use whole program vtables lto optimization
+
+   * frameworks/av
+ef56377803 codec2: Add android fence implementation for C2Fence
+4896e78510 Reexport operator!= overloads in the derived type to avoid ambiguous base class lookups
+0377188322 C2BqPool: Do not call cancelBuffer() after invalidated
+7c38be1175 AudioFlinger: Fix timestamp advancing interval constant
+38fe36094c update scale mode to MediaCodec under NuPlayer::instantiateDecoder
+
+====================
+     12-30-2023
+====================
+
+   * android
+29f2fee manifest: Switch to zlib-ng
+
+   * external/zlib
+3755467 zlib-ng: Update Android.bp with google changes
+
+   * frameworks/base
+0059f7263466 Status bar clock: avoid NPE when the clock is hidden
+a090e4fd468a VolumeDialogImpl: Dismiss dialog on config change
+
+   * packages/apps/SetupWizard
+3bb5b4d SetupWizard: Bring it on our side
+56ace1a SetupWizard: Use correct updater package
+2725954 Ship as crDroid based on LOS
+
+   * packages/modules/Virtualization
+68f8972 vmbase_cc_defaults: disable LTO for build workaround
+7e58b1a stripped import @ bd01d815e613b879e66d70109ca66938608afb06
+
+====================
+     12-29-2023
+====================
+
+   * frameworks/base
+20bcf1ea4b46 TaskId=0 is also a valid task id, should not be passed to valueIfKeyNotFound.
+e4e8e3a45a27 Add Gravis GamePad Pro USB key layout
+1655d02e28c8 services: Implement exit app animation boost
+577fc65b9529 Improve entering pip animation from ActivityEmbedding
+8f89bc038281 Add invisible pip task to transitions.
+181e390efa12 Fix the activity windowingmode error of exiting pip
+c271977678f0 AudioEffect: fix isEffectSupportedForDevice() API
+
+   * frameworks/native
+33788f06a2 Only prune non-pointer events
+0158df066c Cancel only the gesture corresponding to the dropped event
+
+   * packages/apps/Settings
+bd8fcf04fc Finish HomepageActivity when it's not the root of a task and not singleTask.
+
+   * system/core
+8922f68cb remount: Replace ServiceManager::getService with checkService
+cbf6dbb9c fs_mgr: Use /proc/mounts to check if /cache is mounted
+
+====================
+     12-28-2023
+====================
+
+   * build/make
+725e928d8f Merge pull request #44 from Terminator-J/14.0-test3
+
+   * frameworks/base
+781f5d7db08c VolumeDialog: Ensure proper resource release
+03cda3f0f664 Revert "VolumeDialog: Ensure proper resource release"
+de37d2521b2b fixup! base: Initial SenseProvider for FaceSense service
+1188cfbc2487 Fixed process can't start because of mPendingStart is true problem
+7423c7d63c6d Add patch to ensure window ready before PIP mode
+acba12daf089 SystemUI: Prevent OOB when reinflating QS panel with notifications
+
+   * packages/apps/Aperture
+a220a54 Aperture: Update CameraX to 1.4.0-alpha03
+
+   * packages/apps/Launcher3
+194520727f Launcher3: Improve GSA enabled check
+38719b77ee Launcher3: Prevent hotseat QSB crash with google stub
+bc40a2a623 Launcher3: Make music search icon dependent on google search
+
+   * packages/apps/SetupWizard
+2d154ac SetupWizard: Add step for changing theme
+f6bd251 SetupWizard: Remove unused strings
+0ef4a1a Launch Settings activities for lockscreen and biometrics setup
+9b3f1af fixup! Simplify biometric detection
+
+   * system/core
+1c0b26622 Merge pull request #14 from kondors1995/14.0
+
+====================
+     12-27-2023
+====================
+
+   * android
+8799565 manifest: Track system/hardware/interfaces
+
+   * bionic
+7a3e801f8 libdl: do not disable LTO
+
+   * frameworks/base
+e54fc065b8e3 hwui: enable whole program vtables
+8baa018f126a PixelPropsUtils: Allow devices to opt out gms/gapps
+
+   * hardware/qcom-caf/common
+d04fa78 memtrack: Return appropriate error code for unsupported operations
+de7b9e7 memtrack: Fix copyright year
+374e313 memtrack: Change memtrack ndk library dependency
+4a43ab7 memtrack: Switch to AIDL service for Graphics
+
+   * packages/apps/Launcher3
+195c7fd64d Fix kotlin nullable errors in Launcher3
+6bda7f351a Don't open PiP when freeform is opened from recent
+
+   * packages/apps/crDroidSettings
+64e8630 New Crowdin updates (#1099)
+
+   * system/hardware/interfaces
+c66f3c4 media/latest_android_media_audio_common_types_cpp_target_shared: enable whole program vtables optimization
+
+====================
+     12-26-2023
+====================
+
+   * frameworks/base
+e25704bde29b Fix potential NPE in isDefaultIme
+35a9def95c0a Notify recent task to remove split-screen when exit PIP
+
+   * frameworks/native
+92fb603fb2 SF: fix redundant assignment operation.
+
+   * hardware/interfaces
+464e0ed0d Merge 'lineage-21.0' into 14.0
+
+   * packages/apps/Messaging
+360c8c5 Merge 'lineage-21.0' into 14.0
+
+   * system/core
+85aa55a32 Revert "snapuserd: opt out of Global ThinLTO to workaround segfault"
+
+====================
+     12-25-2023
+====================
+
+   * android
+a28dac3 manifest: Track external/arm-optimized-routines
+fb45a0c manifest: Track external    *s
+
+   * bionic
+8b38d23f9 De-pessimize SigSetConverter usage.
+3fe8c257e Microoptimize vdso lookup.
+45fad2c82 Microoptimize the strtol() family.
+a150fbd7b libm: Support -ffp-contract=fast
+bc811be66 Let executables not rely on sentinels in preinit_array/init_array/fini_array
+687babaf3 Re-enable LTO for linker
+fd4992367 Re-enable LTO for libdl
+3c1b95a74 Re-enable LTO for libm
+
+   * build/soong
+52dbad13e Revert "Remove ThinLTO exception for VNDK"
+aa7437c80 Remove workaround for Qualcomm Kryo 385
+
+   * external/arm-optimized-routines
+6153d45 Update Android.bp to include aarch64 specific routines
+2e344fd Android.bp: only disable vector math on ARM
+91395c6 Android.bp: do not restrict optimization
+fb1cfef Merge branch 'master' of https://github.com/ARM-software/optimized-routines into 14.0
+
+   * external/boringssl
+bb5f2030 Disable LTO as workaround
+
+   * external/perfetto
+e24fe69fb perfetto_defaults: don't explicitly set lto
+
+   * external/rust/crates/ring
+5470a77 Set rust_static_cc_lib_defaults
+
+   * frameworks/base
+3d4df484f848 SystemUI: Ensure updating margins and paddings on brightness slider
+3c054a792909 fixup! Add support for app signature spoofing
+d745c747c57a Filter Google Translate queries for GMS
+33e0a99c88ea VolumeDialogControllerImpl: Do not use broadcast for volume change event
+b83e3314ab1a VolumeDialog: Ensure proper resource release
+
+   * frameworks/native
+35f0e7305b Re-enable LTO for libviabratorservice
+
+   * packages/apps/Messaging
+0ebe877 Revert "Messaging: Toggable keyboard emoticons access"
+
+   * packages/modules/Bluetooth
+02b7f3886a Disable LTO on a few defaults
+
+   * system/linkerconfig
+2eb846e Re-enable LTO for linkerconfig
+
+   * vendor/addons
+3893d11d addons: Add sans-serif font package
+8e71037d addons: Rework QS11 dimens
+
+   * vendor/lineage
+2e03eb12 crdroid: Enable Global ThinLTO flag
+
+   * vendor/pixel-framework
+08c147a SettingsGoogle: Remove conflicting find sensor overlays
+
+====================
+     12-24-2023
+====================
+
+   * bionic
+2ce1d71e7 libc: Enable thinLTO for note_memtag_heap_async & note_memtag_heap_sync
+bb1eee4c8 fix undefined out-of-bounds accesses in sched.h
+6fb4d7fde if_nameindex: Fix the failure for subinterfaces
+9f1aab379 linker: Disable linker debugging
+37671ba54 libc: Import cortex-strings strlen for A7/A15/A53/A53.A57/Denver/Krait
+20a5f00ab libc: arm: Optimise memchr for NEON-enabled processors
+3b682ef7b libc: Set __bionic_asm_align to 64 for arm and arm64
+
+   * build/soong
+d9820cdfc Remove unneeded MLGO cflag
+d192e31ba cc: enable Polly globally
+29f75938e cc: do not disable FMA
+fc9d5a86d Remove Full LTO support
+31d64763d allowlist: remove server_configurable_flags
+0105c6ad9 Remove ThinLTO exception for VNDK
+4a8143450 Revert "afdo: Remove -fprofile-sample-accurate flag"
+b8aed8d1e Add comment for afdo flag
+a67f8fbe8 Only enable MLGO for ARM64 ThinLTO targets
+bbbd2f4e5 Simplify LTO flags handling
+6215b752b cc: only enable O3 for modules which specify lto explicitly
+5627ab6bf cc/lto: only increase inline and unroll hints on explicit thinlto modules
+fd3e6c051 cc/lto: utilize lto-O3 on modules which specify thinlto
+da99210df allowlist: remove some modules for AFDO
+f66987175 Implement bp2build converter for fdo_profile
+1751aef0d cc/config: Add ignore warnings for Global ThinLTO
+4a60919ee Shard srcjars when sharding javac compilation
+e0114058c Enable hot cold split
+e49d6c06e Add GLOBAL_THINLTO env fixture to lto_test
+595628f6d Tune LTO inlining limit
+36f99f0ae Merge pull request #17 from kondors1995/14.0
+d225509ff config: Update cortex a75 flags
+016761f55 config: do not force cortex-a76 as cortex-a75
+
+   * external/chromium-webview/patches
+d4db91e Update Chromium Webview to 120.0.6099.144
+
+   * external/chromium-webview/prebuilt/arm
+dfd3ba6 Update Chromium Webview arm prebuilt to 120.0.6099.144
+
+   * external/chromium-webview/prebuilt/arm64
+7daaf01 Update Chromium Webview arm64 prebuilt to 120.0.6099.144
+
+   * external/chromium-webview/prebuilt/x86
+e6941e8 Update Chromium Webview x86 prebuilt to 120.0.6099.144
+
+   * external/chromium-webview/prebuilt/x86_64
+9e607f5 Update Chromium Webview x86_64 prebuilt to 120.0.6099.144
+
+   * frameworks/base
+29c03afdc579 Revert "libandroid_defaults: force full LTO to workaround runtime bug"
+05c2781c4a1a Merge pull request #1048 from kondors1995/14.0
+d8d2eec632dc Rename removeAllProcessGroups() into removeAllEmptyProcessGroups()
+0bcbb6474559 SystemUI: QS Header Image extended settings [1/2]
+
+   * packages/apps/Aperture
+4ac8dad Automatic translation import
+
+   * packages/apps/Launcher3
+fa14c0b39c Launcher3: Prevent NPE with taskbar drag controller
+375feaadc5 Revert "Launcher3: Work tab adjustments for multiple profiles"
+
+   * packages/apps/Settings
+3cc1db1a17 Settings: Link smallest width options in display settings
+
+   * packages/apps/SettingsIntelligence
+2d1f70c Style search bar to match new Settings UI
+
+   * packages/apps/crDroidSettings
+1b240e9 crdroid: Allow QS Header custom image selection from any app
+6e98875 crdroid: QS Header Image extended settings [2/2]
+
+   * system/core
+e50f22a84 Merge pull request #13 from kondors1995/14.0
+fbf86e630 core: Fix reading max_comp_streams for zram
+6b903b7c1 init.rc: tune dirty data writebacks
+7f3c4b20d task_profiles: Use foreground cpuset for SurfaceFlinger
+a07487fb4 libprocessgroup: Add I/O scheduler attributes to task_profiles.json
+914f0045f Revert "libprocessgroup: Add a function to remove only empty process groups"
+d0b401985 libprocessgroup: Internal linkage for removeAllProcessGroupsInternal
+e63dd9921 libprocessgroup: Convert incorrect PLOGs to LOGs
+acd1ce686 libprocessgroup: Use correct language for cgroups
+1e28e75d6 libprocessgroup: Don't sleep after last cgroup removal attempt
+0ff4e414c libprocessgroup: Remove max_processes from KillProcessGroup API
+
+   * vendor/lineage
+267b53f4 crdroid: Disable lockscreen live wallpaper
+
+====================
+     12-23-2023
+====================
+
+   * android
+65f1ea7 manifest: Track agm for sm8550
+
+   * external/arm-optimized-routines
+1b62609 string: Improve code alignment of __memcpy_aarch64_simd
+
+   * frameworks/native
+c9e015e7d7 blur: Invalidate newly-bound framebuffers before rendering
+c69135150f blur: Calculate vertices in vertex shader instead of using VBO
+0f51820ee9 blur: Interpolate tap UV coordinates in vertex shader
+84683b2e3c blur: Reduce floating-point precision for UV coordinates
+050c5bd779 blur: Downscale image before blurring
+ccaed75903 blur: Only set constant shader uniforms once
+285a2d8669 blur: Dither output using triangular RGB blue noise
+eff3ac57f0 blur: Skip processing of alpha channel by swizzling RGB
+bb2960989b blur: Improve terminology used in mix shader
+1c4ecb42b8 blur: Limit blur to the two frontmost layers
+
+   * hardware/qcom-caf/sm8550/audio/agm
+c6be904 Revert "Revert "agm: changes to enable session flush using sessionId""
+
+   * packages/apps/Settings
+9ab93637cb Settings: Disable auto pin confirm preference
+d5aca8e2d0 Settings: Fix findPeakRefreshRate logic
+
+====================
+     12-22-2023
+====================
+
+   * build/make
+97e5d2ec84 build_image: get squashfs partition size from image size
+
+   * frameworks/base
+7cedefe2ae87 SystemUI: QS Header Image [1/2]
+71091f25fceb PixelPropsUtils: Update spoof fingerprint
+891b1409cfe8 SystemUI: Introduce wifi standard icon feature [1/2]
+76d953c1494c SystemUI: Do not marquee QS label text
+9092272ecd2a SystemUI: Fix adding wrong side view in QS
+7b5e7b31ae01 SystemUI: Use label vertical layout for A11 QS
+
+   * packages/apps/Settings
+8543a5cff3 Settings: Fix preference order under Battery
+
+   * packages/apps/crDroidSettings
+36e88c9 crdroid: Bring back QS Header images
+e7cff27 crdroid: Re-enable wifi standard icon settings
+
+   * vendor/addons
+3516ba48 addons: Tune QS11 dimens
+
+   * vendor/lineage
+4647e517 crdroid: Remove BETA tag
+
+   * vendor/pixel-framework
+6b5c1da SettingsGoogle: Use IllustrationPreference bg protection transparent here too
