@@ -1,26 +1,24 @@
-crDroid 9.11
+crDroid 9.12
 
-Changelog since v9.10 (03 November) release:
-- November 2023 Android Security Bulletin (android-13.0.0_r75) merged from AOSP.
+Changelog since v9.11 (25 November) release:
+- December 2023 Android Security Bulletin (android-13.0.0_r75) merged from AOSP.
 - Upstream changes to ROM sources from LineageOS & crDroid merged.
-- crDroid:
-  - I dunno, stuff. Built-in Dialer should be less likely to crash in previously-problematic scenarios, especially when certain bluetooth devices are connected.
-  - Updated PixelPropUtils, repeatedly over the last couple weeks. Play Integrity (SN) should be passing again (until Google changes things on their end YET AGAIN -- it's always going to be a cat & mouse game).
-  - If you noticed that the "use pure black" toggle under "Settings > Display > Dark THeme" submenu was missing, well, it's back.
-- Any device-specific device trees/hardware/kernel/vendor changes pulled from LineageOS.
-  - More little stuff, Edwin's finally been getting some of his modifications merged, yay! Some audio-related property updates (sync with OxygenOS a little where useful).
+  - I think we actually got Android-11-style QS Tiles as an option in crDroid, woo!
+- Any device-specific device trees/hardware/kernel/vendor changes merged from LineageOS.
 - Device-specific:
-  - More cleanup; prepping for Android 14 benefits everyone!
-  - Updated kernel commits from bananafunction.
-  - RIP OOS-style display panel handling. LineageOS kernel commits for panel modes still bother me, deeply, personally, but... it seems like DC Dimmin- *cough* "Anti Flicker" no longer causes micro-fades on enchilada when screen brightness is turned down, so we'll just go with it. Fixes issues with sRGB gamut not being maintained when transitioning from fullscreen HDR content to other apps or turning panel off & back on again quickly. Perhaps the real treasure was the friendships we made along the way.
-  - Didn't get around to importing libperfmgr & lmkd yet again; not sure if I'm going to bother with it in 9.x or save that for crDroid 10.x/Android 14, or just "never"... since things seem to be doing so well now. But it's on the to-do list to at least try.
+  - Redid things to be more unified between 13.0 & 14.0 branches.
+  - Updated to most recent kernel commits from bananafunction's "lineage-20" branch.
+  - Stopped trying to import half the scheduler tuning changes from crosshatch (since we're not migrating to libperfmgr in Android 13) and just let QTI perfd do its thing; it works fine.
 - "Misc tweaks & bugfixes." :D
 
 Known issues:
-- The AOSP bluetooth stack in A13+ doesn't like the car stereo in one guy's Renault and audio stutters _just in voice call mode_ (BT SCO; media audio is fine). Same issue with official LineageOS, bug report is opened but no traction on it, sadly. If you drive a Renault, consider upgrading.
-- The entire release cycle of Android 13, the built-in Dialer app actually can't just pop on top with the fullscreen "incoming call" interface. Works fine when the screen is *off*, but if you want to actually see something over top of everything else when someone calls you and the phone is already awake, you need to enable Heads-Up Notifications (and I recommend using the "less boring notifications" toggle in crDroid Settings, unless you actually WANT all the spam from spywar- *cough* social media apps blocking your view constantly, you sick puppy). I've raised the issue multiple times with the ROM dev team, dunno what to do at this point.
-- For some reason the "QR Code Scanner" lockscreen shortcut option is greyed-out until you add the "QR Scanner" QS tile; then it becomes available & works. ROM devs know, low-priority issue I guess.
-- The extra "Lock Screen" security options are missing due to an overlay in NikGapps which combines Security & Privacy settings fragments into a new layout, which clobbers our ROM layout. I'm working with Nikhail to figure it out, so in the mean time you can either use the current MindTheGapps arm64 13.0 release (if you feel like clean installing or resetting runtime permissions), or manually search Settings for "Quick Unlock" to find that screen.
+- Upstream crDroid/LineageOS/Qualcomm/Google issues:
+  - We're using the source-built AOSP implementations for bluetooth & NFC, since it's not possible to continue with the old prebuilt QTI vendor blobs & implementation. Some things don't work as well; nothing I can do about it. LineageOS devs agree that things are cursed on oneplus/sdm845.
+  - The built-in Dialer app can't just pop on top with the fullscreen "incoming call" interface. Works fine when the screen is *off*, but if you want to actually see something over top of everything else when someone calls you and the phone is already awake, you need to enable Heads-Up Notifications. ROM devs are aware; seems to be an Android thing in general.
+  - For some reason the "QR Code Scanner" lockscreen shortcut option is greyed-out until you add the "QR Scanner" QS tile; then it becomes available & works. ROM devs know, low-priority issue I guess.
+  - The extra "Lock Screen" security options are missing due to an overlay in NikGapps which combines Security & Privacy settings fragments into a new layout, which clobbers our ROM layout. I'm working with Nikhail to figure it out, so in the mean time you can either use the current MindTheGapps arm64 13.0 release (if you feel like clean installing or resetting runtime permissions), or manually search Settings for "Quick Unlock" to find that screen.
+- crDroid OP6/6T-specific issues:
+  - I dunno, our vibrator implementation kinda sucks (which is still thanks to OnePlus & Qualcomm). I tried to make it better; it didn't help much.
 
 Build type: Monthly (-ish)
 Device: OnePlus 6T (fajita)
@@ -28,52 +26,80 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     11-24-2023
-====================
-
-   * frameworks/base
-1290e1c683d6 BatteryStyles: Use getScaleFactor for BatteryBar
-
-====================
-     11-20-2023
+     12-20-2023
 ====================
 
    * packages/apps/Dialer
-03a912e71 New Crowdin updates (#81)
+49e603c01 New Crowdin updates (#90)
 
    * packages/apps/GameSpace
-9e451fb New Crowdin updates (#55)
+d26ad5b New translations (#62)
 
-   * packages/apps/Launcher3
-f3e04acbf7 New Crowdin updates (#371)
+   * packages/apps/ParallelSpace
+ac2f60a New translations (#13)
 
    * packages/apps/crDroidSettings
-3afb15e New Crowdin updates (#1077)
+c76a1b9 New Crowdin updates (#1098)
 
 ====================
-     11-18-2023
+     12-18-2023
 ====================
-
-   * frameworks/native
-4830408c72 Native: ProducerListener: Import ON_BUFFER_DETACHED Changes
-
-   * packages/apps/Dialer
-ba3125850 Dialer: Apply proper dialog styling to dialog_call_subject
-5e8e6f87f Dialer: Fix crash when missing BLUETOOTH_CONNECT permission
-
-====================
-     11-16-2023
-====================
-
-   * device/qcom/sepolicy-legacy-um
-bd547fc2 sepolicy: Label QTI health AIDL service
-
-   * device/qcom/sepolicy_vndr-legacy-um
-cdc9c1ea sepolicy_vndr: Label QTI health AIDL service
 
    * frameworks/base
-a0f187fd5227 PixelPropUtils: Make play integrity pass again
-7371ddf1e47f Merge 'lineage-20.0' into 13.0
+d5e5cb7c69d3 fixup! SystemUI: Add A11 QS UI Style [1/3]
+c02dce04bc1d PixelPropsUtils: Update spoof fingerprint
 
-   * packages/apps/Settings
-cba0f2bcde Settings: Grab screen resolution drawables from cheetah-td1a.220804.031-factory-6152f6f3
+====================
+     12-17-2023
+====================
+
+   * frameworks/base
+a33e9c2c01b3 SystemUI: Add QS Panel Style [1/3]
+01b1b6bd9161 SystemUI: Add A11 QS UI Style [1/3]
+9a9eaeec1d7d Allow setting quick QS rows [1/2]
+ccffc96f0f2f SystemUI: Tune QS Panel bottom padding
+847ce8caadfa SystemUI: Refactor brightness slider paddings
+
+   * packages/apps/crDroidSettings
+6698b94 crdroid: Make QS tile style and QS panel style exclusive
+82fe7e7 crdroid: Add QS Panel Style [3/3]
+03310a4 crdroid: A11 QS UI Style [3/3]
+64d9ce5 Allow setting quick QS rows [2/2]
+a9c0036 SystemUI: Update default columns for landscape
+
+   * vendor/addons
+5a39560c addons: Remove styles xml for QS panel styles
+1c098995 addons: qs: Do not modify columns/rows
+d843f63c addons: qs: Replace dimens for corner radius
+d9ac1e55 addons: qs: Add missing color resource
+5f1dfca6 addons: Add QS Panel Style [2/3]
+5b8540b3 addons: Add A11 QS UI Style [2/3]
+
+====================
+     12-16-2023
+====================
+
+   * frameworks/base
+c0341402d07c SystemUI: Implement Split notification shade changes [SQUASH]
+
+====================
+     12-15-2023
+====================
+
+   * external/chromium-webview/patches
+4e9941d Update Chromium Webview to 120.0.6099.115
+
+   * external/chromium-webview/prebuilt/arm
+f4da252 Update Chromium Webview arm prebuilt to 120.0.6099.115
+
+   * external/chromium-webview/prebuilt/arm64
+45a3506 Update Chromium Webview arm64 prebuilt to 120.0.6099.115
+
+   * external/chromium-webview/prebuilt/x86
+bc8549c Update Chromium Webview x86 prebuilt to 120.0.6099.115
+
+   * external/chromium-webview/prebuilt/x86_64
+1f4e3ad Update Chromium Webview x86_64 prebuilt to 120.0.6099.115
+
+   * packages/apps/TvSettings
+41eb6e24d TvSettings: Reword "advanced restart" preference title and summary
