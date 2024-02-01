@@ -1,14 +1,15 @@
-crDroid 9.12
+crDroid 9.13
 
-Changelog since v9.11 (25 November) release:
-- December 2023 Android Security Bulletin (android-13.0.0_r75) merged from AOSP.
-- Upstream changes to ROM sources from LineageOS & crDroid merged.
-  - I think we actually got Android-11-style QS Tiles as an option in crDroid, woo!
-- Any device-specific device trees/hardware/kernel/vendor changes merged from LineageOS.
+Changelog since v9.12 (31 December 2023) release:
+- January 2024 Android Security Bulletin (android-13.0.0_r75) merged from AOSP & LineageOS.
+- Upstream changes from LineageOS & crDroid ROM sources:
+  - Rebased on current lineage-20 branches for our devices.
+  - They're probably mostly focused on Android 14 at this point, so don't expect a lot of feature changes now.
 - Device-specific:
-  - Redid things to be more unified between 13.0 & 14.0 branches.
-  - Updated to most recent kernel commits from bananafunction's "lineage-20" branch.
-  - Stopped trying to import half the scheduler tuning changes from crosshatch (since we're not migrating to libperfmgr in Android 13) and just let QTI perfd do its thing; it works fine.
+  - Updated to most recent kernel commits from bananafunction's lineage-20 branch.
+  - More realigning to make it tidy with A14 sources.
+  - Wasted a few weeks trying to see if it was going to be possible to drop debugfs in A13 the way it is in A14, and ... I don't know. But I'm not doing it for now.
+  - Silenced OpenGL "could not match desired swap behavior" logspam.
 - "Misc tweaks & bugfixes." :D
 
 Known issues:
@@ -19,6 +20,7 @@ Known issues:
   - The extra "Lock Screen" security options are missing due to an overlay in NikGapps which combines Security & Privacy settings fragments into a new layout, which clobbers our ROM layout. I'm working with Nikhail to figure it out, so in the mean time you can either use the current MindTheGapps arm64 13.0 release (if you feel like clean installing or resetting runtime permissions), or manually search Settings for "Quick Unlock" to find that screen.
 - crDroid OP6/6T-specific issues:
   - I dunno, our vibrator implementation kinda sucks (which is still thanks to OnePlus & Qualcomm). I tried to make it better; it didn't help much.
+  - I have no idea why the battery drain after ~3 days keeps happening. I give up. Sometimes it seems fixed. Literally it seemed to be better in 9.12 hotfix 1 (never pushed to OTA), and back again in 9.13. There's NO CHANGE in device-specific things to account for it. Dropping debugfs and using /proc/wakelocks in kernel works, but... the system_server drain keeps happneing for some people. The "don't spoof fingerprint for Play Services Update" patch is still applied in ROM framework sources. I don't know what to say. It seems random who has the problem and who doesn't. If you have the problem, back up your stuff and try a factory reset. If it comes back, might as well upgrade to crDroid 10 (Android 14) which doesn't have the problem.
 
 Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
@@ -26,80 +28,34 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     12-20-2023
+     01-18-2024
 ====================
 
-   * packages/apps/Dialer
-49e603c01 New Crowdin updates (#90)
-
-   * packages/apps/GameSpace
-d26ad5b New translations (#62)
-
-   * packages/apps/ParallelSpace
-ac2f60a New translations (#13)
-
-   * packages/apps/crDroidSettings
-c76a1b9 New Crowdin updates (#1098)
+   * packages/apps/Aperture
+4fa3048 Aperture: Update AGP to 8.2.1
+4fe3a04 Aperture: Update Gradle to 8.5
+93a5d30 Aperture: Fix HDR10+ drawable
+20fb43d Aperture: Run `./gradlew app:generateBp`
 
 ====================
-     12-18-2023
+     01-17-2024
 ====================
 
-   * frameworks/base
-d5e5cb7c69d3 fixup! SystemUI: Add A11 QS UI Style [1/3]
-c02dce04bc1d PixelPropsUtils: Update spoof fingerprint
+   * device/lineage/atv
+6a2dc82 atv: rro: Allow devices to disable the remote pairing animation
+7b51f5b atv: Move RRO to correct folder name
+219a3c1 Add rro to control gms setup wizard options
 
 ====================
-     12-17-2023
+     01-16-2024
 ====================
 
-   * frameworks/base
-a33e9c2c01b3 SystemUI: Add QS Panel Style [1/3]
-01b1b6bd9161 SystemUI: Add A11 QS UI Style [1/3]
-9a9eaeec1d7d Allow setting quick QS rows [1/2]
-ccffc96f0f2f SystemUI: Tune QS Panel bottom padding
-847ce8caadfa SystemUI: Refactor brightness slider paddings
-
-   * packages/apps/crDroidSettings
-6698b94 crdroid: Make QS tile style and QS panel style exclusive
-82fe7e7 crdroid: Add QS Panel Style [3/3]
-03310a4 crdroid: A11 QS UI Style [3/3]
-64d9ce5 Allow setting quick QS rows [2/2]
-a9c0036 SystemUI: Update default columns for landscape
-
-   * vendor/addons
-5a39560c addons: Remove styles xml for QS panel styles
-1c098995 addons: qs: Do not modify columns/rows
-d843f63c addons: qs: Replace dimens for corner radius
-d9ac1e55 addons: qs: Add missing color resource
-5f1dfca6 addons: Add QS Panel Style [2/3]
-5b8540b3 addons: Add A11 QS UI Style [2/3]
+   * packages/apps/Etar
+43478c32 Automatic translation import
 
 ====================
-     12-16-2023
+     01-13-2024
 ====================
 
    * frameworks/base
-c0341402d07c SystemUI: Implement Split notification shade changes [SQUASH]
-
-====================
-     12-15-2023
-====================
-
-   * external/chromium-webview/patches
-4e9941d Update Chromium Webview to 120.0.6099.115
-
-   * external/chromium-webview/prebuilt/arm
-f4da252 Update Chromium Webview arm prebuilt to 120.0.6099.115
-
-   * external/chromium-webview/prebuilt/arm64
-45a3506 Update Chromium Webview arm64 prebuilt to 120.0.6099.115
-
-   * external/chromium-webview/prebuilt/x86
-bc8549c Update Chromium Webview x86 prebuilt to 120.0.6099.115
-
-   * external/chromium-webview/prebuilt/x86_64
-1f4e3ad Update Chromium Webview x86_64 prebuilt to 120.0.6099.115
-
-   * packages/apps/TvSettings
-41eb6e24d TvSettings: Reword "advanced restart" preference title and summary
+1eedb2145155 NetworkTraffic: Prevent network callback exception on theme change
