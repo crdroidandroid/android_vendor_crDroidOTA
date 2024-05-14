@@ -1,45 +1,134 @@
-crDroid 10.2-r2
+crDroid 10.4
 
-Changes since v10.2 (15 February) release:
-- Still on February 2024 Android Security Bulletin (android-14.0.0_r25).
+Changes since v10.2-r2 (23 April) release:
+- Merge April 2024 Android Security Bulletin & Android 14.0 QPR2 (android-14.0.0_r31).
 - Upstream changes from LineageOS:
-  - Rebased on end-of-March lineage-21 branches for our devices (including switching to bluetooth AIDL, surprised me there).
-  - Probably more updated Lineage 21 apps, I dunno.
+  - Changes to support QPR2 (no it does not have backported BPF, Lineage devs basically reverted a lot of the "test for 4.19 and newer kernel, drop a lot of old code for old kernel compatibility" commits from AOSP).
+  - Rebased on end-of-April lineage-21 branches for our devices (enchilada, fajita, oneplus/sdm845-common device tree, hardware/oneplus/, and merged kernel updates).
+  - Change to using stereo mic (noise cancelling mode I think) for speakerphone for some mixer paths; see if WhatsApp & Signal work for you now if they didn't before I guess...?
 - Upstream changes from crDroid ROM sources:
-  - I dunno, whatever they had to do to incorporate all the lineage-21.0 official release changes mid-month.
-  - Seems we're just defaulting to using jemalloc everywhere now. Okay I guess... less hardened, slightly faster.
-  - I dunno if we changed device fingerprint again for Play Integrity, but wouldn't surprise me.
-  - Probably more things. I last synced my build trees with ROM sources the day before QPR2 merge went live at LineageOS.
-- Device-specific (buckle up):
-  - A million "10.2-next" builds testing a variety of things you'll never see while waiting for Android 14 QPR2 to get merged & Lineage to rebase and crDroid to rebase.
-  - Shrank reserved size for GApps in system partition again to accommodate vendor getting yet-larger, so we're at ~1.2GB available for Google Apps now... but it actually WORKS (see below).
-  - FINALLY fixed a months-old problem with the NikGapps "crdroid-official" elite package (or anything else that was larger than a certain threshold) not flashing completely after the switch to dynamic partitioning. Something something inode count; now it actually calculates available space remaining correctly mid-install of addons.
-  - Complete overhaul of power/performance stuff across kernel, device tree, and hardware interfaces.
-    - Moving to EdwinMoq's v4 power-libperfmgr AIDL imported from Pixel in hardware/oneplus/, it behaves a little different but seems to work.
-    - Go back to explicitly removing more qcom perfd-related bits in kernel (I don't care if it's more in-line with 4.19; it'll need to get removed there as well eventually), among other changes.
-    - Look, I don't even know how to describe it all. Read the commit histories. Things should be more power-friendly, and still maintaining performance. It's all the testing on all the interrim branches where figuring it out was taking place, even if the actual changes aren't massive overall.
-  - Hopefully fix some camera crashing/kernel panics (just... don't ask... mistakes were made).
+  - Merged QPR2, which meant a lot of features went away in 10.3 initially... then while the crDroid devs were busy trying to fix & re-add our customizations, less than two weeks later the April ASB dropped and it was a tiny update so they just merged it. 10.3. hardly existed, which is why we're going straight from 10.2r2 to 10.4. Most of the ROM-side features that will still work correctly have been dropped, fixed, and re-added. So if your favorite feature is now missing... sorry. Pour one out, remember the good old days, move on (unless you know how to fix it, in which case please feel free to author some commits, make a fork of crdroidandroid/android_frameworks_base, and open a pull request on GitHub!).
+  - The dark-grey empty notification block issue in landscape mode has been fixed it seems, yay! If it's still being weird, you might need to go into Settings > crDroid Settings > Quick Settings, and restore some defaults.
+  - Updated translations, various NPE fixes in frameworks, other optimizations, and re-adding features that were dropped initially in 10.3 when the QPR2 merge first landed (not that I ever released 10.3, but oh well).
+  - I actually reverted the commit that adds "dun" APN type to default read-only types, so all the editing restrictions kinda basically magically fall away, and you can try to edit your carrier's provided APN (or a copy you create of it) to use IPv4/IPv6 instead of just IPv6 without losing the ability to do tethering. Will submit for inclusion in the official crDroid ROM sources if it tests well.
+- Device-specific things I can't stop screwing around with:
+  - Kernel base updated to last lineage-20-test branch courtesy of bananafunction (plus merge of lineage-21 branch from upstream LineageOS as well of course). He actually has passed his OP6(T?) on to someone else and is no longer going to be actively maintaining a 4.14 LTS / QUIC update backport branch any longer, so I guess... we are where we are.
+  - Re-land a couple "revert these recent changes by qualcomm" commits from bananafunction that I accidentally previously undid by merging lineage-21 branch of our upstream LineageOS kernel, because they cause playback stuttering/excessive CPU/GPU usage.
+  - Okay, for everyone who kept frothing about how amazing 10.2next5.1 was, fine. It looks like absolute crap in benchmarks & even jitter test. Whatever. I re-included the MCD kernel scheduler/governor changes in kernel, and a couple of the INTERACTION boosts in powerhint. It might be more power-hungry now, but I guess that means that the gawdawful QS/Notification shade code that Google has left us with in AOSP 14 will now animate faster. Stop trying to make 12 QS tiles visible at once and a lot of your problems will go away.
+  - I didn't really want to include too many kernel haxx, but I guess it's all gonna be out the window with 4.19 anyway, so who cares. At least I have a good idea about where to begin with powerhint & Kconfig settings the next time I get back to that... and at least it won't require fugly backports to take proper advantage of uclamp in power-libperfmgr v4 AIDL.
+  - Updated media_codecs_performance.xml based on xiaomi/sdm845-common in LineageOS.
+  - At some point I reset AdrenoBoost default value to 1 again instead of zero. Seems to still be helpful, and we don't use the GPU very much in general so it's not really using much power to help with things feeling smoother.
 - "Misc tweaks & bugfixes." :D
 
 General Notes:
-- I know the power consumption situation was pretty bad in 10.2 first release, and people were having problems with not actually being able to install full NikGapps "crdroid-official" package properly, and I'm sorry for the radio silence for 2 months.
-- Power/perf & "why can't I install GApps?!" are basically the only things I've been working on this whole time, when I've had the time to work on the ROM at all.
-- Now that things are happy again, I can try to move on with just skipping straight to working on a crDroid 10.4 release, so you all don't have to deal with all the features that got removed in 10.3 before the dev team figured out how to re-add them after the AOSP 14.0 QPR2 merge.
+- Rumors of my demise have been greatly exaggerated. But I'm gonna be busy a lot, and the device might get dropped again through the summer & fall because I can only get around to finishing a testing/fixing/release cycle every other month this busy time of year.
 
 Known issues:
 - Look, none of this is really deal-breaking for most people. Things work well as a daily driver, all major systems work as they should as far as I can tell (or at least as well as in upstream LineageOS).
 - Upstream crDroid/LineageOS/Qualcomm/Google issues:
-  - Blurs are very resource-intensive, and I can't disable them by default while keeping the capability intact. For best experience & battery life, go to Settings > Display and disable "window-level blurs". If you want it to look pretty without too much lag/stutter, go to Settings > DeviceExtras and turn "AdrenoBoost" all the way up to 3, but be aware this will consume more battery.
+  - Background blurring requires significant boosts to render smoothly. There's not currently a way to retain the capability for blurs but disable them by default that I can find. You should consider turning off the "window-level blurs" toggle in Settings > Display if you want to make things smoother & save battery.
   - SAFETYNET/PLAY INTEGRITY IS PROBABLY NOT GOING TO PASS FOR GOOGLE PAY/WALLET. Google has been on a rampage against custom ROMs and unlocked bootloaders being able to spoof Play Integrity in a meaningful way, and seems to be requiring hardware-backed integrity (which is currently not spoofable) for Pay/Wallet. It has always been a cat & mouse game, and they can change the rules on their end at any time. Currently a new install will show up with "Device Certified" in Play Store, but that might change any time and is not considered a bug. The ROM devs update the spoofed fingerprint, and it takes me forever to get updates releases pushed, and then it's out of date by the time you get it. Sorry. Hate Google, not me. Change to a better bank & use the website instead of a crappy "app", and complain loudly while you threaten to take your money somewhere else that doesn't make broken apps.
   - As of Android 13, we're using the source-built AOSP implementations for bluetooth & NFC, since it's not possible to continue with the old prebuilt QTI vendor blobs & implementation. Some things don't work as well; nothing I can do about it.
   - The "QR Code Scanner" lockscreen shortcut option does not get enabled for use until you add the "QR Scanner" QS tile.
   - Wallpapers & Styles can cause a SystemUI crash if you swap clock faces & colors too rapidly, too many times before settling on something. It's a stupid/funny reason, I hope devs can figure out what to DO about it. (not sure if this is still true?)
-  - In landscape mode, the "split shade" code was changed in 10.2 and notifications might not appear (just grey rectangles where they should be). Go into "Settings > crDroid Settings > QS Tiles" and change the "Quick QS" columns or rows in landscape to something not-default (3 columns or 2 rows or something) and it should resolve. Might even work if you do that, back out of the setting, then set it back to defaults. This is fixed in newer sources (10.4) but I haven't built against updated sources yet post-14.0-QPR2-merge.
 - crDroid OP6/6T-specific issues:
-  - VP9 video playback has problems in Android 14 on sdm845 devices using the qcom-caf sdm845 media HAL & qualcomm hardware accelerated decoder. Disabling the hardware-accelerated decoder allows apps like YouTube & Instagram that change stream format mid-session to work correctly again, although playback of 1440p & 4K VP9-compressed content now requires software decoding fallback. TL;DR: you might need to use NewPipe to download 4K videos & VLC to play them now. This isn't just our device; anything using sdm845 or sdm710 or older is going to have problems in Android 14 with VP9 video format decoding in hardware, but whether a maintainer chooses to "fix" it by making it fall back to software decoding is going to be device-specific, so I'll put it here (since I did).
   - You should go into crDroid Home (default launcher) settings and disable "Shake to clear recents" feature. It seems buggy with our device's sensor implementation & causes bad lag/slowdown after a while when trying to switch apps/see recents/navigate home.
 
 Build type: Monthly (-ish)
 Device: OnePlus 6 (enchilada)
 Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
+
+______
+
+   * vendor/lineage
+24bb1279 android: merge_dtbs: Respect miboard-id while merging
+8aa38ff7 overlay: Enable freeform/multiple windows feature by default
+ee40d150 common: Inherit pixel-fw when available
+c2e96470 envsetup: Disable ABI checks
+109ddf0c crdroid: Disable phantom process monitoring as workaround
+d8f5ae2a crdroid: Bump to version 10.4
+9c655503 crdroid: Enable ThinLTO cache
+ca5e2f26 crdroid: Switch to AOSPA's face unlock implementation
+f96088c4 crdroid: Build OmniStyle
+ee18e29d crdroid: Build BatteryStatsViewer
+2640a2cb crdroid: Update clone exemption list
+88abaef8 crdroid: Add preinstalled package list to stop auto cloning
+2a8641be device_config: Enable Cloned App
+f1e2e936 overlay: Use google-sans for remaining font configs
+56f91a2b crdroid: Build OmniJaws service
+f2a920d7 overlay: Update clock plugin list
+4b81c304 overlay: Allow telephony stack and components to receive un-sanitized ServiceState entries
+237ca8af soong: Add CAMERA_NEEDS_CLIENT_INFO_LIB{_OPLUS}
+02edcaea soong: Add support to set vendor tag with client package name
+dfa19961 overlay: Enable app-cloning feature in Settings
+993f54ef crdroid: Compile GameSpace
+f2d35ddd overlay: Settings: Show memory usage in app info
+4f74d36b overlay: Set components from pixel device
+e2247e22 overlay: Enable QR Code scanner on Lock Screen
+9727ead2 crdroid: Inherit several Android Go configurations
+29ef1cf8 crdroid: Speed profile services and wifi-service to reduce RAM and storage
+42453370 overlay: Add tethering to location exemption
+512c440d overlay: Add SystemUI to location extra packages
+5a70801f overlay: Add OmniJaws to location extra packages
+02b81082 overlay: Allow new SystemUI clocks
+7f47d46f overlay: Offload WM shell to another thread
+bc00f1ba common: Enable R8 optimizations for system_server and SystemUI
+b9851835 crdroid: Minimize debug info
+41f63591 overlay: Update SettingsProvider defaults
+bf1735fd config: Properly disable blur on app launch
+d688b55d config: Cleanup and update common props from Pixel
+aa910ffc config: Optimize Launcher3 and Settings for speed
+901a0184 crdroid: Remove packages moved to addons
+b3065051 crdroid: Remove Trebuchet packages
+62e36fd1 build: Override host metadata
+8bdd9731 crdroid: Moved bootanimation to addons
+eb0d4c55 crdroid: Clean up wallpaper overlay
+7abfb426 common: Allow OTA downgrade regardless build type
+ecef2386 crdroid: Generate OTA json at build time
+d7f2637a roomservice: get me some crDroid
+6b9c4c3d charger: Switch from LineageOS Teal to crDroid Blue
+9fbd08fc apns: Update mobily APN for prepaid connection
+7bc38458 apns: Grameenphone uses APN 'gpinternet'
+e87a988f Revert "overlay: Default to Seedvault backup transport"
+6360e743 crdroid: Drop custom adb drawable
+cb80c729 build: Ship as crDroid based on LOS
+d2b67cfb crdroid: changelog.sh: fail gracefully
+214ed328 crdroid: Check if changelog file exists
+9841aaad crdroid: Add changelog script
+
+====================
+     05-05-2024
+====================
+
+   * external/avb
+4899306 avbtool: Add retry to generate_fec_data()
+
+   * hardware/qcom-caf/sdm845/media
+3d4652c674 mm-video-v4l2: Disable OMX_BUFFERFLAG_DECODEONLY support
+
+   * packages/apps/Jelly
+eaf90ae Jelly: Fix-up incognito condition
+
+   * packages/apps/Settings
+6f78e64388d fixup! Settings: Add back increasing ring feature (2/2)
+
+====================
+     05-04-2024
+====================
+
+   * hardware/lineage/compat
+00551f4 compat: Add camera provider shim
+
+   * packages/apps/Jelly
+6509b2d Jelly: Inform CookieManager about cookie policy on create
+483a163 Jelly: Reformat code
+
+   * packages/apps/Settings
+ae0ca13e49a Settings: Fix regulatory info availability check
+
+   * packages/services/Telecomm
+487031010 Add back increasing ring feature (1/2).
+
+   * vendor/lineage
+1e092b97 config: common: Set OEM Key ATV property in all cases
