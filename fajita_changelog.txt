@@ -1,28 +1,33 @@
-crDroid 10.5-r2
+crDroid 10.6
+_Kernel 4.9, retrofit dynamic partitions, release-keys signed_
 
-Before we get into the rest of it, here's the big thing to know (for those still on 10.4 or earlier):
-
-*** "SIGNED" BUILDS ***
-- Attempting to update from 10.4 or earlier from the system OTA updater (Settings > System > System Updates) will fail with a "verification failed" error.
-- You have to download the ROM zip to a computer or USB OTG drive and install the update via recovery.
-  - No factory reset required; this will not erase your data.
-  - Since you're flashing in recovery (which does not preserve GApps), you DO need to reboot to recovery when prompted, and flash your Google Apps or microG or crDroid++ kernel or any other addon zip to the freshly-updated slot BEFORE booting to system.
-  - After you've updated to a "release-keys" signed build (10.5 or newer) by flashing in recovery once, all future OTA updates will once again work as normal from the booted Updater in Settings > System > System Updates.
-- Previous releases were made using "test-keys" (cryptographic signature of the ROM installation payload).
-  - Google checks for that now as part of Play Integrity, and will fail devices using "test-keys" for their builds.
-  - The crDroid dev team made organization-wide signing keys ("release-keys") that all of us maintainers are now using when compiling the ROM.
-
-Changes since v10.5 (17 June) release:
-- Still May 2024 Android Security Bulletin (android-14.0.0_r35) -- unchanged.
+Changes since v10.5r2 (02 July) release:
+- Yes we updated the signing keys again (forgot to add NFC to signed packages in the first round), so OTA verification will fail and you'll need to manually flash from recovery with adb sideload. Sorry, shouldn't happen again.
+- June & July 2024 Android Security Bulletins including 14.0 QPR3 (android-14.0.0_r50 & android-14.0.0_r53) merged from upstream AOSP & LineageOS.
+- Changes from upstream LineageOS:
+  - Pffffft everything. It was the quarterly code rebase with huge changes from AOSP. Everyone hates this.
+  - New Lights AIDL for enchilada to align with necessary QPR3 changes. Unfortunately, global changes to notification AIDL-related code in framework means that right now, notification LED is mostly broken for ALL devices equipped with one (not just enchilada). Guess we wait for the big brains at LOS for a fix (unless you're good at Android frameworks and java, in which case hmu).
+  - Updated sensitive numbers & APNs for many regions/carriers (and new xml validation schema to keep changes from killing telephony in the future).
+  - A million things we depend on to make things work right. They're heroes up there.
 - Upstream changes from crDroid ROM sources:
-  - Updated device spoofing fingerprint for PixelPropsUtils for Play Integrity shenanigans.
+  - Updated translations.
+  - Updated customizations/features to whatever is actually still working after the QPR3 merge. Sorry if your favorite feature didn't make the cut.
+  - Now compiling kernel with clang 19.
+  - Fixed a bunch of problems introduced by AOSP with QPR3 merge. So a whole lot of work to stay in the same place. "Thanks, Google!" :P
+  - Sure looks like there are a lot of updates to things & bugfixes in there. I dunno what all, but they're in there!
+  - Unfortunately, we aren't able to keep the ability to choose between multiple filesystem formats for userdata in recovery any longer. Any new factory resets will cause userdata to be formatted as ext4 for OnePlus 6 & 6T. Users who formatted with f2fs should still be able to keep it that way without any problems until the next factory reset, since the device-specific fstab entries are there for both possible filesystems on this device.
 - Device-specific things I can't stop screwing around with:
-  - No really, background apps really ought to stop getting killed immediately again.
-  - Minor adjustment to power/perf (increase uprate limit on Big CPU cores so it should treat higher frequencies as less desirable; still single value at boot time rather than adjusted during runtime, so you should be able to override via kernel manager if rooted without libperfmgr stomping on your settings).
+  - DeviceAsWebcam! Using 0xCAFEBABE's commit stack from sdm710 & mithorium to bring up DeviceAsWebcam support now that there's a public implementation available in AOSP. Seems to work well! To use it, plug into a computer then choose "Webcam" instead of "File Transfer" or any of the other USB options. Rotating the device the first time may cause weird aspect ratio artifacts. Rotate it back, and back again, and it should make things better.
+  - Updated media_codecs to drop outdated OMX software codecs and use c2 instead (avoids some of the issues other devices have been having since QPR3 merge).
+  - Actually had a couple final updates from bananafunction to their kernel base! Thank you for all that hard work, friend!
+  - Added proximity sensor checks to DT2W (and screen-off UDFPS for fajita) to help avoid some accidental screen-on-in-pocket with crDroid's pocket mode implementation.
+  - Fixed USB OTG support again to keep working in Android 14.0 (had to modify fstab, and then drop the out-of-tree sdfat kernel driver since it doesn't seem to play nicely with storage manager any longer). You can install zips from USB OTG in recovery again from both FAT32 and exFAT formatted drives, yay.
+  - Increased zram limit to 50% of system RAM again & fiddled with device_config to make sure things wouldn't get killed instantly in the background as quickly (Android looooves being able to page things out it seems).
+  - Updated power/performance tuning related to wifi a bit. Should help if you were having problems with network streamed playback stuttering previously when screen was off.
 - "Misc tweaks & bugfixes." :D
 
 Release Notes:
-- Rumors of my demise have been greatly exaggerated. But I'm gonna be busy a lot, and the device might get dropped again through the summer & fall because I can only get around to finishing a testing/fixing/release cycle every other month during this busy time of year.
+- Again, trying to download the OTA update will give you a "verification failed" error. You need to download to computer or USB OTG drive and install from recovery, due to an update in signing keys. I hope it won't be required after this, but the devs need to update things sometimes.
 - TL;DR make sure you do the following setup steps or don't bother submitting bug reports:
   - Settings > Display > turn OFF "Prevent accidental wake-up" (use the Pocket Mode in crDroid Settings > Misc instead).
   - Settings > System > Gestures > turn OFF "Lift to check phone" (use crDroid Settings > User Interface > Ambient Display settings instead).
@@ -31,6 +36,7 @@ Release Notes:
   - [Optional] Go get this thing https://mega.nz/file/UHpDQS4L#FGKPas4_OM2Z5b5iE1R0zNZKUEa069uPJ7NAiluViXI and put it into Internal Storage > Android > obb > com.oneplus.gallery since it doesn't download correctly in-app due to sepolicy things I can't be bothered with in Android 14 (or don't if you don't care about OP Gallery being able to do image classification).
 
 Known issues:
+- Notification LED is broken for enchilada (and every other LineageOS-based device with a notification LED) currently. It works when you're selecting a color/pulse pattern, but doesn't work when you have app notifications/missed calls/new voicemail/new messages. Waiting for the big brains to figure out a fix.
 - Look, none of this is really deal-breaking for most people. Things work well as a daily driver, all major systems work as they should as far as I can tell (or at least as well as in upstream LineageOS).
 - Upstream crDroid/LineageOS/Qualcomm/Google issues:
   - Background blurring requires significant boosts to render smoothly. You should consider turning off the "window-level blurs" toggle in Settings > Display if you want to make things smoother & save battery. Or turn up AdrenoBoost in Settings > DeviceExtras for MOAR SMOOTH.
@@ -45,3 +51,851 @@ Build type: Monthly (-ish)
 Device: OnePlus 6T (fajita)
 Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
+
+====================
+     07-31-2024
+====================
+
+   * frameworks/base
+e24e4b9d2ce3 PPU: Update FP 20240702
+
+   * packages/apps/Settings
+
+   * packages/apps/Settings
+08aecd377d3 Revert "Update the battery saver scheduler minimum level" - that commit was creating issue: value set lower than default(20) was not persisting after reboot. This reverts commit b0fe225a17f91cdac8a82a2ff0f25ca19b5bf1bb.
+5c3b27f5f3b Settings: SoftAp: add Hidden SSID preference
+8e5bb2d7682 Settings: SoftAp: add support for setting shutdown timeout
+61129221af0 Settings: SoftAP: Add client manager
+928f92f3907 Settings: Fix crash with face lock preference for limited access users
+18c2deb2c83 Settings: Follow system theme for SD card activities
+606ba8eea88 Fix SmartForwardingActivity crash at screen rotation
+1460e234c18 Fix network can't handle simultaneously SS request for both subs
+08eccbbf37d Settings: fix unexpected routing selection
+4c8ebd2183d Update the icon for the adb wireless pairing code preference.
+a006b61c749 Settings: Disable google battery pref controller
+3019599714c Settings: Import columbus preference settings
+01ae40026b7 Settings: Import settings from pixel-fw
+2ef95a03074 Settings: Define android manifest
+f17acb0574e Settings: Replace android:name for SettingsGoogle
+284ee45a200 Settings: fix app lock allow biometric toggle ignored (always on)
+7893302985b Settings: AppLock: Update for kotlin errors
+940e770dd91 Settings: Don't make app lock settings searchable
+59980cbc77a Settings: Let app lock use face unlock
+fb715915311 Settings: Add app lock settings for alternate security settings provider
+08813364be6 Settings: Add app lock summary for 0 protected apps
+78fdbcc00ac AppLock: Slightly bigger icon size
+7f7d5edd164 Settings: Update AppLock API
+4bee2c2c878 Settings: Allow locking all apps visible in launcher
+88de4333137 Settings: Introduce App Lock [3/4]
+144ea34f8bd Settings: Skip auth for WiFi net share when unlocked in the last 60s
+e82bc89c038 Settings: Move Vo5G toggle right below VoLTE
+a5fe024fbed fuelgauge: Hide screen time since last full charge if not valid
+0d7d630f2f1 Port "Battery Usage Alerts" feature from factory images
+4acd8e9ab1c Settings: Link smallest width options in display settings
+ac020dc93b5 Allow adding space below IME on disabling navigation hint [2/3]
+c6c27c66da4 Settings: Import missing Face Unlock animation
+e0399f09eee Add Face Unlock with ParanoidSense
+a28fdccbdb2 Settings: Hide headsup toggle
+703543e5f15 Settings: Move custom vib pattern to its own preference
+173e7e2e6d0 Settings: Follow new ringtone vibration patterns
+113df62a1af Settings: Preview ringtone vibration pattern
+eff95ccabb9 Settings: Allow choosing a custom vibration pattern [3/3]
+badfa4f336a Settings: Add vibration patterns from OOS [3/3]
+aa84ad7058d Settings: Add simcard number title for SIM1
+603d31f517d Settings: Fix ringtone selection for devices with e-SIM
+4622c978285 MSIM Ringtone: Improve on devices with ESIM
+8458f40d4be Settings: Use AOSP translations for MSIM ringtone
+2f540db70c9 Settings: enable SIM card ringtone only if slot not empty [1/2]
+9bdb2f484ee Settings: Phone ringtone setting for Multi SIM device [2/3]
+f2d60358d02 Settings: Add back increasing ring feature (2/2).
+d030a7465a9 Fix SMS and Calls preference summary displays empty.
+7374f344483 Fix-up starting style&wallpaper from search
+4e7c177cbd8 development: Enable force resizable activities by default
+e57ee5b3393 development: Enable freeform windows by default
+a1dd1c93d8d Open app when clicking on icon in App Info
+e47970e39da Settings: Remove screen off udfps preference
+bd2dc6834f7 Settings: Use pixel blue for icon
+005e8d63e5b BatteryStateDatabase: Set exportSchema to false
+9843dc89bf0 Settings: Forcefully enable Hotspot Speed setting
+225eb603ff2 WiFi: Remove country code checking.
+a41f3883484 DataProcessor: Do not skip and replace screen on component with screen on time
+c1ab394710c Refacotr mobile data observer for repository
+788c29e088b Settings: Fix regulatory info availability check
+530ca665ce6 Fix SubscriptionInfoListViewModelTest
+e92cc613b3d Fix NPE force close if disabling BT feature
+2b3021a8a9a Settings: Don't show module version if isn't a date
+6ea50547af2 Refactor AppPicker page to adopt Settings main theme
+974236f3b89 Settings: Avoid enforcing weird backgrounds
+e07925d6031 Settings: Add location indicator to privacy controls fragment
+72d7e227fd3 Settings: Move location indicators toggle to privacy control settings
+80ae8c56871 ChooseLockPassword: Decrease minimum pin length for auto confirm
+82531f53c2c Settings: Make all user apps cloneable
+f3015db1fdc AppVolumeSlice: Allow querying icon of apps installed by any user
+8b184066b43 Settings: support per-app volume [3/3]
+89de4c5eabd Settings: Hide force full screen settings
+0110e6effe1 Settings: Add activity for cutout force full screen
+9c5a8ca30b4 Allow tuning ambient display with sensors [3/3]
+7d79a7ceff8 Fix long click intent for Smart Pixels tile [2/2]
+deca47d12eb Settings: Add permission to hold wake lock
+7bab0ef9685 Settings: Disable automatic system server heap dumps by default
+8ae1b733443 Remove feedback and bug report stuff
+7c96c0e95d0 InstalledAppDetails: fix refreshing storage summary after force stop
+d93fdee493e Settings: Improve code for time spent in app
+29fc20ee43d AppInfo: Add time spent in app from Wellbeing
+16bae64e82b Settings: add sim status listener in about phone
+3947e41cc54 FaceEnroll: Fix circle camera view background color
+0647cd81ed9 Settings: Do not skip fp authentication for udfps
+9f7b5c4656d Settings: OverlayCategoryPreferenceController: Sort overlays by name
+a8c9873c507 Expand abbreviation in average memory usage string
+02b6cf1690b Settings: Add a preference to battery optimization page
+347b4151ad4 Settings: Move battery/notification light settings to crdroid
+4606af9ff97 Settings: Fix NPE with customdialogpref for backlight settings
+09502e15e0b Hide navbar radius customization when taskbar enabled
+c086b3d93e7 Show appropriate title for gesture navigation settings
+b686da3eac4 Disable Navbar radius customization if hint disabled
+9ecdf8a8d27 Settings: Allow Configuring Navbar Radius [2/2]
+d3ad4ab1c38 Optional haptic feedback on back gesture [2/2]
+9a9cee5fbb0 Allow to hide arrow for back gesture [2/2]
+c7ada973d2f Settings: Also hide pill length on taskbar mode
+f3e2200ea12 Settings: Change back gesture height intervals
+9852ccadb29 Allow changing back gesture height [2/2]
+d83fd717d93 Allow changing the length of gesture navbar [2/2]
+768b5869b90 Add deep sleep preference controller [2/2]
+b61138e4f39 Settings: Add missing icon for media output
+34b7efba77e Settings: Remove typo in manifest to fix predictive back
+1140473b716 Settings: Fix invalid private DNS help text if URI is missing
+e5f72ef0970 Drawables: Dark mode support for app installation restriction icon
+bcb037c9595 Settings: Add icon for emergency broadcasts
+ce05e80ae2d Settings: Move blur toggle to Display options.
+59ec5682f2e Settings: move Extra Dim feature to display
+31330cff66e Settings: Set device name from marketname if available
+dc831d892b1 SlicesDatabaseHelper: Use Build.VERSION.INCREMENTAL
+493e417121f Settings: Fix up panel theme and layout
+b3d2ae8911a Settings: Add icon for 'WiFi cellular data fallback'
+d62687e621b Settings: Add icon for 'WiFi direct'
+e9a2353735e Settings: Add icon for WiFi -> Install certificates
+487f7505ef7 Settings: Add icon for 'WiFi timeout'
+cf059eaa232 Settings: Fix potential NPE in WifiTetherSecurityPreferenceController
+8d7b4f417b8 Settings: Use seekbar to allow setting arbitrary animation values
+d41315d1715 Add back arrow to Desktop backup password
+02c8c3e0cba Settings: add TextView for summary into SeekBarDialogPreference
+b3d1e28866e Settings: Show user's Google avatar on the homepage
+0a74f7036ff Settings: Align user avatar with homepage title
+0e19874e24f Settings: Add avatar to search bar
+fa17c7b4389 Settings: Remove divider from Battery Manager
+d07e11398fe Settings: Remove dividers in Network & Internet
+3fb5d27a4cc Settings: Observe auto brightness mode changes
+cf06a9025f9 Settings: fix typo in settings namespace for qr scanner on ls
+97fe6cfecdf Settings: Fix illustration overlap for location settings
+c5061a06b14 Settings: Update few illustrations from Lottiefiles
+34e802abcf4 Settings: Import missing animations from UP1A.231005.007.A1
+93035607d47 Settings: Add illustration to dark mode preference
+8e98baef4e6 Settings: Import illustrations from motorola
+a74036767ec Settings: Allow to quickly open Running Services from meminfo view
+6dd07c0f94c Settings: Add more DNS providers
+7a885485290 Settings: Add AdGuard DNS as a private DNS Provider
+5cde54bdd67 Settings: check wifi direct feature for showing preferences
+e1f152c2ae6 Settings: DevicePicker: Adapt to S style
+b3038f3ac3e Settings: Change kernel preference behavior
+0194c8a6ee8 Settings: Show full proc/version information
+47ee8a63c0d Make kernel version clickable
+66e9676bd0d Settings: Add Device codename to Firmware version window
+e1da8583531 Settings: Add platform and RAM to Model & Hardware
+22bf4e3c81a Settings: Fix restore default apn dialog sometimes not dismissed.
+a1a22c32c0c Settings: Desktop backup password: Tint buttons to match system theme
+2812494c3d6 display: Import screen resolution from cheetah stock
+7e5d3bf66a5 battery usage UI: use a fallback name for unknown components
+006b94d0488 Settings: Fix rest of the edit menu icon tint
+97d4b94e3e6 Wi-Fi timeout feature
+8e465260955 Bluetooth timeout feature
+fc51fd66984 Settings: Fix loading iconpack-based Wellbeing icon
+3b02ccba4d8 NightDisplay Settings: Use List Preference for NightLight settings
+d8c5ad39567 Settings: Use ListPreference instead of DropDownPreference
+dd0c6dc6915 Settings: Use List Preference for Dark mode
+d913ee1a639 settings: drop divider in dark mode screen
+35025b4717e Settings: Follow navbar color in base
+7c93611c3ba Settings: Use font configs instead fonts directly
+52719824a8d Enable FeatureFlags on "user" builds too
+d8bb4f877de Settings: Add Glide library
+ba7444a4e4d Settings: Fix crdroid settings icon alignment
+fe63d13688c Settings: Link to crdroid legal
+db69bb6a833 Changelog: Rework with Activity [1/2]
+7b886b8d56a Settings: Integrate crDroidSettings into Settings
+107f2f15185 Settings: Update overlay package for pure black theme
+48086e08665 gestures: Update required hint switch package
+77af31a424f Settings: Add back crdroid logo
+7a060ccceb0 Settings: Show CR version in About menu
+08aecd377d3 Revert "Update the battery saver scheduler minimum level" - that commit was creating issue: value set lower than default(20) was not persisting after reboot. This reverts commit b0fe225a17f91cdac8a82a2ff0f25ca19b5bf1bb.
+5c3b27f5f3b Settings: SoftAp: add Hidden SSID preference
+8e5bb2d7682 Settings: SoftAp: add support for setting shutdown timeout
+61129221af0 Settings: SoftAP: Add client manager
+928f92f3907 Settings: Fix crash with face lock preference for limited access users
+18c2deb2c83 Settings: Follow system theme for SD card activities
+606ba8eea88 Fix SmartForwardingActivity crash at screen rotation
+1460e234c18 Fix network can't handle simultaneously SS request for both subs
+08eccbbf37d Settings: fix unexpected routing selection
+4c8ebd2183d Update the icon for the adb wireless pairing code preference.
+a006b61c749 Settings: Disable google battery pref controller
+3019599714c Settings: Import columbus preference settings
+01ae40026b7 Settings: Import settings from pixel-fw
+2ef95a03074 Settings: Define android manifest
+f17acb0574e Settings: Replace android:name for SettingsGoogle
+284ee45a200 Settings: fix app lock allow biometric toggle ignored (always on)
+7893302985b Settings: AppLock: Update for kotlin errors
+940e770dd91 Settings: Don't make app lock settings searchable
+59980cbc77a Settings: Let app lock use face unlock
+fb715915311 Settings: Add app lock settings for alternate security settings provider
+08813364be6 Settings: Add app lock summary for 0 protected apps
+78fdbcc00ac AppLock: Slightly bigger icon size
+7f7d5edd164 Settings: Update AppLock API
+4bee2c2c878 Settings: Allow locking all apps visible in launcher
+88de4333137 Settings: Introduce App Lock [3/4]
+144ea34f8bd Settings: Skip auth for WiFi net share when unlocked in the last 60s
+e82bc89c038 Settings: Move Vo5G toggle right below VoLTE
+a5fe024fbed fuelgauge: Hide screen time since last full charge if not valid
+0d7d630f2f1 Port "Battery Usage Alerts" feature from factory images
+4acd8e9ab1c Settings: Link smallest width options in display settings
+ac020dc93b5 Allow adding space below IME on disabling navigation hint [2/3]
+c6c27c66da4 Settings: Import missing Face Unlock animation
+e0399f09eee Add Face Unlock with ParanoidSense
+a28fdccbdb2 Settings: Hide headsup toggle
+703543e5f15 Settings: Move custom vib pattern to its own preference
+173e7e2e6d0 Settings: Follow new ringtone vibration patterns
+113df62a1af Settings: Preview ringtone vibration pattern
+eff95ccabb9 Settings: Allow choosing a custom vibration pattern [3/3]
+badfa4f336a Settings: Add vibration patterns from OOS [3/3]
+aa84ad7058d Settings: Add simcard number title for SIM1
+603d31f517d Settings: Fix ringtone selection for devices with e-SIM
+4622c978285 MSIM Ringtone: Improve on devices with ESIM
+8458f40d4be Settings: Use AOSP translations for MSIM ringtone
+2f540db70c9 Settings: enable SIM card ringtone only if slot not empty [1/2]
+9bdb2f484ee Settings: Phone ringtone setting for Multi SIM device [2/3]
+f2d60358d02 Settings: Add back increasing ring feature (2/2).
+d030a7465a9 Fix SMS and Calls preference summary displays empty.
+7374f344483 Fix-up starting style&wallpaper from search
+4e7c177cbd8 development: Enable force resizable activities by default
+e57ee5b3393 development: Enable freeform windows by default
+a1dd1c93d8d Open app when clicking on icon in App Info
+e47970e39da Settings: Remove screen off udfps preference
+bd2dc6834f7 Settings: Use pixel blue for icon
+005e8d63e5b BatteryStateDatabase: Set exportSchema to false
+9843dc89bf0 Settings: Forcefully enable Hotspot Speed setting
+225eb603ff2 WiFi: Remove country code checking.
+a41f3883484 DataProcessor: Do not skip and replace screen on component with screen on time
+c1ab394710c Refacotr mobile data observer for repository
+788c29e088b Settings: Fix regulatory info availability check
+530ca665ce6 Fix SubscriptionInfoListViewModelTest
+e92cc613b3d Fix NPE force close if disabling BT feature
+2b3021a8a9a Settings: Don't show module version if isn't a date
+6ea50547af2 Refactor AppPicker page to adopt Settings main theme
+974236f3b89 Settings: Avoid enforcing weird backgrounds
+e07925d6031 Settings: Add location indicator to privacy controls fragment
+72d7e227fd3 Settings: Move location indicators toggle to privacy control settings
+80ae8c56871 ChooseLockPassword: Decrease minimum pin length for auto confirm
+82531f53c2c Settings: Make all user apps cloneable
+f3015db1fdc AppVolumeSlice: Allow querying icon of apps installed by any user
+8b184066b43 Settings: support per-app volume [3/3]
+89de4c5eabd Settings: Hide force full screen settings
+0110e6effe1 Settings: Add activity for cutout force full screen
+9c5a8ca30b4 Allow tuning ambient display with sensors [3/3]
+7d79a7ceff8 Fix long click intent for Smart Pixels tile [2/2]
+deca47d12eb Settings: Add permission to hold wake lock
+7bab0ef9685 Settings: Disable automatic system server heap dumps by default
+8ae1b733443 Remove feedback and bug report stuff
+7c96c0e95d0 InstalledAppDetails: fix refreshing storage summary after force stop
+d93fdee493e Settings: Improve code for time spent in app
+29fc20ee43d AppInfo: Add time spent in app from Wellbeing
+16bae64e82b Settings: add sim status listener in about phone
+3947e41cc54 FaceEnroll: Fix circle camera view background color
+0647cd81ed9 Settings: Do not skip fp authentication for udfps
+9f7b5c4656d Settings: OverlayCategoryPreferenceController: Sort overlays by name
+a8c9873c507 Expand abbreviation in average memory usage string
+02b6cf1690b Settings: Add a preference to battery optimization page
+347b4151ad4 Settings: Move battery/notification light settings to crdroid
+4606af9ff97 Settings: Fix NPE with customdialogpref for backlight settings
+09502e15e0b Hide navbar radius customization when taskbar enabled
+c086b3d93e7 Show appropriate title for gesture navigation settings
+b686da3eac4 Disable Navbar radius customization if hint disabled
+9ecdf8a8d27 Settings: Allow Configuring Navbar Radius [2/2]
+d3ad4ab1c38 Optional haptic feedback on back gesture [2/2]
+9a9cee5fbb0 Allow to hide arrow for back gesture [2/2]
+c7ada973d2f Settings: Also hide pill length on taskbar mode
+f3e2200ea12 Settings: Change back gesture height intervals
+9852ccadb29 Allow changing back gesture height [2/2]
+d83fd717d93 Allow changing the length of gesture navbar [2/2]
+768b5869b90 Add deep sleep preference controller [2/2]
+b61138e4f39 Settings: Add missing icon for media output
+34b7efba77e Settings: Remove typo in manifest to fix predictive back
+1140473b716 Settings: Fix invalid private DNS help text if URI is missing
+e5f72ef0970 Drawables: Dark mode support for app installation restriction icon
+bcb037c9595 Settings: Add icon for emergency broadcasts
+ce05e80ae2d Settings: Move blur toggle to Display options.
+59ec5682f2e Settings: move Extra Dim feature to display
+31330cff66e Settings: Set device name from marketname if available
+dc831d892b1 SlicesDatabaseHelper: Use Build.VERSION.INCREMENTAL
+493e417121f Settings: Fix up panel theme and layout
+b3d2ae8911a Settings: Add icon for 'WiFi cellular data fallback'
+d62687e621b Settings: Add icon for 'WiFi direct'
+e9a2353735e Settings: Add icon for WiFi -> Install certificates
+487f7505ef7 Settings: Add icon for 'WiFi timeout'
+cf059eaa232 Settings: Fix potential NPE in WifiTetherSecurityPreferenceController
+8d7b4f417b8 Settings: Use seekbar to allow setting arbitrary animation values
+d41315d1715 Add back arrow to Desktop backup password
+02c8c3e0cba Settings: add TextView for summary into SeekBarDialogPreference
+b3d1e28866e Settings: Show user's Google avatar on the homepage
+0a74f7036ff Settings: Align user avatar with homepage title
+0e19874e24f Settings: Add avatar to search bar
+fa17c7b4389 Settings: Remove divider from Battery Manager
+d07e11398fe Settings: Remove dividers in Network & Internet
+3fb5d27a4cc Settings: Observe auto brightness mode changes
+cf06a9025f9 Settings: fix typo in settings namespace for qr scanner on ls
+97fe6cfecdf Settings: Fix illustration overlap for location settings
+c5061a06b14 Settings: Update few illustrations from Lottiefiles
+34e802abcf4 Settings: Import missing animations from UP1A.231005.007.A1
+93035607d47 Settings: Add illustration to dark mode preference
+8e98baef4e6 Settings: Import illustrations from motorola
+a74036767ec Settings: Allow to quickly open Running Services from meminfo view
+6dd07c0f94c Settings: Add more DNS providers
+7a885485290 Settings: Add AdGuard DNS as a private DNS Provider
+5cde54bdd67 Settings: check wifi direct feature for showing preferences
+e1f152c2ae6 Settings: DevicePicker: Adapt to S style
+b3038f3ac3e Settings: Change kernel preference behavior
+0194c8a6ee8 Settings: Show full proc/version information
+47ee8a63c0d Make kernel version clickable
+66e9676bd0d Settings: Add Device codename to Firmware version window
+e1da8583531 Settings: Add platform and RAM to Model & Hardware
+22bf4e3c81a Settings: Fix restore default apn dialog sometimes not dismissed.
+a1a22c32c0c Settings: Desktop backup password: Tint buttons to match system theme
+2812494c3d6 display: Import screen resolution from cheetah stock
+7e5d3bf66a5 battery usage UI: use a fallback name for unknown components
+006b94d0488 Settings: Fix rest of the edit menu icon tint
+97d4b94e3e6 Wi-Fi timeout feature
+8e465260955 Bluetooth timeout feature
+fc51fd66984 Settings: Fix loading iconpack-based Wellbeing icon
+3b02ccba4d8 NightDisplay Settings: Use List Preference for NightLight settings
+d8c5ad39567 Settings: Use ListPreference instead of DropDownPreference
+dd0c6dc6915 Settings: Use List Preference for Dark mode
+d913ee1a639 settings: drop divider in dark mode screen
+35025b4717e Settings: Follow navbar color in base
+7c93611c3ba Settings: Use font configs instead fonts directly
+52719824a8d Enable FeatureFlags on "user" builds too
+d8bb4f877de Settings: Add Glide library
+ba7444a4e4d Settings: Fix crdroid settings icon alignment
+fe63d13688c Settings: Link to crdroid legal
+db69bb6a833 Changelog: Rework with Activity [1/2]
+7b886b8d56a Settings: Integrate crDroidSettings into Settings
+107f2f15185 Settings: Update overlay package for pure black theme
+48086e08665 gestures: Update required hint switch package
+77af31a424f Settings: Add back crdroid logo
+7a060ccceb0 Settings: Show CR version in About menu
+
+   * packages/apps/SetupWizard
+263a62b4 SetupWizard: Bring it on our side
+eb32da6a SetupWizard: Use correct updater package
+79e1aaea Ship as crDroid based on LOS
+a4dd79f7 Adapt FinishActivity and outro for 14 QPR3
+
+   * packages/apps/SetupWizard
+263a62b4 SetupWizard: Bring it on our side
+eb32da6a SetupWizard: Use correct updater package
+79e1aaea Ship as crDroid based on LOS
+a4dd79f7 Adapt FinishActivity and outro for 14 QPR3
+
+   * packages/modules/Wifi
+673e7393c3 Add methods for retrieving SoftAp 6ghz band support
+
+   * packages/modules/Wifi
+673e7393c3 Add methods for retrieving SoftAp 6ghz band support
+
+====================
+     07-30-2024
+====================
+
+   * device/lineage/atv
+a57ced8 Add stadia controller key layout
+
+   * device/lineage/atv
+a57ced8 Add stadia controller key layout
+
+   * frameworks/base
+36ee2d6d8004 Screenrecord: Hide HEVC screen recording when no HW codec is available
+6edfaee4e404 Screenrecord: Option to keep the screen awake while screen recording
+f3bcd7aa8021 PhoneWindowManager: Check NPE for LineageHardware
+
+   * frameworks/base
+36ee2d6d8004 Screenrecord: Hide HEVC screen recording when no HW codec is available
+6edfaee4e404 Screenrecord: Option to keep the screen awake while screen recording
+f3bcd7aa8021 PhoneWindowManager: Check NPE for LineageHardware
+
+
+   *    * packages/apps/Dialer
+packages/apps/Dialer
+8cd2246c4 Dialer: Hide call recording if user storage isn't unlocked
+8cd2246c4 Dialer: Hide call recording if user storage isn't unlocked
+
+
+   *    * packages/apps/TvSettings
+packages/apps/TvSettings
+b4881f7ac Allow disabling Frame Rate settings
+b4d9323b0 Ensure that LockscreenCredential#close() gets called
+00bcdb3aa Fix the bluetooth headset without mic icon
+b4881f7ac Allow disabling Frame Rate settings
+b4d9323b0 Ensure that LockscreenCredential#close() gets called
+00bcdb3aa Fix the bluetooth headset without mic icon
+
+====================
+     07-29-2024
+====================
+
+   * device/lineage/atv
+6db845b Override USB debugging dialog for TVs
+
+   * device/lineage/atv
+6db845b Override USB debugging dialog for TVs
+
+
+   *    * packages/apps/TvSettings
+packages/apps/TvSettings
+624f15b5d Fix default focus in list fragment
+a0d76ad6a Enter corresponding fragment by mouse primary key only
+7e3641d35 Ensure the UI which impelemts by TwoPanelSettingsLib can enter corresponding fragment by mouse primary key
+a6fa21915 Add status judgment for profile state during the initialization process of BluetoothConnector when profile is already connected, and change state into success.
+ad6db903d Replace to the parent URL when Bluetooth device is null.
+624f15b5d Fix default focus in list fragment
+a0d76ad6a Enter corresponding fragment by mouse primary key only
+7e3641d35 Ensure the UI which impelemts by TwoPanelSettingsLib can enter corresponding fragment by mouse primary key
+a6fa21915 Add status judgment for profile state during the initialization process of BluetoothConnector when profile is already connected, and change state into success.
+ad6db903d Replace to the parent URL when Bluetooth device is null.
+
+   * packages/apps/TvSystemUI
+adddf33 Implement USB debugging dialog
+
+   * packages/apps/TvSystemUI
+adddf33 Implement USB debugging dialog
+
+
+====================
+     07-28-2024
+====================
+
+   * frameworks/base
+0402343afae1 camera2: allow access to CaptureRequest.mLogicalCameraSettings
+
+   * frameworks/base
+0402343afae1 camera2: allow access to CaptureRequest.mLogicalCameraSettings
+
+
+   *    * hardware/qcom-caf/common
+hardware/qcom-caf/common
+234c0e4 libqti-perfd-client: Define dummy perf_hint_renew method
+234c0e4 libqti-perfd-client: Define dummy perf_hint_renew method
+69575f0 libqti-perfd-client: Correct report values and types of methods
+69575f0 libqti-perfd-client: Correct report values and types of methods
+
+   * packages/apps/Launcher3
+ec7b0df898 Launcher3: Use proper scrim color and alpha for bottom sheet
+
+   * packages/apps/Launcher3
+ec7b0df898 Launcher3: Use proper scrim color and alpha for bottom sheet
+
+
+====================
+     07-27-2024
+====================
+
+   * 
+frameworks/base
+   * frameworks/base
+1ebc64cfcbe0 SystemUI: Animate StatusBarState doze transition using DarkAnimator
+d2f49160a730 Fix NullPointerException in android.widget.TimePickerSpinnerDelegate.updateInputState
+72cc59d110d7 replace pending cookie listener in onTaskInfoChanged
+478307b07d71 Fix memory leak in FrameTracker
+943265d2011e FrameTracker: Silence logspam
+a1bff9f4ef4f Fix the NPE issue caused by the multi-thread operation on mSession and mLocal object.
+939c89f38570 Telephony: Gracefully handle data enablement checks
+0a40fc45b96a SurfaceControl: Fix a multithreading issue when destroying objects
+dbe9e2c4cc25 SurfaceControl: Prevent crash when surfacecontrol is null
+ba3a480fcbfb Reapply "SharedMemory: mark fdsan ownership"
+4e3f91834607 Adjust procfs heap buffer growth limit to 64 MiB
+3bb5bb6145e2 Don't restart procfs reads from scratch
+895c27aca6dd Fix UAF in android_os_Process_readProcFile when kDebugProc==true
+1b7e90a84b2d Keep reading until end-of-file in reading procfs
+58fe6402a6df Typeface: Update font overriding
+1ebc64cfcbe0 SystemUI: Animate StatusBarState doze transition using DarkAnimator
+d2f49160a730 Fix NullPointerException in android.widget.TimePickerSpinnerDelegate.updateInputState
+72cc59d110d7 replace pending cookie listener in onTaskInfoChanged
+478307b07d71 Fix memory leak in FrameTracker
+943265d2011e FrameTracker: Silence logspam
+a1bff9f4ef4f Fix the NPE issue caused by the multi-thread operation on mSession and mLocal object.
+939c89f38570 Telephony: Gracefully handle data enablement checks
+0a40fc45b96a SurfaceControl: Fix a multithreading issue when destroying objects
+dbe9e2c4cc25 SurfaceControl: Prevent crash when surfacecontrol is null
+ba3a480fcbfb Reapply "SharedMemory: mark fdsan ownership"
+4e3f91834607 Adjust procfs heap buffer growth limit to 64 MiB
+3bb5bb6145e2 Don't restart procfs reads from scratch
+895c27aca6dd Fix UAF in android_os_Process_readProcFile when kDebugProc==true
+1b7e90a84b2d Keep reading until end-of-file in reading procfs
+58fe6402a6df Typeface: Update font overriding
+
+
+   *    * hardware/lineage/interfaces
+hardware/lineage/interfaces
+7cbd562 health: Introduce batteryless aidl HAL
+7cbd562 health: Introduce batteryless aidl HAL
+
+
+   *    * packages/apps/Launcher3
+packages/apps/Launcher3
+a9fa98b024 Launcher3: Fix apps drawer background on tablets for light theme
+a9fa98b024 Launcher3: Fix apps drawer background on tablets for light theme
+
+
+====================
+     07-26-2024
+====================
+
+   * frameworks/base
+
+c25633b4e7c7 SystemUI: Remove composite alpha from additional scrim on lockscreen
+7ad9c0aff69e SystemUI: Update QS customizer background color
+d77b76ce5284 NetworkTraffic: Prevent SystemUI crash on user change
+14520bb59427 New Crowdin updates (#1118)
+62563d3baaad Revert "colors_device_defaults: Add chroma to light surface highlight color"
+34f6df503ed9 SystemUI: Explicitly enable background tint optimization
+ec67209c451f Fix carrier text font flaw after theme changed
+e544fe0467f8 SystemUI: Fix SystemUI crash when removing status area
+   * 74820a6ef755 Revert "The display should not freezing during playing animation"
+frameworks/base
+c25633b4e7c7 SystemUI: Remove composite alpha from additional scrim on lockscreen
+7ad9c0aff69e SystemUI: Update QS customizer background color
+d77b76ce5284 NetworkTraffic: Prevent SystemUI crash on user change
+14520bb59427 New Crowdin updates (#1118)
+62563d3baaad Revert "colors_device_defaults: Add chroma to light surface highlight color"
+34f6df503ed9 SystemUI: Explicitly enable background tint optimization
+ec67209c451f Fix carrier text font flaw after theme changed
+e544fe0467f8 SystemUI: Fix SystemUI crash when removing status area
+74820a6ef755 Revert "The display should not freezing during playing animation"
+
+
+   *    * packages/apps/GameSpace
+packages/apps/GameSpace
+d6b81b2 New translations (#79)
+d6b81b2 New translations (#79)
+
+   * packages/apps/Launcher3
+eb809ada92 Launcher3: Hide keyboard when transitioning to home screen
+4f67497432 New Crowdin updates (#424)
+
+   * packages/apps/Launcher3
+eb809ada92 Launcher3: Hide keyboard when transitioning to home screen
+4f67497432 New Crowdin updates (#424)
+
+   * toolchain/pgo-profiles
+f50d67c Refreshed afdo profiles drop from ZP1A.240712.x
+
+   * toolchain/pgo-profiles
+f50d67c Refreshed afdo profiles drop from ZP1A.240712.x
+
+
+   *    * vendor/addons
+vendor/addons
+78008b46 addons: Convert overlay to rro
+78008b46 addons: Convert overlay to rro
+
+
+====================
+     07-25-2024
+====================
+
+   * android
+8efdf28 manifest: Track DocumentsUI
+
+   * android
+8efdf28 manifest: Track DocumentsUI
+
+   * packages/apps/DocumentsUI
+41b6eefb1 Add null check for ConfigStore in IconHelper
+
+   * packages/apps/DocumentsUI
+41b6eefb1 Add null check for ConfigStore in IconHelper
+
+
+   *    * packages/apps/SetupWizard
+packages/apps/SetupWizard
+1d833219 SimMissingActivity is a regular SUW activity
+5948809b Rework activity launching and result handling
+1d833219 SimMissingActivity is a regular SUW activity
+5948809b Rework activity launching and result handling
+635998c4 Refactor activity decorations and transitions
+635998c4 Refactor activity decorations and transitions
+
+
+   *    * packages/apps/TvSettings
+packages/apps/TvSettings
+6ce77889b Unbreak checking if A2DP is enabled
+17d9d2991 Fix the problem that "forget" does not return to the previous level UI, bugId: b/341040773
+6ce77889b Unbreak checking if A2DP is enabled
+17d9d2991 Fix the problem that "forget" does not return to the previous level UI, bugId: b/341040773
+
+
+   *    * vendor/addons
+vendor/addons
+16925c78 addons: Fix QQS and QS panel paddings for notch devices on A11 QS
+07bab743 addons: Increase QS tile vertical margin for A11 QS
+5ef37757 addons: Make more values black
+16925c78 addons: Fix QQS and QS panel paddings for notch devices on A11 QS
+07bab743 addons: Increase QS tile vertical margin for A11 QS
+5ef37757 addons: Make more values black
+1f782a80 Revert "addons: Improve color shades for AndroidBlackTheme"
+1f782a80 Revert "addons: Improve color shades for AndroidBlackTheme"
+
+
+====================
+     07-24-2024
+====================
+
+   * bionic
+1e50ab361 Use ifuncs for memset and memrchr.
+
+   * bionic
+1e50ab361 Use ifuncs for memset and memrchr.
+
+   * bootable/recovery
+619ee3f3 Merge 'lineage-21.0' into 14.0
+45b479f0 Merge pull request #6 from ionutsandroidbuilds/14.0
+
+   * bootable/recovery
+619ee3f3 Merge 'lineage-21.0' into 14.0
+45b479f0 Merge pull request #6 from ionutsandroidbuilds/14.0
+
+   * frameworks/base
+cedd4d08ffcb Fix pipe fds leak in copyInternalSpliceSocket
+
+   * frameworks/base
+cedd4d08ffcb Fix pipe fds leak in copyInternalSpliceSocket
+
+
+   *    * lineage-sdk
+lineage-sdk
+fd50e2d4 Add restart SystemUI in Advanced Reboot [2/2]
+c3112739 Add On-The-Go Mode to power menu constants
+6b1dde65 Set long press on back default to kill app
+c3674c83 Add more device key actions
+abb8e0ce NotificationLights: Allow overriding for all apps [1/2]
+661d3ecd Battery light: 100% charged level (3/3)
+35df85a5 Network traffic mode for status bar [1/3]
+6fe13f93 Revert "Network traffic with automatic units [2/2]"
+53f044d8 Revert "Network Traffic: Consider CLAT interfaces (IPv6)"
+e95dec4b Add toggle to allow advanced restart on secured lockscreen[1/2]
+53120666 Add settings for brightness slider improvements
+7006815f Bring our icon
+8917ef79 Fix settings pref switch for multi-user
+1852a2f5 Properly set default value for switch pref
+cd763539 Allow value to hide the clock
+27f76a7c Allow value 3 for status bar quick pull down
+560734d5 Do not prevent boot on database downgrade
+4cc86f3f Remove setting loading for FORCE_SHOW_NAVBAR
+c1a68016 Try loading default setting value for switch
+e4725d2a Set summary automatically if required
+a8764bc6 Enable advanced reboot by default
+56e3d28d Replace los versioning
+54550544 Kill trust interface hint on first boot
+d30afdfe Disable by livedisplay by default
+fd50e2d4 Add restart SystemUI in Advanced Reboot [2/2]
+c3112739 Add On-The-Go Mode to power menu constants
+6b1dde65 Set long press on back default to kill app
+c3674c83 Add more device key actions
+abb8e0ce NotificationLights: Allow overriding for all apps [1/2]
+661d3ecd Battery light: 100% charged level (3/3)
+35df85a5 Network traffic mode for status bar [1/3]
+6fe13f93 Revert "Network traffic with automatic units [2/2]"
+53f044d8 Revert "Network Traffic: Consider CLAT interfaces (IPv6)"
+e95dec4b Add toggle to allow advanced restart on secured lockscreen[1/2]
+53120666 Add settings for brightness slider improvements
+7006815f Bring our icon
+8917ef79 Fix settings pref switch for multi-user
+1852a2f5 Properly set default value for switch pref
+cd763539 Allow value to hide the clock
+27f76a7c Allow value 3 for status bar quick pull down
+560734d5 Do not prevent boot on database downgrade
+4cc86f3f Remove setting loading for FORCE_SHOW_NAVBAR
+c1a68016 Try loading default setting value for switch
+e4725d2a Set summary automatically if required
+a8764bc6 Enable advanced reboot by default
+56e3d28d Replace los versioning
+54550544 Kill trust interface hint on first boot
+d30afdfe Disable by livedisplay by default
+650995e4 Ship as crDroid based on LOS
+650995e4 Ship as crDroid based on LOS
+
+
+   *    * vendor/lineage
+vendor/lineage
+78aee52e crdroid: Bump to version 10.6
+d681c088 common: Inherit pixel-fw when available
+a00adfa8 config: Optimize Launcher3 and Settings for speed
+0c2d015e crdroid: Remove Trebuchet packages
+75670ae1 crdroid: Switch to AOSPA's face unlock implementation
+7a264bfd crdroid: Remove packages moved to addons
+b529c9b4 crdroid: Build OmniStyle
+965b3378 crdroid: Build BatteryStatsViewer
+b184f923 crdroid: Build OmniJaws service
+40548be3 crdroid: Compile GameSpace
+10d28fe5 overlay: Update device configs global overrides
+d33f9500 envsetup: Disable ABI checks
+4e5e2bcc android: merge_dtbs: Respect miboard-id while merging
+9b449b61 overlay: Enable freeform/multiple windows feature by default
+4066ad95 crdroid: Disable phantom process monitoring as workaround
+797db863 crdroid: Enable ThinLTO cache
+e939c5fd crdroid: Update clone exemption list
+36debc13 crdroid: Add preinstalled package list to stop auto cloning
+96b3b0a3 device_config: Enable Cloned App
+fe1f9a66 overlay: Use google-sans for remaining font configs
+465bf34f overlay: Update clock plugin list
+9e64229f overlay: Allow telephony stack and components to receive un-sanitized ServiceState entries
+4dbf8c01 soong: Add CAMERA_NEEDS_CLIENT_INFO_LIB{_OPLUS}
+bb621b80 soong: Add support to set vendor tag with client package name
+be9f29e8 overlay: Enable app-cloning feature in Settings
+2077ac23 overlay: Settings: Show memory usage in app info
+603c7655 overlay: Set components from pixel device
+58474f9b overlay: Enable QR Code scanner on Lock Screen
+98064f71 crdroid: Inherit several Android Go configurations
+da9051bd crdroid: Speed profile services and wifi-service to reduce RAM and storage
+45ca90da overlay: Add tethering to location exemption
+7fb7b8ca overlay: Add SystemUI to location extra packages
+1b338196 overlay: Add OmniJaws to location extra packages
+48ebf815 overlay: Allow new SystemUI clocks
+30c85923 overlay: Offload WM shell to another thread
+461f399a common: Enable R8 optimizations for system_server and SystemUI
+dbc9800b crdroid: Minimize debug info
+4ae9c35e overlay: Update SettingsProvider defaults
+55f39fd9 config: Properly disable blur on app launch
+f82773af config: Cleanup and update common props from Pixel
+624e7ecf build: Override host metadata
+ef0f5bbb crdroid: Moved bootanimation to addons
+a5a2a113 crdroid: Clean up wallpaper overlay
+39cd13c9 common: Allow OTA downgrade regardless build type
+944ecc71 crdroid: Generate OTA json at build time
+a13eedb9 roomservice: get me some crDroid
+ac937199 charger: Switch from LineageOS Teal to crDroid Blue
+34e24546 apns: Update mobily APN for prepaid connection
+82e869a4 apns: Grameenphone uses APN 'gpinternet'
+de556952 Revert "overlay: Default to Seedvault backup transport"
+92d39a67 crdroid: Drop custom adb drawable
+a81eaf50 build: Ship as crDroid based on LOS
+40736d3d crdroid: changelog.sh: fail gracefully
+95330fb4 crdroid: Check if changelog file exists
+97754e71 crdroid: Add changelog script
+78aee52e crdroid: Bump to version 10.6
+d681c088 common: Inherit pixel-fw when available
+a00adfa8 config: Optimize Launcher3 and Settings for speed
+0c2d015e crdroid: Remove Trebuchet packages
+75670ae1 crdroid: Switch to AOSPA's face unlock implementation
+7a264bfd crdroid: Remove packages moved to addons
+b529c9b4 crdroid: Build OmniStyle
+965b3378 crdroid: Build BatteryStatsViewer
+b184f923 crdroid: Build OmniJaws service
+40548be3 crdroid: Compile GameSpace
+10d28fe5 overlay: Update device configs global overrides
+d33f9500 envsetup: Disable ABI checks
+4e5e2bcc android: merge_dtbs: Respect miboard-id while merging
+9b449b61 overlay: Enable freeform/multiple windows feature by default
+4066ad95 crdroid: Disable phantom process monitoring as workaround
+797db863 crdroid: Enable ThinLTO cache
+e939c5fd crdroid: Update clone exemption list
+36debc13 crdroid: Add preinstalled package list to stop auto cloning
+96b3b0a3 device_config: Enable Cloned App
+fe1f9a66 overlay: Use google-sans for remaining font configs
+465bf34f overlay: Update clock plugin list
+9e64229f overlay: Allow telephony stack and components to receive un-sanitized ServiceState entries
+4dbf8c01 soong: Add CAMERA_NEEDS_CLIENT_INFO_LIB{_OPLUS}
+bb621b80 soong: Add support to set vendor tag with client package name
+be9f29e8 overlay: Enable app-cloning feature in Settings
+2077ac23 overlay: Settings: Show memory usage in app info
+603c7655 overlay: Set components from pixel device
+58474f9b overlay: Enable QR Code scanner on Lock Screen
+98064f71 crdroid: Inherit several Android Go configurations
+da9051bd crdroid: Speed profile services and wifi-service to reduce RAM and storage
+45ca90da overlay: Add tethering to location exemption
+7fb7b8ca overlay: Add SystemUI to location extra packages
+1b338196 overlay: Add OmniJaws to location extra packages
+48ebf815 overlay: Allow new SystemUI clocks
+30c85923 overlay: Offload WM shell to another thread
+461f399a common: Enable R8 optimizations for system_server and SystemUI
+dbc9800b crdroid: Minimize debug info
+4ae9c35e overlay: Update SettingsProvider defaults
+55f39fd9 config: Properly disable blur on app launch
+f82773af config: Cleanup and update common props from Pixel
+624e7ecf build: Override host metadata
+ef0f5bbb crdroid: Moved bootanimation to addons
+a5a2a113 crdroid: Clean up wallpaper overlay
+39cd13c9 common: Allow OTA downgrade regardless build type
+944ecc71 crdroid: Generate OTA json at build time
+a13eedb9 roomservice: get me some crDroid
+ac937199 charger: Switch from LineageOS Teal to crDroid Blue
+34e24546 apns: Update mobily APN for prepaid connection
+82e869a4 apns: Grameenphone uses APN 'gpinternet'
+de556952 Revert "overlay: Default to Seedvault backup transport"
+92d39a67 crdroid: Drop custom adb drawable
+a81eaf50 build: Ship as crDroid based on LOS
+40736d3d crdroid: changelog.sh: fail gracefully
+95330fb4 crdroid: Check if changelog file exists
+97754e71 crdroid: Add changelog script
+8ba07c4c kernel: Deduplicate file paths in file_list.txt
+8ba07c4c kernel: Deduplicate file paths in file_list.txt
+
+
+====================
+     07-23-2024
+====================
+
+
+   *    * vendor/lineage
+vendor/lineage
+da4bb609 sensitive_pn: Add and modify netherland numbers
+279624b2 sensitive_pn: Update and simplify helplines for multiple countries.
+68870367 sensitive_pn: Add China's 12355 helpline
+1ce07cd7 sensitive_pn: Add numbers for Hong Kong, China
+bf0fbd30 apns: Remove unknown attributes and fix misspelled ones
+c3a46252 apns: Add a XML schema and check apns-conf.xml against it
+c871fc9a apns: Convert build rule to Soong
+da4bb609 sensitive_pn: Add and modify netherland numbers
+279624b2 sensitive_pn: Update and simplify helplines for multiple countries.
+68870367 sensitive_pn: Add China's 12355 helpline
+1ce07cd7 sensitive_pn: Add numbers for Hong Kong, China
+bf0fbd30 apns: Remove unknown attributes and fix misspelled ones
+c3a46252 apns: Add a XML schema and check apns-conf.xml against it
+c871fc9a apns: Convert build rule to Soong
+11faaafa apns: Remove support for CUSTOM_APNS_FILE
+11faaafa apns: Remove support for CUSTOM_APNS_FILE
+
+
+====================
+     07-22-2024
+====================
+
+   * frameworks/base
+53f6d28b2a0b fixup! Allow to suppress notifications sound/vibration if screen is ON [1/2]
+
+   * frameworks/base
+53f6d28b2a0b fixup! Allow to suppress notifications sound/vibration if screen is ON [1/2]
+
+   * 
+lineage-sdk
+   * 6f3fef1d sdk: Move spn schema to vendor/lineage
+lineage-sdk
+6f3fef1d sdk: Move spn schema to vendor/lineage
+
+
+   *    * toolchain/pgo-profiles
+toolchain/pgo-profiles
+5a5d0b5 Refreshed afdo profiles drop from ZP1A.240702.x
+5a5d0b5 Refreshed afdo profiles drop from ZP1A.240702.x
+
+   * 
+vendor/lineage
+   * cb619b5b github: Add CI for verifying sensitive_pn.xml
+b2d9167c spn: Move from sdk
+vendor/lineage
+cb619b5b github: Add CI for verifying sensitive_pn.xml
+b2d9167c spn: Move from sdk
