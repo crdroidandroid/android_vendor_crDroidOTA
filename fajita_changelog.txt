@@ -1,48 +1,56 @@
-crDroid 10.7
+crDroid 10.8
 _Kernel 4.9, retrofit dynamic partitions, release-keys signed_
 
-Changes since v10.6 (31 July) release:
-- August 2024 Android Security Bulletins (android-14.0.0_r55) merged from upstream AOSP & LineageOS.
+Changes since v10.7 (17 September) release:
+- September 2024 Android Security Bulletins (android-14.0.0_r67) merged from upstream AOSP & LineageOS.
 - Changes from upstream LineageOS:
   - Everything I'm sure. I have no idea what all, but they're always hard at work doing amazing stuff that benefits everyone.
-  - Updated AIDL-type lights HAL for Enchilada that actually works for notification LED again, woo! Turn the feature off & back on and change one of the settings at least once, probably.
-  - Updated device-specific tree & kernel sources as of, I dunno, mid/late August. OMX media playback changes, switch to QTI memtrack AIDL HAL, patch poweroffalarm.apk extract time so power off alarm (most pointless feature ever; plug your phone in overnight and use charging control to limit charging percentage) should be more reliable, etc.
-  - Fixed VPN data leak issue.
+  - Updated device-specific tree & kernel sources from lineage-21 branch as of early October. Commonized camera HAL (from enchilada), updated extract scripts, updated enchilada Lights HAL fixup.
 - Upstream changes from crDroid ROM sources:
   - Updated translations.
-  - Updated PixelPropsUtils spoofing FP & implementation. Now correctly disables framework spoofing entirely (which probably then falls back to ih8sn props spoofing that I'm also building inline, but at least that's actually using this actual device's FPs even if it's an old print -- "It's an older code, sir, but it checks out").
-  - New 3-finger-swipe gesture implementation (not just screenshots). You can add games/apps to GameSpace to disable 3-finger-swipe implementation on per-app basis.
-  - Bugfixes for locked/hidden apps (requires authentication BEFORE switching to show the locked app from recents now, rather than showing off all your hentai "dating sim" game screen ;) ).
+  - Updated PixelPropsUtils spoofing FP, removed the leaked hw attestation keybox -- back to basic integrity. Disable PPU spoofing in crDroid Settings and use PIF + TS modules via Magisk or KSU if you have your own keybox.
+  - Bugfixes for lots of potential memory leaks & shade/QS/theme/statusbar stuff. I dunno, the team is always busy poking at stuff to make it better.
+  - Updated DocumentsUI theme.
+  - Improvements to 3-finger-swipe implementation.
+  - Private DNS improvements.
+  - Fix for At A Glance widget freezing.
+  - Updated PocketMode implementation.
 - Device-specific things I can't stop screwing around with:
-  - Memory handling tuning, hopefully it remains "not going to kill things in the background immediately". Why I have to keep fussing with this I don't know.
-  - Kernel compiled with clang 19.0.1 (new default "clang-latest" in crDroid, required one or two formatting commits to avoid new warning/error checks).
-  - Wifi tuning (re-allowing "firmware roaming when device is idle", which was the default behavior before Android 14; seems to be failing to update AGPS location data frequently enough in 10.7).
-  - Updated DeviceAsWebcam implementation.
-  - Updated dummy QTI perfd implementation (patchset from LineageOS gerrit that wasn't merged as of mid-August last I checked that handles a few more function calls to make apps think they're working right).
+  - Drop USB headset mic gain boost (don't want to hear myself echoing in my own ear *almost but not quite immediately* kthx).
+  - Update GPS configs & drop some logspam.
+  - Update DeviceAsWebcam & Quick Tap implementations (might even get ADB back earlier during boot process).
+  - Fixup for FaceAuth things; should have fewer problems with camera hardware not being ready on lock screen (it'll still happen eventually and I'm sorely tempted to just remove the feature, but it shouldn't break as quickly as before).
+  - Explicitly disable support for Protected Management Frames in wpa_supplicant; fixes crappy 5GHz wifi speeds.
+  - Disabled the deep sleep/qpower powersave mode for wifi; improves throughput another ~20-30% (although probably drains battery faster) -- back to the same as in upstream LineageOS.
+  - Updated CarrierConfig overlay to not be as ancient (based on xiaomi/sm8150, with some updates to force-allow VoLTE/VoWiFi for more carriers and allow toggling Enhanced LTE for HD voice).
+  - Fixed up & enabled USB-OTG and 900mA "Force USB 2.0 Fastcharge" mode toggles in DeviceExtras. See Release Notes below.
+  - Update GPS configs AGAIN so that it doesn't just stop updating location entirely while in lower power mode (thereby killing your workout tracking when out for a jog with the phone in your pocket).
+  - AdrenoBoost in DeviceExtras defaults to 0 again. It's less janky that way still, but you might have better luck gaming if you crank it up to 3. Values of 1 or 2 don't really help anyone but are still there for the sake of completion.
 - "Misc tweaks & bugfixes." :D
 - I'm sure there's more. I'm a month behind and real life is too crazy. It's already out of date, but I'm pushing it anyway. It's better than it was. It'll get better than it is now, until it gets worse!
 
 Release Notes:
 - If you get a "verification failed" error when trying to OTA update, it means you're coming from an older version that was using test-keys or older signing keys. You need to update from recovery in that case (does not require wiping data; does require a computer & working USB cable & platform-tools).
 - TL;DR make sure you do the following setup steps or don't bother submitting bug reports:
-  - Settings > Display > turn OFF "Prevent accidental wake-up" (use the Pocket Mode in crDroid Settings > Misc instead).
   - Settings > System > Gestures > turn OFF "Lift to check phone" (use crDroid Settings > User Interface > Ambient Display settings instead).
   - Settings > Apps > Default Apps > tap the Gear (settings) icon next to crDroid Home (the default launcher) to open "Home settings" > Recents > turn OFF the "Shake phone to clear all tasks" toggle switch (it causes terrible SystemUI slowdowns & crashes after a couple hours).
-  - Go to https://gitlab.com/crdroidandroid/android_vendor_oneplus_apps/-/tree/14.0/sdm845/vendor/priv-app?ref_type=heads and download the APKs for OnePlusCamera and OnePlusGallery, then install them (it will ask you if you want to update the existing apps; choose yes each time).
-  - [Optional] Go get this thing https://mega.nz/file/UHpDQS4L#FGKPas4_OM2Z5b5iE1R0zNZKUEa069uPJ7NAiluViXI and put it into Internal Storage > Android > obb > com.oneplus.gallery since it doesn't download correctly in-app due to sepolicy things I can't be bothered with in Android 14 (or don't if you don't care about OP Gallery being able to do image classification).
+  - [Optional if you use Oneplus Camera/Gallery] Go to https://gitlab.com/crdroidandroid/android_vendor_oneplus_apps/-/tree/14.0/sdm845/vendor/priv-app?ref_type=heads and download the APKs for OnePlusCamera and OnePlusGallery, then install them (it will ask you if you want to update the existing apps; choose yes each time).
+  - [Optional if you use Oneplus Camera/Gallery] Go get this thing https://mega.nz/file/UHpDQS4L#FGKPas4_OM2Z5b5iE1R0zNZKUEa069uPJ7NAiluViXI and put it into Internal Storage > Android > obb > com.oneplus.gallery since it doesn't download correctly in-app due to sepolicy things I can't be bothered with in Android 14 (or don't if you don't care about OP Gallery being able to do image classification).
 - To use "Device As Webcam" feature, connect USB to a computer, and in the USB mode notification, instead of "charging this device" or "File Transfer/Android Auto", choose the new "Webcam" option from the list. Ta da!
+- You should probably just leave USB-OTG mode toggle on and let the USB Gadget HAL worry about it -- but it can be useful if USB port configuration gets stuck in an invalid state after using certain peripherals, or the port connector is failing and has intermittent connection problems; unplug & turn toggle off & back on to fix.
+- Force USB 2.0 Fastcharge mode toggle will let you increase requested charging current *when connected to a computer or hub* to 900mA, up from 500. It also breaks DASH charging and possibly other Qualcomm quick charging methods when enabled, so don't forget to turn it off again afterwards for better compatibility with most charging bricks.
 
 Known issues:
 _Look, none of this is really deal-breaking for most people. Things work well as a daily driver, all major systems work as they should as far as I can tell (or at least as well as in upstream LineageOS), battery life tends to be average-to-great depending on usage, etc._
 - Upstream crDroid/LineageOS/Qualcomm/Google issues:
   - SAFETYNET/PLAY INTEGRITY MAY NOT PASS. It's a cat & mouse game, and they can change the rules on their end at any time, and have been doing so frequently. This is not considered a bug. The ROM devs try this or that strategy, and it takes me forever to get updates releases pushed, and then it's out of date by the time you get it. Sorry. Hate Google, not me. Change to a better bank & use the website instead of a crappy "app", and complain loudly while you threaten to take your money somewhere else that doesn't make broken apps requiring Google's spyware in order to function.
   - As of Android 13, we're using the source-built AOSP implementations for bluetooth & NFC, since it's not possible to continue with the old prebuilt QTI vendor blobs & implementation. Some things don't work as well; nothing I can do about it.
-  - The "QR Code Scanner" lockscreen shortcut option does not get enabled for use until you add the "QR Scanner" QS tile & use it.
+  - The "QR Code Scanner" lockscreen shortcut option does not get enabled for use until you add the "QR Scanner" QS tile & use it. (not sure if this is still true?)
   - Wallpapers & Styles can cause a SystemUI crash if you swap clock faces & colors too rapidly, too many times before settling on something. It's a stupid/funny reason, I hope devs can figure out what to DO about it. (not sure if this is still true?)
   - Using "Hold handle to search" feature in Gesture Navigation settings is basically broken.
   - If you use Google One/Google Drive for automatic system backups, then Seedvault is gonna complain at you after every reboot about not being able to run a backup. Connect USB to computer & open a terminal (or install a terminal emulator like termux from f-droid) and run the following command: `pm disable-user --user 0 com.stevesoltys.seedvault` to disable Seedvault, since apparently it doesn't know when it's not wanted.
   - Some apps/games cannot connect to their IPv4 servers on mobile data with an IPv6-only carrier SIM (many games on MetroPCS in the US, BGMI and others on Reliance/JIO in India, etc). This seems to be common to LineageOS-based custom ROMs on this device. OxygenOS used Google's carrier info/config stack and still works nearly 3 years later, and current Pixel-based ROMs that use Google's carrier config stack seem to work fine. I have no idea how to fix this, definitely above my pay grade.
-  - Lockscreen layout for Face Unlock instructions is overlapped by UDFPS circle in crDroid 10.7. Hopefully has been fixed in more recent ROM sources since issue was reported, but let's get one month's update out at a time, yeah?
+  - Lockscreen layout for Face Unlock instructions is overlapped by UDFPS circle in crDroid 10.7. Hopefully has been fixed in more recent ROM sources since issue was reported, but I kind of don't care because in my opinion nobody should use this feature and I will not spend time trying to troubleshoot it. If I get complaints, I'll just remove the feature entirely, because bad security (leading to false sense of security) is arguably worse than no security.
 - crDroid OP6/6T-specific issues:
   - Go do the setup things in the Release Notes section; really. Or else I will ignore your bug reports. So there.
   - Some USB gamepads seem to no longer work? Dunno if this is due to USB Gadget implementation for DeviceAsWebcam support or what. One user reported that their Backbone USB-C no longer works in 10.7, but I can't really tell what's up from the logs. My 8BitDo gamepads still work fine while directly attached via USB-C and connecting via Bluetooth, so I know it's not just broken globally. Might have to set/change USB privacy mode in "Trust" or set a different default USB mode in Developer Options or just unplug & reconnect a few times?
