@@ -3,23 +3,37 @@ Build type: BETA
 Device: Mi 11 Lite 4G (courbet,courbetin)
 Device maintainer: Melo Longo (melo159)
 
-===== 11 November 2024 =====
+===== 12 November 2024 =====
 -HOTFIX release
--Fixed infrared
--Fixed fingerprint indicator position
--Synced CrDroid sources with latest LineageOS sources.
+-Fixed double tap to wake!
 -More info below.
+
+====================
+     11-12-2024
+====================
+
+   * device/xiaomi/courbet
+d0343f0 sweet: Set double_tap mode via powerhint
+fbfb595 courbet: switch to AIDL Xiaomi IR service
+e16fcf5 courbet: overlay: adjust fingerprint indicator position
+6d7f966 courbet: switch back to HIDL fingerprint
+941ddb4 courbet: bring back fingerprint sensor props
+0e8d189 courbet: add build fingerprint to prop overrides
+
+   * kernel/xiaomi/sm6150
+c9785dc1b106 arch: arm64: boot: dts: qcom: xiaomi: Adapt IR SPI binding for upstream driver
+5ead80a73962 media: rc: ir-spi: enlarge transmit buffer
+e8ec9d3e4e54 media: rc: IR signal for Panasonic air conditioner too long
+135ad8a4ac12 media: rc: ir-spi: fix duty cycle
+
+   * vendor/xiaomi/courbet
+a1fa999 courbet: Move to Xiaomi IR AIDL
 
 ====================
      11-11-2024
 ====================
 
    * device/xiaomi/courbet
-fbfb595 courbet: switch to AIDL Xiaomi IR service
-e16fcf5 courbet: overlay: adjust fingerprint indicator position
-6d7f966 courbet: switch back to HIDL fingerprint
-941ddb4 courbet: bring back fingerprint sensor props
-0e8d189 courbet: add build fingerprint to prop overrides
 1cf839b courbet: don't explicity include updatable_apex.mk
 bf5f847 courbet: Add haptic, thermal and refresh rate settings
 66b6aea courbet: add crdroid.dependencies
@@ -691,11 +705,12 @@ d7d8240de0b7 base: Add rounded corners to activity open/close animation
 c95bcdf24d30 base: Pause apps feature
 4582d8a44979 base: Add stub files
 
+   * hardware/xiaomi
+0587143 Revert "aidl: fingerprint: Initial stub service"
+22fe86a Revert "aidl: fingerprint: Migrate Xiaomi implementation to AIDL"
+79b18c5 Revert "aidl: fingerprint: Fix a race condition"
+
    * kernel/xiaomi/sm6150
-c9785dc1b106 arch: arm64: boot: dts: qcom: xiaomi: Adapt IR SPI binding for upstream driver
-5ead80a73962 media: rc: ir-spi: enlarge transmit buffer
-e8ec9d3e4e54 media: rc: IR signal for Panasonic air conditioner too long
-135ad8a4ac12 media: rc: ir-spi: fix duty cycle
 a7f9693ae6b9 Revert "media: rc: Import IR driver changes from MI 11"
 
    * packages/apps/Dialer
@@ -712,24 +727,23 @@ b2c492ca58 car_product: Guard APN copy with LINEAGE_BUILD
 58fc452 extract_utils: declare llvm-objdump path in tools
 2f9fa38 extract_utils: kargs -> kwargs
 5bc16f0 extract_utils: solve mypy issues
+2e5bd84 extract_utils: showcase blob fixup for multiple files
 
    * vendor/qcom/opensource/usb
 f42f05d Revert "usb: Fix USB HAL crash due to PortRole tag mismatch"
-
-   * vendor/xiaomi/courbet
-a1fa999 courbet: Move to Xiaomi IR AIDL
 
 ====================
      11-10-2024
 ====================
 
-   * hardware/xiaomi
-0587143 Revert "aidl: fingerprint: Initial stub service"
-22fe86a Revert "aidl: fingerprint: Migrate Xiaomi implementation to AIDL"
-79b18c5 Revert "aidl: fingerprint: Fix a race condition"
+   * frameworks/base
+92db5dfdc919 fixup! Implement firewall status bar indicator
+e33c027f9507 KeyguardUpdateMonitor: Add missing getFaceAuthInteractor null check
 
    * packages/apps/ExactCalculator
 b10a222 ExactCalculator: Setup for edge to edge support
+f9f0b82 ExactCalculator: Bump SDK version to 35
+33358c3 ExactCalculator: Bump to latest stable AGP, Gradle and dependencies
 
    * packages/apps/Launcher3
 fddf06cf54 New Crowdin updates (#451)
@@ -738,8 +752,18 @@ fddf06cf54 New Crowdin updates (#451)
 4769b1e New Crowdin updates (#1192)
 
    * tools/extract-utils
-2e5bd84 extract_utils: showcase blob fixup for multiple files
 335a0af extract_utils: add script for converting to python dump structure
+a534bbb extract_utils: simplify partition chunks sorting algorithm
+5a39801 extract_utils: allow generation of apns along carrier settings
+7ad9e20 extract_utils: pass ctx to write_product_copy_files
+1e01d0f extract_utils: add root-relative vendor sub-dir path to ProductPackagesCtx
+38d9d41 extract_utils: add comments to the paths in ProductPackagesCtx
+2c50493 extract_utils: allow any File iterable in makefile functions
+afe947e extract_utils: pass packages context to pre/post mk generation fns
+063cdd8 extract_utils: add args catch-all to pre / post mk generation fns
+032cc59 extract_utils: expose pre / post mk generation fns
+e1325b0 extract_utils: do not pass around own file list
+c0499ac extract_utils: generate soong namespace when imports are missing
 
 ====================
      11-09-2024
@@ -750,10 +774,6 @@ f3b50d0 Merge 'lineage-22.0' into 15.0
 
    * build/make
 e84657eb58 Merge 'lineage-22.0' into 15.0
-
-   * frameworks/base
-92db5dfdc919 fixup! Implement firewall status bar indicator
-e33c027f9507 KeyguardUpdateMonitor: Add missing getFaceAuthInteractor null check
 
    * frameworks/native
 049762691f Native: ProducerListener: Import ON_BUFFER_DETACHED Changes
@@ -800,12 +820,9 @@ fa380c87 Do not prevent boot on database downgrade
    * packages/apps/DocumentsUI
 76c544638 Merge 'lineage-22.0' into 15.0
 
-   * packages/apps/ExactCalculator
-f9f0b82 ExactCalculator: Bump SDK version to 35
-33358c3 ExactCalculator: Bump to latest stable AGP, Gradle and dependencies
-
    * packages/apps/Launcher3
 b1693f9c28 Launcher3: Add back spacer between overview buttons
+83302b38b9 New Crowdin updates (#450)
 
    * packages/apps/LineageParts
 a589fc2 Disable unused components
@@ -984,6 +1001,7 @@ f1cb627d76b SlicesDatabaseHelper: Use Build.VERSION.INCREMENTAL
 
    * packages/apps/crDroidSettings
 fefb3fd crdroid: Move Network Traffic settings
+ec4875f New Crowdin updates (#1190)
 
    * packages/modules/Bluetooth
 659e7a1eaf Merge 'lineage-22.0' into 15.0
@@ -1010,19 +1028,6 @@ ba1b81dec init.rc: Disable native stats collection service
 
    * system/sepolicy
 ec8abec39 Merge 'lineage-22.0' into 15.0
-
-   * tools/extract-utils
-a534bbb extract_utils: simplify partition chunks sorting algorithm
-5a39801 extract_utils: allow generation of apns along carrier settings
-7ad9e20 extract_utils: pass ctx to write_product_copy_files
-1e01d0f extract_utils: add root-relative vendor sub-dir path to ProductPackagesCtx
-38d9d41 extract_utils: add comments to the paths in ProductPackagesCtx
-2c50493 extract_utils: allow any File iterable in makefile functions
-afe947e extract_utils: pass packages context to pre/post mk generation fns
-063cdd8 extract_utils: add args catch-all to pre / post mk generation fns
-032cc59 extract_utils: expose pre / post mk generation fns
-e1325b0 extract_utils: do not pass around own file list
-c0499ac extract_utils: generate soong namespace when imports are missing
 
    * vendor/lineage
 5021adda overlay: update configs for AiAi
@@ -1076,30 +1081,11 @@ b582c2a3 roomservice: get me some crDroid
      11-08-2024
 ====================
 
-   * packages/apps/Launcher3
-83302b38b9 New Crowdin updates (#450)
-
-   * packages/apps/Recorder
-824dc49 Recorder: grant read permissions for apps requesting recordings
-
-   * packages/apps/crDroidSettings
-ec4875f New Crowdin updates (#1190)
-
-   * tools/extract-utils
-c16941b fixup! extract_utils: ignore regeneration when regenerate makefiles is set
-
-====================
-     11-07-2024
-====================
-
    * android
 2af1fc8 manifest: November 2024 Security Update
 
    * build/make
 cbbde02c21 Merge tag 'android-15.0.0_r5' into staging/lineage-22.0_merge-android-15.0.0_r5
-
-   * build/release
-0d37102 AP3A: Set SPL to 2024-11-05
 
    * frameworks/base
 12f2819dc0b8 Merge tag 'android-15.0.0_r5' into staging/lineage-22.0_merge-android-15.0.0_r5
@@ -1125,6 +1111,9 @@ dbdd700 Merge tag 'android-15.0.0_r5' into staging/lineage-22.0_merge-android-15
    * lineage/scripts
 cf89200 pixel: Adapt to new build prop override scheme
 
+   * packages/apps/Recorder
+824dc49 Recorder: grant read permissions for apps requesting recordings
+
    * packages/apps/Settings
 86aae56098b Merge tag 'android-15.0.0_r5' into staging/lineage-22.0_merge-android-15.0.0_r5
 400176ffa32 Add a mobile data toggle for setup
@@ -1138,20 +1127,34 @@ cf89200 pixel: Adapt to new build prop override scheme
    * packages/providers/MediaProvider
 3bb894798 Merge tag 'android-15.0.0_r5' into staging/lineage-22.0_merge-android-15.0.0_r5
 
-   * prebuilts/clang/host/linux-x86/clang-latest
-6f76406 clang 19.0.1 (based on r536225) from build 12602325
-
    * system/core
 3f2d09e4b Merge tag 'android-15.0.0_r5' into staging/lineage-22.0_merge-android-15.0.0_r5
 
    * tools/extract-utils
+c16941b fixup! extract_utils: ignore regeneration when regenerate makefiles is set
 1ba5168 extract_utils: Use vendorcompat only for blobs on odm and vendor
-3a62f8b extract_utils: Fixup unversioned protobuf dependencies
 
    * vendor/lineage
 2e33440b release: Sync Pixel 9 SVN/kernel manually for Nov ASB
 eb804592 release: Sync Pixel 6-8a SVN manually for Nov ASB
 28166977 vars: November 2024 Security update
+
+====================
+     11-07-2024
+====================
+
+   * build/release
+0d37102 AP3A: Set SPL to 2024-11-05
+
+   * prebuilts/clang/host/linux-x86/clang-latest
+6f76406 clang 19.0.1 (based on r536225) from build 12602325
+
+   * tools/extract-utils
+3a62f8b extract_utils: Fixup unversioned protobuf dependencies
+8732375 extract_utils: find deps separately for 32-bit and 64-bit
+a96e5b7 extract_utils: ignore regeneration when regenerate makefiles is set
+2e05b3c extract_utils: silently ignore regeneration when section is set
+4721d59 extract_utils: extend `lib_fixups` in the template
 
 ====================
      11-06-2024
@@ -1185,10 +1188,6 @@ cbeb8fc Recorder: Release the AudioRecord properly
 7bba682 Recorder: Use default audio source in GoodQualityRecorder
 
    * tools/extract-utils
-8732375 extract_utils: find deps separately for 32-bit and 64-bit
-a96e5b7 extract_utils: ignore regeneration when regenerate makefiles is set
-2e05b3c extract_utils: silently ignore regeneration when section is set
-4721d59 extract_utils: extend `lib_fixups` in the template
 c0902d9 extract_utils: enable ELF checks by default
 2616b80 extract_utils: add support for factory proprietary file
 79a9d9d extract_utils: add extract function for copying pixel fimware
@@ -1210,6 +1209,9 @@ b0974f4 extract_utils: enable f-string-missing-placeholders (F541) ruff check
      11-05-2024
 ====================
 
+   * device/qcom/sepolicy-legacy-um
+a3126b0f common: Switch to AIDL USB HALs
+
    * frameworks/base
 572abdbf092a fixup! ThemeOverlayController: Ensure we always disable the neutral overlay
 2ee954ebc37a Revert "PackageManager: Allow build-time disabling of components"
@@ -1220,8 +1222,20 @@ b0974f4 extract_utils: enable f-string-missing-placeholders (F541) ruff check
    * lineage-sdk
 303a1082 Remove 'build-time disabling of components' resources
 
+   * packages/apps/Dialer
+0ae98b6e5 New translations (#131)
+
+   * packages/apps/GameSpace
+0f17631 New translations (#95)
+
+   * packages/apps/Launcher3
+a440818df4 New Crowdin updates (#448)
+
    * packages/apps/Settings
 4b5fe3fc359 Settings: support black theme for dark mode [2/4]
+
+   * packages/apps/crDroidSettings
+908d395 New Crowdin updates (#1188)
 
    * packages/inputmethods/LatinIME
 c85f34f5b fixup! 15: subtract width of screen cutouts when calculating keyboard width
@@ -1245,8 +1259,9 @@ e96bc80d config: Build the textclassifier models
      11-04-2024
 ====================
 
-   * device/qcom/sepolicy-legacy-um
-a3126b0f common: Switch to AIDL USB HALs
+   * frameworks/base
+8bd951c79fd7 ThemeOverlayController: Ensure we always disable the neutral overlay
+24d0a54dc547 ThemeOverlayController: Don't enable neutral overlay when we use dark bg
 
    * hardware/google/gchips
 39efe73 Convert libVendorVideoApi to soong
@@ -1254,20 +1269,13 @@ a3126b0f common: Switch to AIDL USB HALs
    * hardware/qcom-caf/sdm660/media
 82b8867099 Merge tag 'LA.UM.12.2.1.r1-04000-sdm660.0' into staging/lineage-21.0_merge-LA.UM.12.2.1.r1-04000-sdm660.0
 
-   * packages/apps/Dialer
-0ae98b6e5 New translations (#131)
-
-   * packages/apps/GameSpace
-0f17631 New translations (#95)
-
-   * packages/apps/Launcher3
-a440818df4 New Crowdin updates (#448)
-
-   * packages/apps/crDroidSettings
-908d395 New Crowdin updates (#1188)
-
    * tools/extract-utils
 cd1d802 extract_utils: Make carriersettings package opt-outable
+d6322a1 extract_utils: add type to default lib_fixups
+0c0462b extract_utils: create empty dirs for not found partitions
+8fffa19 extract_utils: refactor extract functions handling
+93ee352 extract_utils: split up alternate paths handling
+0722dbc extract_utils: add and use proprietary file type
 
 ====================
      11-03-2024
@@ -1275,44 +1283,13 @@ cd1d802 extract_utils: Make carriersettings package opt-outable
 
    * android
 bb6ce4a Merge 'lineage-22.0' into 15.0
+d8074fa manifest: Track our kotlinc/kotlinx.{coroutines,serialization} forks
 
    * build/soong
 9d74a5add Merge 'lineage-22.0' into 15.0
-
-   * frameworks/base
-8bd951c79fd7 ThemeOverlayController: Ensure we always disable the neutral overlay
-24d0a54dc547 ThemeOverlayController: Don't enable neutral overlay when we use dark bg
-
-   * lineage/scripts
-6ca3c81 reuse_helper: Handle proguard.flags, aidl and fix bp
-
-   * packages/apps/ExactCalculator
-760b63b ExactCalculator: Switch to dedicated layout for license activity
-
-   * tools/extract-utils
-d6322a1 extract_utils: add type to default lib_fixups
-0c0462b extract_utils: create empty dirs for not found partitions
-8fffa19 extract_utils: refactor extract functions handling
-93ee352 extract_utils: split up alternate paths handling
-0722dbc extract_utils: add and use proprietary file type
-91caba4 extract_utils: raise clearer error when file does not exist
-
-====================
-     11-02-2024
-====================
-
-   * android
-d8074fa manifest: Track our kotlinc/kotlinx.{coroutines,serialization} forks
-4567cf9 Revert "manifest: Remove vendor/crowdin"
-
-   * build/make
-6e20e6defc Merge 'lineage-22.0' into 15.0
-
-   * build/soong
 681549f2a Add vendor/lineage to kotlin plugins neverallow
 41029755d Add support for kotlin plugins
 ad0784406 Add documentation for select statements
-cc855c894 Merge 'lineage-22.0' into 15.0
 
    * external/kotlinc
 c3434db Add a target for kotlin-serialize-compiler
@@ -1324,9 +1301,6 @@ c3434db Add a target for kotlin-serialize-compiler
 1a3673c0d3 Fix MediaPlayer raw pointer usage
 220e269a25 Fix render thread early termination
 
-   * frameworks/base
-302a9567b0d7 SystemUI: support black theme for dark mode [1/4]
-
    * frameworks/opt/telephony
 f0ed26038a Ignore null action in ImsResolver.
 
@@ -1335,68 +1309,41 @@ f0ed26038a Ignore null action in ImsResolver.
 cd36464e sdk: Remove CleanSpec.mk
 82a2cae2 sdk: Remove most public sdk parts
 
+   * lineage/scripts
+6ca3c81 reuse_helper: Handle proguard.flags, aidl and fix bp
+
    * packages/apps/Aperture
 950a507 Aperture: Update CameraX to 1.5.0-alpha03
 a87bc50 Aperture: Use AOSP material & lifecycle-common
 084bbbf Aperture: Update to SDK 35
 b674847 Aperture: Update AGP to 8.7.2
-390f486 Automatic translation import
-
-   * packages/apps/Dialer
-4027c6501 New translations (#129)
 
    * packages/apps/ExactCalculator
+760b63b ExactCalculator: Switch to dedicated layout for license activity
 0a67a77 ExactCalculator: Add missing newlines to all files
 5d95627 ExactCalculator: Set default_applicable_licenses
 8f2d4e7 ExactCalculator: Make it REUSE compatible
 1c907f8 ExactCalculator: Remove CleanSpec.mk
-9602469 ExactCalculator: Use background color for history frame
 
    * packages/apps/FMRadio
 be7524a FMRadio: Remove unused string
-ee47f7a Automatic translation import
-3a33db4 FMRadio: Convert to Android.bp
-
-   * packages/apps/GameSpace
-080e7ad New Crowdin updates (#93)
 
    * packages/apps/Glimpse
 42ab488 Glimpse: Use AOSP material
 cbb3002 Glimpse: Update to SDK 35
 4254672 Glimpse: Update AGP to 8.7.2
 
-   * packages/apps/Jelly
-215e423 Jelly: Don't change immersive mode on focus change
-4644d2b Jelly: Refactor immersive mode
-db352a5 Jelly: Use AOSP appcompat and material
-c64b4dc Jelly: Update to SDK 35
-ef8f4e6 Jelly: Update AGP to 8.7.2
-
-   * packages/apps/Launcher3
-15d35c544e New Crowdin updates (#447)
-
    * packages/apps/Recorder
 1ab7444 Recorder: Use AOSP material
 6cf972f Recorder: Update to SDK 35
 0fe0b82 Recorder: Update AGP to 8.7.2
-73272e7 Automatic translation import
-
-   * packages/apps/crDroidSettings
-9d14caf crdroid: Update setting limits for pulse solid renderer
-533693d New Crowdin updates (#1186)
 
    * packages/modules/Wifi
 78b76b97ab Ignore null action in WifiServiceImpl.
 
-   * vendor/crowdin
-6675f30 Automatic translation import
-d19d673 Remove no longer used translations
+   * tools/extract-utils
+91caba4 extract_utils: raise clearer error when file does not exist
 
    * vendor/lineage
 0cb50ea0 Add `androidx.compose.compiler_compiler-hosted-plugin` define
-d6777fa8 config: Changes for libfmjni bp conversion
-369fe678 common: Build AvatarPicker
-
-   * vendor/qcom/opensource/commonsys/fm
-9300bb1 Automatic translation import
 
