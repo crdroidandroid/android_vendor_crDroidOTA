@@ -1,19 +1,20 @@
-crDroid 10.11
+crDroid 10.12
 _Kernel 4.9, retrofit dynamic partitions, release-keys signed_
 
-Changes since v10.10 (02 December) release:
-- December 2024 Android Security Bulletins (android-14.0.0_r67) merged from upstream AOSP & LineageOS.
+Changes since v10.11 (30 December) release:
+- January 2025 Android Security Bulletins (android-14.0.0_r67) merged from upstream AOSP & LineageOS.
 - Changes from upstream LineageOS:
   - I have no idea what all, but they're always hard at work doing amazing stuff that benefits everyone.
   - Latest dummy libqti-perfd-client patches finally merged!
-  - Updated device-specific tree & kernel sources from lineage-21 branch as of end of December. Merged some stuff from general qcom_sdm845 kernel, updated proprietary blobs extract related stuff, nothing huge. Work has shifted to Android 15 bringup.
+  - Updated device-specific tree & kernel sources from lineage-21 branch as of end of January (don't think anything changed). Work has shifted to Android 15.
 - Upstream changes from crDroid ROM sources:
   - Updated translations.
-  - Finally get adjustable statusbar start/end padding adjustment back! And vertical offset as well, so if you hate the perfection that I've already achieved, you can make it worse if you want. ;)
-  - More fixes & stuff backported from Android 15 I think. I dunno, no huge changes that I noticed.
+  - Probably updated spoofing things, I dunno. Again; all the work has shifted to Android 15.
 - Device-specific things I can't stop screwing around with:
-  - FIXED UPDATED WPA3-COMPATIBLE KERNEL WIFI DRIVER POWER CONSUMPTION! Needed updated "use power-efficient workingqueue" commits for the newer-style driver. Thanks to DennySPb having figured that out 2 years ago in SyberiaOS 12.1 kernel that included newer style qcacld-3.0 driver and appropriate PEWQ commits.
-  - Dunno, I'm sure there was a lot of stuff tested out & tweaked, but I honestly do not remember. Life is busy.
+  - Actual fix (well, workaround) for IPv4-over-IPv6-only carrier on mobile data! Qualcomm proprietary driver blob disables 464XLAT/CLAT in userspace via a persist prop at some point during boot, because they're supposed to do it in the modem firmware. Except on custom ROMs, it... doesn't. So, for now, add init script entry to watch for that prop getting set to disabled, and enable it immediately. Ta-da, IPv4 apps & websites work again with IPv6-only SIMs like Metro by T-Mobile and Reliance Jio.
+  - Slightly tightened-up RSSI thresholds for when networks become unusable so it stops trying to hang onto connections that aren't going to do anything useful.
+  - Re-disabled GCMP-256 cipher support from wifi driver (which we don't have NEON hardware acceleration for), since WPA3-SAE handshaking seems to be working with WPA3-capable base stations using the older CCMP-128 cipher (that we DO have acceleration for). Should hopefully save some battery.
+  - Added some configs for TWT (target wake time) since that was added to AOSP Wifi API but never configured in our device tree and kernel defaults seem to be not amazing. Specifically, disable the capability so AOSP wifi stack doesn't fuss with it (which it seems to want to do now).
 - "Misc bugfixes and improvements."
 - Added new bugs so I'll have something to fix later. :D
 
@@ -52,40 +53,19 @@ Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
 
 ====================
-     12-23-2024
+     02-01-2025
 ====================
 
-   * vendor/certification
-6a68afa certification: Update to latest lynx_beta (#1)
+   * packages/apps/CarrierConfig
+48ab4bc Update carrier configs from aosp/main
 
 ====================
-     12-22-2024
+     01-31-2025
 ====================
 
-   * frameworks/base
-7b15838323a9 New Crowdin updates (#1194)
+   * packages/apps/CarrierConfig
+08585e1 Update carrier configs from aosp/android-15.0.0_r10
 
-   * packages/apps/GameSpace
-71d254b New Crowdin updates (#100)
-
-   * packages/apps/Launcher3
-59ba840166 New translations (#466)
-
-   * packages/apps/crDroidSettings
-763622b New Crowdin updates (#1209)
-
-====================
-     12-21-2024
-====================
-
-   * external/chromium-webview/prebuilt/arm
-2b6b7b9 Update Chromium Webview arm prebuilt to 131.0.6778.200
-
-   * external/chromium-webview/prebuilt/arm64
-ade1035 Update Chromium Webview arm64 prebuilt to 131.0.6778.200
-
-   * external/chromium-webview/prebuilt/x86
-56aea9f Update Chromium Webview x86 prebuilt to 131.0.6778.200
-
-   * external/chromium-webview/prebuilt/x86_64
-f690caf Update Chromium Webview x86_64 prebuilt to 131.0.6778.200
+   * vendor/lineage
+b3417068 apns: Fix GCI
+d48349b1 apns: Update T-Mobile U.S. (310|260) from tmobile_us-62000000022.10
