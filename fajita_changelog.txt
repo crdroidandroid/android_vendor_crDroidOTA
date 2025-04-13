@@ -1,71 +1,49 @@
-crDroid 10.12
+crDroid 10.13
 _Kernel 4.9, retrofit dynamic partitions, release-keys signed_
 
-Changes since v10.11 (30 December) release:
-- January 2025 Android Security Bulletins (android-14.0.0_r67) merged from upstream AOSP & LineageOS.
-- Changes from upstream LineageOS:
-  - I have no idea what all, but they're always hard at work doing amazing stuff that benefits everyone.
-  - Latest dummy libqti-perfd-client patches finally merged!
-  - Updated device-specific tree & kernel sources from lineage-21 branch as of end of January (don't think anything changed). Work has shifted to Android 15.
-- Upstream changes from crDroid ROM sources:
-  - Updated translations.
-  - Probably updated spoofing things, I dunno. Again; all the work has shifted to Android 15.
-- Device-specific things I can't stop screwing around with:
-  - Actual fix (well, workaround) for IPv4-over-IPv6-only carrier on mobile data! Qualcomm proprietary driver blob disables 464XLAT/CLAT in userspace via a persist prop at some point during boot, because they're supposed to do it in the modem firmware. Except on custom ROMs, it... doesn't. So, for now, add init script entry to watch for that prop getting set to disabled, and enable it immediately. Ta-da, IPv4 apps & websites work again with IPv6-only SIMs like Metro by T-Mobile and Reliance Jio.
-  - Slightly tightened-up RSSI thresholds for when networks become unusable so it stops trying to hang onto connections that aren't going to do anything useful.
-  - Re-disabled GCMP-256 cipher support from wifi driver (which we don't have NEON hardware acceleration for), since WPA3-SAE handshaking seems to be working with WPA3-capable base stations using the older CCMP-128 cipher (that we DO have acceleration for). Should hopefully save some battery.
-  - Added some configs for TWT (target wake time) since that was added to AOSP Wifi API but never configured in our device tree and kernel defaults seem to be not amazing. Specifically, disable the capability so AOSP wifi stack doesn't fuss with it (which it seems to want to do now).
-- "Misc bugfixes and improvements."
-- Added new bugs so I'll have something to fix later. :D
+Changes since v10.12 (09 February) release:
+- LineageOS/crDroid ROM sources:
+  - February & March 2025 ASB merged from upstream AOSP & LineageOS -- technically this is me doing that myself, since the crDroid devs haven't merged March yet. That would be 10.14 if they were keeping count, but since it was available to merge I went ahead and did it myself since I'm building on my own computer instead of the org build server.
+  - Doubt much has changed, everyone's on Android 15 work now. Probably updated translations or something.
+  - Updated device-specific sources from upstream lineage-21 branches (if any in lineage-21 branch, might've been one or two things, but I checked at least).
+- Device-specific things I can't stop messing with:
+  - Backported some additional custom ROM hiding tweaks & some updated WiFi configs from Android 15.
+  - Misc bugfixes & improvements (no really, it's basically just fussing a little with making things cleaner as I'm working on my 15.0 trees & see things that I feel should be applied to 14.0 as well - might be slightly fewer errors in the logs).
+  - April 1st bootanimation, inspired by my favorite typo from the crDroid Community TG chat group (technically includes sound but it doesn't play on our device, boo).
+  - Minor fixup to pocketmode configs (no longer try to use light sensor as well as oneplus.sensor.pocket), see release notes/troubleshooting below.
+  - Since it's the end of the world and everything is crap anyway, I went ahead & unlocked Aperture to allow using the crappy second back camera. It looks like ass and the colors are probably wrong and the noise model isn't tuned for it. Knock yourselves out.
+  - Also unlocked higher frame rates in Aperture. It doesn't actually WORK to record video at higher frame rates, but it DOES select the faster shutterspeed & boost ISO to compensate; so if you like the look of "less motion blur at the expense of higher image noise" in your videos, now you have options!
 
 Release Notes:
 - If you get a "verification failed" error when trying to OTA update, it means you're coming from an older version that was using test-keys or older signing keys. You need to update from recovery in that case (does not require wiping data; does require a computer & working USB cable & platform-tools).
 - TL;DR make sure you do the following setup steps or don't bother submitting bug reports:
-  - Go to Settings > Apps > Default Apps > tap the Gear (settings) icon next to crDroid Home (the default launcher) to open "Home settings" > Recents > turn OFF the "Shake phone to clear all tasks" toggle switch (it causes terrible SystemUI slowdowns & crashes after a couple hours).
-  - Make sure to enable or disable BOTH "Settings > Display > Prevent accidental wake-up" and "Settings > crDroid Settings > Miscellaneous > Pocket detection" toggles together; it might do strange things with only one or the other.
-  - Be sure that any Google background-audio-detection features like "Now Playing" background music detection and "Live Caption" speech-to-text detection are disabled. They rely on modifications to the Qualcomm "listen" audio configs (same underlying features that "Hey Google" hotword detection uses) that Pixels have, which we do NOT have, and will cause massive background battery drain & audio control lag/stuttering. Best to disable Hotword detection if you don't need it; save battery.
-  - [Optional if you use Oneplus Camera/Gallery] Go to https://gitlab.com/crdroidandroid/android_vendor_oneplus_apps/-/tree/14.0/sdm845/vendor/priv-app?ref_type=heads and download the APKs for OnePlusCamera and OnePlusGallery, then install them (it will ask you if you want to update the existing apps; choose yes each time).
-  - [Optional if you use Oneplus Camera/Gallery] Go get this thing https://mega.nz/file/UHpDQS4L#FGKPas4_OM2Z5b5iE1R0zNZKUEa069uPJ7NAiluViXI and put it into Internal Storage > Android > obb > com.oneplus.gallery since it doesn't download correctly in-app due to sepolicy things I can't be bothered with in Android 14 (or don't if you don't care about OP Gallery being able to do image classification).
+  - Go to Settings > Apps > Default Apps > tap the Gear (settings) icon next to crDroid Home (the default launcher) to open "Home settings" > Recents > turn OFF the "Shake phone to clear all tasks" toggle switch (it can cause terrible SystemUI slowdowns & crashes after a couple hours).
+  - Make sure to enable or disable *BOTH* "Settings > Display > Prevent accidental wake-up" and "Settings > crDroid Settings > Miscellaneous > Pocket detection" toggles together; it might do strange things with only one or the other.
+  - If you're experiencing massive audio playback latency, disable Google background-audio-monitoring features like Live Captioning, Hotword detection, and "Now Playing" detection (or just do it to save some battery anyway).
+  - If you use Google One/Google Drive for automatic system backups, then Seedvault may gonna cause problems in the background (and possibly complain at you on each boot). Connect USB to computer & open a terminal and run the following command: `pm disable-user --user 0 com.stevesoltys.seedvault` to disable Seedvault.
+  - If you use OnePlus Camera/Gallery, go to [https://gitlab.com/crdroidandroid/android_vendor_oneplus_apps/-/tree/14.0/sdm845/vendor/priv-app?ref_type=heads](https://gitlab.com/crdroidandroid/android_vendor_oneplus_apps/-/tree/14.0/sdm845/vendor/priv-app?ref_type=heads) (may require GitLab sign-in) and download the APKs for OnePlusCamera and OnePlusGallery, then install them (it will ask you if you want to update the existing apps; choose yes each time).
+  - [Optional] Go download the OPGallery expansion file from [https://mega.nz/file/UHpDQS4L#FGKPas4_OM2Z5b5iE1R0zNZKUEa069uPJ7NAiluViXI](https://mega.nz/file/UHpDQS4L#FGKPas4_OM2Z5b5iE1R0zNZKUEa069uPJ7NAiluViXI) and use a computer to copy it into Internal Storage > Android > obb > com.oneplus.gallery since it doesn't download correctly in-app due to sepolicy changes in modern Android versions. Trying to move it from built-in file explorer on phone will not work due to Scoped Storage limitations, but MTP file access from computer will work.
 - To use "Device As Webcam" feature, connect USB to a computer, and in the USB mode notification, instead of "charging this device" or "File Transfer/Android Auto", choose the new "Webcam" option from the list. Ta da!
-- You should probably just leave USB-OTG mode toggle on and let the USB Gadget HAL worry about it -- but it can be useful if USB port configuration gets stuck in an invalid state after using certain peripherals, or the port connector is failing and has intermittent connection problems; unplug & turn toggle off & back on to fix.
-- Force USB 2.0 Fastcharge mode toggle will let you increase requested charging current *when connected to a computer or hub* to 900mA, up from 500. It also breaks DASH charging and possibly other Qualcomm quick charging methods when enabled, so don't forget to turn it off again afterwards for better compatibility with most charging bricks.
-- Leave "AdrenoBoost" in Settings > DeviceExtras at "0" unless you have a specific game/app that responds well to cranking it up to 3... but be aware that this might make notification/QS shade jank even worse. 1 & 2 are basically pointless, but left in there for the sake of completion.
 - Sensor-based doze customizations are now in "Settings > Display > Lock screen > Ambient Display" options (no longer using crDroid doze).
-- If you have trouble with certain apps/games not being able to connect while on mobile data, try editing the mobile APN settings for your current SIM, and change APN protocol to IPv4/IPv6 and save. I think converting CarrierConfig to RRO actually fixed this issue!
-- If performance seems bad or drain seems high and you have GApps installed, try disabling "Hey Google!" hotword detection.
+- DeviceExtras:
+  - Leave "AdrenoBoost" in Settings > DeviceExtras at "0" unless you have a specific game/app that responds well to cranking it up to 3... but be aware that this might make notification/QS shade jank even *worse*. 1 & 2 are basically pointless, but left in there for the sake of completion.
+  - You should probably just leave USB-OTG mode toggle on and let the USB Gadget HAL worry about it -- but it can be useful if USB port configuration gets stuck in an invalid state after using certain peripherals, or the port connector is failing and has intermittent connection problems; unplug & turn toggle off & back on to fix.
+  - Force USB 2.0 Fastcharge mode toggle will let you increase requested charging current *when connected to a computer or hub* to 900mA, up from 500. It also breaks DASH charging and possibly other Qualcomm quick charging methods when enabled, so don't forget to turn it off again afterwards for better compatibility with most charging bricks.
+- Pocketmode: If you're having trouble with pocket mode UI not appearing when camera/speaker notch is covered, or UDFPS circle not appearing on lockscreen on fajita even when proximity sensor area is NOT covered, turn off both the Display "prevent accidental wake-up" toggle and crDroid Settings "Pocket detection" toggles. Turn them on & back off individually. Reboot to get the gremlins out. Fajita users, get some index card paper and use the corner to clean the crud out of the speaker grill slit just above the notch area. Install this update. Reboot. Turn both toggles back on. Should behave.
+  - Some additional voodoo that might help, or at the very least should save you some battery: Disabling a lot of recent Google device management stuff (removing GMS & Find My Phone & other stuff from Trust Providers, turning off Find My Phone & the new Theft Protection features in Google account settings, disabling any Nearby Sharing or Quick Share features & removing your device from cross-device experiences -- undoing all that crap they keep trying to add to waste battery in the background). Turn off the Google app's permission for modifying system settings.
 
-Known issues:
+Known Issues:
 _Look, none of this is really deal-breaking for most people. Things work well as a daily driver, all major systems work as they should as far as I can tell (or at least as well as in upstream LineageOS), battery life tends to be average-to-great depending on usage, etc._
 - Upstream crDroid/LineageOS/Qualcomm/Google issues:
   - SAFETYNET/PLAY INTEGRITY MAY NOT PASS. It's a cat & mouse game, and they can change the rules on their end at any time, and have been doing so frequently. This is not considered a bug. The ROM devs try this or that strategy, and it takes me forever to get updates releases pushed, and then it's out of date by the time you get it. Sorry. Hate Google, not me. Change to a better bank & use the website instead of a crappy "app", and complain loudly while you threaten to take your money somewhere else that doesn't make broken apps requiring Google's spyware in order to function.
-  - As of Android 13, we're using the source-built AOSP implementations for bluetooth & NFC, since it's not possible to continue with the old prebuilt QTI vendor blobs & implementation. Some things don't work as well; nothing I can do about it.
-  - The "QR Code Scanner" lockscreen shortcut option does not get enabled for use until you add the "QR Scanner" QS tile & use it. (not sure if this is still true?)
-  - Wallpapers & Styles can cause a SystemUI crash if you swap clock faces & colors too rapidly, too many times before settling on something. It's a stupid/funny reason, I hope devs can figure out what to DO about it. (not sure if this is still true?)
-  - Using "Hold handle to search" feature in Gesture Navigation settings is basically broken.
-  - If you use Google One/Google Drive for automatic system backups, then Seedvault is gonna cause problems in the background (and possible complain at you on each boot). Connect USB to computer & open a terminal and run the following command: `pm disable-user --user 0 com.stevesoltys.seedvault` to disable Seedvault.
+  - In Android 13 and newer, we're using the source-built AOSP implementations for bluetooth & NFC, since it's not possible to continue with the old prebuilt QTI vendor blobs & implementation. Some things don't work as well; nothing I can do about it.
+  - The "QR Code Scanner" lockscreen shortcut option does not get enabled for use until you add the "QR Scanner" QS tile & use it. (this might have been fixed, finally?)
+  - Shade code (notifications, Quick Settings, Quick Quick Settings) is a mess since Android 12 and the introduction of "tiles" instead of icons. Every release seems to make it worse, and harder to continue adding customization options that users actually want. Some customization options might be incompatible with others. Go to Settings > Display and disable the "Allow window-level blurs" toggle to help. Anything regarding "notifications/QS are laggy or jerky" is not going to be considered a bug. If you're actually getting FCs with a crashlog URL, then fill out a bug report on the crDroid issue tracker. It's not a device-specific problem.
 - crDroid OP6/6T-specific issues:
-  - Go do the setup things in the Release Notes section; really. Or else I will ignore your bug reports. So there.
-  - For some people, the "update app with same version of app but installed as user" approach to fixing OnePlus Camera doesn't work and it STILL has black screen on app launch & crashes shortly thereafter. I don't know why, and don't have time to fix. It's an ugly hack in the first place, and I don't have time to make it better right now.
+  - Go do the setup things at the top of the Release Notes section; really. Or else I will ignore your bug reports. So there.
+  - For some people, the "update app with same version of app but installed as user" approach to fixing OnePlus Camera doesn't work and it STILL has black screen on app launch & crashes shortly thereafter. I don't know why, sorry. It works better in Android 15 now since I was able to build with stub APKs and put them in the correct partition; please consider switching to those builds.
 
 Build type: Monthly (-ish)
 Device: OnePlus 6T (fajita)
 Device maintainer: Jordan Whiteley (Terminator_J)
 Required firmware: OxygenOS 11.1.2.2
-
-====================
-     02-01-2025
-====================
-
-   * packages/apps/CarrierConfig
-48ab4bc Update carrier configs from aosp/main
-
-====================
-     01-31-2025
-====================
-
-   * packages/apps/CarrierConfig
-08585e1 Update carrier configs from aosp/android-15.0.0_r10
-
-   * vendor/lineage
-b3417068 apns: Fix GCI
-d48349b1 apns: Update T-Mobile U.S. (310|260) from tmobile_us-62000000022.10
