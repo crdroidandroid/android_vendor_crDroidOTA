@@ -1,6 +1,9 @@
 crDroid 10.13
 _Kernel 4.9, retrofit dynamic partitions, release-keys signed_
 
+14 April 2025 hotfix:
+- Un-broke screen-off touchscreen gestures (apparently those were load-bearing string arrays... sorry).
+
 Changes since v10.12 (09 February) release:
 - LineageOS/crDroid ROM sources:
   - February & March 2025 ASB merged from upstream AOSP & LineageOS -- technically this is me doing that myself, since the crDroid devs haven't merged March yet. That would be 10.14 if they were keeping count, but since it was available to merge I went ahead and did it myself since I'm building on my own computer instead of the org build server.
@@ -20,7 +23,7 @@ Release Notes:
   - Go to Settings > Apps > Default Apps > tap the Gear (settings) icon next to crDroid Home (the default launcher) to open "Home settings" > Recents > turn OFF the "Shake phone to clear all tasks" toggle switch (it can cause terrible SystemUI slowdowns & crashes after a couple hours).
   - Make sure to enable or disable *BOTH* "Settings > Display > Prevent accidental wake-up" and "Settings > crDroid Settings > Miscellaneous > Pocket detection" toggles together; it might do strange things with only one or the other.
   - If you're experiencing massive audio playback latency, disable Google background-audio-monitoring features like Live Captioning, Hotword detection, and "Now Playing" detection (or just do it to save some battery anyway).
-  - If you use Google One/Google Drive for automatic system backups, then Seedvault may gonna cause problems in the background (and possibly complain at you on each boot). Connect USB to computer & open a terminal and run the following command: `pm disable-user --user 0 com.stevesoltys.seedvault` to disable Seedvault.
+  - If you use Google One/Google Drive for automatic system backups, then Seedvault may cause problems in the background (and possibly complain at you on each boot). Connect USB to computer & open a terminal and run the following command: `pm disable-user --user 0 com.stevesoltys.seedvault` to disable Seedvault.
   - If you use OnePlus Camera/Gallery, go to [https://gitlab.com/crdroidandroid/android_vendor_oneplus_apps/-/tree/14.0/sdm845/vendor/priv-app?ref_type=heads](https://gitlab.com/crdroidandroid/android_vendor_oneplus_apps/-/tree/14.0/sdm845/vendor/priv-app?ref_type=heads) (may require GitLab sign-in) and download the APKs for OnePlusCamera and OnePlusGallery, then install them (it will ask you if you want to update the existing apps; choose yes each time).
   - [Optional] Go download the OPGallery expansion file from [https://mega.nz/file/UHpDQS4L#FGKPas4_OM2Z5b5iE1R0zNZKUEa069uPJ7NAiluViXI](https://mega.nz/file/UHpDQS4L#FGKPas4_OM2Z5b5iE1R0zNZKUEa069uPJ7NAiluViXI) and use a computer to copy it into Internal Storage > Android > obb > com.oneplus.gallery since it doesn't download correctly in-app due to sepolicy changes in modern Android versions. Trying to move it from built-in file explorer on phone will not work due to Scoped Storage limitations, but MTP file access from computer will work.
 - To use "Device As Webcam" feature, connect USB to a computer, and in the USB mode notification, instead of "charging this device" or "File Transfer/Android Auto", choose the new "Webcam" option from the list. Ta da!
