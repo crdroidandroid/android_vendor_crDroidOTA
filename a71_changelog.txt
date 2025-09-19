@@ -1,20 +1,30 @@
-Highlights & Device Specific Changes:
-Build type: Weekly
-Device: Samsung Galaxy A71 4G (a71)
-Device maintainer: Manh Dung (intelgigabyte9299)
+====================
+     09-19-2025
+====================
+
+   * frameworks/base
+b18078bd4 Fix memory leak in car service
+eb91e8a13 HWUI: Preventing potential crashes.
+b81787da2 Fix the IllegalStateException problem.
+
+   * packages/apps/Launcher3
+50c8f51 Optimize the display speed of desktop icons when switching icon styles
+
+   * packages/apps/Twelve
+3026c4d Twelve: Play random songs button
+8b55929 Twelve: Result: Add `onSuccess`/`onError` methods
+5131a69 Twelve: MediaDataStore: Add audios method
+851f87d Twelve: Merge all home page VMs into a single one
+c167d52 Twelve: Get new random content every time app opens
 
 ====================
-     09-17-2025
+     09-18-2025
 ====================
 
    * device/samsung/a71-common
 af7623c a71-common: overlay: Set screen recorder and AOD max refresh rate to 60Hz and Refine status bar padding top
 fdb45ca a71-common: overlay: Update qs panel padding top
 d482519 a71-common: overlay: Adjust status bar height and corner padding
-
-   * frameworks/base
-649a122fc AnimationUtils: Fix inverted flag logic and wrong timebase fallback
-43a9af595 fixup! SystemUI: UdfpsController: Use keyguard update monitor callbacks for animations
 
    * kernel/samsung/a71
 393d51820 drivers: leds: s2mu106: fix commit 5651be44d09e405b940274c4f391fd10708c0660
@@ -118,22 +128,62 @@ c6d8d088a bpf, verifier: detect misconfigured mem, size argument pair
 2701f0e6f bpf: introduce ARG_PTR_TO_MEM_OR_NULL
 f76fe252c bpf: Macrofy stack state copy
 
-   * lineage-sdk
-e76a120 Merge pull request #18 from Alioth-Tree/16.0
-
-   * lineage/hudson
-6215c27 Regenerate device dependency mappings
+   * lineage/wiki
+f71dab2 wiki: Update the push command for apps
+17ad744 wiki: Update Docker installation guide
 
    * packages/apps/Launcher3
 e03a39a Launcher3: Quickspace: Do not load quickspace controller if disabled
-0b2cb9a Launcher3: Quickspace: Fix random quote
-1c612e4 Launcher3: Quickspace: Defer adding listners till layout is inflated
+
+   * packages/apps/Settings
+85dae00 Remove stray closing tag in mode_interstitial_layout.xml
 
    * packages/inputmethods/LatinIME
 ba4961c remove launcher icon
 d9b4e86 LatinIME: Default to Material You theme
 3390bb7 LatinIME: Add libjni_latinimegoogle for swype
 f91ae94 LatinIME: Fix NPE in KeyboardTheme
+
+====================
+     09-17-2025
+====================
+
+   * device/samsung/a71-common
+bc2cb2f sepolicy: define type sysfs_camera and sysfs_camera_writable This is needed by the private sepolicy for the flashlight control app
+9e634fb sepolicy: Add hal_samsung_camera_flashlight_default.te This is needed by the flashlight control app.
+c3eb0f9 Build vendor.samsung_ext.hardware.camera.flashlight-service and FlashControl This fixes an issue with the flashlight being dim. Huge thanks to whystarlix (a.k.a. onesmiledx), wherever he is. This includes changes to SEPolicy.
+006115e a71-common: overlay: Disable color modes
+01e04d2 a71-common: Migrate to LiveDisplay AIDL HAL
+4644b64 a71-common: Set number of physical SIM slots
+96bb0e0 a71-common: manifest: Freeze kernel-level to 6
+c8312c1 a71-common: Migrate to lineagehealth IFastCharge
+d235640 a71-common: Move to Samsung common LiveDisplay HAL
+c8ec6b5 a71-common: sepolicy: Migrate to LiveDisplay QTI domain
+238665e a71-common: Move to Samsung common Touch HAL
+ea3a2f5 a71-common: touch: Use pragma once directive
+eac6e45 a71-common: touch: Migrate to AIDL
+958b0ee a71-common: touch: Fix access node for gestures support check
+a5d2e10 a71-common: touch: Properly check if gestures are supported
+59250ab a71-common: touch: Use samsung_header_path_defaults
+dcac7ce a71-common: touch: Include VINTF fragment
+2bfd466 a71-common: livedisplay: Stop controlling ALPM
+495bbe7 a71-common: livedisplay: Use pragma once directive
+54b6d97 a71-common: livedisplay: Use VINTF fragment
+
+   * frameworks/base
+649a122fc AnimationUtils: Fix inverted flag logic and wrong timebase fallback
+43a9af595 fixup! SystemUI: UdfpsController: Use keyguard update monitor callbacks for animations
+
+   * lineage-sdk
+e76a120 Merge pull request #18 from Alioth-Tree/16.0
+79d1c70 sdk: remove app from recents after kill
+
+   * lineage/hudson
+6215c27 Regenerate device dependency mappings
+
+   * packages/apps/Launcher3
+0b2cb9a Launcher3: Quickspace: Fix random quote
+1c612e4 Launcher3: Quickspace: Defer adding listners till layout is inflated
 
 ====================
      09-16-2025
@@ -182,27 +232,11 @@ af5e20f Don't make recovery patch for devices with prebuilt vendor
 315e072 Move recovery-from-boot.p from /system to /vendor
 938aff9 soong: Add ability to build scudo-free 32-bit libc variant.
 
-   * device/samsung/a71-common
-bc2cb2f sepolicy: define type sysfs_camera and sysfs_camera_writable This is needed by the private sepolicy for the flashlight control app
-9e634fb sepolicy: Add hal_samsung_camera_flashlight_default.te This is needed by the flashlight control app.
-c3eb0f9 Build vendor.samsung_ext.hardware.camera.flashlight-service and FlashControl This fixes an issue with the flashlight being dim. Huge thanks to whystarlix (a.k.a. onesmiledx), wherever he is. This includes changes to SEPolicy.
-006115e a71-common: overlay: Disable color modes
-01e04d2 a71-common: Migrate to LiveDisplay AIDL HAL
-4644b64 a71-common: Set number of physical SIM slots
-96bb0e0 a71-common: manifest: Freeze kernel-level to 6
-c8312c1 a71-common: Migrate to lineagehealth IFastCharge
-d235640 a71-common: Move to Samsung common LiveDisplay HAL
-c8ec6b5 a71-common: sepolicy: Migrate to LiveDisplay QTI domain
-238665e a71-common: Move to Samsung common Touch HAL
-ea3a2f5 a71-common: touch: Use pragma once directive
-eac6e45 a71-common: touch: Migrate to AIDL
-958b0ee a71-common: touch: Fix access node for gestures support check
-a5d2e10 a71-common: touch: Properly check if gestures are supported
-59250ab a71-common: touch: Use samsung_header_path_defaults
-dcac7ce a71-common: touch: Include VINTF fragment
-2bfd466 a71-common: livedisplay: Stop controlling ALPM
-495bbe7 a71-common: livedisplay: Use pragma once directive
-54b6d97 a71-common: livedisplay: Use VINTF fragment
+   * external/dtc
+94f2246 dtc: Fix -Wincompatible-pointer-types-discards-qualifiers warnings
+411a812 libfdt: overlay_merge: Fix copy_node for multiple phandles
+ba79589 libfdt: overlay_merge: Fix phandle errors with proper path fix
+5a2289d libfdt: overlay_merge: Fix incorrect reference to nodes
 
    * frameworks/base
 7237e0610 services: Reduce grace window to kill cache after user unlock
@@ -300,9 +334,6 @@ cb883113d SystemUI: clock_default_large: Don't hardcode monospace font
 6c5629f22 SystemUI: Simplify brightness slider position and visibility
 b36fefd9c SystemUI: Allow to change brightness slider positioning in new compose QS [1/2]
 d7f4a1376 BrightnessSlider: Increase spacer size to avoid clipping in tracking mode
-a37ba839e BrightnessSlider: Add tunable for showing brightness icon
-b7469fc1d SystemUI: Add auto brightness toggle in brightness slider in new compose QS
-02a3f53be Attempt fixing keyguard status bar height issue
 
    * frameworks/native
 85f62e97b libui: Do not restrict instr limit
@@ -333,9 +364,6 @@ da072069d libbinder: Suppress log spam when unlinking death recipients
 a18e0bd80 Provide a default executor
 e6b4b10ec telephony: Disable handling audio direction changes on IMS calls.
 3e70a985c Ignore null action in ImsResolver.
-
-   * lineage-sdk
-79d1c70 sdk: remove app from recents after kill
 
    * lineage/crowdin
 d676fb0 config: Remove 19.1/20.0 support
@@ -458,7 +486,9 @@ dc27138 Settings: Use List Preference for Zen mode settings
 31002c2 Open app when clicking on icon in App Info
 367b569 WiFi: Remove country code checking.
 08a4326 DataProcessor: Do not skip and replace screen on component with screen on time
-d683f00 Settings: Fix regulatory info availability check
+
+   * packages/apps/Twelve
+e765cd7 Automatic translation import
 
    * packages/modules/Bluetooth
 9a82fe328 SBC Dual Channel (SBC HD) support - redux
@@ -587,6 +617,7 @@ a408983 common: Allow OTA downgrade regardless build type
 b6c968b Revert "overlay: Default to Seedvault backup transport"
 8d30aa1 crdroid: Drop custom adb drawable
 3d74e28 build: Ship as crDroid based on LOS
+c0fe4cb Bump Security String to 2025-09-01
 
 ====================
      09-15-2025
@@ -595,18 +626,15 @@ b6c968b Revert "overlay: Default to Seedvault backup transport"
    * android
 64f1c72 manifest: Switch to lineage-23.0 for available projects
 c242223 manifest: Remove sdm845 HAL guards
-
-   * external/dtc
-94f2246 dtc: Fix -Wincompatible-pointer-types-discards-qualifiers warnings
-411a812 libfdt: overlay_merge: Fix copy_node for multiple phandles
-ba79589 libfdt: overlay_merge: Fix phandle errors with proper path fix
-5a2289d libfdt: overlay_merge: Fix incorrect reference to nodes
+32fadd5 manifest: September 2025 Security Update
+2eb6f1c manifest: Remove sdm845 HAL guards
 
    * hardware/broadcom/libbt
 5d69608 libbt: Convert to Android.bp
 
    * hardware/qcom/audio
 1b40af451 hal: Convert primary HAL to blueprint
+c895c9468 soundfx: Convert to blueprint
 
    * hardware/qcom/bt
 73ebd37 bt: Build with -Werror
@@ -618,8 +646,22 @@ d0dfd8a bt: Remove unused headers
 bdff615 camera: Remove unused libmmlib2d_interface
 a7ae4d9 camera: Remove unused files
 
+   * hardware/qcom/sdm845/display
+0d74c81 display: histogram: Add missing epoll_event.h include
+a1cb4c2 Convert remaining Android.mk to blueprint
+
    * lineage/mirror
 c18e2f2 Updated to 14-Sep-2025 22:01 UTC
+
+   * lineage/wiki
+97e9a68 wiki: Add schema validation for `recovery_reboot`
+2744973 wiki: Unset `recovery_reboot` for m5/odroidc4/radxa0/radxa02
+
+   * packages/apps/Launcher3
+48306a8 Launcher3: Address potential leaks in google feed
+919781e Launcher3: Ensure surfaces/animators are cleaned in onActivityDestroyed()
+2362e83 Launcher3: Prevent repeated calls resulting duplicate registrations
+7f68ecc Launcher3: Retrieve controller inside posted lamda
 
    * packages/apps/crDroidSettings
 6c8925a crdroid: Add toggle for QS tile haptic feedback
@@ -628,59 +670,18 @@ c18e2f2 Updated to 14-Sep-2025 22:01 UTC
 91921aa OmniJaws: Switch to material expressive design for preferences
 
    * vendor/lineage
-c0fe4cb Bump Security String to 2025-09-01
+1c6299c vars: Update qcom tags
 
 ====================
      09-14-2025
 ====================
 
-   * android
-32fadd5 manifest: September 2025 Security Update
-2eb6f1c manifest: Remove sdm845 HAL guards
-
-   * hardware/qcom/audio
-c895c9468 soundfx: Convert to blueprint
-
-   * hardware/qcom/sdm845/display
-0d74c81 display: histogram: Add missing epoll_event.h include
-a1cb4c2 Convert remaining Android.mk to blueprint
-
    * lineage/wiki
-97e9a68 wiki: Add schema validation for `recovery_reboot`
-2744973 wiki: Unset `recovery_reboot` for m5/odroidc4/radxa0/radxa02
 ca24d88 wiki: Update pioneer maintainers
 
    * packages/apps/Launcher3
-48306a8 Launcher3: Address potential leaks in google feed
-919781e Launcher3: Ensure surfaces/animators are cleaned in onActivityDestroyed()
-2362e83 Launcher3: Prevent repeated calls resulting duplicate registrations
-7f68ecc Launcher3: Retrieve controller inside posted lamda
 3bf9601 Launcher3: QuickSpace: Limit weather updates from google widget
 d6cbacb Launcher3: Add SeraphixGoogle helpers to pause listening
-
-   * vendor/lineage
-1c6299c vars: Update qcom tags
-
-====================
-     09-13-2025
-====================
-
-   * art
-c09a5c72 Merge branch 'android16-security-release' of https://android.googlesource.com/platform/art into lineage-23.0
-
-   * frameworks/native
-c6b508972 Merge branch 'android16-security-release' of https://android.googlesource.com/platform/frameworks/native into lineage-23.0
-
-   * frameworks/opt/telephony
-44377e2d7 Merge branch 'android16-security-release' of https://android.googlesource.com/platform/frameworks/opt/telephony into lineage-23.0
-
-   * packages/apps/Contacts
-a184e27c Merge branch 'android16-security-release' of https://android.googlesource.com/platform/packages/apps/Contacts into lineage-23.0
-
-   * packages/apps/DocumentsUI
-b9e58d02 Merge branch 'android16-security-release' of https://android.googlesource.com/platform/packages/apps/DocumentsUI into lineage-23.0
-
-   * packages/apps/Launcher3
 63a9321 Launcher3: Clear cache and recycler views on pause
 683fcb9 Launcher3: MemInfoView: Remove blocking main thread
 9426fc5 New Crowdin updates (#500)
@@ -751,6 +752,47 @@ b2a592d Launcher3: PageIndicatorDots: Fix theme warnings
 c874355 Launcher3: Fix cloned apps not appearing in app drawer
 adca6ab Launcher3: Adapt material expressive icons for main settings
 
+====================
+     09-13-2025
+====================
+
+   * android
+2ecb062 Merge 'lineage-23.0' into 16.0
+
+   * art
+c09a5c72 Merge branch 'android16-security-release' of https://android.googlesource.com/platform/art into lineage-23.0
+
+   * frameworks/native
+c6b508972 Merge branch 'android16-security-release' of https://android.googlesource.com/platform/frameworks/native into lineage-23.0
+
+   * frameworks/opt/telephony
+44377e2d7 Merge branch 'android16-security-release' of https://android.googlesource.com/platform/frameworks/opt/telephony into lineage-23.0
+
+   * hardware/qcom/sdm845/display
+8e56e0e sdm: Convert hwcomposer.qcom to soong
+fc078b2 sdm: Remove display_config_version conditionals
+ede92e3 sdm: Remove use_hwc2 conditional
+a04d353 Convert libhistogram/libsdmcore to blueprint
+ce359a6 Convert gpu_tonemapper to blueprint
+9f8daaf gralloc: Make MASTER_SIDE_CP as default Making MASTER_SIDE_CP as default
+fcef4ae Remove unused libcopybit sources
+
+   * hardware/qcom/sdm845/gps
+71438e3 Add hardware/qcom/sdm845/gps soong namespace
+33255a1 Remove obsolete os_pickup.{bp,mk}
+
+   * lineage/wiki
+ea3a2cb devices: nx: Update fric's name
+
+   * packages/apps/Contacts
+a184e27c Merge branch 'android16-security-release' of https://android.googlesource.com/platform/packages/apps/Contacts into lineage-23.0
+
+   * packages/apps/DocumentsUI
+b9e58d02 Merge branch 'android16-security-release' of https://android.googlesource.com/platform/packages/apps/DocumentsUI into lineage-23.0
+
+   * packages/inputmethods/LatinIME
+2287321 Add Turkish F layout
+
    * packages/modules/Bluetooth
 0428c1015 Merge branch 'android16-security-release' of https://android.googlesource.com/platform/packages/modules/Bluetooth into lineage-23.0
 
@@ -774,49 +816,8 @@ c4a1c5f89 Merge branch 'android16-security-release' of https://android.googlesou
 ====================
 
    * android
-2ecb062 Merge 'lineage-23.0' into 16.0
 ec453d1 manifest: Switch to our fork of athletico ST HAL
-
-   * hardware/qcom/sdm845/display
-8e56e0e sdm: Convert hwcomposer.qcom to soong
-fc078b2 sdm: Remove display_config_version conditionals
-ede92e3 sdm: Remove use_hwc2 conditional
-a04d353 Convert libhistogram/libsdmcore to blueprint
-ce359a6 Convert gpu_tonemapper to blueprint
-9f8daaf gralloc: Make MASTER_SIDE_CP as default Making MASTER_SIDE_CP as default
-fcef4ae Remove unused libcopybit sources
-
-   * hardware/qcom/sdm845/gps
-71438e3 Add hardware/qcom/sdm845/gps soong namespace
-33255a1 Remove obsolete os_pickup.{bp,mk}
-
-   * lineage/wiki
-ea3a2cb devices: nx: Update fric's name
-
-   * packages/apps/Aperture
-49c70e3 Aperture: Use constant timestamp for RAW+JPEG
-e648a3c Aperture: Add date taken metadata
-d35afdb Aperture: Force set gallery visibility on load success
-c55d653 Aperture: Support JPEG Ultra HDR/RAW/RAW+JPEG capture
-abb7aa1 Aperture: Update CameraX to 1.5.0
-
-   * packages/inputmethods/LatinIME
-2287321 Add Turkish F layout
-
-   * vendor/lineage
-c7a3e36 vars: Point sunfish to archive.org
-
-====================
-     09-11-2025
-====================
-
-   * android
 dabdb70 Merge 'lineage-23.0' into 16.0
-c11ed59 manifest: Remove sm8150 HAL guards
-
-   * bootable/recovery
-6354a8a recovery: Extend A/B downgrades for older SPL
-411b8b9 Revert "recovery: Allow downgrading SPL on non-release builds"
 
    * build/soong
 3ee8369 Disable fsgen check
@@ -850,6 +851,34 @@ ea94f77 soong: Always return release-keys
 2ed5003 Revert "Remove timestamp from local build number"
 f0f3f9b Add ability to enable scudo-free 32-bit libc variant.
 
+   * packages/apps/Aperture
+49c70e3 Aperture: Use constant timestamp for RAW+JPEG
+e648a3c Aperture: Add date taken metadata
+d35afdb Aperture: Force set gallery visibility on load success
+c55d653 Aperture: Support JPEG Ultra HDR/RAW/RAW+JPEG capture
+abb7aa1 Aperture: Update CameraX to 1.5.0
+
+   * packages/apps/LMOFreeform
+f87cc75 Merge pull request #6 from tavukkdoner/16.0-1
+
+   * vendor/lineage
+c7a3e36 vars: Point sunfish to archive.org
+
+====================
+     09-11-2025
+====================
+
+   * android
+c11ed59 manifest: Remove sm8150 HAL guards
+0741154 manifest: Remove sm7250 HAL guards
+d745fef manifest: Switch to lineage-23.0 for available projects
+1f654f2 Merge 'lineage-23.0' into 16.0
+257de19 manifest: Remove sm7250 HAL guards
+
+   * bootable/recovery
+6354a8a recovery: Extend A/B downgrades for older SPL
+411b8b9 Revert "recovery: Allow downgrading SPL on non-release builds"
+
    * hardware/qcom/sm8150/display
 c13de98 Convert remaining Android.mk to blueprint
 ad7078c sdm: Convert hwcomposer.qcom to soong
@@ -860,135 +889,48 @@ ad7078c sdm: Convert hwcomposer.qcom to soong
 cd069e1 Convert gpu_tonemapper to blueprint
 cf6f59d Remove unused libcopybit sources
 
+   * hardware/qcom/sm8150/gps
+c102eca Remove obsolete os_pickup.{bp,mk}
+
    * packages/apps/Aperture
 d7fa247 Aperture: CameraViewModel: Inline useless return
 84c6cbf Aperture: Move Camera2 options to CameraConfiguration
 f8a95b3 Aperture: CameraConfiguration: Drop `clone` method
 bac8471 Aperture: Recreate camera configuration on user preference changes
 
+   * packages/apps/GameSpace
+3c01f53 GameSpace: Add callChangeListener() for all changes in CustomSeekBarPreference
+08f9fdb GameSpace: Update view for Quick start apps dialog
+
    * packages/apps/LMOFreeform
-f87cc75 Merge pull request #6 from tavukkdoner/16.0-1
 b4798a7 AllAppActivity: Fix wrong padding
+
+   * packages/apps/crDroidSettings
+baceed4 crdroid: Add callChangeListener() for all changes in CustomSeekBarPreference
 
 ====================
      09-10-2025
 ====================
 
-   * android
-0741154 manifest: Remove sm7250 HAL guards
-d745fef manifest: Switch to lineage-23.0 for available projects
-1f654f2 Merge 'lineage-23.0' into 16.0
-257de19 manifest: Remove sm7250 HAL guards
-
    * device/qcom/sepolicy
 74db8a6 sepolicy: Added attributes for BHS services.
-
-   * hardware/qcom/sm8150/gps
-c102eca Remove obsolete os_pickup.{bp,mk}
 
    * hardware/samsung
 888b125 Revert "aidl: health: Allow disabling charger suspend"
 4dd00a6 Revert "aidl: usb: gadget: Link mass_storage.0 when MTP or ADB is enabled"
 f8f8b96 Revert "aidl: usb: gadget: Don't bail out on mass_storage link fail"
 
-   * packages/apps/GameSpace
-3c01f53 GameSpace: Add callChangeListener() for all changes in CustomSeekBarPreference
-08f9fdb GameSpace: Update view for Quick start apps dialog
-
-   * packages/apps/crDroidSettings
-baceed4 crdroid: Add callChangeListener() for all changes in CustomSeekBarPreference
-80f7961 crdroid: Restore QS layout settings
-
-   * packages/resources/devicesettings
-81f8a50 devicesettings: Add strings for StylusKeyHandler
-
-====================
-     09-09-2025
-====================
-
    * packages/apps/Aperture
 ecbc794 Aperture: Camera models cleanup
 79cab63 Aperture: Drop `Camera::supportsVideoRecording`
 81d30b3 Aperture: Improve the flip camera logic
 
+   * packages/apps/crDroidSettings
+80f7961 crdroid: Restore QS layout settings
+
    * packages/modules/adb
 e37e39f adb: Always report as debuggable when building userdebug/eng
 
-====================
-     09-08-2025
-====================
-
-   * android
-307ab65 lineage: Remove Android.mk guard for msm8998/sdm845
-
-   * device/lineage/sepolicy
-4d7db4d sepolicy: Update for CachedAppOptimizer denial
-90f3f34 sepolicy: Allow platform read thermal sysfs
-8f07518 sepolicy: Address CachedAppOptimizer denial
-abe152e common: Always run recovery in permissive domain
-eca5598 Revert "Make backuptool permissive only in non user builds"
-ea5541f common: Address denial for google services app
-5f20351 common: Address launcher app denials
-54da08b sepolicy: Add support for boost framework
-acc1183 sepolicy: Allow gmscore_app to access system_data_file
-b39c3cc sepolicy: Add support for LMOFreeform service
-8a0542b Allow launcher to access zram sysfs
-e31db1e Allow apps to access usap pool
-4a2c245 sepolicy: Make Health service discoverable by Settings app
-9129f9f sepolicy: Label Dolby Sepolicy labels
-b938c75 Allow system app to read navbar config
-22e7c42 sepolicy: Label more dirty writeback parameters
-6859404 sepolicy: introduce app lock [2/4]
-c216280 sepolicy: Label LinearmotorVibratorService
-9a2fab8 sepolicy: Move in pocket service sepolicy
-cf88bfa sepolicy: Label skip unconfigure prop
-6b2d57e Allow updater to read data files
-5e59572 updater_app: Address uncrypt denials
-c98be03 sepolicy: Allow system_server to read and write to sysfs_battery_supply
-9375fcd Update ota_update path
-ebe6d73 sepolicy: Allow launcher app to read archiving prop
-1947ab1 Allow platform app to read memory info
-29f7d61 sepolicy: Allow platform adjust camera shutter sound
-3331930 Allow documents UI to access storage
-2a9c67d sepolicy: Allow key disabler access for platform
-34e247c sepolicy: Update custom legal prop
-070a3e1 qcom: Label acl LiveDisplay sysfs node
-
-   * device/qcom/sepolicy-legacy-um
-f59019e sdm660: Label more video4linux wakeup nodes
-
-   * hardware/qcom-caf/msm8998/audio
-717b078e6 hal: audio_extn: Add argument to pthread routines
-
-   * hardware/qcom-caf/sdm845/audio
-d5ad5c133 hal: audio_extn: Add argument to pthread routines
-
-   * lineage/mirror
-8896d20 Updated lineage-minimal to 07-Sep-2025 22:01 UTC
-
-   * lineage/wiki
-0aaa61c wiki: Remove `recovery_boot` from salami
-0814752 wiki: Hide `recovery_boot` instructions if empty
-ed7ad34 wiki: Add OnePlus 12
-9fe2d1b wiki: Remove `recovery_boot` from OnePlus 7/8/9/11 series
-
-   * system/core
-e1fee0e core: Lockscreen Charging (2/3)
-14f2bb6 camera: Add L-compatible camera feature enums
-877ae9b Camera: Add feature extensions
-051fc7a init: reboot to recovery on panic by default to allow reading pstore
-6c3ebb3 init: Do not set safety net props for ENG builds
-f4f5865 init: Spoof more props
-9600ea9 init: Add more properties to spoof.
-fc39c54 init: Weaken property override security for the init extension
-b52284d init: Set properties to make SafetyNet pass
-49d37f1 init.rc: don't start console unless asked to
-f0ee5ac init.rc: Disable native stats collection service
-d9f39db debuggerd: Adapt rom name in tombstones
-8322a96 Revert "init.rc: remove 4.9/4.14 support"
-8d4a165 debuggerd: Set correct version for tombstone
-
-   * vendor/qcom/opensource/power
-f47d3a6 power: Bump QTI power HAL version to 6
-8f0b87c power: Abstract android.hardware.power-ndk dependency
+   * packages/resources/devicesettings
+81f8a50 devicesettings: Add strings for StylusKeyHandler
 
