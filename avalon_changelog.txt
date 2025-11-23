@@ -3,6 +3,11 @@ Build type: Monthly
 Device: OnePlus Nord 4 (avalon)
 Device maintainer: TestaMic
 
+===== 11-22-2025 =====
+- avalon: Enabled device as a webcam when connected to USB.
+- avalon: Upstreamed kernel to 6.1.157 + CAF updates.
+- Updated lockscreen default font to google flex.
+- Updated google flex font package.
 ===== 11-20-2025 =====
 - Allow dismissing persistent suggestions in Settings app.
 - Improved blur support.
@@ -28,12 +33,73 @@ Device maintainer: TestaMic
 - crDroid 12.3 with November 2025 security patch.
 
 ====================
-     11-21-2025
+     11-22-2025
 ====================
 
    * device/oneplus/sm8650-common
-5d1980d sm8650-common: DeviceSettings: Do not remove pref if not writable
-74f6bfb sm8650-common: DeviceSettings: Add toggle for LTPO
+afc0a26 sm8650-common: DeviceAsWebcam: set HQ mode as default
+d09bfc3 sm8650-common: DeviceAsWebcam: disable USAGE_VIDEO_ENCODE ImageReader flag
+977bb45 sm8650-common: Build DeviceAsWebcam service
+9b073bb sm8650-common: Setup DeviceAsWebcam
+
+   * vendor/addons
+9f3d0eaa addons: Update google sans flex fonts
+
+   * vendor/lineage
+082f234 overlay: Use google sans flex for lockscreen clock
+
+====================
+     11-21-2025
+====================
+
+   * build/make
+ca2c7ab envsetup: Kill vendor setup
+
+   * frameworks/base
+d5074edea New Crowdin updates (#1273)
+ea91e0f85 MediaArt: Allow lockscreen media art on landscape
+
+   * hardware/oplus
+1b82c6a Add toggle for ltpo features
+71cf932 sepolicy: Label oplus bluetooth prop
+
+   * kernel/oneplus/sm8650
+2cff76780f kernel: Eliminate dynamic memory allocation in prctl_set_vma()
+c18758e4b0 bpf: Avoid allocating small buffers for map keys and values
+7a6a58651c PM / freezer: Reduce freeze timeout to 1 second for Android
+edb966df00 ANDROID: gki_defconfig: Enable Clang ThinLTO support
+879f63060c ANDROID: gki_defconfig: Enable AUTOFDO_CLANG for AutoFDO optimizations
+8a67f245da fs: Add hide lineage from wild kernel
+a0a1defb90 mbcache: Speed up cache entry creation
+a9e5790829 arm64: debug: disable self-hosted debug by default
+95358a349f lib: Disable debug_locks
+cc2be4021a kernelsu: replace renameat hook with fsnotify
+806b76a971 kernelsu: Fix kernel panics caused by thread info flag corruption
+e6b0534edb kernelsu: Use SUS_SU by default
+873877c0ed kernelsu: Fix SUS_SU feature
+e99bce8032 kernelsu: implement v2_signature size/hash override from userspace through kernel module parameter
+4b30060a4d kernelsu: Allow compatible manager apks
+72bee3437c kernelsu: Remove duplicate function to fix compilation
+e65413bf2b kernelsu: Enable susfs for ksu
+6b939360fb kernelsu: Add susfs in gki android14-6.1
+712d62754a drivers: Set proper version for KernelSU-Next
+95d27ea729 drivers: Import KernelSU Next v1.1.1
+5687670e25 drivers: Add KSU config path
+e804c6a8a5 Merge branch 'android14-6.1-lts' of https://android.googlesource.com/kernel/common into 16.0
+
+   * packages/apps/LMOFreeform
+738b49f New translations (#15)
+
+   * packages/apps/crDroidSettings
+2ffaba3 New Crowdin updates (#1272)
+6551048 crdroid: Clean up for battery bar settings
+bcdc4a7 crDroid settings: change donation button snooze text (#1271)
+
+====================
+     11-20-2025
+====================
+
+   * device/oneplus/sm8650-common
 fe0c835 sm8650-common: audio: Do not disable post processing effects for dolby
 
    * external/jemalloc_new
@@ -141,8 +207,10 @@ b09e96105 Pulse: Use visibility guard for draw and engine process
 4019eedb4 MediaArt: Remove dozing condition for lockscreen media art
 e9d5ea0ec MediaArt: Improve updates logic for MediaSessionManager
 532c8023f MediaArt: Utilities: Update for media control
-b322f388b MediaArt: Improve handling of lockscreen media art
-1211e0cb6 MediaArt: Improvements for lockscreen media art
+
+   * kernel/oneplus/sm8650
+51ee45e6cc ANDROID: KABI: fix up abi change in struct usb_request
+67f38d846a Merge 9a1908273205 ("usb: gadget: Store endpoint pointer in usb_request") into android14-6.1-lts
 
    * packages/apps/GameSpace
 b68fe22 New translations (#121)
@@ -160,14 +228,24 @@ bd1b0a0 New Crowdin updates (#14)
 1e2c91f New Crowdin updates (#1268)
 
 ====================
-     11-20-2025
+     11-19-2025
 ====================
 
    * frameworks/native
 64b66d6d6 Adding glass blur filter
 
    * hardware/oplus
-ae5ba91a sepolicy: Allow systemui read fps
+ae5ba91 sepolicy: Allow systemui read fps
+
+   * kernel/oneplus/sm8650
+1fd39c9383 Merge 6.1.157 into android14-6.1-lts
+b396bb3a9e Merge 93faabb55a37 ("asm-generic/io.h: Skip trace helpers if rwmmio events are disabled") into android14-6.1-lts
+e581e59d41 Revert "PCI/AER: Support errors introduced by PCIe r6.0"
+6214484627 Merge f734944e12b2 ("selftests/mm: skip soft-dirty tests when CONFIG_MEM_SOFT_DIRTY is disabled") into android14-6.1-lts
+0c5c6d4624 Merge 796594990b3c ("firmware: meson_sm: fix device leak at probe") into android14-6.1-lts
+4954e05b25 Merge 6.1.156 into android14-6.1-lts
+5744d1b1cf Merge 05639cb84e3c ("Revert "usb: xhci: Avoid Stop Endpoint retry loop if the endpoint seems Running"") into android14-6.1-lts
+60c21e6d76 Merge 0a6b2ed51a1c ("f2fs: fix zero-sized extent for precache extents") into android14-6.1-lts
 
    * lineage/mirror
 78d0a5a Updated aosp-minimal to 19-Nov-2025 11:02 UTC
@@ -183,10 +261,11 @@ ae5ba91a sepolicy: Allow systemui read fps
 4e604ba EnableBlursPreferenceController: fix default blur value
 
    * vendor/lineage
+d427e2f overlay: Remove duplicate DPS config
 10407ff crdroid: Update blur support
 
 ====================
-     11-19-2025
+     11-18-2025
 ====================
 
    * device/oneplus/sm8650-common
@@ -203,16 +282,6 @@ d284277 runtime(doc): Remove :runtime completion (#11447) todo item
 
    * lineage/website
 8591b4f www: Update homepage images for themes
-
-====================
-     11-18-2025
-====================
-
-   * device/oneplus/sm8650-common
-5b6b365 sm8650-common: Include ConsumerIR prebuilt
-
-   * hardware/interfaces
-946d17476 audio: Allow opting out of speaker_layout_channel_mask field
 
    * packages/apps/ThemePicker
 4bac90b0 ThemePicker: Update color stub from mustang A16 QPR1
@@ -318,17 +387,31 @@ a6dae8e overlay: Update clock plugin list
 6f10846 overlay: Allow new SystemUI clocks
 1f2428e overlay: Set AOSP webview as fallback
 4ab4e02 build: Enable ThinLTO cache
-bf4e49f crdroid: Always disable app launch blur
-30a52df common: Allow OTA downgrade regardless build type
 
    * vendor/oneplus/ir
 c398de3 Add adaptive icon for IR package
-a498f21 Do not install IR app in clone and private
-c51cc3c Initial import of ConsumerIR from OP13
 
 ====================
      11-17-2025
 ====================
+
+   * device/oneplus/sm8650-common
+5b6b365 sm8650-common: Include ConsumerIR prebuilt
+
+   * hardware/interfaces
+946d17476 audio: Allow opting out of speaker_layout_channel_mask field
+
+   * vendor/oneplus/ir
+a498f21 Do not install IR app in clone and private
+c51cc3c Initial import of ConsumerIR from OP13
+
+====================
+     11-16-2025
+====================
+
+   * android
+f5c969f manifest: Untrack system/bpf
+d28aa65 Merge pull request #171 from ReStranger/16.0
 
    * bionic
 a946b129 bionic: libm: Remove duplicate e_log10f function
@@ -374,56 +457,48 @@ a923e6c sm8650-common: Drop IOplusLogCore prebuilts
 4b4a893 translation(it): Update Italian translation
 
    * hardware/oplus
-cde5812a sepolicy: Label project name prop
-53221830 sepolicy: qti: Label some missing wakeup nodes on OP13R
-3cc9ed54 Euicc: Add OnePlus 13R support
-166f53b6 sepolicy: Address nfc denial
-198dd401 dolby: Update layout to material expressive design
-a3ab808e dolby: Make sure to persist value after toggling QS tile
-61938998 powershare: gracefully fail in case powershare support not available some OP9 device don't have support for reverse wireless charging, so bail out gracefully
-9c0590c9 dolby: Fix compilation error in TooltipIconButton
-aed1411a dolby: Migrate MainSwitchBar and Switch to Material3
-c23e0193 dolby: Add custom profile
-1b618d60 dolby: Add icons for dolby profiles
-49da14db dolby: Make bass enhancer available on speakers as well
-4db6e068 dolby: Switch to MaterialTheme settingsBackground for EqualizerScreen background color
-1ce7c43b Revert "dolby: Fix Building in Andoid 15"
-49332f6f oplus-fwk: Add missing classes for oplus camera
-e9b88da4 oplus-fwk: Remove unused imports
-3d9b1b3c dolby: translate strings to Russian
-6370fcb3 dolby: Exempt installing package in clone or private space
-cac1fee9 dolby: Fix Building in Andoid 15
-e7f18965 Import dolby from hardware/xiaomi
-a475f424 vintf: Add compatibility fcm for dolby
-eee24917 oplus-fwk: Bring in camera bits
-981b86bb overlay: qssi: Update QSSI RROs from CPH2573_11_A.76
-dec3ec08 sepolicy: Address rild denial for prop
-27f3e730 sepolicy: Fix bluetooth denial on user builds
-9bf74df6 sepolicy: Fix denial for FPS info tile
-e7dbd361 sepolicy: Allow GameSpace read fps node
-81bb19e6 sepolicy: Address cryptoeng denials
-1e34fe04 sepolicy: Label hal_charger service
-44eabb52 sepolicy: Fix hal_bootctl_default denial
-ce512deb sepolicy: Label missing wakeup nodes
-3727ba44 sepolicy: Address various denials
-733d83f6 sepolicy: Add dolby support
-7a5cdf46 sepolicy: Allow system app read battery health status
-fa54e9d1 sepolicy: Allow system_app to access zram sysfs nodes
-41f1c515 sepolicy: Address DeviceSettings and fast charging denials
-ce6a614e hardware: hidl: inscreen: Set thread to high CFS priority
-464b1d35 oplus: Introduce dummy liboplus-uah-client
-0c554081 interfaces: Update vendor.oplus.hardware.olc2 to V3
-9582ba05 interfaces: Update vendor.oplus.hardware.olc2 to V2
-81fa629d interfaces: Add vendor.oplus.hardware.olc2 V1
-6f268cde sepolicy: qti: Label battery gauge daemon
-
-   * kernel/oneplus/sm8650
-0fab7f2c0ff kernel: Eliminate dynamic memory allocation in prctl_set_vma()
-2f07c7c25a2 bpf: Avoid allocating small buffers for map keys and values
-c73af54c90e PM / freezer: Reduce freeze timeout to 1 second for Android
-295344f2aa6 ANDROID: gki_defconfig: Enable Clang ThinLTO support
-aed06953141 ANDROID: gki_defconfig: Enable AUTOFDO_CLANG for AutoFDO optimizations
-41e0dbceb4b fs: Add hide lineage from wild kernel
+cde5812 sepolicy: Label project name prop
+5322183 sepolicy: qti: Label some missing wakeup nodes on OP13R
+3cc9ed5 Euicc: Add OnePlus 13R support
+166f53b sepolicy: Address nfc denial
+198dd40 dolby: Update layout to material expressive design
+a3ab808 dolby: Make sure to persist value after toggling QS tile
+6193899 powershare: gracefully fail in case powershare support not available some OP9 device don't have support for reverse wireless charging, so bail out gracefully
+9c0590c dolby: Fix compilation error in TooltipIconButton
+aed1411 dolby: Migrate MainSwitchBar and Switch to Material3
+c23e019 dolby: Add custom profile
+1b618d6 dolby: Add icons for dolby profiles
+49da14d dolby: Make bass enhancer available on speakers as well
+4db6e06 dolby: Switch to MaterialTheme settingsBackground for EqualizerScreen background color
+1ce7c43 Revert "dolby: Fix Building in Andoid 15"
+49332f6 oplus-fwk: Add missing classes for oplus camera
+e9b88da oplus-fwk: Remove unused imports
+3d9b1b3 dolby: translate strings to Russian
+6370fcb dolby: Exempt installing package in clone or private space
+cac1fee dolby: Fix Building in Andoid 15
+e7f1896 Import dolby from hardware/xiaomi
+a475f42 vintf: Add compatibility fcm for dolby
+eee2491 oplus-fwk: Bring in camera bits
+981b86b overlay: qssi: Update QSSI RROs from CPH2573_11_A.76
+dec3ec0 sepolicy: Address rild denial for prop
+27f3e73 sepolicy: Fix bluetooth denial on user builds
+9bf74df sepolicy: Fix denial for FPS info tile
+e7dbd36 sepolicy: Allow GameSpace read fps node
+81bb19e sepolicy: Address cryptoeng denials
+1e34fe0 sepolicy: Label hal_charger service
+44eabb5 sepolicy: Fix hal_bootctl_default denial
+ce512de sepolicy: Label missing wakeup nodes
+3727ba4 sepolicy: Address various denials
+733d83f sepolicy: Add dolby support
+7a5cdf4 sepolicy: Allow system app read battery health status
+fa54e9d sepolicy: Allow system_app to access zram sysfs nodes
+41f1c51 sepolicy: Address DeviceSettings and fast charging denials
+ce6a614 hardware: hidl: inscreen: Set thread to high CFS priority
+464b1d3 oplus: Introduce dummy liboplus-uah-client
+0c55408 interfaces: Update vendor.oplus.hardware.olc2 to V3
+9582ba0 interfaces: Update vendor.oplus.hardware.olc2 to V2
+81fa629 interfaces: Add vendor.oplus.hardware.olc2 V1
+6f268cd sepolicy: qti: Label battery gauge daemon
 
    * lineage-sdk
 791e43a sdk: SelfRemovingPreference: set visibility at early stage
@@ -575,16 +650,14 @@ e112072 audio: Allow opting out of speaker_layout_channel_mask field
 fada70d Initial import of dolby blobs
 
    * vendor/oneplus/sm8650-common
-5de3ad78 sm8650-common: Remove remaining URCC blobs
-c0a2c7b7 sm8650-common: Drop IOplusLogCore prebuilts
+5de3ad7 sm8650-common: Remove remaining URCC blobs
+c0a2c7b sm8650-common: Drop IOplusLogCore prebuilts
 
 ====================
-     11-16-2025
+     11-15-2025
 ====================
 
    * android
-f5c969f manifest: Untrack system/bpf
-d28aa65 Merge pull request #171 from ReStranger/16.0
 a36be95 Merge 'lineage-23.0' into 16.0
 
    * device/oneplus/sm8650-common
@@ -599,11 +672,11 @@ f46616f runtime(vim): Update base syntax and generator, match :cd commands
 de7049e patch 9.1.1915: :breaklist accepts unprocessed arguments.
 
    * hardware/oplus
-ac5f6263 Automatic translation import
-768b9a51 interfaces: Update IOplusProject to V3
-1bab6873 interfaces: Update IOplusProject to V2
-09a99183 interfaces: Introduce vendor.oplus.hardware.stability.oplus_project V1
-3e90c6d7 vintf: Bump ISubsys and ISubsysRadio aidl versions
+ac5f626 Automatic translation import
+768b9a5 interfaces: Update IOplusProject to V3
+1bab687 interfaces: Update IOplusProject to V2
+09a9918 interfaces: Introduce vendor.oplus.hardware.stability.oplus_project V1
+3e90c6d vintf: Bump ISubsys and ISubsysRadio aidl versions
 
    * lineage-sdk
 39cff88 Automatic translation import
@@ -635,19 +708,35 @@ ce9df81 Settings: Hide back haptics setting if not supported
 93da2a7 Automatic translation import
 
    * vendor/oneplus/sm8650-common
-77a3bc15 sm8650-common: Drop IOplusProject prebuilts
+77a3bc1 sm8650-common: Drop IOplusProject prebuilts
 
 ====================
-     11-15-2025
+     11-14-2025
 ====================
+
+   * external/jemalloc_new
+1e6fe0c pages: fix Wshorten-64-to-32
+
+   * external/vim
+d582163 runtime(new-tutor): escape tutor filename
+384685f patch 9.1.1914: runtime(netrw): wipes unnamed buffers
+b811992 patch 9.1.1913: Error message with :unlet! and non-existing dictionary item
+eb732ed runtime(doc): Wrap overlength lines in uganda.txt
+8644c3b runtime(help): Update syntax, match tables at :help :digraph-table
+
+   * hardware/oplus
+baeef85 vintf: Bump vendor.oplus.hardware.charger to V9
 
    * packages/apps/crDroidSettings
 677c77b crdroid: Move mobile signal to status bar tuner
 eb0d722 crdroid: Hide signal icon customization if not supported
 2becf59 New Crowdin updates (#1267)
 
+   * vendor/apn
+060d567 Add WE EG
+
 ====================
-     11-14-2025
+     11-13-2025
 ====================
 
    * android
@@ -661,7 +750,6 @@ e464d82 sm8650-common: Import perf boost configs from vendor
 a375521 Merge branch 'master' of github.com:ARM-software/optimized-routines into vic
 
    * external/jemalloc_new
-1e6fe0c pages: fix Wshorten-64-to-32
 f869024 Handle migration of tikv-jemalloc-sys to crate monorepo
 d2b017b Android.bp: update visibility for A15/QPR2
 e321c4a Android.bp: remove test_per_src
@@ -680,104 +768,27 @@ f11476b if process_madvise is supported, call it when purging hpa
 0ee2bb6 Extend purging algorithm with peak demand tracking
 
    * external/vim
-d582163 runtime(new-tutor): escape tutor filename
-384685f patch 9.1.1914: runtime(netrw): wipes unnamed buffers
-b811992 patch 9.1.1913: Error message with :unlet! and non-existing dictionary item
-eb732ed runtime(doc): Wrap overlength lines in uganda.txt
-8644c3b runtime(help): Update syntax, match tables at :help :digraph-table
-
-   * hardware/oplus
-baeef857 vintf: Bump vendor.oplus.hardware.charger to V9
-
-   * vendor/apn
-060d567 Add WE EG
-
-   * vendor/oneplus/sm8650-common
-c659b574 sm8650-common: Enable GamePowerOptFeature in PowerFeatureConfig
-b11641c6 sm8650-common: Move perf boost configs to device
-
-====================
-     11-13-2025
-====================
-
-   * device/oneplus/avalon
-231eb17 avalon: Add crdroid dependencies for jenkins
-
-   * external/vim
 8cb4505 patch 9.1.1912: tests: test_plugin_comment fails
-c44e5ae patch 9.1.1911: build failure on Solaris with gcc 5
-d667946 patch 9.1.1910: tests: test failures in Test_term_gettitle() in CI
-23e12c0 patch 9.1.1909: filetype: .mom files recognized as nroff files
-e9d296e runtime(erlang): recognize -if/-elif as erlangPreCondit in syntax script
-9ab6a22 runtime(doc): Improve :help :ls description formatting
-4f19d27 runtime(vim): Update base syntax, match :prompt command args
-
-   * kernel/oneplus/sm8650-devicetrees
-81e64312e qcom: camera: Build both camera DTB[O]s for giulia together
-
-   * lineage/hudson
-362cfeb Two-face
-c529ac8 Regenerate device dependency mappings
-
-   * lineage/mirror
-e7ad4d2 Updated lineage-minimal to 12-Nov-2025 11:02 UTC
-136c0a7 Updated aosp-minimal to 11-Nov-2025 23:22 UTC
-f918fe2 aosp-minimal: Include release branches
-d7ea5e6 Updated to 11-Nov-2025 23:01 UTC
-
-   * lineage/wiki
-4567d9f wiki: Add Changing screen resolution quirk for some devices
-2bccf08 wiki: Add Nubia X
-
-====================
-     11-12-2025
-====================
-
-   * device/oneplus/avalon
-8f683a1 avalon: overlay: Move in alert slider configs
-47b7425 avalon: Set market name for device
-4b0c151 avalon: Enable UDFPS animations
-
-   * external/arm-optimized-routines
-712aa21 math: Remove float_t and double_t
-
-   * external/vim
-89f0a3a patch 9.1.1908: tests: test_crash.vim times out in CI ASAN builds
-f85951f runtime(css): improve cssBoxProp matches
-7dd51d3 patch 9.1.1907: xterm: no support for mouse buttons 8 and 9
-efc3be7 patch 9.1.1906: filetype: not all Ruby files are recognized
-1ff3e70 patch 9.1.1905: tabpanel: truncates terminal output
-b74ec15 runtime(sqlcomplete): only set 'omnifunc' if dbext plugin was loaded
-97c3744 runtime(doc): Wrap some overlength lines in vim9{,class}.txt.
-fe24972 runtime(vim): Update base syntax, refine object constructor matching
 
    * kernel/oneplus/sm8650
-9e09e34bd2b mbcache: Speed up cache entry creation
-d4586654fcf arm64: debug: disable self-hosted debug by default
-c39f63da001 lib: Disable debug_locks
-ad4ec4db207 kernelsu: replace renameat hook with fsnotify
-9226b30d560 kernelsu: Fix kernel panics caused by thread info flag corruption
-5d27ee02a7f kernelsu: Use SUS_SU by default
-b8b9c69824f kernelsu: Fix SUS_SU feature
-3989bc84975 kernelsu: implement v2_signature size/hash override from userspace through kernel module parameter
-79a02415a5b kernelsu: Allow compatible manager apks
-557ecd6f8f9 kernelsu: Remove duplicate function to fix compilation
-94117c6d04e kernelsu: Enable susfs for ksu
-3497ae77389 kernelsu: Add susfs in gki android14-6.1
-26278ba3633 drivers: Set proper version for KernelSU-Next
-5e102287073 drivers: Import KernelSU Next v1.1.1
-8c60451d74b drivers: Add KSU config path
-2144c00f422 Merge branch 'android14-6.1-lts' of https://android.googlesource.com/kernel/common into 16.0
+08e5e5654c Load AT803X PHY driver module during first stage init
+6f50af051b Merge remote-tracking branch 'sm8650/lineage-22.2' into HEAD
+fded65abf0 drivers: dwc3: Remove duplicate `DWC3_LLUCTL` macro definition
+60527d1c4e Merge tag 'ASB-2025-11-03_14-6.1' of https://android.googlesource.com/kernel/common into HEAD
+64d7f3e6af Merge branch 'android14-6.1-lts' of https://android.googlesource.com/kernel/common into HEAD
+d8c98e62df Merge tag 'KERNEL.PLATFORM.3.0.r1-12700-kernel.0' of https://git.codelinaro.org/clo/la/kernel/qcom into HEAD
 
-   * packages/apps/LMOSystemUIClock
-338cf5d Add five new unique Google Fonts
-321a9be clock: implement additional burn in protection
-b7c2563 clocks: remove all which violate guidelines
+   * kernel/oneplus/sm8650-modules
+aa6fc1696 Merge remote-tracking branch 'sm8650-modules/lineage-22.2' into HEAD
+7582b2d68 Merge tag 'LA.VENDOR.14.3.0.r1-22400-lanai.QSSI15.0' of https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/qcacld-3.0 into HEAD
+b59fee779 Merge tag 'LA.VENDOR.14.3.0.r1-22400-lanai.QSSI15.0' of https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/qca-wifi-host-cmn into HEAD
+5be67788a Merge tag 'LA.VENDOR.14.3.0.r1-22400-lanai.QSSI15.0' of https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/platform into HEAD
+c28617d86 Merge tag 'LA.VENDOR.14.3.0.r1-22400-lanai.QSSI15.0' of https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/wlan/fw-api into HEAD
+3827d1292 Merge tag 'GRAPHICS.LA.14.0.r1-10500-lanai.0' of https://git.codelinaro.org/clo/la/platform/vendor/qcom/opensource/graphics-kernel into HEAD
+0e714abca Merge tag 'LA.VENDOR.14.3.0.r1-22400-lanai.QSSI15.0' of https://git.codelinaro.org/clo/la/platform/vendor/opensource/dataipa into HEAD
+39d0f8c1b Merge tag 'LA.VENDOR.14.3.0.r1-22400-lanai.QSSI15.0' of https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/bt-kernel into HEAD
 
-   * system/core
-fec77ef init: property_service: Hide adbd
-
-   * vendor/apn
-2341ff2 Add a helper to pretty format apn xmls and run it
-ebf7f73 Initial commit
+   * vendor/oneplus/sm8650-common
+c659b57 sm8650-common: Enable GamePowerOptFeature in PowerFeatureConfig
+b11641c sm8650-common: Move perf boost configs to device
 
