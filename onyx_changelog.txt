@@ -1,10 +1,134 @@
 ====================
-     12-07-2025
+     12-10-2025
 ====================
+
+  Device Side changes
+- Enabled 120Hz Keyguard
+- Updated UDFPS handling and animations
+- Improved DT2W stability
+- Optimized OTG power usage
+- Optimized Wi-Fi power consumption
+- Fixed Smart Charging (Lineage implementation)
+- Improved thermal performance
+- Enhanced fast charging behavior
+- Fixed USSD dial issue
+- Added Bluetooth v5+ fixup
+- Added CPU hints for improved UI performance
+- Added 120fps Screen Recorder support
+- Switched to ARMv9 Architecture
+- Added GameBar with RAM temp & clock overlay
+- Improved Display Saturation mode
+- Added Dynamic Thermal Profile handler
+- Added Peak Refresh Rate handler
+- Improved Dolby Atmos processing
+- Fixed multiple SEPolicy denials
+- Fixup for symlink denials
+- Improved loudspeaker output
+- Enhanced Dolby processing pipeline for deeper bass
+- Fixed no incoming audio on Bluetooth/wired headsets
+- Added HBM (High Brightness Mode)
+- Improved CPU tuning (GS101 inspired)
+- Various under-the-hood optimizations & fixups
 
 
    * frameworks/base
-91fda764d91f New Crowdin updates (#1275)
+71a2ed2dac38 fixup! inputmethod: allow hiding navigation ime bar [1/4]
+
+   * lineage/hudson
+17139ba rescuing the Jamboard from Google's dumpster
+
+   * lineage/wiki
+f322d788 templates: before_build_init: apt get u-boot dep
+
+   * packages/apps/Launcher3
+c36551939a fixup! Launcher3: Allow hiding navigation ime bar [4/4]
+
+   * packages/apps/Settings
+7e99c653537 Merge pull request #165 from 306bobby-android/16.0
+
+====================
+     12-09-2025
+====================
+
+   * device/qcom/sepolicy-legacy-um
+8204f3a2 legacy: Label timeservice app with user=system
+
+   * device/qcom/sepolicy_vndr/legacy-um
+492c88574 sepolicy: Label qcom,dp_display wakeup node
+
+   * 
+   * frameworks/opt/telephony
+2cb28697c2 Merge pull request #8 from userariii/16.0
+
+   * packages/apps/crDroidSettings
+bccd908 crdroid: Update strings for LTE CA aggregation
+
+====================
+     12-08-2025
+====================
+
+   * android
+62a7774 manifest: Track dng_sdk
+
+   * art
+5482d476d2 Reduce severity of 'cannot load the jdwp agent' logs to remove spam
+
+   * build/release
+fa3e8d4a Merge tag 'android-security-16.0.0_r3' into staging/lineage-23.0_merge-android-security-16.0.0_r3
+
+   * build/soong
+129d7d584 cc: do not disable FMA
+
+   * external/dng_sdk
+5359e8a dng_area_task: Provide backwards compatibility with legacy blobs
+
+   * frameworks/av
+1208847eb9 Null Pointer Exception in CameraServer during user switch
+
+   * frameworks/native
+afaff3bf9e gui: Fix buffer caching issue causing flicker
+
+   * hardware/interfaces
+f0af756cc2 Merge 'lineage-23.0' into 16.0
+
+   * lineage/mirror
+d2060d6 Updated to 07-Dec-2025 23:01 UTC
+
+   * lineage/scripts
+994084d pixel: Winter cleanup
+
+   * packages/apps/DocumentsUI
+09a2acff6 Use proper background in dark theme
+
+   * packages/apps/LineageParts
+f09d6b8 LineageParts: M3E love for everyone
+
+   * packages/modules/Bluetooth
+b3552e88ff Merge 'lineage-23.0' into 16.0
+
+   * packages/modules/Connectivity
+34f98cf6ae Merge 'lineage-23.0' into 16.0
+
+   * packages/modules/Wifi
+2bb0fa2e38 Merge 'lineage-23.0' into 16.0
+
+   * packages/services/Telecomm
+59edf044e Telecomm: Fix InCallController.getInCallServiceComponents() in secondary users
+
+   * packages/services/Telephony
+2cc6b30b8 RadioInfo: Handle system insets
+
+   * system/core
+8c88754b5 init: property_service: Hide adbd
+
+   * vendor/lineage
+777a6794 crdroid: Bump to version 12.4
+
+====================
+     12-07-2025
+====================
+
+  
 
    * packages/apps/GameSpace
 38360c3 GameSpace: Do not exclude activity from recents
@@ -12,73 +136,15 @@
    * packages/apps/LMOFreeform
 bca4bab New translations (#16)
 
-   * packages/apps/Launcher3
-b3029f40da Launcher3: Fix min usage in XML for CustomSeekBarPreference
-
-   * packages/apps/crDroidSettings
-de42f78 New Crowdin updates (#1274)
-
 ====================
      12-06-2025
 ====================
-
-   * lineage/hudson
-bfe0fa1 Regenerate device dependency mappings
 
 ====================
      12-05-2025
 ====================
 
-   * device/xiaomi/onyx
-af54ebb onyx: props: Enable ADPF CPU hints for improved UI performance
-99bbe3b onyx: rootdir: Set default thermal_normal mode for better charging current
-baba201 onyx: props: Enable compr_voip feature
-727136b onyx: rootdir: Restore I/O performance As one can see in cfq_arm_slice_timer(), the CFQ I/O scheduler supports two parameters that can make it delay I/O: group_idle and slice_idle. Restore I/O performance by setting both the group_idle and slice_idle parameters to zero.
-f068b9f onyx: Enable UDFPS icons and animations
-1335963 tmp
-a7e1121 onyx: Include GameBar - Real-time Performance Overlay for Android credit goes to @kenway214 https://github.com/kenway214/packages_apps_GameBar Real-time FPS Monitoring - Track frame rates with multiple measurement methods CPU Metrics - Usage percentage, per-core frequencies, and temperature GPU Metrics - Usage, clock speed, and temperature Memory Stats - RAM usage, speed, and temperature Battery Temperature - Monitor device thermal status Customizable Overlay - Adjustable position, size, colors, and transparency Per-App Configuration - Auto-enable GameBar for specific applications Logging & Analytics - Record and analyze performance data Gesture Controls - Double-tap screenshot, long-press actions Device-Specific Overlays - Easy hardware path configuration per device
-e41d37b onyx: Extend audio offload buffer size to 256kb Extend buffer size for offload playback to reduce the frequency of CPU wake up. It makes ADSP to process more data one time and reduce the number of times to wake up CPU.
-76e8b53 onyx: Switch to armv9-a ARCH variant Running below command: $ cat /proc/cpuinfo | grep -m 1 Features Features        : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 asimdfhm dit uscat ilrcpc flagm ssbs sb paca pacg dcpodp flagm2 frint i8mm bf16 bti
-0d5ceb9 onyx: Fixing connecting BLE (bt 5.x) devices (smart watches, etc.)
-1e32ee4 onyx: overlay: show min/max refresh rate in settings
-e558e7f drop "onyx: overlay: Settings: Enable Smooth Display setting"
-8037ff0 onyx: Allow qti init shell to open/write page cluster size
-8ff970f onyx: sepolicy: Allow rild to read default_prop 09-18 09:03:16.615  1420  1420 I auditd  : type=1400 audit(0.0:1208): avc: denied { read } for comm=DispatcherModul name=u:object_r:default_prop:s0 dev=tmpfs ino=14458 scontext=u:r:rild:s0 tcontext=u:object_r:default_prop:s0 tclass=file permissive=0 09-18 09:03:16.615  1420  1420 W DispatcherModul: type=1400 audit(0.0:1208): avc: denied { read } for name=u:object_r:default_prop:s0 dev=tmpfs ino=14458 scontext=u:r:rild:s0 tcontext=u:object_r:default_prop:s0 tclass=file permissive=0 09-18 09:03:16.615  1420  1420 I auditd  : type=1400 audit(0.0:1209): avc: denied { read } for comm=DispatcherModul name=u:object_r:default_prop:s0 dev=tmpfs ino=14458 scontext=u:r:rild:s0 tcontext=u:object_r:default_prop:s0 tclass=file permissive=0 09-18 09:03:16.615  1420  1420 W DispatcherModul: type=1400 audit(0.0:1209): avc: denied { read } for name=u:object_r:default_prop:s0 dev=tmpfs ino=14458 scontext=u:r:rild:s0 tcontext=u:object_r:default_prop:s0 tclass=file permissive=0 09-18 09:03:16.615  1420  1420 I auditd  : type=1400 audit(0.0:1210): avc: denied { read } for comm=DispatcherModul name=u:object_r:default_prop:s0 dev=tmpfs ino=14458 scontext=u:r:rild:s0 tcontext=u:object_r:default_prop:s0 tclass=file permissive=0 09-18 09:03:16.615  1420  1420 W DispatcherModul: type=1400 audit(0.0:1210): avc: denied { read } for name=u:object_r:default_prop:s0 dev=tmpfs ino=14458 scontext=u:r:rild:s0 tcontext=u:object_r:default_prop:s0 tclass=file permissive=0 09-18 09:03:16.615  1420  1420 I auditd  : type=1400 audit(0.0:1211): avc: denied { read } for comm=DispatcherModul name=u:object_r:default_prop:s0 dev=tmpfs ino=14458 scontext=u:r:rild:s0 tcontext=u:object_r:default_prop:s0 tclass=file permissive=0 09-18 09:03:16.615  1420  1420 W DispatcherModul: type=1400 audit(0.0:1211): avc: denied { read } for name=u:object_r:default_prop:s0 dev=tmpfs ino=14458 scontext=u:r:rild:s0 tcontext=u:object_r:default_prop:s0 tclass=file permissive=0
-17f0bc9 onyx: Address filesystem decryption denial [    6.032858,2] audit: type=1400 audit(14.933:4): avc:  denied  { search } for  uid=0 pid=168 comm=kworker/2:1 name=block dev=tmpfs ino=17685 scontext=u:r:kernel:s0 tcontext=u:object_r:block_device:s0 tclass=dir permissive=0
-e0c5dff onyx: sepolicy: Allow hal_camera_default to access /proc/meminfo and /proc/pressure/* 1. Access to /proc/meminfo:    - avc: denied { open } for path=/proc/meminfo dev=proc ino=4026532013 scontext=u:r:hal_camera_default:s0 tcontext=u:object_r:proc_meminfo:s0 tclass=file
-a7f70ad onyx: Allow camera HAL to access miev device avc:  denied  { write } for  name=miev dev=tmpfs ino=1699 scontext=u:r:hal_camera_default:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=0
-9612cad onyx: Address system_server sepolicy avc:  denied  { write } for  name=vndbinder dev=binder ino=6 scontext=u:r:system_server:s0 tcontext=u:object_r:vndbinder_device:s0 tclass=chr_file permissive=0
-de1ddb4 onyx: Allow vendor_qrtr to manage its own data avc:  denied  { write } for  name=qrtr dev=dm-45 ino=428 scontext=u:r:vendor_qrtr:s0 tcontext=u:object_r:vendor_data_file:s0 tclass=dir permissive=0
-13f59b5 onyx: Move interfaces hypsys common ndk to hardware/xiaomi
-5bb4ebe onyx: Move hypsys common service aidl to hardware/xiaomi
-372e6fd onyx: Enable Wide Color Gamut support Change-Id: Ia50a03cd8ac32ce4bb1c1a8691d57c674b9cfb40
-0bd25aa onyx:  Add secondary interface using gEnableConcurrentSTA=wlan1 gEnableConcurrentSTA=wlan1 will create wlan1 while insmod driver.
-b453246 onyx: wifi: tune bmps listening interval Tune the BMPS listening interval for the moderate power level to achieve power savings during wifi idle.
-cb232a8 onyx: wifi: Enable Optimized Power Management - This config was renamed as of CLO commit [1] and [2].
-3e35156 onyx: Remove some camera-daemon commands Those commands have moved to init.rc.
-30335c8 onyx: Disable minidebuginfo generation * it is recommended on production build. * Reduces memory overhead and improves runtime performance slightly
-2fd6758 onyx: Add feature flag for IPSEC_TUNNEL_MIGRATION This commit adds the IPSEC_TUNNEL_MIGRATION feature flag, with XFRM_MIGRATE used as the implementation
-2ae3711 onyx: Use tether automatic upstream selection Also, this overlay was moved to Tethering package, so it is unused.
-c99e957 onyx: Remove deprecated config_mobile_tcp_buffers/networkAttributes Change-Id: Ieda947e283cde11cf74a01dc1b438e1deeb902c9
-5067658 onyx: overlay: Use the new auto network selection UI Change-Id: I76698911103601d5f3ad67e1099790af8c2fdc18
-1f47882 onyx: overlay: Adjust status bar paddings
-3c2c3f2 onyx: Clean up python extract script
-27ed311 onyx: include Gcam instead of aperture
-155ee4d onyx: Set default thermal profile
-4c75953 onyx: Switch to NCM USB tethering
-
-   * lineage/hudson
-ac6b651 Regenerate device dependency mappings
-
-   * lineage/mirror
-e0880f2 Updated to 04-Dec-2025 23:01 UTC
-
-   * lineage/scripts
-53c1836 device-deps-regenerator: Improve matching
-
-   * tools/extract-utils
-c452d62 Revert "extract_utils: add lib fixup for libprotobuf-cpp-{lite,full}-21.7"
-
+   * 
    * vendor/addons
 7b9e92a3 addons: Import Pixel launcher customer overlay
 
@@ -89,34 +155,35 @@ e09a80d Add Bait MX
      12-04-2025
 ====================
 
+   
+   * packages/providers/MediaProvider
+9f7d73baf Merge tag 'android-security-16.0.0_r3' into staging/lineage-23.0_merge-android-security-16.0.0_r3
+
+   * packages/services/Mms
+a1a7477 Merge tag 'android-security-16.0.0_r3' into staging/lineage-23.0_merge-android-security-16.0.0_r3
+
    * tools/extract-utils
-75e9174 extract_utils: add lib fixup for libprotobuf-cpp-{lite,full}-21.7
+c452d62 Revert "extract_utils: add lib fixup for libprotobuf-cpp-{lite,full}-21.7"
 
 ====================
      12-03-2025
 ====================
 
-   * lineage/hudson
-d61ec8c unfold extra room for proper destruction
-772ac75 CC 9 -> CC9
-
-   * lineage/mirror
-067ad91 Updated aosp-minimal to 02-Dec-2025 23:02 UTC
-
-   * lineage/wiki
-3bea55fe devices: Promote zizhan to 23.0
-9aec8e09 wiki: CC 9 -> CC9
-
    * packages/apps/FlipFlap
 34ec40c FlipFlap: Use new method to listen for preference changes
-33302c5 FlipFlap: Convert to SwitchPreferenceCompat
-8351110 FlipFlap: Move to PreferenceFragmentCompat
 
    * system/logging
 7df7fd48 logd: Use build time debuggable check for klogd_default
 
 ====================
      12-02-2025
+====================
+
+   * hardware/qcom-caf/common
+d4f02ca qcom: Declare some prebuilt qti radio interfaces
+
+====================
+     12-01-2025
 ====================
 
    * packages/apps/Aperture
@@ -151,185 +218,4 @@ e35b3b2 Automatic translation import
 
    * vendor/qcom/opensource/commonsys/fm
 9a0f49d Automatic translation import
-
-====================
-     12-01-2025
-====================
-
-   * lineage/wiki
-1b7a17b7 wiki: Require dtbo flash for enchilada and fajita
-
-====================
-     11-30-2025
-====================
-
-   * device/qcom/sepolicy_vndr/legacy-um
-ae358764f sepolicy: Label SEC NFC device & HAL
-
-   * device/qcom/sepolicy_vndr/sm8450
-ab5a1f3d9 sepolicy: Label SEC NFC device & HAL
-
-   * device/qcom/sepolicy_vndr/sm8550
-08e84aa25 sepolicy: Label SEC NFC device & HAL
-
-   * device/qcom/sepolicy_vndr/sm8650
-dd7818565 sepolicy: Label SEC NFC device & HAL
-
-   * device/qcom/sepolicy_vndr/sm8750
-6748e0222 sepolicy: Label SEC NFC device & HAL
-
-   * hardware/lineage/interfaces
-14a1544 compatibility_matrices: Mark as product specific
-
-   * lineage/hudson
-fadc405 Regenerate device dependency mappings
-
-   * lineage/wiki
-7dc3668c wiki: Correct a few bits in timelm
-4f75f44a avalon/caihong/waffle: Bump FW to match OOS 16 release
-
-   * vendor/lineage
-fb3c5aa2 overlay: Use google sans flex for lockscreen clock
-27f04322 overlay: Remove duplicate DPS config
-c7e2b228 crdroid: Update blur support
-bb28f872 crdroid: Bump to version 12.3
-05aacac5 crdroid: Build LMO systemui clock plugin
-a06c57fd envsetup: Set crdroid path for Pixel OOT kernel build
-315fe4b1 crdroid: Do not install matlog and updater in private space
-5bff4302 build: Ship adb_root only WITH_SU
-52f06080 crdroid: Include vendor/certification when available
-17b39c33 release: Re-enable launcher blur flags
-cb25d809 overlay: enable ambient burn in protection
-a473693f component-overrides: Force disable google settings intelligence injects
-daa35ff0 overlay: Enable keyboard vibration
-f26fa659 overlay: SystemUI: Add plugin whitelist
-8ec00278 overlay: SystemUI: Tune new biometric dialog UI
-f1480115 overlay: Enable split shade for notifications in landscape
-90771089 release: Disable apply_picture_profiles
-011a537d release: Disable lpp squeeze effect
-ce901a58 release: Generate themed/monochrome icons for all apps
-95c6c3bc release: Disable ambient AOD
-89536e17 release: Remove glanceable hub
-47cb5609 release: Remove some useless notification flags
-230856ae release: Remove flag for using emphasized font family for shade header
-a996dd74 release: Remove glitchy depth push scaling effect
-fdb9dfa8 release: Drop notification themed icons
-f8e6aea8 release: drop more launcher flags
-341d0f7e release: drop more flags
-f621e8bb release: Disable enroll_layout_truncate_improvement
-25286d40 release: Remove notifications redesign templates flag
-05ca6b96 release: Disable thumbnail_block_model flag
-6eec74ec release: Enable android.app flags
-b1f65dbe release: drop launcher blur
-bb394a96 release: Re-add transparent notification
-53b580b3 release: more flag changes
-23619817 release: enable more flags
-c44b751b release: drop low_light_clock_dream
-42a63688 release: drop some flags
-85e385d5 release: drop new sb icons
-c33e342a release: Enable WallpaperPicker2 flags
-3e604a38 release: Enable SystemUI flags (com.android.systemui.shared)
-6dd7c191 release: Enable SystemUI flags
-8946a0a2 release: Enable SettingsLib flags
-f04c68ed release: Enable Settings flags
-e22dd5a9 release: Enable Launcher3 flags
-f95c4609 overlay: Make Google Sans the default headline font
-e5694f5d Move adb_root outside userbuild
-bc8b8139 crdroid: Adding an option to build DeviceAsWebcam
-35ff49e7 crdroid: Allow disabling MatLog
-463339cf crdroid: generate json at build time
-4678cb5f component-overrides: Force disable various google components
-8ea8ed44 crdroid: Conditionally build ColumbusService
-71f3b383 crdroid: Move face unlock biometric permission to system_ext
-a37bf1e0 crdroid: Switch to AOSPA's face unlock implementation
-d45781a5 crdroid: Build LMO Freeform app and sidebar
-fbca7b35 crdroid: Build GameSpace
-938bc661 crdroid: Build BatteryStatsViewer
-297e9dfe overlay: Add gms location history to extra location packages
-7b4b9ee0 overlay: Add tethering to location exemption
-ccd64eb5 overlay: Add SystemUI to location extra packages
-1f1f9987 overlay: Add OmniJaws to location extra packages
-fadfdb9c crdroid: Build OmniJaws service
-94c6dbad crdroid: Build OmniStyle
-fae4a796 config: Enable Material Design 3 Expressive
-01d0f29a overlay: DeviceConfig: update nearby flags
-9bf1a263 soong: Add CAMERA_NEEDS_CLIENT_INFO_LIB{_OPLUS} to select()
-a4b8fe5e soong: Add support for vendor tag with client package name to select
-56184a50 build: Override host metadata
-b22f157a kernel: Set "safe" default values for kernel build host & user
-2cfb351c roomservice.py: use -j2 for repo sync
-50e8c861 overlay: Remove bouncer delay when face unlock is enabled
-eda401d1 rro_overlay: Use headline font for PermissionController
-d280c351 overlay: device_config: Updates
-c920b19d overlay: device_config: Add values required for Speech Recognition
-cad72a28 overlay: device_config: Escape special characters
-7bf66a7a overlay: device_config: animate navbar on long press
-3ec15c1e overlay: Update circle to search overlays for vanilla builds
-2081c8f6 overlay: Enable circle to search
-84468d72 overlay: Use google-sans for font config overlays
-a08e3e9b crdroid: Remove packages moved to addons
-174e7677 crdroid: Moved bootanimation to addons
-c76a3e0e crdroid: Clean up wallpaper overlay
-4b2a8b16 crdroid: Do not clone default AudioFX app
-2ef989fe crdroid: Disable default frame rate limit for games
-bff2237c config: Optimize Launcher3 and Settings for speed
-65b44348 crdroid: Disable memtag for different processes
-833003bb crdroid: Execute changelog script once at a time
-b9cfa1cc crdroid: Add changelog script
-5ed16148 overlay: update configs for AiAi
-8ba2cd32 overlay: Update device configs global overrides
-37b811b9 overlay: Offload WM shell to another thread
-e1a75e84 overlay: Update SettingsProvider defaults
-3df09a12 crdroid: Update clone exemption list
-e011e7c2 crdroid: Add preinstalled package list to stop auto cloning
-8fc8abb1 overlay: Enable app-cloning feature in Settings
-98f79344 overlay: Settings: Show memory usage in app info
-a4762a95 device_config: Enable Cloned App
-e655c015 overlay: Update clock plugin list
-bf614973 overlay: Allow new SystemUI clocks
-52a68ecc overlay: Set AOSP webview as fallback
-edcd58bc build: Enable ThinLTO cache
-007909d9 crdroid: Always disable app launch blur
-005c33f7 common: Allow OTA downgrade regardless build type
-e62741df roomservice: get me some crDroid
-544171c8 charger: Switch from LineageOS Teal to crDroid Blue
-656c8d75 Revert "overlay: Default to Seedvault backup transport"
-ff780b9d crdroid: Drop custom adb drawable
-fe3cc2ce build: Ship as crDroid based on LOS
-
-====================
-     11-29-2025
-====================
-
-   * hardware/lineage/interfaces
-1b3557d interfaces: Add compatibility matrix
-
-   * packages/apps/Seedvault
-6723deaa Merge branch 'android16' of https://github.com/seedvault-app/seedvault into lineage-23.0
-de2b6f99 Merge tag '16-5.7' of https://github.com/seedvault-app/seedvault into lineage-23.0
-
-   * vendor/lineage
-60444c0d lineage: Move device_framework_matrix.xml to hardware/lineage/interfaces
-
-====================
-     11-28-2025
-====================
-
-   * device/xiaomi/onyx
-0771af2 onyx: Build Lineage Health HAL
-b1e6033 onyx: overlay: Set preferred refresh rate on keyguard to 60
-5a2d94c onyx: overlay: Lock lockscreen to 120hz
-5c06844 onyx: parts: Properly handle min refresh rate
-ff1b1da onyx: parts: Rewrite in Kotlin
-f253609 onyx: parts: Set min refresh rate to 60hz
-da1773f onyx: Remove libqtigefar from dependency check
-1204c02 onyx: Drop sla service
-08c8d58 onyx: hidl: Drop unused minet and miwill entries
-8362ec4 onyx: overlay: Add SecureNfc support for onyx sku
-784d33d onyx: Switch to AOSP NXP NFC service
-fb7ec78 onyx: Update from OS2.0.204.0.VOLMIXM
-
-   * lineage/wiki
-446887f4 wiki: Allow 15 fw for FP4
-42682e47 wiki: Allow A16 FW for dodge and erhai
 
