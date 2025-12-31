@@ -1,0 +1,79 @@
+crDroid 11.12
+_Android 15.0.0_r32, kernel 4.9, retrofit dynamic partitions, release-keys signed_
+
+Android 15 official release (relevant changes since Android 14 where applicable):
+- LineageOS/crDroid ROM sources:
+  - Security updates through December 2025 ASB merged from upstream AOSP & LineageOS.
+  - Based on current lineage-22.2 device-specific branches, current as of 24 December 2025.
+- Device-specific things I can't stop messing with:
+  - Back to using QTI perfd in Android 15; it works better than libperfmgr with kernel 4.9.
+  - Sensor-based doze customizations are now in "Settings > Display > Lock screen > Ambient Display" options (no longer using crDroid doze).
+  - Using PSI and vmpressure signals with lmkd, plus attempts to convince Activity Manager to not kill tasks immediately that have been backgrounded, so you can actually switch out of a game to answer a couple messages and then go back without it reloading.
+  - Enabled userspace clatd so that apps using hard-coded IPv4 addresses will work over IPv6 mobile data (it's supposed to be handled by modem via QTI blobs but we're missing something proprietary to enable it; that's why it's never worked under LOS).
+  - Not actually device-specific, but one thing I'm including is a fix from AOSP to system/logging/ that stops leaking certain kernel-related selinux AVC logs to userspace, see https://android-review.googlesource.com/c/platform/system/logging/+/3725346 for details (as recommended by backslashxx here: https://github.com/backslashxx/KernelSU/issues/29).
+- Happy holidays & Happy New Year to you and your loved ones. Seriously, you folks are the best!
+
+Release Notes:
+- If you want to use OnePlus Camera/Gallery, go to https://gitlab.com/crdroidandroid/proprietary_vendor_oneplus_camera/-/tree/15.0-op6?ref_type=heads and follow the instructions in the README.md for how to update the stub APKs to full OnePlus Camera and Gallery and manually install the Gallery expansion file after ROM installation.
+- "Hey where is the new Android 15 QuickSettings tile interface with customizable blobs?" No. Everyone tried it and hated it within 24 hours and wanted the existing customizations back.
+- Sadly we can't have background blurs available, but disabled by default. For better battery life & smoother UI, disable the toggle in Settings > Display.
+- TL;DR make sure you do the following setup steps or don't bother submitting bug reports:
+  - Factory reset/clean flash if coming from any Android 15 build before 11.2 unrelease or crDroid 10.x (Android 14).
+  - Make sure to enable or disable *BOTH* "Settings > Display > Prevent accidental wake-up" and "Settings > crDroid Settings > Miscellaneous > Pocket detection" toggles together; it might do strange things with only one or the other.
+- DeviceExtras:
+  - Now located within "Settings > System" due to changes in grouping/background in Android 15.0 ("thanks, Google!").
+  - The CPU/GPU max speed sliders are wonky, because I am not a Java dev and don't know how to modify CustomPreferenceBar to do the things I want. Short version is that defaults are good. If you want to change them, select the frequency at or just BELOW the value you know you want, and it will select the next highest actual value. After a reboot, when it reads the number from the corresponding sysfs node, it will actually show the next HIGHER matching value. But it's doing the right thing inside.
+  - AdrenoBoost likes being at "1" now that we're back on QTI perfd. You can maybe save some battery putting it at 0, but shade will be janky. Crank up to "3" and use the OCGPU crDroid++ kernel for e-peen benchmarking.
+
+Known Issues:
+_Look, none of this is really deal-breaking for most people. Things work well as a daily driver, all major systems work as they should as far as I can tell (or at least as well as in upstream LineageOS), battery life tends to be average-to-great depending on usage, etc._
+- Upstream crDroid/LineageOS/Qualcomm/Google issues:
+  - SAFETYNET/PLAY INTEGRITY MAY NOT PASS. It's always been a cat & mouse game, and Google changes the rules all the time and wants hardware attestation. It's probably possible make it work with custom keybox XML and various hiding/injection things, but I haven't bothered fighting it myself in over a year.
+  - Regardless of how you installed or updated, sometimes it will freeze on the first (re)boot at the crDroid logo during boot animation. Actual freeze, not just looping forever. This is confirmed to be a crDroid source issue, not an "oh fsck my flash storage chip is dying" problem. Unplug the USB cable, then press & hold the power button until the phone restarts, and it should come up normally.
+  - NikGapps package puts a big black stripe across the UDFPS icon on fajita. But the actual dimlayer (the alpha mask that lets the HBM green sensor illuminating circle shine through) works fine when you actually touch it. Cosmetic issue with GApps overlay, not a ROM problem, doesn't affect functionality.
+  - If you're experiencing massive audio playback latency, disable Google background-audio-monitoring features like Live Captioning, Hotword detection, and "Now Playing" detection (or just do it to save some battery anyway).
+- crDroid OP6/6T-specific issues:
+  - "Performant auth" (single-fp-press wake-and-unlock) is currently unreliable, and may require pressing power three times to wake screen. This seems to be common since late April 2025 changes to things in both crDroid and upstream in LineageOS.
+  - Please note that OnePlus Gallery may use a LOT of battery in the background after some time idle, even if unplugged from power, once you install the expansion that allows it to do image classification/facial recognition. You may want to restrict background battery use, or just remove the expansion from Internal Storage > Android > obb > com.gallery.oneplus if you installed it.
+
+Build type: Monthly (-ish)
+Device: OnePlus 6 (enchilada)
+Device maintainer: Jordan Whiteley (Terminator_J)
+Required firmware: OxygenOS 11.1.2.2
+
+====================
+     12-24-2025
+====================
+
+   * system/logging
+b6f505c5 Hide procfs related audit messages from appdomain
+
+====================
+     12-22-2025
+====================
+
+   * packages/apps/crDroidSettings
+3fd5cb9 New Crowdin updates (#1275)
+
+====================
+     12-16-2025
+====================
+
+   * lineage/scripts
+8012f03 lineage-priv-template: Override mainline bluetooth signature
+
+   * packages/apps/Aperture
+6150514 Automatic translation import
+
+   * vendor/crowdin
+9ce60df Automatic translation import
+
+   * vendor/qcom/opensource/commonsys/fm
+89815b8 Automatic translation import
+
+====================
+     12-15-2025
+====================
+
+   * lineage/scripts
+4e850a6 lineage-priv-template: Add new Android 16 QPR2 key
