@@ -3,6 +3,13 @@ Build type: Monthly
 Device: Samsung Galaxy A52 4G (a52q)
 Device maintainer: TestaMic
 
+===== 01-29-2025 =====
+- Synced with the latest sources.
+- Initial crDroid 12.6 build (based on Android 16 QPR2).
+- Switched to Simon’s upstreamed kernel.
+- Reduced blur radius to make it smoother.
+- Fixed hotspot not turning on.
+
 ===== 01-20-2025 =====
 - Synced with latest sources.
 - Fixed OTG. (like USB-C hubs, USB-C Flash drives, etc.)
@@ -25,399 +32,252 @@ Device maintainer: TestaMic
 - Added a patch to fix gestures lagging when blur is enabled.
 
 ====================
-     01-20-2026
+     01-29-2026
 ====================
+
+   * frameworks/base
+331245e65 Revert "SystemUI: Allow to toggle BT directly with Bluetooth tile [1/2]"
+
+   * hardware/lineage/interfaces
+e0bbf71 livedisplay: sdm: Update default PA on setDisplayMode
+
+   * hardware/oplus
+6da232e sepolicy: Label audio props to avoid denials
 
    * kernel/samsung/sm7125
-0e4c08234 sm7125_defconfig: Disable VDSO.
-098891c00 Revert "arch: arm64: vdso32: Change armhf compiler version."
-3f165433a arch: arm64: vdso32: Change armhf compiler version.
-42983c7d5 sm7125: Add required defconfig changes for FCM level 6.
-e11170d6c drivers: gpu: trace: make TRACE_GPU_MEM selectable
-0ff9408e8 sm7125: Change defconfig according to FCM level 6 requirements.
-262a143fe input: touchscreen: fts5cu56a: Notify scrub_pos sysfs for FOD gestures
-c11d72e83 fixup! "sm7125: input: stm: force enable hover proximity sensor"
-76932e2e1 Revert "sm7125: input: touchscreen: fts5cu56a: Add sysfs to track FOD pressed state"
-5b869855b sched: fair: Modify capacity margins for atoll
-cde4c6213 dts: atoll: Recalculate energy model Values were obtained using freqbench
-1128e6c47 dts: atoll: Add atoll frequency table
-dc7d47784 clk: qcom: clk-cpu-osm: Allow overriding CPU frequency tables in DT
-1aabbcd26 dts: atoll: enable GPU DDR 2.1Ghz
-53c0af143 arm64: boot: atoll: Fix a few freq inconsistencies
-70e5d5130 gpu: samsung_lego: fix adaptive refresh rate color flickering
-c87b69295 ARM64/configs: Samsung: Disable redundant Spectre variant 2 mitigations
-0adb0309c ARM64/configs: Samsung: Enable Unicode
+c3c833472 BACKPORT: epoll: fix compat syscall wire up of epoll_pwait2
+
+   * packages/apps/ExactCalculator
+4053832 ExactCalculator: Clean up unused and redundant code
+
+   * packages/apps/SimpleSettingsConfig
+d63949d Allow "lineage" settings to be set
+
+   * packages/apps/Twelve
+34c38ed Twelve: Migrate to Material 3 Expressive
+
+   * packages/apps/crDroidSettings
+6d8c5c3 crdroid: Get rid of BT dialog toggle
+
+====================
+     01-28-2026
+====================
+
+   * android
+6b2fc0d Merge remote-tracking branch 'lineage-23.2' into 16.0
+
+   * device/lineage/sepolicy
+0e6f8ac sepolicy: Allow systemui access to bluetooth_lea_prop
+
+   * device/oneplus/sm8650-common
+23b542a sm8650-common: Increase reserve partition sizes
+
+   * device/samsung/a52q
+4462a21 a52q: Remove exclusively including lineage-priv.
+
+   * device/samsung/a72q
+a35dbd4 a72q: Remove exclusively including lineage-priv.
+
+   * packages/apps/WallpaperPicker2
+fd99c9e Update settings repository to latest interface
 
    * vendor/apn
-f606483 BY: Fix Life:) configuration
+0762fe5 apn: Make it REUSE compatible
+
+   * vendor/lineage
+faa9f84 release: Enable clock_reactive_variants
 
 ====================
-     01-19-2026
+     01-27-2026
 ====================
 
-   * frameworks/base
-0feafe673 fixup! Add toggle to enable brightness slider haptic feedback [1/2]
+   * build/soong
+ee637a5 soong: check_boot_jars: Whitelist Xiaomi Extensions
+
+   * device/oneplus/avalon
+9d08055 avalon: Add crdroid dependencies for jenkins
+
+   * device/samsung/sm7125-common
+1535d739 sm7125-common: overlay: Reduce blur radius
+
+   * hardware/qcom-caf/common
+28e41fa Introduce xbl_config_arb_check
+
+   * kernel/oneplus/sm8650
+f191feb3d arm64: configs: Disable Qualcomm Thermal Limiter
+
+   * kernel/oneplus/sm8650-modules
+c1afb39 tristatekey: Kill logspace on refresh rate change
 
    * lineage/hudson
-5dad587 Regenerate device dependency mappings
-
-   * lineage/scripts
-4bd08c7 key-migration: Bypass SELinux during abx conversion
-
-====================
-     01-18-2026
-====================
-
-   * device/lineage/car
-d1c70d2 car: Add missing copyright headers
-
-   * external/chromium-webview/prebuilt/arm64
-0bc4821 Update Chromium Webview arm64 to 144.0.7559.76
-
-   * external/chromium-webview/prebuilt/x86
-827c503 Update Chromium Webview x86 to 144.0.7559.76
-
-   * external/chromium-webview/prebuilt/x86_64
-fceff90 Update Chromium Webview x86_64 to 144.0.7559.76
-
-   * hardware/samsung
-3e305b9 pre-commit: Enable clang-format
-9525841 sensors: Run through clang-format
-7aaff6f ril: Run through clang-format
-97f9b8c rebalance_interrupts: Run through clang-format
-435d54d hidl: Run through clang-format
-bf8e652 aidl: Run through clang-format
-d1f90ac aidl: vibrator: Add some brackets
-7f58595 aidl: usb: Add some brackets
-753c897 aidl: memtrack: Add some brackets
-e5322e0 aidl: camera: Remove deprecated module
-63a9687 hidl: camera: Remove deprecated custom device impl and provider
-8d6491d aidl: vibrator: Migrate to select()
-a6d9786 aidl: usb: gadget: Migrate to select()
-d6f1d83 aidl: camera: Migrate to select()
-5ff9ae1 samsung: Remove loki_tool
-7533082 samsung: Delete dtbhtoold
-4514886 aidl: sensors: Define vintf_fragments as modules
+cdb9b53 guess what TIME it is
 
    * lineage/mirror
-88573a4 Updated lineage-minimal to 17-Jan-2026 23:01 UTC
-
-   * lineage/scripts
-bf00364 dev: rro: Remove extra first line space
-
-====================
-     01-17-2026
-====================
-
-   * external/chromium-webview/patches
-b988df5 Update Chromium Webview to 144.0.7559.76
-
-   * external/chromium-webview/prebuilt/arm
-6cf941d Update Chromium Webview arm to 144.0.7559.76
-
-   * frameworks/base
-c438112e1 SystemUI: VolumeDialog: Fix layout issues with left gravity
-faa94e47b Add gravity end to the volume dialog root view
-9201c1a8e Fix volume dialog ringer drawer rtl expansion
-40e5cfcde Add missing margin to landscape collapsed constraint set
-c7623ecfd Change how the ringer drawer background is aligned
-
-   * lineage/mirror
-5e0410a Updated to 17-Jan-2026 11:01 UTC
+e9547ed Updated to 26-Jan-2026 23:01 UTC
 
    * lineage/wiki
-7772f42 wiki: Add Sony Xperia 1 IV/5 IV
+e24fc7f fixup! devices: Promote timelm to 23.0
+
+   * packages/apps/LMOFreeform
+cf02304 sidebar: Update sidebar default customization values
+
+   * vendor/oneplus/avalon
+3b99df0 avalon: Update
+
+   * vendor/oneplus/sm8650-common
+8bc8e5f sm8650-common: Update
 
 ====================
-     01-16-2026
+     01-26-2026
 ====================
 
-   * lineage/scripts
-6b2f980 build-webview: Update default webview to 144.0.7559.76
+   * frameworks/libs/systemui
+e38d7a9 iconloaderlib: Update themed icons color palette
 
-   * lineage/wiki
-61b7f13 wiki: Update hotdogb maintainer list
+   * hardware/qcom-caf/sm8550/audio/agm
+10316d1 agm: Fix format specifiers
+
+   * hardware/qcom-caf/thermal
+181d4d6 thermal-hal: Update skin temperature values for kalama and crow
+
+   * packages/apps/Launcher3
+ed281ec Launcher3: Prevent LauncherPrefs crash during direct boot
+
+   * packages/apps/TvSettings
+01f7b09 TvSettings: Support two button mute
 
 ====================
-     01-15-2026
+     01-25-2026
 ====================
 
    * device/qcom/sepolicy_vndr/legacy-um
-a1a44fbb Fix the AVC denial issue
+32aefa5 sepolicy_vndr: Add SePolicy rules for new wfd AIDL service
 
    * device/qcom/sepolicy_vndr/sm8450
-9d4b9719 Fix the AVC denial issue
+ce9bc1d sepolicy_vndr: Add SePolicy rules for new wfd AIDL service
 
    * device/qcom/sepolicy_vndr/sm8550
-ec7f7b6a sepolicy_vndr: Add permission to write kmsg in vendor_qti_init_shell
-8ac95060 Fix the AVC denial issue
+155be93 sepolicy_vndr: Add SePolicy rules for new wfd AIDL service
 
-   * device/qcom/sepolicy_vndr/sm8750
-4d2c01b8 sepolicy_vndr: Add permission to write kmsg in vendor_qti_init_shell
-fe8fc376 Fix the AVC denial issue
+   * frameworks/native
+4e102a6 nativedisplay: fix the flicker issue in streaming video
 
-   * lineage/wiki
-a75e373 snippets: recovery_reboot: Clarify how to navigate fastboot menu
-4298527 templates: device_install: Be more explicit about side-button navigation
+   * hardware/lineage/compat
+f895522 compat: Provide libaudioutils shim
 
-====================
-     01-14-2026
-====================
+   * hardware/qcom-caf/sm8750/audio/agm
+4ce90e2 agm: Fix format specifiers
 
-   * frameworks/base
-dd6370a53 New Crowdin updates (#1279)
-ef709252a Update Crowdin configuration file
-1c4d975eb SystemUI: Fix default font feature on lockscreen
-a2b9cf7c2 fixing app directory access
-907384a55 fixing ShadeDialogContextRepo crash
-756a555f0 display: Allow HBM in manual brightness if no time limitation
-30c4da4a3 Remove Duplicate WIFI_DISPLAY permission entry
-349525638 totalScanTimeMs and totalWifiLockTimeMs may be 0, causing an ArithmeticException and triggering a reboot.
-eb5868296 Add Fix Bluetooth status display issue after power cycle
-22e865d17 Fixes an issue where the lockscreen clock would display the incorrect time after a SystemUI restart or hot reload.
-8cdfb95f5 SettingsLib: Don't show system overlays on apps list
-5a27392e6 SystemUI: smartspace: Open google weather on tapping smartspace
-0f8cda48d SystemUI: smartspace: refactor dagger
-0bcca1b99 SystemUI: smartspace: fix media view mistake
-52889fda4 SystemUI: Align Smartspace DataProviders with updated BcSmartspaceDataPlugin API
-6faf79435 SystemUI: re enable KeyguardSliceProvider
-71b8802e6 SystemUI: smartspace: fix duplicate date view on lockscreen
-6088bcb65 SystemUI: Implement Reverse-engineered Smartspace
-16df267ea center-cropping media bitmaps to improve quality
-5fef0d5e4 preventing media album bitmaps from impacting performance
-633b3d4ac appops: skip ops for invalid null package during state serialization
-747ff565e Revert "Null safe package name in AppOps writeState"
-3c3b9eedd ActivityManagerService: Perform system compaction with GC
-42c801af7 ActivityManagerService: Adjust delay on boot system compaction
-f814709a2 services: Reduce grace window to kill cache after user unlock
-41d7171e4 fixing configuration controller crash
-38aadc546 fixing contacts apps crash
-ddd1f507d SystemUI: Fix keyguard back button background
-a0fddeae0 Fix NullPointerException in PackageManagerService
-fc79a8285 Reduce unnecessary calls to getLatestVsyncEventData
-6f2c64575 ViewGroup: null-check child in dispatchDraw to avoid NPE
-57d988f72 Fix RuntimeXfermode native memory leaks
-76e690ad7 SettingsLib: Prevent NPE for fragments without divider
-59325e4c3 SystemUI: Hide data switch tile on non-voice capable devices
-8eebf6449 Fix it has two times return back if only press the back key one time.
-9e6f8aea8 Fix index out of bounds exception in HandwritingModeController.
-ce4d62324 SystemUI: Prevent ShadeListBuilder illegal state on notification dump
-69e2542e8 SystemUI: Prevent NotifCollection illegal state on notification dump
-0adf8cf5b SystemUI: Fix stale colors on power menu after UI mode change
-fc6ff55fa CpuMonitorService: reduce cache size
-0cf238195 SystemUI: Add toggle for doze wallpaper
-c35bf4ba6 Fix ConcurrentModificationException in LocaleStore
-7c1b1af90 system: Postpone NetworkWatchlistService scan during boot
-4d5ee9220 try-catch unlinkToDeath called on unlinked Binder.
-335727f75 Minor code optimization.
-fd4b93d09 Move SaveUi from bottom to center
-2c712b806 am: Prevent ANRs by offloading dumps to a dedicated thread
-7b2fc44a0 Fix NullPointerException in ArtFastDataOutput.writeUTF()
-fd0592154 Fix memory leak in car service
-5deb23c00 InputMethodManager: Prevent unnecessary invocation of IME
-a501319c8 Optimize home to desktop transition speed.
-549226047 Optimize the response speed of recents animations
-b7e7fcc8e adjust frame distance to make scrolling smoother.
-27dc8e647 ScreenshotController: Play haptic feedback even on normal ringer mode
-a3cef2ac2 ScreenshotController: Clean up resources when dismissed
-7926af377 Screenrecord: Fix notifications not being dismissed
-da82d5d43 SystemUI: Screenrecord: Add delete action to the notification
-d9b5f68cc SystemUI: InternetTileNewImpl: Fix secondary click
-418c593d8 SystemUI: Allow devices to disable 5G toggle
-90cc8e920 SystemUI: Introduce 5G toggle in internet connectivity dialog
-00a65ab5c SystemUI: Add hotspot toggle in QS internet dialog
-cd91f8f49 fix missing notification backgrounds
-a97cb9971 Optimize the DateTimeView logic time consumption when updating the Ui main thread time
-4fd8aece1 SystemUI: Add margin above small clock in lockscreen
-6c60ab7c4 fix NullPointerException in Animator:callOnList
-c3b501b79 don't remove app widgets from user's home screen when the user stops
-4b943c2d2 SystemUI: Remove split navigation bar layout for sw900dp
-1a343c798 SystemUI: Constrain keyguard indication area burn-in offset
-59502644c AudioService: Cancel old toasts when switching ringer mode
-ec9d25171 AudioService: do not block focus request from applications compiled with lower version sdks
-92c13f5d5 SystemUI: Fix Internet Tile showing no service
-ce55eefc0 frameworks/base: Import Xiaomi Image Tags defenitions
-f7262d2b2 SystemUI: write initial value of SHOW_QR_CODE_SCANNER_SETTING on first call
-818829780 SystemUI: Use privacy_chip_background for charger indicator bg
-e55a57021 base: Add support for application downgrade [1/2]
-3c8e38834 base: Add option to cycle through ringer modes [1/3]
-b615e933d base: Allow disabling private DNS for VPN [1/2]
-e7c7f3413 SystemUI: Add flashlight strength control [SQUASHED]
-d97f9b412 SystemUI: Refresh system icons on theme change
-403f01f5f services: Reduce memory release interval guard
-a57fdc0eb ActivityManagerService: Rewrite release memory on screen wake
-c54495550 SystemUI: clean heap memory on screen off
-d73f942de services: clean system_server heap memory on screen off
-a6482c90f services: optimize memory on device wake
-c2808e36e CachedAppOptimizer: Pageout File pages during system compaction
-4d2fd7b6f CachedAppOptimizer: Initialize compactProfile and compactTime
-a36e3a197 CachedAppOptimizer: Fix persistent compact skipped
-f719a07cd CachedAppOptimizer: Set thread group to background
-6deaa172f services: Disallow max cached processes above 128
-5f7bc75eb CUR_MAX_CACHED_PROCESSES is not greater than the maximum value allowed
-908808fc4 Ask pin for shutdown/reboot on secure lockscreen
-67a395123 SystemUI: Hide QR code scanner tile if not launch activity available
-8bffe5a63 Fix NPE problem to avoid systemserver process crash.
-384ca1250 PowerStats: extend the MAX_STATS_ARRAY_LENGTH
+   * hardware/qcom-caf/sm8750/audio/pal
+7f00b35 plugins: customva_intf: Fix format specifiers
+
+   * hardware/qcom-caf/sm8750/display/core
+2318000 Partial apply: "display-core: fix clang issues"
+
+   * hardware/qcom-caf/sm8750/display/hal
+8f0658c gralloc: Fix format specifiers
+
+   * packages/apps/Settings
+eae3d26 Settings: Remove flag check for blur toggle
+
+   * packages/services/DeviceAsWebcam
+1256e90 Allow setting HQ mode as default
+
+   * system/bpf
+6c5f4f8 bpfloader: Allow overriding kernel version
+
+   * system/core
+872dc0c core: Lockscreen Charging (2/3)
+
+   * system/update_engine
+2f6377d fixup! update_engine: Allow backup tool to run in user builds
+
+   * tools/extract-utils
+48bb722 extract_utils: use copy.deepcopy() for merging fixups
 
 ====================
-     01-13-2026
+     01-24-2026
 ====================
 
-   * hardware/qcom-caf/sm8350/display
-b68a754 qmaa: Fix soong namespace imports
+   * art
+dd66bb3 optimized hprof speed
+
+   * build/make
+8452af6 build: Add backuptool by default
+
+   * hardware/interfaces
+20dc32d compatibility_matrices: Add p/android-4.4 into FCM 5
+
+   * kernel/configs
+6f84bf0 Lower q/android-4.9 requirements
+
+   * lineage/scripts
+6a6c6da dev: rro: beautify: Allow ignoring specific overlay packages
+
+   * packages/apps/DocumentsUI
+ac65fcc Use proper background in dark theme
 
 ====================
-     01-12-2026
+     01-23-2026
 ====================
 
-   * android
-44c38e6 Merge 'lineage-23.1' into 16.0
-527cec6 readme: include blur specific flags
+   * lineage/crowdin
+eeb2099 config: Move alert slider strings to devicesettings
 
-   * lineage/hudson
-52ba84f left behind
-f5cc699 Regenerate device dependency mappings
+   * packages/resources/devicesettings
+5a84769 devicesettings: Import alert slider strings
 
-   * lineage/mirror
-fc03fdd Updated lineage-minimal to 11-Jan-2026 23:01 UTC
-
-   * lineage/wiki
-3e3bd46 templates: device_install: State how to navigate without touch
+====================
+     01-22-2026
+====================
 
    * packages/apps/GameSpace
-71d5687 New Crowdin updates (#125)
+331c9f9 New Crowdin updates (#128)
 
-   * packages/apps/LMOFreeform
-7f14a4e New translations (#19)
-
-   * packages/apps/Launcher3
-f1909cb7a New Crowdin updates (#510)
-
-   * packages/apps/crDroidSettings
-60a1a55 New Crowdin updates (#1286)
-
-   * vendor/lineage
-73fb046 overlay: Use google-sans for font config overlays
+   * packages/apps/Seedvault
+7bc8325 Merge tag '16-5.8' of https://github.com/seedvault-app/seedvault into lineage-23.0
 
 ====================
-     01-11-2026
+     01-21-2026
 ====================
 
-   * android
-7d40838 manifest: Track EuiccPolicy
+   * external/libjxl
+4365ed5 libjxl: Make it available to vendor
 
-   * kernel/samsung/sm7125
-053284a5f ARM64/configs: Samsung: Don't sync when entering suspend
-e2d6d2292 ARM64/configs: Samsung: Turn off CONFIG_SCHED_CORE_CTL
-770f44c14 ARM64/configs: Samsung: Remove CONFIG_CPU_BOOST
-f0c9d6d3f ARM64/configs: Samsung: disable CONFIG_MSM_PERFORMANCE
-abba3a622 arm64: dts: atoll: Remove unused 36 MiB memdump region
-59c05abf3 arm64: dts: atoll: Disable unhandled or broken IRQ monitoring
-24b28d899 arm64: dts: atoll: disable watchdog during suspend
-017e3b3f7 arm64: dts: atoll: Disable pm8008
-3c204abc7 arm64: dts: msm: Update chip wakeup support
-159412113 arm64: dts: atoll: Use 67us latency for cdsp
-d906bab9a arm64: dts: atoll: Remove unused conflicting disp_rdump_memory region
-82c5749b6 arm64: dts: atoll: Fix extra space in gpio88 configuration
-3dcb3fe0d scripts/dtc: Update to upstream version v1.4.6-9-gaadd0b65c987
-be654023e scripts/dtc: Update to upstream version v1.4.5-6-gc1e55a5513e9
-c9e0f1065 scripts/dtc: Update to upstream version v1.4.5-3-gb1a60033c110
-579d5a269 scripts/dtc: add fdt_overlay.c and fdt_addresses.c to sync script
-4fab39f17 dtc: update warning settings for new bus and node/property name checks
-ea6838b72 Revert "HACK: sm7125: force use prebuilt Android DTC"
-3efe15186 arm64: Generate a single final dtb
-119feb1ce scripts: Update mkdtboimg from AOSP upstream
-9ce19b8ba scripts: Port mkdtboimg to python 3
-af9889a56 scripts: use aosp python mkdtboimg for cmd_mkdtimg
-e492ed359 dtbo.img: build device tree overlay partition image
-2e50ebf05 ANDROID: kallsyms: increase KSYM_NAME_LEN
-99ded66f6 Fix build break for Argument list too long
-0f7aa9502 ARM64/configs: Samsung: Enable CONFIG_COMPAT_VDSO
-ef2c9a332 arm64: vdso32: Fix compile errors due to unwanted atomic header inclusion
-a2515badf BACKPORT: arm64: vdso32: add CONFIG_THUMB2_COMPAT_VDSO
-5081ab2b4 arm64: vdso32: Remove jump label config option in Makefile
-6533f0618 arm64: vdso32: require CROSS_COMPILE_COMPAT for gcc+bfd
-411a65425 arm64: vdso32: drop -no-integrated-as flag
-fc9d7d1bd arm64: vdso32: Allow ld.lld to properly link the VDSO
-74fd2db36 arm64: Switch to CROSS_COMPILE_COMPAT for vDSO32 compilation
-de4c5bc59 arm64: vdso32: Fix '--prefix=' value for newer versions of clang
-335803290 UPSTREAM: ARM64: vdso32: Install vdso32 from vdso_install
-90cda62eb arm64: vdso: Compile vDSO at -O3 Optimization level
-327ec61d2 FROMLIST: arm64: Build vDSO with -ffixed-x18
-8b6c320ba ANDROID: turn on VCT access from 32-bit applications
-6d70138ea vdso32: Invoke clang with correct path to GCC toolchain
-3d22b01f5 FROMLIST: arm64: vdso32: Use full path to Clang instead of relying on PATH
-453d176b1 ANDROID: clock_gettime(CLOCK_BOOTTIME,) slows down >20x
-9c74b1ac8 ANDROID: CROSS_COMPILE_ARM32 must work if CONFIG_COMPAT_VDSO
-c6daf9a87 FROMLIST: BACKPORT: [PATCH 6/6] arm64: Wire up and expose the new compat vDSO
-08cf5f24e FROMLIST: [PATCH 5/6] arm64: compat: 32-bit vDSO setup
-e97b3feaa FROMLIST: [PATCH 4/6] arm64: compat: Add a 32-bit vDSO
-e6c149e0b FROMLIST: BACKPORT: [PATCH 3/6] arm64: Refactor vDSO init/setup
-38b7603e3 FROMLIST: [PATCH 2/6] arm64: elf: Set AT_SYSINFO_EHDR in compat processes
-79de533d9 FROMLIST: [PATCH 1/6] arm64: compat: Use vDSO sigreturn trampolines if available
-99ba3a7da FROMLIST: lib: vdso: add support for time
-05f80aeee FROMLIST: [PATCH] arm64: compat: Expose offset to registers in sigframes
-af6b29f8c FROMLIST: [PATCH v5 12/12] lib: vdso: do not expose gettimeofday, if no arch supported timer
-6e021ceef FROMLIST: [PATCH v5 11/12] lib: vdso: Add support for CLOCK_BOOTTIME
-8d70694c9 FROMLIST: [PATCH v5 10/12] arm64: vdso: replace gettimeofday.S with global vgettimeofday.C
-5d0a4a771 FROMLIST: [PATCH v5 09/12] arm: vdso: move vgettimeofday.c to lib/vdso/
-edd71121b FROMLIST: [PATCH v5 08/12] arm: vdso: Add ARCH_CLOCK_FIXED_MASK
-56e29c307 FROMLIST: [PATCH v5 07/12] arm: vdso: disable profiling
-713dc36d0 FROMLIST: [PATCH v5 06/12] arm: vdso: add support for clock_getres
-69f1caed6 FROMLIST: [PATCH v6 05/12] arm: vdso: Add support for CLOCK_MONOTONIC_RAW
-bf8abd9db FROMLIST: [PATCH v5 04/12] arm: vdso: do calculations outside reader loops
-f787cb9b9 FROMLIST: [PATCH v5 03/12] arm: vdso: inline assembler operations to compiler.h
-f720d0848 FROMLIST: [PATCH v5 02/12] arm: vdso: add include file defining __get_datapage()
-1457df7f8 FROMLIST: [PATCH v5 01/12] arm: vdso: rename vdso_datapage variables
-0e2b5b0bd FROMLIST: [PATCH v3 3/3] arm64: compat: Add CONFIG_KUSER_HELPERS
-62d1cc052 FROMLIST: [PATCH v3 2/3] arm64: compat: Split the sigreturn trampolines and kuser helpers (assembler sources)
-3fbc60a8f FROMLIST: [PATCH v3 1/3] arm64: compat: Split the sigreturn trampolines and kuser helpers (C sources)
-d98d0c64d Revert "ARM: vdso: Remove dependency with the arch_timer driver internals"
-f3c74fecb Revert "arm64: vdso: Fix clock_getres() for CLOCK_REALTIME"
-2d2f547a6 UPSTREAM: arm64: tlb: Rewrite stale comment in asm/tlbflush.h
-ca5ae16d5 BACKPORT: arm64: tlb: Avoid synchronous TLBIs when freeing page tables
-43a4a95ae BACKPORT: arm64: tlb: Adjust stride and type of TLBI according to mmu_gather
-048883d0a UPSTREAM: arm64: tlb: Remove redundant !CONFIG_HAVE_RCU_TABLE_FREE code
-57afbf149 UPSTREAM: arm64: tlbflush: Allow stride to be specified for __flush_tlb_range()
-c7f7e11ea UPSTREAM: arm64: tlb: Justify non-leaf invalidation in flush_tlb_range()
-7aecd2cb9 BACKPORT: arm64: pgtable: Implement p[mu]d_valid() and check in set_p[mu]d()
-91d8ef0b9 UPSTREAM: arm64: tlb: Add DSB ISHST prior to TLBI in __flush_tlb_[kernel_]pgtable()
-d960c8ada UPSTREAM: arm64: tlb: Use last-level invalidation in flush_tlb_kernel_range()
-4d9c5bd63 UPSTREAM: MAINTAINERS: Add entry for MMU GATHER AND TLB INVALIDATION
-df87cc68f RELAND: hugetlbfs: flush TLBs correctly after huge_pmd_unshare
-ab04dc6f1 BACKPORT: mm/memory: Move mmu_gather and TLB invalidation code into its own file
-265bc8d53 Revert "hugetlbfs: flush TLBs correctly after huge_pmd_unshare"
-14672fa5a UPSTREAM: asm-generic/tlb: Track which levels of the page tables have been cleared
-b406c4c33 UPSTREAM: asm-generic/tlb: Track freeing of page-table directories in struct mmu_gather
+   * packages/apps/Dialer
+42727e7 Dialer: Add primary color for incall ui
 
-   * lineage/hudson
-e00b818 Regenerate device dependency mappings
+   * packages/apps/LineageParts
+f00eed4 DisplayRotation: fix lockscreen rotation hidden on portrait
 
-   * packages/apps/EuiccPolicy
-22c9e83 EuiccPolicy: Also allow overlaying root_smds_address
-d6ae1dd EuiccPolicy: Disable Euicc packages if unsupported
-4bd68d3 EuiccPolicy: Allow overlaying all possible JSONs
-65e6d79 EuiccPolicy: Add package change listener
-68eca23 EuiccPolicy: Get rid of GSF dependency
-1e05198 EuiccPolicy: Make JSON mappings untranslatable
-05d3bad EuiccPolicy: Migrate to `privapp_allowlist`
-06f8574 EuiccPolicy: Switch to PackageManager.getApplicationInfo()
-a08fbfe EuiccPolicy: Remove CarrierServices references
-2bb761d EuiccPolicy: Don't fatally crash when euicc package is not exists
-27cd5f5 EuiccPolicy: Move to priv-app and grant required permissions
-fdb0ab5 EuiccPolicy: Remove references to EuiccPixel
-166d219 EuiccPolicy: Disable EuiccGoogle when GMS and GSF are not installed
-f6a3437 Introduce EuiccPolicy
-c8bbba9 Introduce pre-commit & GitHub Actions for it
+   * packages/apps/Messaging
+099590b Messaging: Replace AOSP illustrations
 
-   * packages/apps/GameSpace
-f5d398f Merge pull request #126 from mukesh22584/16.0
+   * packages/inputmethods/LatinIME
+320eb15 remove launcher icon
 
-   * packages/apps/Launcher3
-a9bf3eaf6 Revert "Add logs for split screen RemoteAnimationTargets"
+====================
+     01-20-2026
+====================
+
+   * frameworks/av
+721d507 MediaCodec: Improve mediacrypto async priorty
+
+   * frameworks/opt/net/wifi
+3bf65d8 add support for always generating new random MAC
+
+   * frameworks/opt/telephony
+7729449 Telephony: Fix crash while updating Operator Name
+
+   * packages/services/Telecomm
+a44882b Ringer: There should really not be an observer here
+
+   * packages/services/Telephony
+ef86bc7 Telephony: Migrate MainSwitchBar and Switch to Material3
+
+   * system/sepolicy
+6ad4a44 !fixup: Make su domain permissive on user builds
 
    * vendor/addons
-3b1b7ad0 addons: Update fonts_customization.xml for google fonts
-48859bf7 addons: Use xmllint on fonts_customization.xml
+2968e820 addons: Remove preference_preference-ktx library prebuilt
 
