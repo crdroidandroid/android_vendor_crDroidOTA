@@ -3,11 +3,15 @@ Build type: Monthly
 Device: Samsung Galaxy A72 (a72q)
 Device maintainer: TestaMic
 
+===== 04-14-2026 =====
+- Synced with the latest sources.
+- Fixed built-in PIF, Trickystore, and game spoofing causing false root detection.
+
 ===== 04-13-2026 =====
 - Synced with the latest sources.
 - Inital crDroid 12.9 release with the April 2026 security patches.
 - Implemented new Play Integrity spoof options (crDroid Settings → Misc)
-- Implemented built-in TrickyStore (crDroid Settings → Misc) 
+- Implemented built-in TrickyStore (crDroid Settings → Misc)
 
 ===== 04-08-2026 =====
 - Synced with the latest sources.
@@ -82,7 +86,7 @@ Device maintainer: TestaMic
 
 ===== 02-04-2026 =====
 - Synced with latest sources.
-- Initial crDroid 12.7 build based on the February 2026 Security patch. 
+- Initial crDroid 12.7 build based on the February 2026 Security patch.
 
 ===== 01-30-2026 =====
 - Synced with the latest sources.
@@ -116,6 +120,33 @@ Device maintainer: TestaMic
 ===== 11-11-2025 =====
 - crDroid 12.3 with the November security patch.
 - Added a patch to fix gestures lagging when blur is enabled.
+
+====================
+     04-14-2026
+====================
+
+   * device/lineage/atv
+9be7336 atv: Add reversed keylayouts for NVIDIA/Stadia controller/remotes
+8a4ed80 atv: Drop proprietary licensed keylayouts
+b97f393 atv: Migrate to SPDX license headers and remove years
+
+   * device/lineage/sepolicy
+060873a sepolicy: Move trickystore, pif and game props spoof
+
+   * frameworks/base
+9a601f455 core: Add isolated process check before spoof in PIF
+550def568 core: Fix json parsing non-string values in PIF
+6466e1a54 core: Move trickystore, pif and game props spoof
+
+   * hardware/lineage/compat
+8f184b0 compat: libaudioclient: fix usage of AudioTrack::legacy_callback_t
+
+   * packages/apps/crDroidSettings
+56d8048 crdroid: Fix info preferences clipping
+3002180 crdroid: Move trickystore, pif and game props spoof
+
+   * system/core
+d74592f init: Move trickystore, pif and game props spoof
 
 ====================
      04-13-2026
@@ -217,6 +248,9 @@ c80c0e4 Regenerate device dependency mappings
 
    * lineage/scripts
 5c9a34c collect-kernel-module-deps: Cache modules paths
+
+   * lineage/wiki
+d64e3e4 wiki: davinci: Install dtbo before recovery
 
    * packages/apps/GameSpace
 0b77a19 New translations (#141)
@@ -339,6 +373,19 @@ a6c0dd2b build: overriding lineage namespace
    * external/bouncycastle
 e17aa984 adding more providers for trickystore port
 
+   * frameworks/native
+157ce304e native: blocking untrusted app lineage service checks
+
+   * hardware/lineage/compat
+9f69ce5 compat: libstagefright_foundation-v33: Allow on system_ext
+
+   * lineage/hudson
+c26f16f Regenerate device dependency mappings
+
+====================
+     04-11-2026
+====================
+
    * frameworks/base
 381c02ba0 SystemUI: Add more classic icon shapes
 b2df047c0 SystemUI: Fix classic tile specs in some instances
@@ -397,28 +444,6 @@ d02c7c291 SystemUI: Fix edge light, media art, pulse on ambient display
 65c8b15e6 Fix NavBar haptic feedback after Bluetooth device disconnect
 7e053984c Fix boot race in NotificationManagerService
 caed87450 Fix check for pinned shortcut in ShortcutRequestPinProcessor
-60a1ca041 SystemUI: TunerActivity: Remove vibrate icon if not supported
-4a95ead78 use shared bitmaps in MediaMetadata to avoid Binder failures
-b3d165580 SystemUI: Prevent indicator text cutting off in biometric prompt
-
-   * frameworks/native
-157ce304e native: blocking untrusted app lineage service checks
-
-   * hardware/lineage/compat
-9f69ce5 compat: libstagefright_foundation-v33: Allow on system_ext
-
-   * lineage/hudson
-c26f16f Regenerate device dependency mappings
-
-   * packages/apps/crDroidSettings
-5ec6f7b crdroid: Remove pif spoofing
-
-   * vendor/apn
-117017d APN: Remove GU
-
-====================
-     04-11-2026
-====================
 
    * lineage/crowdin
 e13e093 crowdin: Migrate away from distutils
@@ -428,6 +453,7 @@ e13e093 crowdin: Migrate away from distutils
 efed330 Updated to 10-Apr-2026 22:01 UTC
 
    * packages/apps/crDroidSettings
+5ec6f7b crdroid: Remove pif spoofing
 1b947f0 crdroid: Remove compact chip toggle for dynamic bar
 
    * tools/extract-utils
@@ -435,6 +461,9 @@ efed330 Updated to 10-Apr-2026 22:01 UTC
 
    * vendor/addons
 91ea7b85 addons: ax_compose: Add new compose elements and bug fixes
+
+   * vendor/apn
+117017d APN: Remove GU
 
 ====================
      04-10-2026
@@ -448,9 +477,6 @@ efed330 Updated to 10-Apr-2026 22:01 UTC
    * hardware/lineage/interfaces
 2ad62f2 Camera: aidl: provider: Skip broken / missing camera IDs during initialisation.
 41c789c Camera: aidl: provider: Move remapid property to anonymous namespace
-
-   * lineage/scripts
-4b1ea93 collect-kernel-module-deps: Add non-interactive mode
 
    * lineage/wiki
 b4d0279 wiki: device_build_before_init: Add xxd to deps
@@ -476,6 +502,9 @@ d8ed839 merge_dtbs: Add moorechip,device-id to EXTRA_KEYS
 eb40bb0 compat: megvii: Run clang-format
 93aeafb compat: megvii: Return a char pointer for some stubs instead
 5bebfee compat: megvii: Initial stub libraries
+
+   * lineage/scripts
+4b1ea93 collect-kernel-module-deps: Add non-interactive mode
 
    * lineage/wiki
 628b83c templates: recovery_install_nintendo: Clarify folder name is a folder name
@@ -548,23 +577,6 @@ e82bf75 Handle underflows in dng_opcode_MapTable
 
    * lineage/wiki
 f620bee wiki: Migrate most of custom TWRP images before they become lost media
-165ddd5 wiki: Set custom_recovery_codename for mt2
-70f9417 wiki: Set custom_recovery_codename for k3gxx
-2569a43 wiki: Set custom_recovery_codename for zerolte/zeroflte
-bd4834f wiki: Set custom_recovery_codename for lt02ltespr
-52eaf06 wiki: Set custom_recovery_codename for n2awifi
-4565a33 wiki: Set custom_recovery_codename for h811/h815
-61e8e4b wiki: Set custom_recovery_codename for himaul/himawl
-6958581 wiki: Set custom_recovery_codename for n1awifi
-
-   * packages/apps/GameSpace
-95f7bc9 New Crowdin updates (#138)
-
-   * packages/apps/Launcher3
-a14dda9 New Crowdin updates (#530)
-
-   * packages/apps/crDroidSettings
-9f2bf56 New Crowdin updates (#1305)
 
    * prebuilts/kernel-build-tools
 811c6e2 Merge "Update kernel-build-tools to ab/15119431" into main-kernel-2025
@@ -580,7 +592,24 @@ b475a1c release: Bump Security String to 2026-04-01
 82f44d36 Prevent serial of ro props from self increment
 
    * lineage/wiki
+165ddd5 wiki: Set custom_recovery_codename for mt2
+70f9417 wiki: Set custom_recovery_codename for k3gxx
+2569a43 wiki: Set custom_recovery_codename for zerolte/zeroflte
+bd4834f wiki: Set custom_recovery_codename for lt02ltespr
+52eaf06 wiki: Set custom_recovery_codename for n2awifi
+4565a33 wiki: Set custom_recovery_codename for h811/h815
+61e8e4b wiki: Set custom_recovery_codename for himaul/himawl
+6958581 wiki: Set custom_recovery_codename for n1awifi
 df75777 wiki: timelm: Add L-51A to supported models list
+
+   * packages/apps/GameSpace
+95f7bc9 New Crowdin updates (#138)
+
+   * packages/apps/Launcher3
+a14dda9 New Crowdin updates (#530)
+
+   * packages/apps/crDroidSettings
+9f2bf56 New Crowdin updates (#1305)
 
 ====================
      04-05-2026
@@ -599,34 +628,4 @@ f74ea0a wiki: Add Xperia 1 VI
 
    * vendor/addons
 72328ec1 addons: Import ax_compose sdk
-
-====================
-     04-04-2026
-====================
-
-   * bionic
-90771e83 Add hooks for custom rom hide
-
-   * frameworks/av
-0bfce869 Adapt dynamic resolution in nuplayer with enable sample aspect ratio parameter
-
-   * packages/apps/AxThemeStore
-731d904 strings: Added a Russian translation
-
-   * packages/apps/Settings
-52b8ec3 wifi: Fix reachability check in WifiDppQrCodeScannerFragment [qr-2/2]
-
-   * packages/apps/crDroidSettings
-61f7e51 crdroid: Add lock screen toggles for lock screen dynamic bar
-
-   * packages/modules/Bluetooth
-344ad139e Fix avrcp disconnect/connect issue
-
-   * packages/modules/Wifi
-27c48b2ad ClientModeImpl: Move updateCurrentConnectionInfo() before broadcast
-8636c1223 wifi: Fix Transition Disble in WifiUriParser [qr-1/2]
-6bcfd8dfd Accept operating environment values 0x01-0x06 in Country IE
-
-   * vendor/apn
-9160664 apn: DE: Add sim.de
 
