@@ -3,6 +3,10 @@ Build type: Monthly
 Device: Samsung Galaxy A52 4G (a52q)
 Device maintainer: TestaMic
 
+===== 07-21-2026 =====
+- Synced with the latest sources.
+- Added experimental support for VoLTE, VoWiFi, and SMS over IMS. Many thanks to @krazey for the implementation!
+ 
 ===== 07-07-2026 =====
 - Synced with the latest sources.
 - Fixed random reboots.
@@ -175,609 +179,208 @@ Device maintainer: TestaMic
 - Fixed OTG. (like USB-C hubs, USB-C Flash drives, etc.)
 
 ====================
-     07-07-2026
+     07-21-2026
 ====================
 
-   * build/soong
-0cabbb4b soong: Increase ThinLTO cache to 15GB
-d5008b1d soong: Make sure TLTO cache dir exists
-5255f026 lto: support overriding ThinLTO cache directory
-
-   * frameworks/base
-309246027 CarrierConfigManager: Gracefully handle missing CarrierConfigLoader
-f3ddccef3 telephony: Relax default 5G NR SA SS-RSRP signal strength thresholds
-314ec0eb9 Revert "services: Skip access check for matlog shipped with rom"
-
-   * kernel/samsung/sm7125
-673b80046 input: fix use-after-free race in /proc/bus/input/devices
+   * device/samsung/sm7125-common
+e440f34a sm7125-common: PhhIms: Fix reboots when toggling Mobile Data/WiFi.
+122de1d2 sm7125-common: Import PhhIms
 
 ====================
-     07-06-2026
+     07-20-2026
 ====================
 
-   * bionic
-adc85bf3 bionic: drop long property-name warning spam
+   * device/samsung/a52q
+e61c3bf a52q: Fix earpiece volume being too low in VoLTE calls.
 
-   * lineage/scripts
-acd1868 lineage-priv-template: Add com.android.npumanager
+====================
+     07-19-2026
+====================
+
+   * device/samsung/sm7125-common
+c1d1ff91 sm7125-common: Fix incoming calls when using VoLTE.
+de4fbc84 sm7125-common: Add IMS sepolicy.
+cf8afef3 sm7125-common: CarrierConfigResCommon: Disable seamless IMS IWLAN handover
+0a97645c sm7125-common: Add common carrier config overlay
+663edb71 sm7125-common: Add IMS overlays.
+e0d5fe12 sm7125-common: Add IMS permissions file.
+26b0b7bd sm7125-common: Add IMS packages.
 
    * lineage/wiki
-e4658db wiki: Update avatrn and bronco firmware requirements
-63b5275 wiki: Add reboot suggestion to recovery_install_fastboot_sony
-
-   * packages/apps/Launcher3
-1421bd8 Launcher3: Remove dead space in bottom appdrawer search bar
-0c2592c fixup! Launcher3: Add appdrawer searchbar location
-
-   * system/core
-6a7ff2cc init: Fixing abnormal state
+aa536e1 devices: NB1: Use fastboot_misc recovery reboot method
 
 ====================
-     07-05-2026
+     07-18-2026
 ====================
-
-   * android
-a7e64d6 Merge 'lineage-23.2' into 16.0
-5c3bbcb Revert "manifest: Track custom prebuilts/misc revision"
-335a78f manifest: Track libvmmem
-
-   * build/soong
-97a6d749 soong: Overriding lineage namespace
-8eebd850 soong: Fix 'date' command options
-f936a1c0 soong: check_boot_jars: Whitelist Xiaomi Extensions
-0ace42c6 Add Kryo785 variant
-4b23287a Add exynos-m4 support
-af67f6b8 arm64_device: armv9-a: add additional march flags for all supported armv9-a platforms
-36699c49 Remove workaround for Qualcomm Kryo 385
-f15c8ebc Enable crypto extensions for armv9-a
-cfb31d90 config: Update cortex a75 flags
-a995a689 config: do not force cortex-a76 as cortex-a75
-b541b6b4 soong: Add kryo300 variant support
-5fb56a49 soong: add kryo785 architecture variant for arm64.
-76a772ea arm_device: Change cortex-a76 mcpu from a55 to a75
-165b8e71 arm64_device: Change cortex-a76 mcpu from a55 to a75
-1bd66c15 Use -march=armv9-a+nosve for Armv9-A arch variant
-2fd68e4f Introduce Cortex-A510 CPU variant
-5c64e468 soong: check_boot_jars: Whitelist Camera Extensions
-540faed1 remove cross-version ABI dump difference check
-7b5b7f24 remove same-version ABI dump difference check
-cf21db73 soong: Add out/soong/*.glob* to installclean
-074cc658 check_boot_jars: Add LMODroid packages
-ba44e396 check_boot_jars: add more OnePlus packages to whitelist
-dc0aec5d soong: Do not leak lineage_ prefixes in build.prop
-45aecb5b soong: Turn off debug props on userdebug builds
-e594902a cc: do not disable FMA
-93c6d3ed afdo: further optimize AFDO modules
-82db4b34 cc/lto: add property for not restricting instr limit
-163cc533 lto: enable O3 optimizations on explicit lto modules
-29112fbe cc/lto: instr limit of 40 for explicit LTO modules
-a6fa29fc soong: Set ro.crdroid.device
-b44c3b7a cc: Enable more features when using armv8.2-a+dotprod
-69cb9f26 soong: Always return release-keys
-1f70acc9 Disable fsgen check
-1c7457f5 soong: increase heap size for metalava
-afaf1566 soong: Change to CR_VERSION
-fd6fd493 soong: Allow various path commands
-
-   * hardware/lineage/compat
-9e8811a compat: Provide our own libprotobuf 3.9.1 / 21.12 prebuilts
-
-   * hardware/qcom-caf/sm8450-6.6/audio/primary-hal
-6a423413 effects: Link against latest android.media.audio.common.types
-320014e8 effects: Include missing libaudioutils_headers dependency
-30010d12 effects: Fix sign comparison errors
-
-   * lineage/mirror
-2330004 Updated lineage-minimal to 04-Jul-2026 22:01 UTC
-b7b6083 Updated to 04-Jul-2026 10:01 UTC
-
-   * lineage/website
-065a2e2 feed: Fix typo
-ee2ff2c feed: Add rss/channel/item/content
-
-   * lineage/wiki
-71b1233 devices: Update tundra maintainers
-
-   * packages/apps/Launcher3
-b992f70 Launcher3: Add blur for homescreen popup menu
-dc4fb65 Launcher3: Cancel ongoing animations before entering allapps
-639c9f1 Launcher3: Fix bottom sheet statusbar color
-49a1772 Launcher3: Force update statusbar color on allapps
-0895a13 Launcher3: Hide home screen in fullscreen appdrawer styles
-5c0d9e5 Launcher3: Enable blur on surfaces by default
-9421bb5 Launcher3: Set workspace blur outline after folder animation too
-7449933 Launcher3: Update DeepShortcutView in the case of using blur
-ecd03a1 Launcher3: Blur homescreen menu
-28b51e8 Launcher3: Support blur in Launcher folders
-6333819 Launcher3: Add icon search support in custom icon
-2e694bd Launcher: Add per-app icon picker
-3b7f766 fixup! Launcher3: Improve workspace animation
-5c60208 Launcher3: Notify renderer on blur scrim creation
-528d5c8 Launcher3: Add blur in app close animation
-0c50298 Launcher3: Add optional toggle for app launch blur animation
-
-   * vendor/lineage
-14ffae7 crdroid: Drop memtag props
-8fa33fe crdroid: Bump to version 12.11
-231f1c4 overlay: Update DocumentsUIOverlay
-69c3a7e config: speed compile applocker
-16cee58 config: dexpreopt gamespace
-2a457fb crdroid: Build AxSandbox
-952b60c config: Switch to glif_expressive SUW theme
-c0b5458 crdroid: Build AxQuickLook service
-dae859b config: Disable default frame rate limit for games
-94fa02b crdroid: Build AxThemeStore
-5749e66 overlay: Use google-sans-text for regular font
-b13291a crdroid: Fix material expressive for permission manager
-525135e overlay: device_config: Update from google
-e8b1647 release: Enable clock_reactive_variants
-bbc4a83 release: Import release flags from bp2a and mica bp3a
-ac3e803 common: Allow OTA downgrade regardless build type
-6649fa4 overlay: Enable ambient AOD
-63742ed overlay: Use google-sans for font config overlays
-ecc48d2 crdroid: Enable background blur support by default
-32b8bee build: Ship adb_root only WITH_SU
-c69b43a crdroid: Do not install matlog and updater in private space
-2cb9937 Move adb_root outside userbuild
-dffb0c2 crdroid: Adding an option to build DeviceAsWebcam
-d495a8c crdroid: Allow disabling MatLog
-03751c9 overlay: Add gms location history to extra location packages
-b2439ed overlay: Add tethering to location exemption
-1e1767c overlay: Add SystemUI to location extra packages
-211b04c overlay: Add OmniJaws to location extra packages
-6230478 crdroid: Conditionally build ColumbusService
-cbe318e overlay: Offload WM shell to another thread
-5600df3 crdroid: Update clone exemption list
-d063d39 crdroid: Add preinstalled package list to stop auto cloning
-d9cd97a overlay: Enable app-cloning feature in Settings
-08b918b overlay: Settings: Show memory usage in app info
-4965560 device_config: Enable Cloned App
-91a76ba crdroid: Move face unlock biometric permission to system_ext
-2453146 crdroid: Switch to AOSPA's face unlock implementation
-8c9ba91 overlay: Remove bouncer delay when face unlock is enabled
-6f45ead crdroid: Build LMO Freeform app and sidebar
-20c7544 crdroid: Build GameSpace
-ec6dd86 crdroid: Build BatteryStatsViewer
-93fea64 crdroid: Build OmniJaws service
-01414ce crdroid: Build OmniStyle
-568f2d6 crdroid: Execute changelog script once at a time
-55386af crdroid: Add changelog script
-5315999 component-overrides: Force disable google settings intelligence injects
-fa438c4 component-overrides: Force various google components
-2e1c7ae build: Override host metadata
-1d1fe84 kernel: Set "safe" default values for kernel build host & user
-37a3224 overlay: Enable split shade for notifications in landscape
-b142974 rro_overlay: Use headline font for PermissionController
-eb7b9a6 overlay: Update circle to search overlays for vanilla builds
-69bd5e0 overlay: Enable circle to search
-f9b4829 crdroid: Clean up wallpaper overlay
-06c9f3f crdroid: Disable memtag for different processes
-b0d9e28 overlay: SystemUI: Add plugin whitelist
-68c9c1e overlay: Update SettingsProvider defaults
-5750153 overlay: Set AOSP webview as fallback
-255a90d crdroid: Remove packages moved to addons
-4a29686 crdroid: Moved bootanimation to addons
-23be8e7 overlay: Update clock plugin list
-dc78914 overlay: Allow new SystemUI clocks
-c99212f charger: Switch from LineageOS Teal to crDroid Blue
-daeac38 Revert "overlay: Default to Seedvault backup transport"
-ddb3aad envsetup: Set crdroid path for Pixel OOT kernel build
-004989a build: Enable ThinLTO cache
-5b80c1d roomservice: Get me some crDroid
-1344949 crdroid: generate json at build time
-ac2be8d crdroid: Drop custom adb drawable
-efade4b build: Ship as crDroid based on LOS
-6e3765e config: Export TARGET_MAX_PAGE_SIZE_SUPPORTED to soong
-1db9599 config: Exclude prebuilts/misc/protobuf_vendorcompat
-938ec39 config: Remove deprecated flags
-
-   * vendor/qcom/opensource/libvmmem
-a4a0b08 libvmmem: Fix unused variable warning
-1e3b3e9 libvmmem: Fix format specifier errors
-fcf0021 Add .gitupstream file
-
-====================
-     07-04-2026
-====================
-
-   * hardware/qcom-caf/sm8450-6.6/display/hal
-618af110 Revert "vmmem: Make libvmmem_headers available"
-7f49d769 Revert "vmmem: Add dummy libvmmem shared_lib"
-
-   * hardware/qcom-caf/sm8450/display
-9dfe5416 Revert "vmmem: Make libvmmem_headers available"
-b5b04cf1 Revert "vmmem: Add dummy libvmmem shared_lib"
-
-   * hardware/qcom-caf/sm8550/display
-d679d895 Revert "vmmem: Make libvmmem_headers available"
-7ea46e20 Revert "vmmem: Add dummy libvmmem shared_lib"
-
-   * hardware/qcom-caf/sm8650/display
-7f95c241 Revert "vmmem: Make libvmmem_headers available"
-473c2b73 Revert "vmmem: Add dummy libvmmem shared_lib"
-
-   * lineage/website
-1b71a83 post: Android Developer Verification
-
-   * lineage/wiki
-2b26186 wiki: bugreporting: Align with reality
-68106d4 wiki: Migrate odin devices to samloader-rs
-8e9d82c wiki: Migrate heimdall devices to samloader-rs
-
-   * packages/apps/Twelve
-6a84b00 Twelve: Adjust track index card view colors
-3829c67 Twelve: Mark currently played track in album fragment
-
-====================
-     07-03-2026
-====================
-
-   * device/lineage/sepolicy
-eedd470 sepolicy: Address denial for setting vbmeta prop
-5ff94f7 sepolicy: Address sandbox denials
-96754f9 sepolicy: Add permissions for secure Sandbox Vault
-f5cb233 sepolicy: Allow game space set thread priority
-60a0a73 sepolicy: Add support for game space
-adba90a sepolicy: Add sandbox rules
-6272f57 sepolicy: Adding theme engine rules
-39fbd66 sepolicy: Add rules to allow powerhal accessing IStates AIDL
-81f59ee sepolicy: Allow systemui access to bluetooth_lea_prop
-e8dcae0 sepolicy: Restrict build version props
-
-   * external/chromium-webview/prebuilt/arm
-3cc02a1 Update Chromium Webview arm to 150.0.7871.63
-
-   * external/chromium-webview/prebuilt/arm64
-aca8d63 Update Chromium Webview arm64 to 150.0.7871.63
-
-   * external/chromium-webview/prebuilt/x86
-02a0000 Update Chromium Webview x86 to 150.0.7871.63
-
-   * external/chromium-webview/prebuilt/x86_64
-cf378c5 Update Chromium Webview x86_64 to 150.0.7871.63
-
-   * frameworks/av
-2598b568 audiopolicy: Do not wipe device's known codec during bluetooth disconnection
-7debd2e2 Revert "issue: After connecting the Bluetooth earphones and projecting the screen, music will play from the earphones. At this point, disconnect the earphones, click play, and the projection will be silent"
-
-   * frameworks/base
-f622767ae services: Add log dump for Reality Display engine
-8daa9c209 services: Refactor Reality Display engine
-045c50801 services: Introduce Reality Display engine [1/2]
-c9d26ce04 SystemUI: Add blur QS tile
-54a303cad SystemUI: Add haptic feedback for qs footer actions
-
-   * lineage/mirror
-21c098e Updated lineage-minimal to 02-Jul-2026 22:02 UTC
-
-   * lineage/scripts
-df53508 build-webview: Update default webview to 150.0.7871.63
-
-   * lineage/wiki
-88fc2ee devices: Correct Dragonwing branding
-5dd1bac wiki: Move bullet point to proper spot
-
-   * packages/apps/Launcher3
-8728197 Launcher3: Increase CPU clock speed when enabling early wakeup.
-
-   * packages/apps/Settings
-57f8d35 colors: Introduce Reality display engine [2/2]
-
-   * packages/apps/Twelve
-99c83d6 Twelve: Make Subsonic scrobble take list of "times"
-e132525 Twelve: Set Subsonic scrobble submission to false
-
-   * packages/apps/crDroidSettings
-d24caed crdroid: Add strings for new display modes
-455c89a crdroid: Add strings for Reality display engine
-
-====================
-     07-02-2026
-====================
-
-   * android
-c335b68 Revert "manifest: Track qcom sepolicy for sm8550, sm8650 and sm8750"
-
-   * device/lineage/sepolicy
-83f0028 sepolicy: Restrict pixel props usage
-81f3538 sepolicy: Address denial for webview crash
-71febfa sepolicy: Allow platform read thermal sysfs
-d24e29a sepolicy: Address CachedAppOptimizer denial
-5bd8896 common: Always run recovery in permissive domain
-ff26107 Revert "Make backuptool permissive only in non user builds"
-1fc6d87 common: Address denial for google services app
-8010dc8 common: Address launcher app denials
-399e99d sepolicy: Add support for boost framework
-749cad0 sepolicy: Allow gmscore_app to access system_data_file
-0a18292 sepolicy: Add support for LMOFreeform service
-9f685e4 Allow launcher to access zram sysfs
-9e89201 Allow apps to access usap pool
-9e794c5 sepolicy: Make Health service discoverable by Settings app
-8213a10 sepolicy: Label Dolby Sepolicy labels
-9760516 Allow system app to read navbar config
-cc94d32 sepolicy: Label more dirty writeback parameters
-721a258 sepolicy: introduce app lock [2/4]
-34402ee sepolicy: Label LinearmotorVibratorService
-c7386ac sepolicy: Move in pocket service sepolicy
-fef2fab sepolicy: Label skip unconfigure prop
-a305cf0 Allow updater to read data files
-08fafbe updater_app: Address uncrypt denials
-8c7a500 sepolicy: Allow system_server to read and write to sysfs_battery_supply
-cec535f Update ota_update path
-2ae4f14 sepolicy: Allow launcher app to read archiving prop
-dc6bd10 Allow platform app to read memory info
-13c363b sepolicy: Allow platform adjust camera shutter sound
-214a32b Allow documents UI to access storage
-c9e629b sepolicy: Allow key disabler access for platform
-e907ea7 sepolicy: Update custom legal prop
-
-   * external/chromium-webview/patches
-970cdf1 Update Chromium Webview to 150.0.7871.63
-
-   * lineage/crowdin
-d392d80 config: Add hardware/ayn/packages/AynParts
 
    * lineage/hudson
-18dee8c Regenerate device dependency mappings
-9ced91f hudson: Ship Retroid Pocket 6
-
-   * lineage/wiki
-e29c1db wiki: Add Retroid Pocket 6
-
-   * packages/apps/Glimpse
-0161fa9 Automatic translation import
-
-   * packages/resources/devicesettings
-bbb201a Automatic translation import
-
-   * vendor/crowdin
-e705fa7 Automatic translation import
+c9c7622 How powerfull is Odin??
 
 ====================
-     07-01-2026
+     07-17-2026
 ====================
 
-   * frameworks/av
-0cbb72f3 Nuplayer: Fix use-after-free in AWakeLock
+====================
+     07-16-2026
+====================
 
    * frameworks/base
-646119987 SystemUI: show location indicator for OP_COARSE_LOCATION
-f299292b4 ExploreByTouchHelper focusable by default
-baac6f222 Fix caching issue for product strategies
-
-   * lineage/hudson
-c40c791 Regenerate device dependency mappings
-
-   * packages/apps/Settings
-1b2b9ee Settings: Add per app exclusion for expanded dark theme
-
-   * packages/apps/Updater
-455b861 Updater: Adapt colors in lottie animations
-07ab16c Updater: Add device name in card
-0d09a6d Updater: Add device metadata info and links
-dd69039 Updater: Update header card for crdroid
-617bc8b Updater: Adapt json parsing for crdroid
-8f65bc3 Updater: Remove cryptographic signature verification for local updates
-176af99 Updater: Initial adaption for crdroid
-ab6ea88 Ship as crDroid based on LOS
-
-   * packages/apps/crDroidSettings
-65b122e crdroid: Add strings for per app dark theme exclusions
-43cd8c7 crdroid: Add abstract app checklist fragment
-
-   * system/core
-afc6ca16 libutils: Avoid UB in String8::toLower
-
-   * vendor/apn
-f61eef6 NL: Fix Youfone Internet
-
-====================
-     06-30-2026
-====================
-
-   * build/soong
-4035bec9 gen_build_prop: Disable dalvik debugging in userdebug builds
+77451ab87 Animate play/pause button when clicked
 
    * lineage/mirror
-4d7473f Updated lineage-minimal to 29-Jun-2026 10:01 UTC
-
-   * lineage/scripts
-82a3130 dev: sepolicy: remove merging for source rules
-48fa1fc dev: sepolicy: respect line marks when merging
-838a94b dev: sepolicy: guard macros producing absent memberships
-
-   * lineage/wiki
-65189f6 xpeng: Update maintainers
-03dded4 wiki: Fix wrong codename in before_install_h870 template
-
-   * packages/apps/Launcher3
-852ead4 Launcher3: Add app rename feature
-ddd4a44 Launcher3: Update icons on dynamic color changes
-
-   * packages/apps/Settings
-c65be82 Settings: Fix color state for auto-confirm PIN checkbox
-
-   * packages/apps/Updater
-a904c4a Updater: Skip clean up if network updates list is empty
-c64b0fc Updater: Skip clean up for updates without download URL
-
-   * vendor/lineage
-9f3cfba build-manifest: Call repo with REPO_TRACE=0
+e59e9b8 Updated to 16-Jul-2026 10:01 UTC
 
 ====================
-     06-29-2026
+     07-15-2026
 ====================
-
-   * frameworks/base
-6efaa2b69 SystemUI: Disable tile squishiness animation during QS expansion
-df673ca39 SystemUI: Fix bad QS scrim colors due to race in brightness mirror state
-56976e0bb Fix flashlight slider RTL UI
-b0cac2dad Attempt reconnect even if flashlight was not found on start
-53b424834 Add top line above VerticalFlashlightSlider
-77506c0e7 Smooth neck for flashlight beam shape
-7d0124723 Remove extra clip from flashlight slider
-290eefb73 Add animateContentSize calls
-a3b51e4ff Prevent crashing System UI due to invalid volume values.
-ecac6e7be SystemUI: enable no expansion on shade overscroll
-d76c3ea51 SystemUI: Use early expansion when touching the shade
-24acb794a Remove debug logs
-68a2ce5b5 Remove extra shade expansion trace markers.
-40014d510 Make ShadeExpansionStateManager more closely match legacy behavior
-4ec75b048 New Crowdin updates (#1326)
-5dcc5dc0c Update Crowdin configuration file
-b47dbf52a SystemUI: DynamicBar: Fix media progress drift
-b65b35e28 SystemUI: DynamicBar: Fix text clipping in recents card
-cad4c091b SystemUI: DynamicBar: Make close icon in recents card more distinct
-9434138c9 SystemUI: DynamicBar: Add kill-app action from Recents grid
-fb5eca2af services Add jit warmup threshold params
-22300edb3 services Disable wm debug cpu hotspots
-e5bd75e86 SystemUI: Handle 0% torch strength in dynamic bar
-411f6174e SystemUI: Make FlashlightListener strength callback default
-8df37bb45 SystemUI: Fix flashlight slider re-enable from 0 level
-51f7db443 SystemUI: Fix flashlight QS direct-expand slider initialization
-bab251286 SystemUI: Make the new vertical flashlight slider compatible with the old FlashlightController implementation
-168cc678f SystemUI: Fix torch tile issue
-92870d931 Sandbox: Do not relock app when system sub-activity takes focus in the same task
-3163366d5 BatteryStatsViewer: Import translations from Weblate
-1ca9202c9 BatteryStatsViewer: Get matching app info from all user
-06f1fc445 fixup! base: Initial SenseProvider for FaceSense service
-ad20cbeb6 Pulse: Resolve currently playing local media app
-6fa97b57e SystemUI: Skip time updates on lockscreen clock outside keyguard
-2b1e73995 SystemUI: Animate clock doze properly across transitions
-6dfee439c SystemUI: Add BatteryEventService for Intelligence battery widget
-e4ff233eb base: Add an icon for NR_SA (5G Standalone) data connection
-332505f33 OmniJaws: Add HOURLY_PROJECTION constant for weather content provider
-0a8824cf6 core: AHardwareBuffer fixes for oplus camera
-30ea61c51 ActionChain: Do not call collectExistenceChange if transition is null
-648ebb6b9 OmniJaws: Fix concurrency issues in client
-e261f0d71 SystemUI: Remove container color background from volume slider in QS
-910bc8f69 SystemUI: Extend volume slider modes
-1fc632166 SystemUI: Fix weather text not following custom clock color
-7affc232c SystemUI: ClockStyles: Remove setting center layout programmatically
-134d5af31 SystemUI: Fix up text clock style
-dee9688fb fixup! fixing app lock issue
-da664c2fb SystemUI: Add volume slider and ringer mode in QS panel
-eb79f55ad SystemUI: Fix UDFPS animation attach/detach race
-8c8c11a5f SystemUI: Fix sporadic jumps in statusbar brightness control
-2a51e9731 WindowWakeUpPolicy: Don't wake from lid when LID_BEHAVIOR is disabled
-916b1bb7d SystemUI: Hide notifications when quickly expanding QS
-55a1603dc SystemUI: DynamicBar: Skip biometric unlock on keyguard when disabled
-5d3ae685d wm: DisplayRotation: Preserve locked rotation during screen state changes
-364dcd092 SystemUI: fixing keyguard bypass issue
-4f55e911f SettingsLib: fixing platform apps storage info
-da7cd82e8 SystemUI: fixing keyguard locked rotation
-69155cf95 SystemUI: DynamicBar: fixing touch intercept issue
-12f1f09ae ThemeEngine: fixing update broadcasting crashes
-2ff81f354 SystemUI: fixing wifi standard alignment
-3bf1c56a9 ThemeEngine: fixing wifi | signal icons sizing
-53a62e653 sandbox: improving vault file management
-77dafc70a SystemUI: Fix slider haptic issue
-051b7a17d SystemUI: Fix quick pulldown regression with statusbar brightness control
-114d9e355 core: hide clone targets from regular Open with
-e902a6de8 Remove unconditional log in add()
-cc12114e1 base: Allow locking tasks to recents [1/2]
-32a07176b pm: clear tracked changed states in PackageStateMutator
-de7a80509 SystemUI: Add customization to select carrier label location
-649dda593 SystemUI: Add custom carrier text customization
-24332201c haptics: Allow to set predefined feedback for texture tick effect
-35eb3826e services: Fix performance mode issue
-41c8e6329 SettingsLib: Force enable expressive theme
-88f5b4621 SystemUI: tuner: Update statusbar tuner icons
-e6249cd8f SystemUI: Follow material expressive icons for status bar tuner
-632777a63 backport fix for stuck IME input from May 2026 Pixel update
-dc8aa05fb AMS appDiedLocked killProcessQuiet is vulnerable to PID reuse race, can SIGKILL Zygote/system_server.
-9eededd53 Prevent system_server from restarting due to app issues.
-0ef144452 core: Caching views to optimize performance
-db23dd789 core: Fix dispatch detach window race
-70f6c3e63 SystemUI: Fix and add status bar brightness control for lockscreen
-49f282e04 SystemUI: Port statusbar brightness control
-1f6d1b344 core: sandbox: Fix app lock issue
-7df99f468 SystemUI: Fix notification app lock issues
-8418ab994 Fix flaky test in b/504933143.
-a6878b250 Fix NPE in JobServiceContext.handleOpTimeoutLocked()
-a28bdb972 SystemUI: charging: harden charging ripple cleanup against stale callbacks
-e91d3c2e9 services: Optimizing navigation bar draws
-1a4ab3e2b services: Caching isOverlappingWithNavBar to avoid redundant rectangle math
-
-   * frameworks/native
-da1214c0a fixup! libs: Add MTK GED-KPI support to fix MTK gpufreq
-e5414f7e6 Merge pull request #23 from Addster09/16.0
-509183f2a libs: Add MTK GED-KPI support to fix MTK gpufreq
-
-   * hardware/interfaces
-6e2d52e80 Merge 'lineage-23.2' into 16.0
-40c184d18 compatibility_matrices: Allow gnss AIDL v1 on target-level 7
-
-   * lineage/scripts
-009845f pixel: Fix running device.sh from anywhere but $TOP
-992686f lineage-priv-template: Add Android 17 keys
-8106365 pixel: dump-sepolicy: Get rid of gs-common
-541a144 pixel: Add stallion & update ignored overlays for CP2A
-30fd909 dev: sepolicy: macro-match after splitting
-9930b9c dev: sepolicy: allow multiple references when macro matching
-f632c73 dev: sepolicy: default missing flags to false
-a3e7f78 dev: sepolicy: parse needed flags automatically
-3343efc dev: sepolicy: cleanup against platform public/private policy
-de7b7d8 dev: sepolicy: limit class sets merging to single source statements
-
-   * lineage/wiki
-fb03b84 wiki: Fix a21s unlock step wording
 
    * packages/apps/Aperture
-b678a0f Aperture: Force dark navigation bar in CameraActivity
+4256784 Automatic translation import
+
+   * packages/apps/DeskClock
+86b8c63 Automatic translation import
+
+   * packages/apps/FMRadio
+78dfedb Automatic translation import
 
    * packages/apps/GameSpace
-da6a892 New Crowdin updates (#152)
-
-   * packages/apps/LMOFreeform
-d489b56 New Crowdin updates (#31)
-
-   * packages/apps/Launcher3
-8650721 Launcher3: Allow setting auto-rotation on phone devices
-92d035a Launcher3: Improve workspace animation
-04ec955 Launcher3: Update app launch blur interpolation
-997031f Launcher3: Skip WorkspaceRevealAnim for app to Launcher while Overview is active
-bfb63a5 Launcher3: Should use unfilteredApps when getting Launcher target
-8f9cf84 Launcher3: App launch animation with blur and pushback
-dd0d05d Launcher3: Animation optimization
-2a22f27 Launcher3: Optimizing app to workspace animation
-1b853b1 Launcher3: Improve app to home animation
-11bc13c New Crowdin updates (#546)
-
-   * packages/apps/Twelve
-503ca9f Twelve: Fix search query
-
-   * packages/apps/crDroidSettings
-a52343d New Crowdin updates (#1326)
-
-   * packages/resources/apps
-1c33179 New Crowdin updates (#2)
-9f84a2e resources: Add OmniJaws strings
-
-   * packages/services/OmniJaws
-11276aa OmniJaws: Move strings for translations
-9753c3f OmniJaws: Prepare for moving strings
-6389a9f OmniJaws: Localize weather condition strings
-
-   * tools/extract-utils
-88b42c6 extract_utils: update file on destination update
-
-====================
-     06-28-2026
-====================
-
-   * hardware/lineage/interfaces
-8258d8d power-libperfmgr: Fix sustained performance mode not turning off
-
-   * lineage/wiki
-c308483 wiki: Fix search underline color
+f27d428 New Crowdin updates (#154)
 
    * packages/apps/Glimpse
-0e55840 Glimpse: Handle FD open failure gracefully
+29694da Automatic translation import
+
+   * packages/apps/Jelly
+6517f6a Automatic translation import
+
+   * packages/apps/LMOFreeform
+53000e4 New Crowdin updates (#32)
+
+   * packages/apps/Twelve
+2443487 Automatic translation import
+
+   * packages/apps/crDroidSettings
+7fa6f53 New Crowdin updates (#1329)
 
    * packages/resources/apps
-a29f668 resources: Add maintainer string for Updater
+58339c7 New Crowdin updates (#3)
+
+   * packages/resources/devicesettings
+0c8e54f Automatic translation import
+
+   * vendor/crowdin
+542010c Automatic translation import
+
+   * vendor/qcom/opensource/commonsys/fm
+87b347b Automatic translation import
+
+====================
+     07-14-2026
+====================
+
+   * art
+663e2bf art: Optimize IsPathologicalCase with unlikely hints
+
+   * bionic
+b5f8e4d libm: optimize roundf with bit-based fast path
+
+====================
+     07-13-2026
+====================
+
+   * device/qcom/sepolicy_vndr/legacy-um
+a61270b vendor: lahaina: Label hwmon node from motorola/sm7325
+
+   * hardware/lineage/interfaces
+19b455c light: Add support for microphone & camera privacy LEDs
+
+====================
+     07-12-2026
+====================
+
+   * android
+aac17d7 manifest: Untrack sm8350 display hal
+
+   * device/qcom/sepolicy
+d903f8e Merge tag 'LA.QSSI.16.0.r1-14000-qssi.0' into staging/lineage-23.2_merge-LA.QSSI.16.0.r1-14000-qssi.0
+
+   * device/qcom/sepolicy_vndr/sm8550
+db30294 Merge tag 'LA.VENDOR.13.2.0.r1-27500-KAILUA.QSSI16.0' of https://git.codelinaro.org/clo/la/device/qcom/sepolicy_vndr into HEAD
+
+   * device/qcom/sepolicy_vndr/sm8650
+69cbb9a Merge tag 'LA.VENDOR.14.3.0.r1-23100-lanai.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.14.3.0.r1-23100-lanai.QSSI16.0
+
+   * device/qcom/sepolicy_vndr/sm8750
+b5c0266 Merge tag 'LA.VENDOR.15.4.0.r1-21400-pakala.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.15.4.0.r1-21400-pakala.QSSI16.0
+
+   * hardware/qcom-caf/sm8350/audio
+9596e4b Merge tag 'LA.UM.9.14.r1-26700-LAHAINA.QSSI16.0' into staging/lineage-23.2_merge-LA.UM.9.14.r1-26700-LAHAINA.QSSI16.0
+
+   * hardware/qcom-caf/sm8450-6.6/dataipa
+3296f05 Merge tag 'LA.VENDOR.15.4.1.r1-10900-WAIPIO.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.15.4.1.r1-10900-WAIPIO.QSSI16.0
+
+   * hardware/qcom-caf/sm8450/audio/agm
+35c3491 Merge tag 'LA.VENDOR.1.0.r1-29900-WAIPIO.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.1.0.r1-29900-WAIPIO.QSSI16.0
+
+   * hardware/qcom-caf/sm8450/audio/pal
+a8c1206 Merge tag 'LA.VENDOR.1.0.r1-29900-WAIPIO.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.1.0.r1-29900-WAIPIO.QSSI16.0
+
+   * hardware/qcom-caf/sm8450/audio/primary-hal
+1e1e5aa Merge tag 'LA.VENDOR.1.0.r1-29900-WAIPIO.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.1.0.r1-29900-WAIPIO.QSSI16.0
+
+   * hardware/qcom-caf/sm8450/data-ipa-cfg-mgr
+a17b3e2 Merge tag 'LA.VENDOR.1.0.r1-29900-WAIPIO.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.1.0.r1-29900-WAIPIO.QSSI16.0
+
+   * hardware/qcom-caf/sm8550/audio/primary-hal
+aa14955 Merge tag 'AUDIO.LA.8.0.r1-13000-KAILUA.0' into staging/lineage-23.2_merge-AUDIO.LA.8.0.r1-13000-KAILUA.0
+
+   * hardware/qcom-caf/sm8550/data-ipa-cfg-mgr
+a37a455 Merge tag 'LA.VENDOR.13.2.0.r1-27800-KAILUA.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.13.2.0.r1-27800-KAILUA.QSSI16.0
+
+   * hardware/qcom-caf/sm8550/dataipa
+a964339 Merge tag 'LA.VENDOR.13.2.0.r1-27800-KAILUA.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.13.2.0.r1-27800-KAILUA.QSSI16.0
+
+   * hardware/qcom-caf/sm8650/audio/pal
+8c4463e Merge tag 'AUDIO.LA.9.0.r1-08900-lanai.0' into staging/lineage-23.2_merge-AUDIO.LA.9.0.r1-08900-lanai.0
+
+   * hardware/qcom-caf/sm8650/audio/primary-hal
+2aa541f Merge tag 'AUDIO.LA.9.0.r1-08900-lanai.0' into staging/lineage-23.2_merge-AUDIO.LA.9.0.r1-08900-lanai.0
+
+   * hardware/qcom-caf/sm8650/data-ipa-cfg-mgr
+0b5c342 Merge tag 'LA.VENDOR.14.3.0.r1-23100-lanai.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.14.3.0.r1-23100-lanai.QSSI16.0
+
+   * hardware/qcom-caf/sm8650/dataipa
+1311e1c Merge tag 'LA.VENDOR.14.3.0.r1-23100-lanai.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.14.3.0.r1-23100-lanai.QSSI16.0
+
+   * hardware/qcom-caf/sm8750/audio/agm
+853c0f6 Merge tag 'AUDIO_HANDSET.LA.10.0.r1-08100-pakala.0' into staging/lineage-23.2_merge-AUDIO_HANDSET.LA.10.0.r1-08100-pakala.0
+
+   * hardware/qcom-caf/sm8750/audio/pal
+39f7ccc Merge tag 'AUDIO_HANDSET.LA.10.0.r1-08100-pakala.0' into staging/lineage-23.2_merge-AUDIO_HANDSET.LA.10.0.r1-08100-pakala.0
+
+   * hardware/qcom-caf/sm8750/data-ipa-cfg-mgr
+5c75409 Merge tag 'LA.VENDOR.15.4.0.r1-21400-pakala.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.15.4.0.r1-21400-pakala.QSSI16.0
+
+   * hardware/qcom-caf/sm8750/dataipa
+c620683 Merge tag 'LA.VENDOR.15.4.0.r1-21400-pakala.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.15.4.0.r1-21400-pakala.QSSI16.0
+
+   * hardware/qcom-caf/thermal
+05ea2d4 Merge tag 'LA.VENDOR.15.4.0.r1-21400-pakala.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.15.4.0.r1-21400-pakala.QSSI16.0
+
+   * hardware/qcom-caf/thermal-legacy-um
+ed71072 Merge tag 'LA.VENDOR.14.3.0.r1-23100-lanai.QSSI16.0' into staging/lineage-23.2_merge-LA.VENDOR.14.3.0.r1-23100-lanai.QSSI16.0
+
+   * packages/apps/Updater
+923ba75 Updater: Adapt colors in lottie animations
 
    * vendor/lineage
-64513aa merge_dtbs: Apply multi-threaded parallel compilation
+66bb913 crdroid: Add security date in OTA json
+
+   * vendor/qcom/opensource/audio-hal/st-hal
+943789d Merge tag 'LA.UM.9.14.r1-26700-LAHAINA.QSSI16.0' into staging/lineage-23.2_merge-LA.UM.9.14.r1-26700-LAHAINA.QSSI16.0
+
+   * vendor/qcom/opensource/data-ipa-cfg-mgr-legacy-um
+897e656 Merge tag 'LA.UM.9.14.r1-26700-LAHAINA.QSSI16.0' into staging/lineage-23.2_merge-LA.UM.9.14.r1-26700-LAHAINA.QSSI16.0
+
+   * vendor/qcom/opensource/interfaces
+eb976d9 Merge tag 'LA.QSSI.16.0.r1-14000-qssi.0' into staging/lineage-23.2_merge-LA.QSSI.16.0.r1-14000-qssi.0
 
